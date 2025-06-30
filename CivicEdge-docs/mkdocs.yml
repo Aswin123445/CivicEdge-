@@ -3,4 +3,22 @@ theme:
   name: material
 nav:
   - Home: index.md
+  - Vision: vision.md
   - About: about.md
+  - Modules:
+      - Citizen: 
+        - Overview: modules/citizen/overview.md
+        - Authentication: modules/citizen/authentication.md
+        - Reporting Complaints: modules/citizen/complaint_system.md
+        - Joining Volunteer Armies: modules/citizen/volunteer_system.md
+        - Community Forum: modules/citizen/community_forum.md
+        - Notifications: modules/citizen/notifications.md
+        - profile_management: modules/citizen/profile_manage.md
+      - Admin:
+        - Overview: modules/admin/overview.md
+      - Solver:
+        - Overview: modules/solver/overview.md
+
+
+
+
