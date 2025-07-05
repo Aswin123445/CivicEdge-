@@ -16,8 +16,24 @@ nav:
         - profile_management: modules/citizen/profile_manage.md
       - Admin:
         - Overview: modules/admin/overview.md
+        - Complaint Management: modules/admin/complaint_management.md
+        - Solver Management: modules/admin/solver_management.md
+        - User Management: modules/admin/user_management.md
+        - Volunteer Management: modules/admin/volunteer_management.md
+        - Reward Distribution: modules/admin/reward_distribution.md
+        - Forum Moduration: modules/admin/forum_moderation.md
+        - Poll Management: modules/admin/poll_management.md
+        - Notification Broadcasts: modules/admin/notification_broadcasts.md
+        - Notification Management: modules/admin/notification_management.md
+        - Analytics Dashboard: modules/admin/analytics.md
+        - Admin Profile: modules/admin/admin_profile.md
       - Solver:
         - Overview: modules/solver/overview.md
+        - Complaint Handling: modules/solver/complaint_handling.md 
+        - Complaint History: modules/solver/complaint_history.md 
+        - Feedback View: modules/solver/feedback_view.md 
+        - Profile Management: modules/solver/profile_management.md
+        - Notifications: modules/solver/notifications.md
 
 
 
