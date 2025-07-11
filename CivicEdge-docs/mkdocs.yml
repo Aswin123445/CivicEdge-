@@ -34,7 +34,22 @@ nav:
         - Feedback View: modules/solver/feedback_view.md 
         - Profile Management: modules/solver/profile_management.md
         - Notifications: modules/solver/notifications.md
-
+  - API:
+      - Overview: api/overview.md
+      - Citizen:
+        - Complaint:
+          - Overview: api\citizen\complaints\overview.md
+          - Sumbit: api\citizen\complaints\submit.md
+          - List Complaints: api\citizen\complaints\listcomplaints.md
+          - Complaint Details: api\citizen\complaints\complaintdetails.md
+          - Complaint Update: api\citizen\complaints\complaintupdate.md
+          - Upload Media : api\citizen\complaints\upload_complaint_media.md
+          - View Media : api\citizen\complaints\view_complaint_media.md
+          - Status Log : api\citizen\complaints\view_complaint_status_log.md
+          - Submit Feedback : api\citizen\complaints\submit_feedback.md
+      - Solver:
+        - Task:
+          - Overview: api\solver\task\overview.md
 
 
 
