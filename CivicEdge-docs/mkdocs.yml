@@ -50,6 +50,22 @@ nav:
       - Solver:
         - Task:
           - Overview: api\solver\task\overview.md
+          - List Tasks: api\solver\task\list_all_task.md
+          - Task Details: api\solver\task\task_details.md
+          - Update Status: api\solver\task\update_status.md
+          - Upload Media: api\solver\task\upload_media.md
+          - View Feedback: api\solver\task\view_feedback.md
+          - View Media: api\solver\task\view_media.md
+      - Admin:
+        - Task:
+          - Overview: api\admin\complaints\overview.md
+          - List Complaints: api\admin\complaints\list_all_complaints.md
+          - Complaint Details: api\admin\complaints\complaint_details.md
+          - Verify Complaint: api\admin\complaints\verify_complaint.md
+          - Assign Solver: api\admin\complaints\assign_solver.md
+          - Track Progress: api\admin\complaints\track_progess.md
+          - View Feedback: api\admin\complaints\view_feedback.md
+          - Flag Complaints: api\admin\complaints\flag_complaints.md
 
 
 
