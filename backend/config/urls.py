@@ -18,4 +18,6 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('api/v1/user/', include('apps.user.routes.user_routes')),  # User-related routes
 ]

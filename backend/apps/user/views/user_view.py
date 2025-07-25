@@ -1,5 +1,44 @@
-# Create your views here.
+from sqlite3 import IntegrityError
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.generics import CreateAPIView
+from apps.user.services.user_services import InvalidTokenError, verify_user_email_from_token
+from apps.user.serializers.user.user_read_serilazer import UserReadSerializer
+from apps.user.serializers.user.user_create import UserCreateSerializer
+from shared.exceptions.custom_exceptions import TokenExpiredError, UserAlreadyExistsError
+import logging
+
+logger = logging.getLogger(__name__)
 
 
+class CitizenRegisterView(CreateAPIView):
+    serializer_class = UserCreateSerializer
+    def perform_create(self, serializer):
+        self.user = serializer.save()
+
+    def create(self, request, *args, **kwargs):
+        response = super().create(request, *args, **kwargs)
+        return Response({
+            "message": "User registered successfully. Please verify your email.",
+            "user": UserReadSerializer(self.user).data
+        }, status=status.HTTP_201_CREATED)
+
+        
+class VerifyEmailView(APIView):
+    def get(self, request):
+        token = request.query_params.get('token', '').strip()
+        if not token:
+            return Response({"error": "Token is required"}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            user = verify_user_email_from_token(token)
+        except (InvalidTokenError, TokenExpiredError, UserAlreadyExistsError) as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            logger.exception("Unexpected error in email verification")
+            return Response({"error": "Something went wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        return Response({
+            "message": "Email verified successfully",
+            "user": UserReadSerializer(user).data
+        }, status=status.HTTP_200_OK)

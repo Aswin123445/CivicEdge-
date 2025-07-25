@@ -1,0 +1,1 @@
+from apps.user.signals import user_created

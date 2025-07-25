@@ -74,8 +74,27 @@ USE_TZ = True
 STATIC_URL = "/static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# backend/core/settings/base.py
+AUTH_USER_MODEL = "user.User"
 
-# CELERY_BROKER_URL = 'redis://localhost:6379/0'
+# FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:3000")
+BACKEND_URL = "http://localhost:8000"
+
+#email settings 
+EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND", "backend")
+EMAIL_HOST = os.environ.get("EMAIL_HOST", "hoster")
+EMAIL_PORT = os.environ.get("EMAIL_PORT", 587)
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", True)
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "email")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "password")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "from email")
+
+# backend/core/settings/base.py 
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'  # or your result backend
+CELERY_ACCEPT_CONTENT = ['json']  
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'  # or your timezone
+
 # CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
-
