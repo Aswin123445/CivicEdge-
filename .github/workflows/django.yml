@@ -1,6 +1,6 @@
 name: Django CI
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   test:
@@ -9,25 +9,25 @@ jobs:
     services:
       postgres:
         image: postgres:14
-        ports:
-          - 5432:5432
         env:
+          POSTGRES_DB: testdb
           POSTGRES_USER: testuser
           POSTGRES_PASSWORD: testpassword
-          POSTGRES_DB: testdb
+        ports: ['5432:5432']
         options: >-
-          --health-cmd="pg_isready -U testuser -d testdb"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     env:
+      GITHUB_ACTIONS: true
       DB_NAME: testdb
       DB_USER: testuser
       DB_PASSWORD: testpassword
       DB_HOST: localhost
       DB_PORT: 5432
-      GITHUB_ACTIONS: true
+      DJANGO_SETTINGS_MODULE: config.settings.development
 
     steps:
       - uses: actions/checkout@v4
@@ -35,22 +35,26 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.11
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+        working-directory: .  # because requirements.txt is in root
 
-      - name: Wait for PostgreSQL
+      - name: Wait for Postgres to be ready
         run: |
           until pg_isready -h localhost -p 5432 -U $DB_USER; do
             echo "Waiting for Postgres..."
-            sleep 2
+            sleep 1
           done
+        working-directory: backend
 
-      - name: Run migrations
+      - name: Run Django migrations
         run: python manage.py migrate
+        working-directory: backend
 
       - name: Run tests
         run: python manage.py test
+        working-directory: backend
