@@ -1,10 +1,10 @@
-name: Django CI
-
-on: [push]
-
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: backend
 
     services:
       postgres:
@@ -21,14 +21,15 @@ jobs:
           --health-retries 5
 
     env:
+      DB_HOST: localhost
+      DB_PORT: 5432
       DB_NAME: testdb
       DB_USER: testuser
       DB_PASSWORD: testpass
-      DB_HOST: postgres   # ✅ correct service hostname
-      DB_PORT: 5432
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -40,7 +41,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Django migrations
+      - name: Wait for Postgres
+        run: |
+          until pg_isready -h $DB_HOST -p $DB_PORT -U $DB_USER; do
+            echo "Waiting for Postgres..."
+            sleep 1
+          done
+
+      - name: Run migrations
         run: python manage.py migrate
 
       - name: Run tests
