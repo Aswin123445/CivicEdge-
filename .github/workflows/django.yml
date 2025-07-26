@@ -28,11 +28,11 @@ jobs:
           --health-retries 5
 
     env:
-      POSTGRES_DB: testdb
-      POSTGRES_USER: testuser
-      POSTGRES_PASSWORD: testpass
-      POSTGRES_HOST: localhost
-      POSTGRES_PORT: 5432
+      DB_NAME: testdb
+      DB_USER: testuser
+      DB_PASSWORD: testpass
+      DB_HOST: postgres
+      DB_PORT: 5432
 
     steps:
       - name: Checkout code
@@ -56,10 +56,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Wait for Postgres
+        run: |
+          until pg_isready -h $DB_HOST -p $DB_PORT -U $DB_USER; do
+            echo "Waiting for Postgres..."
+            sleep 2
+          done
+
       - name: Run tests
         run: |
           cd backend
-          python manage.py migrate  # Required to initialize the DB
+          python manage.py migrate
           python manage.py test
 
       - name: Run Ruff Linter
