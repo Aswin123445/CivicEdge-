@@ -21,6 +21,7 @@ jobs:
           --health-retries 5
 
     env:
+      GITHUB_ACTIONS: true
       DB_NAME: testdb
       DB_USER: testuser
       DB_PASSWORD: testpass
