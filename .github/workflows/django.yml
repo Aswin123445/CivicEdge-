@@ -33,6 +33,7 @@ jobs:
       DB_PASSWORD: testpass
       DB_HOST: postgres
       DB_PORT: 5432
+      PGPASSWORD: testpass
 
     steps:
       - name: Checkout code
