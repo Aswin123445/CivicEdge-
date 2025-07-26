@@ -11,7 +11,7 @@ ALLOWED_HOSTS = ["*"]
 #     }
 # }
 
-DATABASES = {
+DATABASES = {   
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.environ.get("DB_NAME"),
