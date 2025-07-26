@@ -27,7 +27,7 @@ jobs:
       DB_PASSWORD: testpass
       DB_HOST: postgres
       DB_PORT: 5432
-
+      DJANGO_SETTINGS_MODULE: config.settings.development
     steps:
       - uses: actions/checkout@v4
 
