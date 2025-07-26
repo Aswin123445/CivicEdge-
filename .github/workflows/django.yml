@@ -13,7 +13,6 @@ jobs:
           POSTGRES_DB: testdb
           POSTGRES_USER: testuser
           POSTGRES_PASSWORD: testpass
-        ports: ['5432:5432']
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -28,6 +27,7 @@ jobs:
       DB_HOST: postgres
       DB_PORT: 5432
       DJANGO_SETTINGS_MODULE: config.settings.development
+
     steps:
       - uses: actions/checkout@v4
 
@@ -41,6 +41,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r ../requirements.txt
         working-directory: backend
+
+      - name: Install PostgreSQL client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
 
       - name: Wait for Postgres to be ready
         run: |
