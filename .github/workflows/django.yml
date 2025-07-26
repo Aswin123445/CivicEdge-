@@ -44,6 +44,11 @@ jobs:
 
       - name: Install PostgreSQL client
         run: sudo apt-get update && sudo apt-get install -y postgresql-client
+      - name: Try connecting manually
+        run: |
+         echo "Trying to manually connect to postgres..."
+         PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -U $DB_USER -d $DB_NAME -c '\l'
+
 
       - name: Wait for Postgres to be ready
         run: |
