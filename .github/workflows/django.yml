@@ -38,12 +38,13 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r ../requirements.txt
+        working-directory: backend  # 👈 Set to where `manage.py` is
 
       - name: Run Django migrations
         run: python manage.py migrate
-        working-directory: backend  # 👈 set this
+        working-directory: backend
 
       - name: Run tests
         run: python manage.py test
-        working-directory: backend  # 👈 set this
+        working-directory: backend
