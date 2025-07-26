@@ -2,14 +2,11 @@
 from datetime import timedelta
 import os
 from pathlib import Path
-
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 PROJECT_ROOT = BASE_DIR.parent
-# load_dotenv(PROJECT_ROOT / ".env")
-if os.getenv("GITHUB_ACTIONS") != "true":
-    from dotenv import load_dotenv
-    load_dotenv(PROJECT_ROOT / ".env")
+load_dotenv(PROJECT_ROOT / ".env")
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "unsafe-default-key")
 DEBUG = os.environ.get("DEBUG", "False") == "True"
