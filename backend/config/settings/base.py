@@ -1,4 +1,5 @@
 # backend/config/settings/base.py
+from datetime import timedelta
 import os
 from pathlib import Path
 from dotenv import load_dotenv
@@ -13,6 +14,7 @@ DEBUG = os.environ.get("DEBUG", "False") == "True"
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
+    'rest_framework_simplejwt.token_blacklist',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +45,27 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),  # short-lived access
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),     # longer-lived refresh
+
+    "ROTATE_REFRESH_TOKENS": False,  # if True, generates new refresh on use
+    "BLACKLIST_AFTER_ROTATION": True,  # blacklists old token on rotation
+
+    "UPDATE_LAST_LOGIN": True,  # set to True if you want to update last_login on token issue
+
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,  # default is your Django SECRET_KEY
+
+    "AUTH_HEADER_TYPES": ("Bearer",),  # default authorization header type
+
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+    "TOKEN_TYPE_CLAIM": "token_type",
+    "JTI_CLAIM": "jti",  # used to uniquely identify a token (needed for blacklisting)
+
+    "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser",  # used when user is lazy-loaded
 }
 
 TEMPLATES = [
@@ -97,4 +120,6 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'  # or your timezone
 
+#jwt setup
+# USER_ID_FIELD = 'id'
 # CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'

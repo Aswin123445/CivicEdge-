@@ -1,7 +1,7 @@
 from apps.user.serializers.common.user_base_serializer import BaseUserSerializer
 from rest_framework import serializers
-from apps.user.services.user_services import register_user
 from apps.user.utils.password_validaton import validate_strong_password
+from apps.user.services.user.register_user import register_user
 from shared.exceptions.custom_exceptions import PasswordMismatchError
 
 class UserCreateSerializer(BaseUserSerializer):
@@ -46,7 +46,7 @@ class UserCreateSerializer(BaseUserSerializer):
         """
         confirm_password = attrs.pop('confirm_password', None)
         if attrs.get('password') != confirm_password:
-            raise PasswordMismatchError("Password do not match please check your password")
+            raise serializers.ValidationError("Passwords do not match.")
         return attrs
 
     def create(self, validated_data):
