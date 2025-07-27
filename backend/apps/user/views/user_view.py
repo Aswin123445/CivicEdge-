@@ -36,7 +36,7 @@ class VerifyEmailView(APIView):
             user = verify_user_email_from_token(token)
         except (InvalidTokenError, TokenExpiredError, UserAlreadyExistsError) as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        except Exception as e:
+        except Exception:
             logger.exception("Unexpected error in email verification")
             return Response({"error": "Something went wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

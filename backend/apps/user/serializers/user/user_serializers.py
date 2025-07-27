@@ -1,9 +1,8 @@
 from rest_framework import serializers
-from apps.user.models.user import User, Profile
+from apps.user.models.user import  Profile
 from apps.user.utils.location_validation import validate_location
 from apps.user.utils.indian_phone_validator import indian_phone_validator
-from apps.user.services.user_services import register_user
-from apps.user.serializers.common.user_base_serializer import BaseUserSerializer
+
 
 class ProfileBaseSerializer(serializers.ModelSerializer):
     """

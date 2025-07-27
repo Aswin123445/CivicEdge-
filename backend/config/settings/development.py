@@ -1,6 +1,6 @@
 # backend/core/settings/development.py
-from .base import *
-
+from .base import * # noqa: F403
+import os
 DEBUG = True
 ALLOWED_HOSTS = ["*"]
 

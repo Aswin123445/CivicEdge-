@@ -1,7 +1,6 @@
 # backend/core/settings/production.py
-from .base import *
-from dotenv import load_dotenv
-
+from .base import * # noqa: F403
+import os
 DEBUG = False
 ALLOWED_HOSTS = ["yourdomain.com"]
 

@@ -1,6 +1,4 @@
 import pytest
-from django.urls import reverse
-from rest_framework import status
 
 SIGNINURL = "/api/v1/user/signin/"
 
@@ -81,7 +79,7 @@ class TestInvalidLogin:
         assert response.status_code == 403
 
     def test_unverified_user_login(self, client, django_user_model):
-        user = django_user_model.objects.create_user(email="notverified@example.com", password="aswin131@3B", is_verified=False)
+        django_user_model.objects.create_user(email="notverified@example.com", password="aswin131@3B", is_verified=False)
         payload = {"email": "notverified@example.com", "password": "aswin131@3B"}
         response = client.post(SIGNINURL, payload)
         assert response.status_code == 403

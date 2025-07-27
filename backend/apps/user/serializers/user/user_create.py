@@ -2,7 +2,6 @@ from apps.user.serializers.common.user_base_serializer import BaseUserSerializer
 from rest_framework import serializers
 from apps.user.utils.password_validaton import validate_strong_password
 from apps.user.services.user.register_user import register_user
-from shared.exceptions.custom_exceptions import PasswordMismatchError
 from django.core.validators import validate_email as django_validate_email
 from django.core.exceptions import ValidationError as DjangoValidationError
 

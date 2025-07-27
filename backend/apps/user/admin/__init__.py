@@ -1,1 +1,1 @@
-from .user_admin import *
+from . import user_admin
