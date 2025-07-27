@@ -3,6 +3,8 @@ from rest_framework import serializers
 from apps.user.utils.password_validaton import validate_strong_password
 from apps.user.services.user.register_user import register_user
 from shared.exceptions.custom_exceptions import PasswordMismatchError
+from django.core.validators import validate_email as django_validate_email
+from django.core.exceptions import ValidationError as DjangoValidationError
 
 class UserCreateSerializer(BaseUserSerializer):
     """
@@ -13,7 +15,7 @@ class UserCreateSerializer(BaseUserSerializer):
     Delegates actual creation to the user service layer.
     """
     password = serializers.CharField(write_only=True, min_length=8)
-    confirm_password = serializers.CharField(write_only=True)
+    confirm_password = serializers.CharField(write_only=True, min_length=8)
 
     class Meta(BaseUserSerializer.Meta):
         fields = BaseUserSerializer.Meta.fields + ['password', 'confirm_password', 'role']
@@ -29,6 +31,21 @@ class UserCreateSerializer(BaseUserSerializer):
             str: The validated password.
         """
         validate_strong_password(value)
+        return value
+    
+    def validate_email(self, value):
+        value = value.strip()
+
+        # Length check
+        if len(value) > 254:  # match EmailField default max_length
+            raise serializers.ValidationError("Ensure email has at most 254 characters.")
+
+        # Format check
+        try:
+            django_validate_email(value)
+        except DjangoValidationError:
+            raise serializers.ValidationError("Enter a valid email address.")
+
         return value
 
     def validate(self, attrs):

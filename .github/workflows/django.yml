@@ -55,6 +55,9 @@ jobs:
         run: python manage.py migrate
         working-directory: backend
 
+      - name: Run Ruff (Linter)
+        run: ruff .
+
       - name: Run tests
         run: python manage.py test
         working-directory: backend

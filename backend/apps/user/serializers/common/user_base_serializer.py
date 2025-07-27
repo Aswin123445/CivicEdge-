@@ -3,7 +3,7 @@ from rest_framework import serializers
 from apps.user.models.user import User
 
 class BaseUserSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(help_text="User's email address")
+    email = serializers.EmailField(max_length=254,help_text="User's email address",required=True)
 
     class Meta:
         model = User
