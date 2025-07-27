@@ -57,8 +57,9 @@ jobs:
         working-directory: backend
 
       - name: Run Ruff (Linter)
-        run: ruff .
-        working-directory: backend  # ✅ If your code is in backend
+        run: ruff check .
+        working-directory: backend
+
 
       - name: Run tests
         run: python manage.py test
