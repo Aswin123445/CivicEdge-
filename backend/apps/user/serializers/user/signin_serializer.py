@@ -27,7 +27,7 @@ class SignInSerializer(BaseUserSerializer):
     def validate(self, attrs):
         email = attrs.get('email')
         password = attrs.get('password')
-        user = authenticate(request=self.context.get("request"), email=email, password=password)
+        user = authenticate(request=self.context.get("request"), username=email, password=password)
         if user is None:
             raise serializers.ValidationError("Invalid email or password.")
         attrs['user'] = user

@@ -35,7 +35,7 @@ services:
       dockerfile: docker/django/Dockerfile
     container_name: celery
     command: celery -A config worker -l info
-    working_dir: /app/backend   # <--- ✅ Very important for Celery to find Django project
+    working_dir: /app/backend   
     volumes:
       - .:/app
     env_file:

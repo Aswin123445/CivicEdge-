@@ -46,6 +46,14 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault("is_active", True)
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("is_verified", True)
+
+        
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError("Superuser must have is_staff=True.")
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError("Superuser must have is_superuser=True.")
         return self.create_user(email, password, role=UserRole.ADMIN, **extra_fields)
 
 
@@ -56,7 +64,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(unique=True,max_length=256)
-    password = models.CharField(max_length=128)
+    password = models.CharField(max_length=128,blank=True)
 
     role = models.CharField(
         max_length=20,

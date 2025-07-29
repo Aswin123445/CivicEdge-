@@ -5,9 +5,9 @@ from rest_framework.exceptions import PermissionDenied
 User = get_user_model()
 
 class EmailAuthBackend(ModelBackend):
-    def authenticate(self, request, email=None, password=None, **kwargs):
+    def authenticate(self, request, username=None, password=None, **kwargs):
         try:
-            user = User.objects.get(email=email)
+            user = User.objects.get(email=username)
         except User.DoesNotExist:
             return None
 
@@ -19,3 +19,4 @@ class EmailAuthBackend(ModelBackend):
         if not user.is_verified:
             raise PermissionDenied("Account not Verified")
         return user
+  

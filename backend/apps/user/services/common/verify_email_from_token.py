@@ -19,8 +19,7 @@ def verify_user_email_from_token(token: str):
         user.is_verified = True
         user.save()
     else:
-        raise UserAlreadyExistsError("User already verifided please login")
-    
+        raise UserAlreadyExistsError("User already verifided please login") 
     if not hasattr(user, "profile"):
-        Profile.objects.create(user=user, name=user.email.split('@')[0]) 
+        Profile.objects.create(user=user, name=user.email.split('@')[0])
     return user

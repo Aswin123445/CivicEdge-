@@ -9,24 +9,11 @@ from apps.user.services.common.verify_email_from_token import verify_user_email_
 from apps.user.serializers.user.signin_serializer import SignInSerializer
 from shared.exceptions.custom_exceptions import InvalidTokenError, TokenExpiredError, UserAlreadyExistsError
 
-import logging
+import logging 
 
 logger = logging.getLogger(__name__)
 
 
-class CitizenRegisterView(CreateAPIView):
-    serializer_class = UserCreateSerializer
-    def perform_create(self, serializer):
-        self.user = serializer.save()
-
-    def create(self, request, *args, **kwargs):
-        super().create(request, *args, **kwargs)
-        return Response({
-            "message": "User registered successfully. Please verify your email.",
-            "user": UserReadSerializer(self.user).data
-        }, status=status.HTTP_201_CREATED)
-
-        
 class VerifyEmailView(APIView):
     def get(self, request):
         token = request.query_params.get('token', '').strip()
@@ -52,4 +39,4 @@ class SignInView(GenericAPIView):
         serializer = self.get_serializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         token_data = serializer.save()
-        return Response(token_data, status=status.HTTP_200_OK)
+        return Response(token_data, status=status.HTTP_200_OK) 

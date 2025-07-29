@@ -3,6 +3,8 @@ from datetime import timedelta
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+import sys
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 PROJECT_ROOT = BASE_DIR.parent
@@ -46,12 +48,16 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_SAMESITE = 'Lax'  # This is enough for redirect-based login flows
+SESSION_COOKIE_SECURE = False    # Only True if you're using HTTPS (you’re likely not on local)
+CSRF_COOKIE_SECURE = False
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),  # short-lived access
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),     # longer-lived refresh
 
-    "ROTATE_REFRESH_TOKENS": False,  # if True, generates new refresh on use
+    "ROTATE_REFRESH_TOKENS": True,  # if True, generates new refresh on use
     "BLACKLIST_AFTER_ROTATION": True,  # blacklists old token on rotation
 
     "UPDATE_LAST_LOGIN": True,  # set to True if you want to update last_login on token issue
@@ -123,8 +129,56 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'  # or your timezone
 
+#google oauth
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
+
 
 
 #jwt setup
 # USER_ID_FIELD = 'id'
 # CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+
+    "formatters": {
+        "simple": {
+            "format": "[{levelname}] {message}",
+            "style": "{",
+        },
+    },
+
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "stream": sys.stdout,
+            "formatter": "simple",
+        },
+    },
+
+    "root": {
+        "handlers": ["console"],
+        "level": "WARNING",  # Only show warnings, errors, critical
+    },
+
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "WARNING",  # Suppress debug/info logs
+            "propagate": False,
+        },
+        "django.request": {
+            "handlers": ["console"],
+            "level": "ERROR",  # Only show request errors
+            "propagate": False,
+        },
+        "django.server": {
+            "handlers": ["console"],
+            "level": "INFO",  # Show server start, etc.
+            "propagate": False,
+        },
+    },
+}
