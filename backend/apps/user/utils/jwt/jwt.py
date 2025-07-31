@@ -4,6 +4,8 @@ import jwt
 from datetime import datetime, timedelta ,timezone 
 from django.conf import settings
 from shared.exceptions.custom_exceptions import InvalidTokenError, TokenExpiredError
+from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework_simplejwt.tokens import RefreshToken
 
 SECRET_KEY = settings.SECRET_KEY
 ALGORITHM = "HS256"
@@ -32,3 +34,22 @@ def decode_access_token(token: str):
         raise TokenExpiredError("The verification link has expired. Plaease request a new verification email.")
     except jwt.InvalidTokenError:
         raise InvalidTokenError("Invalid or malformed token.")
+
+
+
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
+    
+    
+
+
+def decode_token(token: str):
+    try:
+        payload = AccessToken(token)
+        return payload  # acts like a dict
+    except Exception as e:
+        raise ValueError("Invalid token") from e

@@ -3,8 +3,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from apps.user.services.user.forgot_password import initiate_password_reset, reset_user_password
 from apps.user.serializers.user.forgot_password import ForgotPasswordSerializer, ResetPasswordSerializer
-
+from rest_framework.permissions import AllowAny
 class ForgotPasswordView(APIView):
+    permission_classes = [AllowAny]
     def post(self, request):
         try:
             serializer = ForgotPasswordSerializer(data=request.data)
@@ -16,12 +17,14 @@ class ForgotPasswordView(APIView):
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         
 class ResetPasswordView(APIView):
+    permission_classes = [AllowAny]
     def post(self, request,uidb64,token):
         serializer = ResetPasswordSerializer(
             data = request.data,
             context = {
             'uidb64': uidb64,
-            'token': token,            }
+            'token': token,            
+        }
         )
         if serializer.is_valid():
             reset_user_password(serializer.validated_data)

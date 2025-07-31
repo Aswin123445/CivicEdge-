@@ -8,13 +8,14 @@ from apps.user.serializers.user.user_create import UserCreateSerializer
 from apps.user.services.common.verify_email_from_token import verify_user_email_from_token
 from apps.user.serializers.user.signin_serializer import SignInSerializer
 from shared.exceptions.custom_exceptions import InvalidTokenError, TokenExpiredError, UserAlreadyExistsError
-
+from rest_framework.permissions import AllowAny
 import logging 
 
 logger = logging.getLogger(__name__)
 
 
 class VerifyEmailView(APIView):
+    permission_classes = [AllowAny]
     def get(self, request):
         token = request.query_params.get('token', '').strip()
         if not token:
@@ -34,6 +35,7 @@ class VerifyEmailView(APIView):
         
 
 class SignInView(GenericAPIView):
+    permission_classes = [AllowAny]
     serializer_class = SignInSerializer
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data, context={'request': request})

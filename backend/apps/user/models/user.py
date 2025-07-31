@@ -57,6 +57,7 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, role=UserRole.ADMIN, **extra_fields)
 
 
+
 class User(AbstractBaseUser, PermissionsMixin):
     """
     Custom user model that supports email-based authentication and role handling.
@@ -128,6 +129,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         """
         return self.role == UserRole.CITIZEN
 
+class Zone(models.Model):  
+    name = models.CharField(max_length=100)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
 class Profile(models.Model):
     """
@@ -154,13 +158,13 @@ class Profile(models.Model):
     # Citizen fields
     location = models.CharField(max_length=200, null=True, blank=True)
     interests = models.JSONField(null=True, blank=True, help_text="List of user's interests")
-    zone = models.CharField(max_length=50, null=True, blank=True)
+    # zone = models.CharField(max_length=50, null=True, blank=True)
 
     # Solver fields
     skills = models.JSONField(null=True, blank=True, help_text="List of technical or civic skills")
-
+    zone = models.ForeignKey(Zone, on_delete=models.PROTECT, null=True, blank=True)
     # Admin fields
     admin_zone_responsibility = models.CharField(max_length=100, null=True, blank=True, help_text="Zones managed by admin")
 
     def __str__(self):
-        return f"{self.name} ({self.user.role})"
+        return f"{self.user.email} ({self.user.role})"

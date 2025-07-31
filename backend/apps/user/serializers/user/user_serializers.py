@@ -1,9 +1,7 @@
 from rest_framework import serializers
 from apps.user.models.user import  Profile
 from apps.user.utils.location_validation import validate_location
-from apps.user.utils.indian_phone_validator import indian_phone_validator
-
-
+from apps.user.utils.validator import indian_phone_validator
 class ProfileBaseSerializer(serializers.ModelSerializer):
     """
     Base serializer for user profiles shared across roles.

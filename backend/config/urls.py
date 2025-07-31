@@ -29,5 +29,7 @@ urlpatterns = [
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('api/token/blacklist/', TokenBlacklistView.as_view(), name='token_blacklist'),
     path('admin/', admin.site.urls),
-    path('api/v1/user/', include('apps.user.routes.user.user_routes')),  # User-related routes
+    
+    #apps url prefix
+    path('api/v1/user/', include('apps.user.routes')),  # User-related routes
 ]

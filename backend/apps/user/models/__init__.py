@@ -1,3 +1,3 @@
-from .user import User,Profile
+from .user import User,Profile,Zone
 
-__all__ = ['User','Profile']
+__all__ = ['User','Profile','Zone']
