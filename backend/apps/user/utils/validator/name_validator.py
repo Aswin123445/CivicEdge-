@@ -22,3 +22,4 @@ def name_validator(name: str):
 
     if "  " in name:
         raise ValidationError("Name cannot have consecutive spaces.")
+    return name

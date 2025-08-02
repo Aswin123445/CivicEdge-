@@ -99,8 +99,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         """
         if self.role == UserRole.ADMIN and not self.is_staff:
             raise ValidationError("Admins must be staff.")
-        if self.role == UserRole.SOLVER and not self.is_staff:
-            raise ValidationError("Solvers must be staff.")
 
     class Meta:
         ordering = ["-created_at"]

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
-from apps.user.utils.password_validaton import validate_strong_password
+from apps.user.utils.validator.password_validaton import validate_strong_password
 from django.core.validators import validate_email as django_validate_email
 from django.core.exceptions import ValidationError as DjangoValidationError
 

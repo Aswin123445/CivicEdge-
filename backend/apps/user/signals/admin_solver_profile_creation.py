@@ -4,7 +4,6 @@ from django.dispatch import receiver
 from apps.user.models.user import Profile,User
 @receiver(post_save, sender=User)
 def create_profile_for_admin_and_solver(sender, instance, created, **kwargs):
-    print('sinal triggered')
     user = instance
     # Only create profile on user creation
     if not created:
@@ -16,4 +15,5 @@ def create_profile_for_admin_and_solver(sender, instance, created, **kwargs):
     if hasattr(user, 'profile'):
         return
     # Create profile immediately
-    Profile.objects.create(user=user)
+    name = 'solver' if user.role == 'solver' else 'admin'
+    Profile.objects.create(user=user,name = name)   
