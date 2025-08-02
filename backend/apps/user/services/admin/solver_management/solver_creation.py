@@ -24,7 +24,6 @@ def create_solver(validated_data: dict):
             # Check if profile is created via signal
             if not hasattr(user, "profile"):
                 raise ValidationError("Profile was not created for the user.")
-        
             user.profile.name = name
             user.profile.save()
             send_solver_welcome_email.delay(
@@ -36,7 +35,7 @@ def create_solver(validated_data: dict):
             )
             return user
 
-
+he
     except IntegrityError:
         # Duplicate email / unique constraint
         raise DRFValidationError({"email": ["User with this email already exists."]})
