@@ -5,3 +5,4 @@ from apps.user.serializers.admin.solver_management.solver_creation import AdminC
 class AdminCreateSolverView(CreateAPIView):
     serializer_class = AdminCreateSolverSerializer
     permission_classes = [IsAdminUser]
+    

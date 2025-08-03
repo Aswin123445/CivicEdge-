@@ -35,7 +35,6 @@ def create_solver(validated_data: dict):
             )
             return user
 
-he
     except IntegrityError:
         # Duplicate email / unique constraint
         raise DRFValidationError({"email": ["User with this email already exists."]})

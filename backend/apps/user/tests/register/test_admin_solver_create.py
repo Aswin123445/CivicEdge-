@@ -202,7 +202,6 @@ class TestInvalidCreateSolver:
         payload = {
             "name": "SolverNoAuth",
             "email": "noauth@example.com",
-            "password": "StrongPass1!"
-        }
+            "password": "StrongPass1!"        }
         response = client.post(CREATE_SOLVER_URL, payload)  # no headers
         assert response.status_code in (401, 403, 404)  # depending on concealment

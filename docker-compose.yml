@@ -5,50 +5,48 @@ services:
     build:
       context: .
       dockerfile: docker/django/Dockerfile
-    container_name: django
-    command: python manage.py runserver 0.0.0.0:8000
-    working_dir: /app/backend
-    volumes:
-      - .:/app
+    container_name: civicedge-django
     ports:
       - "8000:8000"
     env_file:
       - .env
     environment:
-      - DJANGO_SETTINGS_MODULE=config.settings.development
+      DJANGO_SETTINGS_MODULE: config.settings.development
+    volumes:
+      - .:/app  # sync code for live edit
     depends_on:
       - redis
       - postgres
-    restart: always
-
-
-  redis:
-    image: redis:alpine
-    container_name: redis
-    ports:
-      - "6379:6379"
     restart: always
 
   celery:
     build:
       context: .
       dockerfile: docker/django/Dockerfile
-    container_name: celery
+    container_name: civicedge-celery
     command: celery -A config worker -l info
-    working_dir: /app/backend   
-    volumes:
-      - .:/app
     env_file:
       - .env
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.development
+    volumes:
+      - .:/app
     depends_on:
       - django
       - redis
       - postgres
     restart: always
 
+  redis:
+    image: redis:alpine
+    container_name: civicedge-redis
+    ports:
+      - "6379:6379"
+    restart: always
+
   postgres:
     image: postgres:15
-    container_name: postgres
+    container_name: civicedge-postgres
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
@@ -56,6 +54,22 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ../docker/react/Dockerfile
+    container_name: civicedge-frontend
+    volumes:
+      - ./frontend:/app:cached        # live code sync with better performance
+      - /app/node_modules            # preserve container node_modules
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_BASE_URL=http://django:8000
+      - CHOKIDAR_USEPOLLING=true     # makes file watching reliable in Docker
+    depends_on:
+      - django
 
 volumes:
   postgres_data:
