@@ -17,7 +17,7 @@ def send_verification_email_task(user_id):
 }
         token = create_access_token(user_data,expires_at=5)  # Token valid for 5 minutes
         # verification_link = f"{settings.FRONTEND_URL}/verify-email?token={token}"
-        verification_link = f"{settings.BACKEND_URL}/api/v1/user/verify-email?token={token}"
+        verification_link = f"{settings.FRONTEND_URL}verify-email?token={token}"
         subject = "CivicEdge - Email Verification for acount activation"
         html_message = render_to_string("user_verification.html", {
             "user": user,

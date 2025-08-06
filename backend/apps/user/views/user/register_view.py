@@ -15,4 +15,4 @@ class CitizenRegisterView(CreateAPIView):
         return Response({
             "message": "User registered successfully. Please verify your email.",
             "user": UserReadSerializer(self.user).data
-        }, status=status.HTTP_201_CREATED) 
+        }, status=status.HTTP_201_CREATED)
