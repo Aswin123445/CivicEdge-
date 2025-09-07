@@ -18,8 +18,7 @@ class ForgotPasswordSerializer(serializers.Serializer):
 
 class ResetPasswordSerializer(serializers.Serializer):
     new_password = serializers.CharField(write_only=True)
-    confirm_password = serializers.CharField(write_only=True)
-    
+    confirm_password = serializers.CharField(write_only=True)    
     def validate_new_password(self, value):
         """
         Validates the strength of the password using a custom utility.

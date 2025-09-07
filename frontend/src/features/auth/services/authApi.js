@@ -17,6 +17,7 @@ const axiosBaseQuery =
         method,
         data,
         params,
+        withCredentials: true,
         headers: {
           ...(meta?.skipAuth ? {} :{ ...getAuthHeaders()}), 
         },
@@ -36,7 +37,7 @@ const axiosBaseQuery =
 
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: axiosBaseQuery({ baseUrl: 'http://127.0.0.1:8000/api/v1/user' }),
+  baseQuery: axiosBaseQuery({ baseUrl: '/api/v1/user' }),
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: (credentials) => ({
@@ -54,14 +55,29 @@ export const authApi = createApi({
     }),
     login: builder.mutation({
       query: (credentials) => ({
-        url: '/login',
+        url: '/signin/',
         method: 'post',
+        withCredentials: true,
         data: credentials,
+        meta: { skipAuth: true },
+
       }),
       transformResponse: (response) => {
-        saveToken(response.token);
+        console.log(response)
         return response;
       },
+    }),
+    refresh: builder.mutation({
+      query: () => ({
+        url: '/refresh/',
+        method: 'post',
+        withCredentials: true,
+        meta: { skipAuth: true },
+      }),
+      transformResponse: (response) => {
+        // save new access token to storage
+        return response;
+      }
     }),
     verifyEmail: builder.query({
       query: (params) => ({
@@ -73,7 +89,48 @@ export const authApi = createApi({
         return response
       }
     }), 
+    googleLogin: builder.mutation({
+      query: (credentials) => ({
+        url: '/auth/google/login/',
+        method: 'post',
+        data: credentials,
+        meta: { skipAuth: true },
+      }),
+      transformResponse: (response) => {
+        saveToken(response.refresh);
+        return response;
+      },
+    }),
+    forgotPassword: builder.mutation({
+      query: (credentials) => ({
+        url: '/forgot-password/',
+        method: 'post',
+        data: credentials,
+        meta: { skipAuth: true },
+      }),
+      transformResponse: (response) => {
+        return response;
+      },
+    }),
+    resetPassword: builder.mutation({
+      query: ({uid,token,credentials}) => ({
+        url: `/reset-password/${uid}/${token}/`,
+        method: 'post',
+        data: credentials,
+        meta: { skipAuth: true },
+      }),
+      transformResponse: (response) => {
+        return response;
+      },
+    }),
   }),
 });
-
-export const { useSignupMutation, useLoginMutation , useVerifyEmailQuery } = authApi;
+export const { 
+  useSignupMutation, 
+  useLoginMutation , 
+  useVerifyEmailQuery ,
+  useGoogleLoginMutation, 
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
+  useRefreshMutation
+} = authApi;

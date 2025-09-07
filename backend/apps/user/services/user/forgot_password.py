@@ -19,7 +19,7 @@ def initiate_password_reset(email: str):
     uid = urlsafe_base64_encode(force_bytes(user.id))
     
     token = default_token_generator.make_token(user)
-    reset_link = f"{settings.BACKEND_URL}/api/v1/user/reset-password/{uid}/{token}"
+    reset_link = f"{settings.FRONTEND_URL}/reset-password/{uid}/{token}"
     # Send email in background
     send_reset_password_email_task.delay(user.email, reset_link)
     return reset_link

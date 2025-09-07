@@ -1,5 +1,6 @@
 // src/layout/MainLayout.jsx
-export default function MainLayout({ children }) {
+import {Outlet} from "react-router-dom";
+export default function MainLayout() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navbar */}
@@ -9,7 +10,7 @@ export default function MainLayout({ children }) {
 
       {/* Main content */}
       <main className="flex-1 p-4 bg-gray-50">
-        {children}
+        <Outlet/>
       </main>
 
       {/* Footer */}

@@ -5,15 +5,14 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 User = get_user_model()
 
-def google_register_signin_service(tokens):
-    token = tokens.get('userinfo',None)
-    if not token:
+def google_register_signin_service(user_info):
+    if not user_info:
         raise ValidationError("Invalid token data")
-    print(token)
-    email_verified = token.get("email_verified")
-    email = token.get("email")
-    name = token.get("name")
-    picture = token.get("picture")
+    print(user_info)
+    email_verified = user_info.get("verified_email")
+    email = user_info.get("email")
+    name = user_info.get("name")
+    picture = user_info.get("picture")
 
     if not email:
         raise ValidationError("Email not provided by Google")

@@ -7,8 +7,11 @@ import PasswordField from '../components/PasswordField';
 import { useAuth } from '../hooks/useAuth';
 import Spinner from '../../../components/ui/Spinner';
 import {useNavigate} from 'react-router-dom'; 
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 export default function AuthRegister() {
+  const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const { signup, signupStatus } = useAuth();
   const {
@@ -48,6 +51,9 @@ export default function AuthRegister() {
   if (password !== conformPassword) confirmUnmetCriteria.push('passwords do not match');
   const passwordMatch = conformPassword === password;
 
+  if (user) {
+    return <Navigate to="/dashboard" replace />;
+  }
   return (
     <div className="flex flex-col items-center my-3">
       <LogoHeader logo={logo} />
@@ -77,14 +83,7 @@ export default function AuthRegister() {
           error_prefix={""}
         />
 
-        {/* Forgot Password */}
-        <div className="text-xs text-center text-gray-500">
-          Forgot{' '}
-          <Link to="/auth/reset" className="text-blue-500 hover:underline">
-            Password
-          </Link>
-          ?
-        </div>
+
 
         {/* Buttons */}
         <div className="flex justify-between items-center mt-2">

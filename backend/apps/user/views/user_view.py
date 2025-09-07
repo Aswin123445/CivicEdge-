@@ -41,4 +41,15 @@ class SignInView(GenericAPIView):
         serializer = self.get_serializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         token_data = serializer.save()
-        return Response(token_data, status=status.HTTP_200_OK) 
+
+        response = Response(token_data, status=status.HTTP_200_OK) 
+        response.set_cookie(
+            key='refresh_token',
+            value=token_data['refresh'],
+            httponly=True,
+            secure=False,      # local HTTP
+            samesite='Lax',    # same-origin via proxy
+            max_age=3*60,
+            path='/',
+        )
+        return response

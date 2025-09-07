@@ -121,6 +121,7 @@ AUTHENTICATION_BACKENDS = [
 
 FRONTEND_URL = "http://localhost:5173"
 BACKEND_URL = "http://localhost:8000"
+CORS_ALLOW_CREDENTIALS = True
 
 #email settings 
 EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND", "backend")
@@ -195,6 +196,5 @@ LOGGING = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]

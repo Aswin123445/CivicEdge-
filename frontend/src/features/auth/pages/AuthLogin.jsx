@@ -4,8 +4,17 @@ import LogoHeader from '../components/LogoHeader';
 import logo from '../../../assets/logo.png';
 import EmailField from '../components/EmailField ';
 import PasswordField from '../components/PasswordField';
+import { useAuth } from '../hooks/useAuth';
+import Spinner from '../../../components/ui/Spinner';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
+
 
 export default function AuthLogin() {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const { login, loginStatus } = useAuth();
   const {
     register,
     handleSubmit,
@@ -15,8 +24,14 @@ export default function AuthLogin() {
     mode: 'onTouched',
   });
 
-  const onSubmit = (data) => {
-    console.log('Form submitted:', data);
+  const onSubmit = async (data) => {
+    await login(data);
+    if (loginStatus.isSuccess === true) {
+      navigate('/dashboard');
+    }
+    if (loginStatus.isError) {
+      console.error('Login failed:', loginStatus.message);
+    }
   };
 
   const password = watch('password') || '';
@@ -25,6 +40,9 @@ export default function AuthLogin() {
   if (!/[a-z]/.test(password)) unmetCriteria.push('one lowercase');
   if (!/[^A-Za-z0-9]/.test(password)) unmetCriteria.push('one special character');
   if (password.length < 9) unmetCriteria.push('minimum 8 characters');
+  if (user) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   return (
     <div className="flex flex-col items-center my-3">
@@ -49,7 +67,7 @@ export default function AuthLogin() {
         {/* Forgot Password */}
         <div className="text-xs text-center text-gray-500">
           Forgot{' '}
-          <Link to="/auth/reset" className="text-blue-500 hover:underline">
+          <Link to="/forgot-password" className="text-blue-500 hover:underline">
             Password
           </Link>
           ?
@@ -62,10 +80,10 @@ export default function AuthLogin() {
           </button>
           <button
             type="submit"
-            disabled={!isValid || unmetCriteria.length > 0}
-            className="bg-sky-400 text-white px-5 py-1.5 rounded-full font-semibold hover:bg-sky-500 disabled:cursor-not-allowed"
+            disabled={!isValid || unmetCriteria.length > 0 || unmetCriteria.length > 0 || loginStatus.isLoading}
+            className="bg-sky-400 w-28 text-white px-5 py-1.5 rounded-full font-semibold hover:bg-sky-500 disabled:cursor-not-allowed"
           >
-            Sign In
+            {loginStatus.isLoading ? <Spinner /> : 'Sign In'}
           </button>
         </div>
       </form>
