@@ -1,46 +1,47 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import LandingLayout from "../layout/LandingLayout";   
-import Landing from "../pages/Landing";
-import AuthLayout from "../layout/AuthLayout";
-import AuthLanding from "../features/auth/pages/AuthLanding"; 
-import AuthLogin from "../features/auth/pages/AuthLogin";
-import AuthRegister from "../features/auth/pages/AuthRegister";
-import VerifyEmailInfo from "../features/auth/pages/VerifyEmailInfo";
-import VerifyEmailResult from "../features/auth/pages/VerifyEmailResult";
 import RequireAuth from "./RequireAuth";
-import MainLayout from "../layout/MainLayout";
-import Dashboard from "../pages/Dashboard";
-import AuthForgotPassword from "../features/auth/pages/AuthForgotPassword";
-import  AuthResetPassword  from "../features/auth/pages/AuthResetPassword";
-import AuthResetPasswordInfo from "../features/auth/pages/AuthResetPasswordInfo";
-import ResetPasswordConfirmation from "../features/auth/pages/AuthResetConfirmation";
 import { useAuthInit } from "../hooks/refreshHook";
 import RequireNoAuth from "./RequireNoAuth";
+import MainLayout from "../features/core/layouts/MainLayout";
+import Dashboard from "../features/core/pages/Dashboard";
+import AuthRouter from "../features/auth/router/AuthRouter";
+import AdminLayout from "../features/auth/layout/adminLayout";
+import UserManagement from "../features/auth/pages/admin/CitizenManagemnt";
+import SolverManagement from "../features/auth/pages/admin/SolverManagement";
+import Test from "../features/auth/pages/admin/Test";
+import UserManagementLayout from "../features/auth/layout/RoleManagementLayout";
+
+import AdminManagement from "../features/auth/pages/admin/AdminManagement";
+
 export default function AppRoutes() {
   useAuthInit();
-  return(
+  return (
     <Routes>
       {/* Public routes */}
-      <Route element={<RequireNoAuth/>}>
-      <Route element={<AuthLayout />}>
-        <Route path="/landing" element={<AuthLanding />} />
-        <Route path="/login" element={<AuthLogin />} />
-        <Route path="/register" element={<AuthRegister />} />
-        <Route path="/verify-email-info" element={<VerifyEmailInfo />} />
-        <Route path="/verify-email" element={<VerifyEmailResult />} />
-        <Route path="/forgot-password" element={<AuthForgotPassword />} />
-        <Route path="/reset-password/:uid/:token" element={<AuthResetPassword />} />
-        <Route path="/reset-password" element={<AuthResetPasswordInfo />} />
-        <Route path="/reset-confirmation" element={<ResetPasswordConfirmation />} />
-      </Route>
-      </Route>
+      <Route element={<RequireNoAuth />}>{AuthRouter()}</Route>
       {/* Protected routes */}
       <Route element={<RequireAuth />}>
         <Route element={<MainLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
+        <Route element={<AdminLayout />}>
+          <Route element={<UserManagementLayout />}>
+            <Route
+              path="/admin/management/citizens"
+              element={<UserManagement />}
+            />
+            <Route
+              path="/admin/management/solvers"
+              element={<SolverManagement />}
+            />
+            <Route
+              path="/admin/management/admins"
+              element={<AdminManagement />}
+            />
+          </Route>
+          <Route path="/admin/test" element={<Test />} />
+        </Route>
       </Route>
-
       {/* Catch-all */}
       <Route path="*" element={<Navigate to="/home" replace />} />
     </Routes>

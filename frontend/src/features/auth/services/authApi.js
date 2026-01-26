@@ -1,39 +1,12 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import axios from 'axios';
-import { saveToken, getToken } from './tokenStorage';
+import axiosBaseQuery from '../../../services/axiosBaseQuery';
+// import { saveToken, getToken } from './tokenStorage';
 
 
-const getAuthHeaders = () => {
-  const token = getToken();
-  return token ? { Authorization: `Bearer ${token}` } : {};
-};
-
-const axiosBaseQuery =
-  ({ baseUrl } = { baseUrl: '' }) =>
-  async ({ url, method, data, params ,meta }) => {
-    try {
-      const result = await axios({
-        url: baseUrl + url,
-        method,
-        data,
-        params,
-        withCredentials: true,
-        headers: {
-          ...(meta?.skipAuth ? {} :{ ...getAuthHeaders()}), 
-        },
-      });
-      return { data: result.data };
-    } catch (axiosError) {
-      return {
-        error: axiosError.response
-          ? {
-              status: axiosError.response.status,
-              data: axiosError.response.data,
-            }
-          : { status: 500, data: axiosError.message },
-      };
-    }
-  };
+// const getAuthHeaders = () => {
+//   const token = getToken();
+//   return token ? { Authorization: `Bearer ${token}` } : {};
+// };
 
 export const authApi = createApi({
   reducerPath: 'authApi',
@@ -45,6 +18,7 @@ export const authApi = createApi({
         method: 'post',
         data: credentials,
         meta: { skipAuth: true },
+        withCredentials: false
       }),
       transformResponse: (response) => {
         return {
@@ -60,10 +34,9 @@ export const authApi = createApi({
         withCredentials: true,
         data: credentials,
         meta: { skipAuth: true },
-
       }),
       transformResponse: (response) => {
-        console.log(response)
+        console.log(response,'for the  data is here')
         return response;
       },
     }),
@@ -83,7 +56,9 @@ export const authApi = createApi({
       query: (params) => ({
         url: '/verify-email',
         method: 'get',
-        params
+        params,
+        withCredentials: false,
+        meta: { skipAuth: true },
       }),
       transformResponse :(response) =>{
         return response
@@ -95,9 +70,10 @@ export const authApi = createApi({
         method: 'post',
         data: credentials,
         meta: { skipAuth: true },
+        withCredentials: false
       }),
       transformResponse: (response) => {
-        saveToken(response.refresh);
+        // saveToken(response.refresh);
         return response;
       },
     }),
@@ -106,6 +82,7 @@ export const authApi = createApi({
         url: '/forgot-password/',
         method: 'post',
         data: credentials,
+        withCredentials: false,
         meta: { skipAuth: true },
       }),
       transformResponse: (response) => {
@@ -118,6 +95,18 @@ export const authApi = createApi({
         method: 'post',
         data: credentials,
         meta: { skipAuth: true },
+        withCredentials: false
+      }),
+      transformResponse: (response) => {
+        return response;
+      },
+    }),
+    logout: builder.mutation({
+      query: () => ({
+        url: '/logout/',
+        method: 'post',
+        withCredentials: true,
+        meta: { skipAuth: false },
       }),
       transformResponse: (response) => {
         return response;
@@ -132,5 +121,6 @@ export const {
   useGoogleLoginMutation, 
   useForgotPasswordMutation,
   useResetPasswordMutation,
-  useRefreshMutation
+  useRefreshMutation,
+  useLogoutMutation
 } = authApi;

@@ -14,6 +14,19 @@ But these thoughts often stay in their heads, unheard and unrealized.
 It gives every citizen a voice, every idea a stage, and every complaint a path to resolution.
 
 ---
+## 🌱 Building Civic Sense
+
+CivicEdge believes that real change begins with mindset.
+
+The platform promotes:
+- awareness about everyday civic behavior  
+- responsibility toward public spaces  
+- discipline in community living  
+- respect for laws, people, and shared resources  
+
+By encouraging participation, learning, and positive habits, CivicEdge works to **reform civic culture from the grassroots level**.
+
+---
 
 ## 🔑 What You Can Do
 

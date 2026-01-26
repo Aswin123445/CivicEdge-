@@ -22,9 +22,10 @@ This module allows users to join community volunteer groups, participate in even
 
 ## 🧩 Database Tables
 
-- `volunteer_groups`  
-- `volunteer_memberships`  
-- `volunteer_events`  
+- `armies`  
+- `army_requirements`  
+- `army_member_applications`  
+- `army_members`
 - `event_participation`  
 - `certificates`
 
@@ -41,17 +42,25 @@ This module allows users to join community volunteer groups, participate in even
 
 ## 🔄 Module Flow
 
-1. **Join Group**:  
-   User browses available volunteer groups and requests to join.
+1. **Join Army**  
+   Citizen browses available armies and joins based on interest or eligibility.
 
-2. **Enroll in Event**:  
-   Admin creates events within groups. Users in the group can enroll.
+2. **Receive Events**  
+   Admin creates service or emergency events under each army.  
+   Army members receive notifications and can view available events.
 
-3. **Participation & Verification**:  
-   Admin tracks or verifies participation manually or through check-in.
+3. **Register for Event**  
+   Citizens choose events and register based on availability.
 
-4. **Certification**:  
-   After participation, a certificate is issued (downloadable or emailed).
+4. **Participation & Verification**  
+   Admin or coordinators verify attendance during or after the event.
+
+5. **Contribution Recording**  
+   Verified participation is logged as civic contribution.
+
+6. **Certification**  
+   After successful participation, certificates are issued and made available for download or email.
+
 
 ---
 

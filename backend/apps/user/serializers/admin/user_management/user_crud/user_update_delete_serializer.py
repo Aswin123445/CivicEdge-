@@ -9,7 +9,7 @@ class CitizenUpdateSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(source = "profile.phone", allow_blank=True, allow_null=True, required = False,validators=[indian_phone_validator])
     class Meta:
         model = User
-        fields = ['email', 'is_active', 'name','phone']
+        fields = ['email', 'is_active', 'name','phone','role']
         
     def update(self, instance, validated_data):
         profile_data = validated_data.pop('profile', {})

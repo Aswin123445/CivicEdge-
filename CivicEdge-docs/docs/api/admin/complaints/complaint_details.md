@@ -1,76 +1,36 @@
-# 🔍 View Complaint Details
+# 🔍 Complaint Details
 
-Fetch detailed information about a specific complaint submitted by a citizen. Admins can use this to review descriptions, attached media, logs, and assignment status before taking any action.
+**Endpoint:** `GET /api/admin/complaints/{id}/`  
+**Auth Required:** ✅ Yes (Admin Bearer Token)  
+**Content-Type:** `application/json`
 
 ---
 
-## 🔗 Endpoint
-GET /api/admin/complaints/{id}/
+## 📌 Description
+
+This endpoint allows administrators to retrieve the **complete details of a specific complaint** submitted by a citizen.
+
+It provides all information required for verification, assignment, inspection review, approval decisions, and final closure.
 
 ---
 
 ## 🔐 Authentication
 
-This endpoint requires **Admin** authentication.
+Include the admin access token in the request header:
 
 
 ---
 
-## 🔢 Path Parameter
+## 🔗 Path Parameter
 
-| Parameter | Type    | Description              |
-|-----------|---------|--------------------------|
-| `id`      | integer | ID of the complaint entry |
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `id` | UUID | ✅ | Unique complaint ID |
 
 ---
 
-## 📦 Response
+## ✅ Example Request
 
-```json
-{
-  "id": 24,
-  "title": "Overflowing garbage near park",
-  "description": "Garbage hasn't been collected in 5 days.",
-  "category": "sanitation",
-  "status": "open",
-  "created_at": "2025-07-10T10:24:00Z",
-  "location": {
-    "latitude": 11.2598,
-    "longitude": 75.7804
-  },
-  "user": {
-    "id": 101,
-    "name": "Amina Hiba",
-    "email": "amina@example.com"
-  },
-  "assigned_solver": {
-    "id": 202,
-    "name": "Aswin Sandeep"
-  },
-  "media": [
-    {
-      "url": "https://example.com/media/complaint_24_1.jpg",
-      "type": "image"
-    },
-    {
-      "url": "https://example.com/media/complaint_24_video.mp4",
-      "type": "video"
-    }
-  ],
-  "status_logs": [
-    {
-      "status": "open",
-      "timestamp": "2025-07-10T10:24:00Z",
-      "updated_by": "system"
-    },
-    {
-      "status": "assigned",
-      "timestamp": "2025-07-11T08:12:00Z",
-      "updated_by": "admin"
-    }
-  ],
-  "feedback": {
-    "rating": 4,
-    "comment": "Resolved quickly!"
-  }
-}
+```http
+GET /api/admin/complaints/f8e2a5b4-2b47-4d3f-bdc9-75f6a3df9fc2/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6...

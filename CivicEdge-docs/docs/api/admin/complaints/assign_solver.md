@@ -1,35 +1,40 @@
-# 👷 Assign Complaint to Solver
+# 🧑‍🔧 Assign Solver
 
-This endpoint allows **admins** to assign a verified complaint to a **solver** for resolution. This creates a task associated with the solver and the complaint.
+**Endpoint:** `POST /api/admin/complaints/{id}/assign/`  
+**Auth Required:** ✅ Yes (Admin Bearer Token)  
+**Content-Type:** `application/json`
 
 ---
 
-## 🔗 Endpoint
+## 📌 Description
 
-`POST /api/admin/complaints/{complaint_id}/assign/`
+This endpoint allows an administrator to **assign a verified complaint to a solver** for on-site inspection and evaluation.
+
+Assignment initiates the operational phase where the solver visits the location, studies the issue, and submits an inspection report for administrative decision-making.
+
+Only verified complaints are eligible for solver assignment.
 
 ---
 
 ## 🔐 Authentication
 
-**Required:** ✅ Yes  
-**Header:** `Authorization: Bearer <access_token>`  
-Only accessible to users with `admin` role.
+Include the admin access token in the request header:
+
 
 ---
 
-## 🧾 Path Parameters
+## 🔗 Path Parameter
 
 | Parameter | Type | Required | Description |
-|----------|------|----------|-------------|
-| `complaint_id` | `uuid` | ✅ | The ID of the complaint to be assigned |
+|-----------|------|----------|-------------|
+| `id` | UUID | ✅ | Unique complaint ID |
 
 ---
 
-## 📥 Request Body
+## 🧾 Request Body
 
 ```json
 {
-  "solver_id": "b3e123cd-90a4-4ab1-a0b8-ff34223dfc9a",
-  "instructions": "Please resolve within 48 hours and upload proof."
+  "solver_id": "sol-221",
+  "remarks": "Assigned based on sanitation expertise and ward coverage."
 }

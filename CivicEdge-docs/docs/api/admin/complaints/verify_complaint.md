@@ -1,46 +1,42 @@
 # ✅ Verify Complaint
 
-This endpoint allows **admins** to verify a complaint submitted by a citizen. Verification confirms the complaint as valid and ready for assignment to a solver.
+**Endpoint:** `POST /api/admin/complaints/{id}/verify/`  
+**Auth Required:** ✅ Yes (Admin Bearer Token)  
+**Content-Type:** `application/json`
 
 ---
 
-## 🔗 Endpoint
+## 📌 Description
 
-`PATCH /api/admin/complaints/{complaint_id}/verify/`
+This endpoint allows an administrator to **verify a complaint submitted by a citizen** after reviewing its details, location, and attached media.
+
+Only verified complaints can be assigned to solvers for inspection and resolution.
+
+Verification confirms that:
+- the complaint is genuine
+- the issue falls under civic responsibility
+- sufficient information is available for further action
 
 ---
 
 ## 🔐 Authentication
 
-**Required:** ✅ Yes  
-**Header:** `Authorization: Bearer <access_token>`  
-Only accessible to users with `admin` role.
+Include the admin access token in the request header:
+
 
 ---
 
-## 🧾 Path Parameters
+## 🔗 Path Parameter
 
 | Parameter | Type | Required | Description |
-|----------|------|----------|-------------|
-| `complaint_id` | `uuid` | ✅ | ID of the complaint to be verified |
+|-----------|------|----------|-------------|
+| `id` | UUID | ✅ | Unique complaint ID |
 
 ---
 
-## 📥 Request Body
-
-No body is required. The verification is handled by the endpoint logic.
-
----
-
-## 📤 Response
-
-### ✅ Success: `200 OK`
+## 🧾 Request Body (Optional)
 
 ```json
 {
-  "message": "Complaint verified successfully.",
-  "complaint_id": "8fc3a1b4-523f-48be-a8c0-5c6dbd17c4e2",
-  "status": "verified",
-  "verified_at": "2025-07-15T11:22:30Z",
-  "verified_by": "admin_123"
+  "remarks": "Verified after reviewing location and images."
 }

@@ -5,7 +5,10 @@
 ## 🌱 Project Overview
 
 <!-- Brief summary of what CivicEdge is, and its purpose -->
-**CivicEdge** is a citizen-first platform designed to empower individuals to take part in shaping their communities—whether urban or rural. Rather than watching problems go unresolved, CivicEdge encourages people to **speak up, collaborate, and contribute**.
+**CivicEdge** is a citizen-first platform designed to empower individuals to take part in shaping their communities—whether urban or rural. Rather than watching problems go unresolved, CivicEdge encourages people to **speak up, collaborate, and contribute**. 
+
+Beyond solving issues, the platform aims to **influence positive behavioral change among citizens** by promoting civic sense, responsibility, and respect for shared spaces. By creating awareness, encouraging participation, and reinforcing good civic habits, CivicEdge works toward building a society where responsible behavior becomes a natural part of everyday life.
+
 
 The platform provides a space where citizens can:
 

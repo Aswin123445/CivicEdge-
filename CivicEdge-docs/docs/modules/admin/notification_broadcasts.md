@@ -1,6 +1,6 @@
 # 📢 Notification Broadcasts (Admin)
 
-This module allows admins to send announcements and alerts to specific user groups across the Smart City Citizen Dashboard. Broadcasts are used to notify citizens, solvers, or volunteers about important civic events, updates, or system-wide changes.
+This module allows admins to send announcements and alerts to specific user groups across the CivicEdge Dashboard. Broadcasts are used to notify citizens, solvers, or volunteers about important civic events, updates, or system-wide changes.
 
 ---
 

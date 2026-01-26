@@ -1,16 +1,19 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useSignupMutation, useLoginMutation, useGoogleLoginMutation,useForgotPasswordMutation,useResetPasswordMutation } from '../services/authApi';
-import { logout as logoutAction } from '../authSlice';
+import { useSelector } from 'react-redux';
+import { useSignupMutation,
+   useLoginMutation,
+   useLogoutMutation,
+   useGoogleLoginMutation,
+   useForgotPasswordMutation,
+   useResetPasswordMutation } from '../services/authApi';
 export function useAuth() {
-  const dispatch = useDispatch();
   const { user, access_token } = useSelector((s) => s.auth);
   const [signup, signupResult] = useSignupMutation();
   const [login, loginResult] = useLoginMutation();
   const [forgotPassword, forgotPasswordResult] = useForgotPasswordMutation();
   const [googleLogin, googleLoginResult] = useGoogleLoginMutation();
   const [resetPassword, resetPasswordResult] = useResetPasswordMutation();
+  const [logout, logoutResult] = useLogoutMutation();
 
-  const logout = () => dispatch(logoutAction());
 
   return {
     user,
@@ -25,6 +28,7 @@ export function useAuth() {
     forgotPassword,
     forgotPasswordResult,
     resetPassword,
-    resetPasswordResult
+    resetPasswordResult,
+    logoutResult
   };
 }

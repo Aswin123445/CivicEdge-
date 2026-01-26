@@ -1,44 +1,42 @@
-# 💬 View Complaint Feedback
+# ⭐ View Complaint Feedback
 
-This endpoint allows **admins** to view feedback provided by citizens after a complaint has been resolved. It helps assess citizen satisfaction and service quality.
+**Endpoint:** `GET /api/admin/complaints/{id}/feedback/`  
+**Auth Required:** ✅ Yes (Admin Bearer Token)  
+**Content-Type:** `application/json`
 
 ---
 
-## 🔗 Endpoint
+## 📌 Description
 
-`GET /api/admin/complaints/{complaint_id}/feedback/`
+This endpoint allows administrators to **view feedback submitted by the citizen** after a complaint has been closed.
+
+Feedback helps evaluate:
+- resolution quality
+- solver performance
+- administrative efficiency
+- overall citizen satisfaction
+
+This data is used for analytics, reporting, and service improvement.
 
 ---
 
 ## 🔐 Authentication
 
-**Required:** ✅ Yes  
-**Header:** `Authorization: Bearer <access_token>`  
-Only users with the `admin` role are authorized.
+Include the admin access token in the request header:
+
 
 ---
 
-## 🧾 Path Parameters
+## 🔗 Path Parameter
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `complaint_id` | `uuid` | ✅ | Unique ID of the complaint |
+| `id` | UUID | ✅ | Unique complaint ID |
 
 ---
 
-## 📤 Response
+## ✅ Example Request
 
-### ✅ Success: `200 OK`
-
-```json
-{
-  "feedback_id": "fb-9383af27",
-  "complaint_id": "cmp-139c67ad",
-  "rating": 4,
-  "comment": "The issue was resolved quickly. Appreciated!",
-  "submitted_by": {
-    "user_id": "user-8493df",
-    "name": "Aswin Sandeep"
-  },
-  "submitted_at": "2025-07-15T08:45:00Z"
-}
+```http
+GET /api/admin/complaints/cmp-1023/feedback/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6...

@@ -13,6 +13,16 @@ class AdminLoginView(APIView):
         
         try:
             data = admin_login_service(serializer.validated_data)
-            return Response(data, status=status.HTTP_200_OK)
+            response =  Response(data, status=status.HTTP_200_OK)
+            response.set_cookie(
+                key='refresh_token',
+                value=data['refresh'],
+                httponly=True,
+                secure=False,      # local HTTP
+                samesite='Lax',    # same-origin via proxy
+                max_age=10*60,
+                path='/',
+            )
+            return response
         except Exception as e:
             return Response({"detail": str(e)}, status=status.HTTP_401_UNAUTHORIZED)

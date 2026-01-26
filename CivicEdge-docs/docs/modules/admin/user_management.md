@@ -11,7 +11,7 @@ This module allows administrators to view, manage, and take actions on platform 
   - Name
   - Email
   - Role (citizen, solver, admin)
-  - Area/ward
+  - Zone - (Area/ward)
 - View user profile and activity
 - Block or unblock users
 - Promote or demote users (e.g., to solver or moderator)

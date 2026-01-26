@@ -6,8 +6,9 @@ from apps.user.services.user.logout import logout_user_by_refresh_token
 class LogoutView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     def post(self, request):
+        print(request.COOKIES.get("refresh_token"))
         try:
-            logout_user_by_refresh_token(request.data.get("refresh"))
+            logout_user_by_refresh_token(request.COOKIES.get("refresh_token"))
             return Response({"message": "Successfully logged out."}, status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
