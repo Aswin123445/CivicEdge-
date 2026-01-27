@@ -1,0 +1,72 @@
+🧑‍🔧 1. Login & View Dashboard
+
+Login with Solver Credentials
+    ↓
+Redirect to Solver Dashboard
+    ↓
+View Stats (e.g., Assigned Complaints, Pending, Resolved)
+
+📥 2. View Assigned Complaints
+
+Dashboard → Click "Assigned Complaints"
+    ↓
+List View of All Assigned Complaints
+    ↓
+Click a Complaint → Open Details
+
+🔧 3. Update Complaint Status
+
+Complaint Detail Page
+    ↓
+Mark as "In Progress"
+    ↓
+Upload Photos, Add Work Notes, Location (optional)
+    ↓
+Mark as "Resolved"
+
+📜 4. View Complaint History
+
+Dashboard → "Complaint History"
+    ↓
+Filter by Status (Resolved, Pending, etc.)
+    ↓
+Click to View Details (Photos, Notes, Timeline)
+
+🔁 5. Receive Feedback
+
+After Complaint Marked as Resolved
+    ↓
+Dashboard → Feedback Tab
+    ↓
+View Citizen Ratings/Comments
+
+👤 6. Manage Solver Profile
+
+Dashboard → Profile
+    ↓
+View/Edit Personal Info (Name, Zone, Skills)
+    ↓
+Update → Save
+
+🔔 7. View Notifications
+
+Dashboard → Notifications
+    ↓
+View Alerts from Admin (New assignment, updates, etc.)
+
+🧭 8. Navigation Assistance (Optional Advanced)
+
+Complaint Detail → Click “Open Map”
+    ↓
+Get Directions to Complaint Location (Google Maps API)
+
+✅ Summary Table of Solver Flows
+Flow	Description
+Login & Dashboard	View assignment stats
+View Assigned Complaints	List + detail view
+Update Complaint	Mark as in progress/resolved, upload photos
+View Complaint History	Track all complaints handled
+View Feedback	Read ratings/comments
+Profile Management	Update own info
+Notifications	View admin messages
+Navigation (Optional)	Map to complaint location

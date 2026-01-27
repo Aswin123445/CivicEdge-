@@ -1,0 +1,54 @@
+Entity	Description
+Complaint	Original citizen complaint
+ComplaintMedia	Media (photo/video) attached to a complaint
+ComplaintLog	Admin-side status history/notes
+Task	Task created from complaint
+TaskAssignment	Assigns a solver to a task
+TaskUpdateSubmission (or TaskLog)	Solver updates and progress
+TaskMedia	Solver-uploaded media for updates
+🧑‍🔧 2. Solver Management
+Entity	Description
+User (role='solver')	Solver account
+Profile	Extended solver profile (zone, skills)
+Availability (optional)	Working hours or availability flag
+Reward	Solver’s earned badges or points
+PaymentRequest	Request for payment for resolved task
+👥 3. Citizen/User Management
+Entity	Description
+User (role='citizen')	Citizen account
+Profile	Location, interests, etc.
+Reward	Recognition for contributions
+Log (optional)	Citizen activity history
+Warning (optional)	Admin-issued behavioral warnings
+🛡️ 4. Volunteer Army Management
+Entity	Description
+Army / ArmyGroup	Named volunteer groups (Red Army, etc.)
+CauseCategory	Type of cause (cleanliness, environment)
+ArmyMembership	Citizens enrolled in armies
+MissionApplication (optional)	Applications for special missions
+🗣️ 5. Community & Forum Moderation
+Entity	Description
+Post	Community/forum posts
+Comment	Comments on posts
+Like	Reaction to posts
+Share (optional)	Post shares
+Poll (optional)	Poll creation
+PollOption (optional)	Poll choices
+PollVote (optional)	Who voted on what
+ReportUser	Report against user/post
+PostModerationLog	Admin actions on community content
+📢 6. Notification & Announcement System
+Entity	Description
+Notification	Alerts or messages to users
+NotificationLog (optional)	Track read/unread or delivery
+Broadcast (optional)	Mass announcements to roles/zones
+📊 7. Analytics & Reward Insights
+Entity	Description
+AnalyticsSnapshot (optional)	Daily/weekly metric cache
+RewardCriteria	Rules for issuing rewards
+RewardClaim (optional)	Claim request for earned reward
+👤 8. Admin Account & Profile
+Entity	Description
+User (role='admin')	Admin account
+Profile	Admin name, contact, zone
+Log	Actions performed (audit trail)
