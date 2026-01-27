@@ -7,8 +7,8 @@ on:
       - feature/user
     paths:
       - "CivicEdge-docs/**"
-  permissions:
-    contents: write
+permissions:
+  contents: write
 jobs:
   deploy:
     runs-on: ubuntu-latest
