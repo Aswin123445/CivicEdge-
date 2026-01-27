@@ -1,6 +1,6 @@
 # 📘 About CivicEdge
 
----
+--- 
 
 ## 🌱 Project Overview
 
