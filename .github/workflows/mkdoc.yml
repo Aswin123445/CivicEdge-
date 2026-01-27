@@ -3,7 +3,7 @@ name: Deploy Doc
 on:
   push:
     branches:
-      - main
+      - feature/user
 
 jobs:
   test:
