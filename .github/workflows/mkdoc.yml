@@ -6,6 +6,7 @@ on:
       - feature/user
     paths:
       - "CivicEdge-docs/**"
+      - ".github/**"
 
 permissions:
   contents: write
