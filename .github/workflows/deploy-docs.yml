@@ -30,4 +30,4 @@ on:
           working-directory: CivicEdge-docs
           run: |
             mkdocs gh-deploy --force
-         
+          
