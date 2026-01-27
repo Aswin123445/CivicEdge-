@@ -12,7 +12,7 @@ Beyond solving issues, the platform aims to **influence positive behavioral chan
 
 The platform provides a space where citizens can:
 
-- 📝 Report issues affecting public life  
+- 📝 Report issues affecting public lifes
 - 💡 Share innovative ideas for community improvement  
 - 🤝 Connect with others around common concerns  
 - 🧰 Volunteer their skills and services  
