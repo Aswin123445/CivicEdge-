@@ -43,106 +43,109 @@ nav:
         - Notifications: modules/solver/notifications.md
   - API:
       - Citizen:
-        - Citizen Complaint:
-          - Overview: api\citizen\complaints\overview.md
-          - Sumbit: api\citizen\complaints\submit.md
-          - List Complaints: api\citizen\complaints\listcomplaints.md
-          - Complaint Details: api\citizen\complaints\complaintdetails.md
-          - Complaint Update: api\citizen\complaints\complaintupdate.md
-          - Upload Media : api\citizen\complaints\upload_complaint_media.md
-          - View Media : api\citizen\complaints\view_complaint_media.md
-          - Status Log : api\citizen\complaints\view_complaint_status_log.md
-          - Submit Feedback : api\citizen\complaints\submit_feedback.md
-        - Citizen Authentication:
-          - Overview: api\citizen\auth\overview.md
-          - Register: api\citizen\auth\register.md
-          - Verify Email: api\citizen\auth\verify_email.md
-          - Login: api\citizen\auth\login.md
-          - Google Login: api\citizen\auth\google_login.md
-          - Google Callback: api\citizen\auth\google_callback.md
-          - Refresh Token: api\citizen\auth\refresh_token.md
-          - Logout: api\citizen\auth\logout.md
-          - Forgot Password: api\citizen\auth\forgot_password.md
-          - Reset Password: api\citizen\auth\reset_password.md
-          - Get Profile: api\citizen\auth\get_profile.md
-          - Update Profile: api\citizen\auth\update_profile.md 
-        - Citizen Community Forum:
-            - Overview: api\citizen\forum\overview.md
-        
-            - Threads:
-                - Create Thread: api\citizen\forum\threads\create_thread.md
-                - List Threads: api\citizen\forum\threads\list_threads.md
-                - Thread Details: api\citizen\forum\threads\thread_details.md
-                - Update Thread: api\citizen\forum\threads\update_thread.md
-                - Delete Thread: api\citizen\forum\threads\delete_thread.md
-        
-            - Comments:
-                - Add Comment: api\citizen\forum\comments\add_comment.md
-                - List Comments: api\citizen\forum\comments\list_comments.md
-                - Update Comment: api\citizen\forum\comments\update_comment.md
-                - Delete Comment: api\citizen\forum\comments\delete_comment.md
-        
-            - Reactions:
-                - React to Thread/Comment: api\citizen\forum\reactions\add_reaction.md
-                - Remove Reaction: api\citizen\forum\reactions\remove_reaction.md
-        
-            - Reports:
-                - Report Content: api\citizen\forum\reports\report_content.md
-                - View My Reports: api\citizen\forum\reports\my_reports.md
-        
-            - Polls:
-                - View Polls: api\citizen\forum\polls\list_polls.md
-                - Poll Details: api\citizen\forum\polls\poll_details.md
-                - Vote in Poll: api\citizen\forum\polls\vote_poll.md
-                - Poll Results: api\citizen\forum\polls\poll_results.md
-
-        - Citizen Armies:
-          - Overview: api\citizen\armies\overview.md
-        
-          - Armies:
-            - List Armies: api\citizen\armies\list_armies.md
-            - Army Details: api\citizen\armies\army_details.md
-            - Join Army: api\citizen\armies\join_army.md
-            - Leave Army: api\citizen\armies\leave_army.md
-            - My Armies: api\citizen\armies\my_armies.md
-        
-          - Army Events:
-            - List Events: api\citizen\armies\events\list_events.md
-            - Event Details: api\citizen\armies\events\event_details.md
-            - Join Event: api\citizen\armies\events\join_event.md
-            - Cancel Event Registration: api\citizen\armies\events\cancel_event.md
-        
-          - Participation & Recognition:
-            - My Participations: api\citizen\armies\participation\my_participations.md
-            - Certificates: api\citizen\armies\certificates\list_certificates.md
-            - Download Certificate: api\citizen\armies\certificates\download_certificate.md
-
-      - Solver :
+          - Citizen Complaint:
+              - Overview: api/citizen/complaints/overview.md
+              - Submit: api/citizen/complaints/submit.md
+              - List Complaints: api/citizen/complaints/listcomplaints.md
+              - Complaint Details: api/citizen/complaints/complaintdetails.md
+              - Complaint Update: api/citizen/complaints/complaintupdate.md
+              - Upload Media: api/citizen/complaints/upload_complaint_media.md
+              - View Media: api/citizen/complaints/view_complaint_media.md
+              - Status Log: api/citizen/complaints/view_complaint_status_log.md
+              - Submit Feedback: api/citizen/complaints/submit_feedback.md
+  
+          - Citizen Authentication:
+              - Overview: api/citizen/auth/overview.md
+              - Register: api/citizen/auth/register.md
+              - Verify Email: api/citizen/auth/verify_email.md
+              - Login: api/citizen/auth/login.md
+              - Google Login: api/citizen/auth/google_login.md
+              - Google Callback: api/citizen/auth/google_callback.md
+              - Refresh Token: api/citizen/auth/refresh_token.md
+              - Logout: api/citizen/auth/logout.md
+              - Forgot Password: api/citizen/auth/forgot_password.md
+              - Reset Password: api/citizen/auth/reset_password.md
+              - Get Profile: api/citizen/auth/get_profile.md
+              - Update Profile: api/citizen/auth/update_profile.md
+  
+          - Citizen Community Forum:
+              - Overview: api/citizen/forum/overview.md
+  
+              - Threads:
+                  - Create Thread: api/citizen/forum/threads/create_thread.md
+                  - List Threads: api/citizen/forum/threads/list_threads.md
+                  - Thread Details: api/citizen/forum/threads/thread_details.md
+                  - Update Thread: api/citizen/forum/threads/update_thread.md
+                  - Delete Thread: api/citizen/forum/threads/delete_thread.md
+  
+              - Comments:
+                  - Add Comment: api/citizen/forum/comments/add_comment.md
+                  - List Comments: api/citizen/forum/comments/list_comments.md
+                  - Update Comment: api/citizen/forum/comments/update_comment.md
+                  - Delete Comment: api/citizen/forum/comments/delete_comment.md
+  
+              - Reactions:
+                  - React to Thread/Comment: api/citizen/forum/reactions/add_reaction.md
+                  - Remove Reaction: api/citizen/forum/reactions/remove_reaction.md
+  
+              - Reports:
+                  - Report Content: api/citizen/forum/reports/report_content.md
+                  - View My Reports: api/citizen/forum/reports/my_reports.md
+  
+              - Polls:
+                  - View Polls: api/citizen/forum/polls/list_polls.md
+                  - Poll Details: api/citizen/forum/polls/poll_details.md
+                  - Vote in Poll: api/citizen/forum/polls/vote_poll.md
+                  - Poll Results: api/citizen/forum/polls/poll_results.md
+  
+          - Citizen Armies:
+              - Overview: api/citizen/armies/overview.md
+  
+              - Armies:
+                  - List Armies: api/citizen/armies/list_armies.md
+                  - Army Details: api/citizen/armies/army_details.md
+                  - Join Army: api/citizen/armies/join_army.md
+                  - Leave Army: api/citizen/armies/leave_army.md
+                  - My Armies: api/citizen/armies/my_armies.md
+  
+              - Army Events:
+                  - List Events: api/citizen/armies/events/list_events.md
+                  - Event Details: api/citizen/armies/events/event_details.md
+                  - Join Event: api/citizen/armies/events/join_event.md
+                  - Cancel Event Registration: api/citizen/armies/events/cancel_event.md
+  
+              - Participation & Recognition:
+                  - My Participations: api/citizen/armies/participation/my_participations.md
+                  - Certificates: api/citizen/armies/certificates/list_certificates.md
+                  - Download Certificate: api/citizen/armies/certificates/download_certificate.md
+  
+      - Solver:
           - Solver Authentication:
-            - Overview: api\solver\auth\overview.md
-            - Login: api\solver\auth\login.md
-            - Refresh Token: api\solver\auth\refresh_token.md
-            - Logout: api\solver\auth\logout.md
-            - Change Password: api\solver\auth\change_password.md
-
+              - Overview: api/solver/auth/overview.md
+              - Login: api/solver/auth/login.md
+              - Refresh Token: api/solver/auth/refresh_token.md
+              - Logout: api/solver/auth/logout.md
+              - Change Password: api/solver/auth/change_password.md
+  
           - Solver Task Management:
-            - Overview: api\solver\tasks\overview.md
-          
-            - Tasks:
-              - List Assigned Tasks: api\solver\tasks\list_tasks.md
-              - Task Details: api\solver\tasks\task_details.md
-          
-            - Inspection & Reporting:
-              - Submit Inspection Report: api\solver\tasks\inspection\submit_inspection_report.md
-              - Upload Inspection Media: api\solver\tasks\inspection\upload_inspection_media.md
-          
-            - Task Execution & Updates:
-              - Submit Task Update: api\solver\tasks\updates\submit_task_update.md
-              - Upload Update Media: api\solver\tasks\updates\upload_update_media.md
-              - View Update History: api\solver\tasks\updates\view_update_history.md
-          
-            - Verification & Closure:
-              - Submit Completion Verification: api\solver\tasks\verification\verify_task.md
+              - Overview: api/solver/tasks/overview.md
+  
+              - Tasks:
+                  - List Assigned Tasks: api/solver/tasks/list_tasks.md
+                  - Task Details: api/solver/tasks/task_details.md
+  
+              - Inspection & Reporting:
+                  - Submit Inspection Report: api/solver/tasks/inspection/submit_inspection_report.md
+                  - Upload Inspection Media: api/solver/tasks/inspection/upload_inspection_media.md
+  
+              - Task Execution & Updates:
+                  - Submit Task Update: api/solver/tasks/updates/submit_task_update.md
+                  - Upload Update Media: api/solver/tasks/updates/upload_update_media.md
+                  - View Update History: api/solver/tasks/updates/view_update_history.md
+  
+              - Verification & Closure:
+                  - Submit Completion Verification: api/solver/tasks/verification/verify_task.md
+
 
       - Admin:
         - Admin Authentication:

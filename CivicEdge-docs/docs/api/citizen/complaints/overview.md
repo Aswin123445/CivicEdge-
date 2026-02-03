@@ -28,6 +28,8 @@ This module serves as the core of civic engagement between citizens, the governi
 
 ## 🔁 Workflow
 
+The complaint lifecycle follows these steps:
+
 1. **Citizen submits a complaint** with optional GPS & media.
 2. **Complaint is stored** and marked as `open`.
 3. **Admin/Solver updates status** — actions logged in `complaint_status_logs`.
