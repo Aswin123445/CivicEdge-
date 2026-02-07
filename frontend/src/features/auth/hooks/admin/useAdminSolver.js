@@ -1,72 +1,151 @@
-import { 
-    useCreateSolverMutation, 
-    useListSolversQuery, 
-    useUpdateSolverMutation 
+import {
+  useCreateSolverMutation,
+  useListSolversQuery,
+  useUpdateSolverMutation,
+  useFetchZonesQuery,
 } from "../../services/adminAuthApi";
-import { useEffect ,useState} from "react";
+import { useSearchParams } from "react-router-dom";
+import { useState,useEffect } from "react";
+import { useDebounce } from "../../../../utils/debounce";
+
+
 export const useAdminSolver = () => {
-    const [addSolver, addStatus] = useCreateSolverMutation();
-    const { data,  isSuccess } = useListSolversQuery();
-    const [solvers, setSolvers] = useState([]);
-    const [search, setSearch] = useState("");
-    const [isCreateModal,setIsCreateModal] = useState(false)
-    const [roleData, setRoleData] = useState(null);
-    const [flagData, setFlagData] = useState(null);
-    const [updateSolver, updateStatus] = useUpdateSolverMutation();
-    const handleSave = async (updatedCard) => {
-      try {
-        const data = await updateSolver({
-          role: updatedCard.role,
-          id: updatedCard.id,
-        }).unwrap();
-        setSolvers((prev) =>
-          prev.filter((role) => role.id !== updatedCard.id || role.role === updatedCard.role)
-        );
+  /* =========================
+     URL & Pagination source
+     ========================= */
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = Number(searchParams.get("page") || 1);
+  const search = searchParams.get("search") || "";
+  const PAGE_SIZE = 6;
 
-        setRoleData(null); 
-        console.log(data);
-      } catch (error) {
-        console.log(error);
+  /* =========================
+     Queries
+     ========================= */
+  const { data,isLoading,isFetching } = useListSolversQuery({ page, search });
+  const { data: zoneData, isSuccess: zoneSuccess } = useFetchZonesQuery();
+
+  /* =========================
+     Mutations
+     ========================= */
+  const [addSolver, addStatus] = useCreateSolverMutation();
+  const [updateSolver, updateStatus] = useUpdateSolverMutation();
+
+  /* =========================
+     UI State
+     ========================= */
+  const [isCreateModal, setIsCreateModal] = useState(false);
+  const [roleData, setRoleData] = useState(null);
+  const [flagData, setFlagData] = useState(null);
+  const [searchValue, setSearchValue] = useState(search);
+  const debouncedSearch = useDebounce(searchValue, 500);
+
+  /* =========================
+     Derived Data
+     ========================= */
+  const solvers = data?.results ?? [];
+  const zones = zoneData ?? [];
+
+  const count = data?.count ?? 0;
+  const next = data?.next;
+  const previous = data?.previous;
+
+  /* =========================
+     Pagination Derived State
+     ========================= */
+  const totalPages = Math.ceil(count / PAGE_SIZE);
+
+  const isEmpty = count === 0;
+  const isSinglePage = totalPages <= 1;
+  const isFirstPage = !previous;
+  const isLastPage = !next;
+
+  /* =========================
+     Pagination Actions
+     ========================= */
+  const goToPage = (targetPage) => {
+    if (targetPage < 1 || targetPage > totalPages) return;
+    setSearchParams({ page: String(targetPage) });
+  };
+  useEffect(() => {
+    setSearchParams((prev) => {
+      if (debouncedSearch.trim()) {
+        prev.set("search", debouncedSearch);
+        prev.set("page", "1");
+      } else {
+        prev.delete("search");
+        prev.set("page", "1");
       }
-    };
+      return prev;
+    });
+  }, [debouncedSearch, setSearchParams]);
+  /* =========================
+     Business Actions
+     ========================= */
+  const handleSave = async (updatedCard) => {
+    try {
+      await updateSolver({
+        id: updatedCard.id,
+        role: updatedCard.role,
+      }).unwrap();
 
-    const handleFlag = async (updatedUser) => {
-      try {
-        console.log(updatedUser, "updatedUser");
-        const data = await updateSolver({
-          id: updatedUser.id,
-          is_active: updatedUser.is_active,
-        }).unwrap();
-        console.log(data);
-        setRoleData(null); // Close modal
-      } catch (error) {
-        console.log(error);
-      }
-    };
+      setRoleData(null);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    useEffect(() => {
-        if(isSuccess && data?.results){
-            setSolvers(data.results);
-        }
+  const handleFlag = async (updatedUser) => {
+    try {
+      await updateSolver({
+        id: updatedUser.id,
+        is_active: updatedUser.is_active,
+      }).unwrap();
 
-    },[isSuccess, data]);
+      setFlagData(null);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    return { 
-        solvers, 
-        setSolvers,
-        search,
-        setSearch,
-        isCreateModal,
-        setIsCreateModal,
-        addSolver,
-        addStatus,
-        roleData,
-        setRoleData,
-        flagData,
-        setFlagData,
-        updateSolver,
-        updateStatus,
-        handleSave,
-        handleFlag  
-    };
-}
+  /* =========================
+     Public API
+     ========================= */
+  return {
+    /* data */
+    solvers,
+    zones,
+    zoneSuccess,
+
+    /* ui state */
+    search,
+    isCreateModal,
+    setIsCreateModal,
+    roleData,
+    setRoleData,
+    flagData,
+    setFlagData,
+
+    /* mutations */
+    addSolver,
+    addStatus,
+    updateSolver,
+    updateStatus,
+
+    /* actions */
+    handleSave,
+    handleFlag,
+
+    /* pagination */
+    page,
+    totalPages,
+    isEmpty,
+    isSinglePage,
+    isFirstPage,
+    isLastPage,
+    goToPage,
+    setSearchValue,
+    searchValue,
+    isLoading,
+    isFetching
+  };
+};

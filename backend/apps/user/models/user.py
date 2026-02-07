@@ -130,6 +130,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Zone(models.Model):  
     name = models.CharField(max_length=100)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    def __str__(self):
+        return f"zone {self.name}"
 
 class Profile(models.Model):
     """

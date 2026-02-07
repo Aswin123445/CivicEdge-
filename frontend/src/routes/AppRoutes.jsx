@@ -1,49 +1,126 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import RequireAuth from "./RequireAuth";
-import { useAuthInit } from "../hooks/refreshHook";
-import RequireNoAuth from "./RequireNoAuth";
+import { Suspense, lazy } from "react";
+import RequireAuth from "./guards/RequireAuth";
+import RequireNoAuth from "./guards/RequireNoAuth";
+import RoleGuard from "./guards/RoleGuard";
+/* ========== LAYOUTS ========== */
+import AuthLayout from "../features/auth/layout/AuthLayout";
 import MainLayout from "../features/core/layouts/MainLayout";
-import Dashboard from "../features/core/pages/Dashboard";
-import AuthRouter from "../features/auth/router/AuthRouter";
 import AdminLayout from "../features/auth/layout/adminLayout";
-import UserManagement from "../features/auth/pages/admin/CitizenManagemnt";
-import SolverManagement from "../features/auth/pages/admin/SolverManagement";
+const UserManagementLayout = lazy(() => import("../features/auth/layout/RoleManagementLayout")); // UserManagementLayout
+
+/* ========== AUTH PAGES (GUEST) ========== */
+import AuthLanding from "../features/auth/pages/user/AuthLanding";
+import AuthLogin from "../features/auth/pages/user/AuthLogin";
+import AuthRegister from "../features/auth/pages/user/AuthRegister";
+import VerifyEmailInfo from "../features/auth/pages/user/VerifyEmailInfo";
+import VerifyEmailResult from "../features/auth/pages/user/VerifyEmailResult";
+import AuthForgotPassword from "../features/auth/pages/user/AuthForgotPassword";
+import AuthResetPassword from "../features/auth/pages/user/AuthResetPassword";
+import AuthResetPasswordInfo from "../features/auth/pages/user/AuthResetPasswordInfo";
+import ResetPasswordConfirmation from "../features/auth/pages/user/AuthResetConfirmation";
+import AuthAdminLogin from "../features/auth/pages/admin/AdminLogin";
+
+/* ========== CORE PAGES ========== */
+import Dashboard from "../features/core/pages/Dashboard";
+import PostLoginRedirect from "../pages/PostLoginRedirect";
+import Unauthorized from "../pages/Unauthorized";
+
+/* ========== ADMIN PAGES ========== */
+const UserManagement = lazy(() => import("../features/auth/pages/admin/CitizenManagemnt")); // UserManagement
+const SolverManagement = lazy(() => import("../features/auth/pages/admin/SolverManagement")); // SolverManagement
+const  AdminManagement = lazy(() => import("../features/auth/pages/admin/AdminManagement")); // AdminManagement
+
 import Test from "../features/auth/pages/admin/Test";
-import UserManagementLayout from "../features/auth/layout/RoleManagementLayout";
 
-import AdminManagement from "../features/auth/pages/admin/AdminManagement";
-
+import UserManagementSectionLoader from "../features/auth/components/skeltons/loaders_skelton/UserManagementSectionLoader";
 export default function AppRoutes() {
-  useAuthInit();
   return (
     <Routes>
-      {/* Public routes */}
-      <Route element={<RequireNoAuth />}>{AuthRouter()}</Route>
-      {/* Protected routes */}
-      <Route element={<RequireAuth />}>
-        <Route element={<MainLayout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Route>
-        <Route element={<AdminLayout />}>
-          <Route element={<UserManagementLayout />}>
-            <Route
-              path="/admin/management/citizens"
-              element={<UserManagement />}
-            />
-            <Route
-              path="/admin/management/solvers"
-              element={<SolverManagement />}
-            />
-            <Route
-              path="/admin/management/admins"
-              element={<AdminManagement />}
-            />
-          </Route>
-          <Route path="/admin/test" element={<Test />} />
+      {/* ================== GUEST ROUTES ================== */}
+      <Route element={<RequireNoAuth redirectTo="/post-login" />}>
+        <Route element={<AuthLayout />}>
+          <Route path="/landing" element={<AuthLanding />} />
+          <Route path="/login" element={<AuthLogin />} />
+          <Route path="/register" element={<AuthRegister />} />
+
+          <Route path="/verify-email-info" element={<VerifyEmailInfo />} />
+          <Route path="/verify-email" element={<VerifyEmailResult />} />
+
+          <Route path="/forgot-password" element={<AuthForgotPassword />} />
+          <Route path="/reset-password" element={<AuthResetPasswordInfo />} />
+          <Route
+            path="/reset-password/:uid/:token"
+            element={<AuthResetPassword />}
+          />
+          <Route
+            path="/reset-confirmation"
+            element={<ResetPasswordConfirmation />}
+          />
+
+          <Route path="/auth/admin/login" element={<AuthAdminLogin />} />
         </Route>
       </Route>
-      {/* Catch-all */}
-      <Route path="*" element={<Navigate to="/home" replace />} />
+
+      {/* ================== AUTHENTICATED ROUTES ================== */}
+      <Route element={<RequireAuth />}>
+        {/* 🔀 post-login navigation policy */}
+        <Route path="/post-login" element={<PostLoginRedirect />} />
+
+        {/* citizen authenticated area */}
+        <Route element={<RoleGuard roles={["citizen"]} />}>
+          <Route element={<MainLayout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
+        </Route>
+
+        {/* ================== ADMIN ONLY ================== */}
+        <Route element={<RoleGuard roles={["admin"]} />}>
+          <Route element={<AdminLayout />}>
+            {/* User Management Section */}
+            <Route
+              element={
+                <Suspense fallback={<UserManagementSectionLoader />}>
+                  <UserManagementLayout />
+                </Suspense>
+              }
+            >
+              <Route
+                path="/admin/management/citizens"
+                element={
+                  <Suspense fallback={<UserManagementSectionLoader />}>
+                    <UserManagement />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/admin/management/solvers"
+                element={
+                  <Suspense fallback={<UserManagementSectionLoader />}>
+                    <SolverManagement />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/admin/management/admins"
+                element={
+                  <Suspense fallback={<UserManagementSectionLoader />}>
+                    <AdminManagement />
+                  </Suspense>
+                }
+              />
+            </Route>
+
+            <Route path="/admin/test" element={<Test />} />
+          </Route>
+        </Route>
+      </Route>
+
+      {/* ================== SYSTEM ================== */}
+      <Route path="/unauthorized" element={<Unauthorized />} />
+
+      {/* ================== FALLBACK ================== */}
+      <Route path="*" element={<Navigate to="/landing" replace />} />
     </Routes>
   );
 }

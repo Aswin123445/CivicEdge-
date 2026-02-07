@@ -1,62 +1,67 @@
-import { User } from "lucide-react";
 import UserUpdateModal from "../../components/modaals/UserUpdateModal";
 import FlagModal from "../../components/modaals/UserFlagModal";
 import useAdminUserManagement from "../../hooks/admin/useadminUserManagement";
 import UserCard from "../../components/UserCard";
 import Pagination from "../../../../components/common/PaginationBar";
-
+import UserManagementSectionLoader from "../../components/skeltons/loaders_skelton/UserManagementSectionLoader";
+import DottedLoaderIndicator from "../../../../components/common/DottedLoaderIndicator";
 const UserManagement = () => {
   const {
-    search,
-    setSearch,
     selectedCard,
     setSelectedCard,
     setisFlagModalUser,
     isFlagModalUser,
     handleSave,
     handleFlag,
-    data,
-    handleNextPage,
-    handlePrePage,
-    handleExactPage
+    citizens,
+    totalPages,
+    isSinglePage,
+    isFirstPage,
+    isLastPage,
+    goToPage,
+    page,
+    setSearchValue,
+    searchValue,
+    isLoading,
+    isFetching,
   } = useAdminUserManagement();
-
-
-
-
-  console.log(data,'data is printed');
-
-  const filteredUsers = data?.results.filter((u) =>
-    u.name.toLowerCase().includes(search.toLowerCase())
-  );
-
+  if (isLoading) {
+    return <UserManagementSectionLoader />;
+  }
+  console.log("is is feting working", isFetching);
   return (
     <>
-      <div className="mb-6">
+      <div className="relative mb-6 ml-2 w-48">
         <input
           type="text"
           placeholder="search for user"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-48 h-8 pl-3 pb-1 rounded-md bg-[#2B2B2B] border border-gray-600 text-white"
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          className="w-full h-8 pl-3 pr-8 rounded-md bg-[#2B2B2B] border border-gray-600 text-white"
         />
-      </div>
 
+        {isFetching && (
+          <div className="absolute right-2 top-1/2 -translate-y-1/2">
+            <DottedLoaderIndicator />
+          </div>
+        )}
+      </div>
       {/* User cards */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-        {filteredUsers?.map((user) => <UserCard
-         key={user.id}
-         user={user}
-         setSelectedCard={setSelectedCard} 
-         setIsFlagModalUser={setisFlagModalUser} 
-        />)}
+        {citizens?.map((user) => (
+          <UserCard
+            key={user.id}
+            user={user}
+            setSelectedCard={setSelectedCard}
+            setIsFlagModalUser={setisFlagModalUser}
+          />
+        ))}
         {selectedCard && (
           <UserUpdateModal
             user={selectedCard}
             onClose={() => setSelectedCard(null)}
             onSave={(updatedUser) => handleSave(updatedUser)}
-            options = { {role1:"citizen",role2:"solver"} }
-
+            options={{ role1: "citizen", role2: "solver" }}
           />
         )}
         {isFlagModalUser && (
@@ -67,7 +72,17 @@ const UserManagement = () => {
           />
         )}
       </div>
-      <Pagination currentPage={1} totalPages={5} onNext={handleNextPage} onPrev={handlePrePage} onPage={handleExactPage}/>
+      {!isSinglePage && (
+        <div className="sticky bottom-0 py-4 ">
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            isFirstPage={isFirstPage}
+            isLastPage={isLastPage}
+            onPageChange={goToPage}
+          />
+        </div>
+      )}{" "}
     </>
   );
 };

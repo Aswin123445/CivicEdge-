@@ -6,7 +6,7 @@ from apps.user.views.admin.solver_management.solver_creation import AdminCreateS
 from apps.user.views.admin.solver_management.solver_listing import AdminSolverListView
 from apps.user.views.admin.solver_management.solver_update_delete import AdminSolverDetailView
 from apps.user.views.admin.admin_management.list_admin import AdminListView
-
+from apps.user.views.admin.solver_management.solver_zone_listing import ZoneListView
 urlpatterns = [
     path("login/", AdminLoginView.as_view(), name="admin-login"),
     path("citizens/", AdminCitizenListView.as_view(), name="admin-citizen-list"),
@@ -15,4 +15,5 @@ urlpatterns = [
     path('create-solver/', AdminCreateSolverView.as_view(), name='admin-create-solver'),#test file created
     path('solvers/', AdminSolverListView.as_view(), name='admin-solver-list'),#test file created
     path('solvers/<str:id>/', AdminSolverDetailView.as_view(), name='admin-update-delete-solver'),#test file created
+    path('zones/', ZoneListView.as_view(), name='admin-zone-list'), 
 ] 

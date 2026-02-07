@@ -4,6 +4,7 @@ import axiosBaseQuery from '../../../services/axiosBaseQuery';
 export const adminAuthApi = createApi({
     reducerPath: 'adminAuthApi',
     baseQuery: axiosBaseQuery({ baseUrl: '/api/v1/user/admin' }),
+    tagTypes: ['Citizens', 'Solvers', 'Admins', 'Zones'], 
     endpoints: (builder) => ({
       login: builder.mutation({
         query: (credentials) => ({
@@ -13,26 +14,31 @@ export const adminAuthApi = createApi({
           data: credentials,
           meta: { skipAuth: true },
         }),
-        // transformResponse: (response) => {
-        //   console.log(response)
-        //   return {
-        //     access: response.access,
-        //     user: response.user.email
-        //   };
-        // },
+      }),
+      fetchZones: builder.query({
+        query: () => ({
+          url: '/zones/',
+          method: 'get',
+          withCredentials: true ,
+          meta: { skipAuth: false },  
+        }),
+        providesTags: ['Zones'],
+        transformResponse: (response) => {
+          console.log(response,'response')
+          return response;
+        }
       }),
       getCitizens: builder.query({
-        query: (page = 1 ) => ({
-          url: `/citizens/?page=${page} `,
+        query: ({page = 1,search = ""} ) => ({
+          url: '/citizens/',
           method: 'get',
+          params: { page,search },
           withCredentials: false ,
           meta: { skipAuth: false },  
         }),
         providesTags: ['Citizens'],
       }),
-      transformResponse: (response) => {
-        return response;
-      },
+
       roleChange: builder.mutation({
         query: (credentials) => ({
           url: `/citizens/${credentials.id}/`,
@@ -60,14 +66,16 @@ export const adminAuthApi = createApi({
         },
       }),
       listSolvers: builder.query({
-        query: () => ({
+        query: ({page = 1,search = ""}) => ({
           url: '/solvers/',
+          params: { search , page},
           method: 'get',
           withCredentials: false,
           meta: { skipAuth: false },
         }),
         providesTags: ['Solvers'],
         transformResponse: (response) => {
+          console.log(response,"response")
           return response;
         },
       }),
@@ -75,7 +83,7 @@ export const adminAuthApi = createApi({
         query: (credentials) => ({
           url: '/create-solver/',
           method: 'post',
-          withCredentials: false,
+          withCredentials: true,
           data: credentials,
           meta: { skipAuth: false },
         }),
@@ -98,14 +106,16 @@ export const adminAuthApi = createApi({
         },
       }),
       listAdmins: builder.query({
-        query: () => ({
+        query: ({page = 1 ,search = ""}) => ({
           url: '/admins/',
+          params: { search , page},
           method: 'get',
           withCredentials: false,
           meta: { skipAuth: false },
         }),
         providesTags: ['Admins'],
         transformResponse: (response) => {
+          console.log(response,"response" )
           return response;
         },
       }),
@@ -119,5 +129,6 @@ export const {
   useListSolversQuery,
   useCreateSolverMutation,
   useUpdateSolverMutation,
-  useListAdminsQuery
+  useListAdminsQuery,
+  useFetchZonesQuery
  } = adminAuthApi;

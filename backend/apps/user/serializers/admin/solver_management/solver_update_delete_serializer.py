@@ -15,15 +15,12 @@ class SolverUpdateSerializer(serializers.ModelSerializer):
         profile_data = validated_data.pop('profile', {})
         for attr,value in validated_data.items():
             if attr == 'role' and value != instance.role:
-                if value == 'admin':
-                    instance.is_staff = True
-                else:
-                    instance.is_staff = False
+                instance.is_staff = value == 'admin'
             setattr(instance,attr,value)
         instance.save()
-        profile = instance.profile 
+        profile = instance.profile
         for attr,value in profile_data.items():
-            setattr(profile,attr,value) 
+            setattr(profile,attr,value)
         profile.save()
         notify_user_profile_updated(instance)
         return instance

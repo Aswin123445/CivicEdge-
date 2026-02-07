@@ -13,6 +13,7 @@ const useAuthLanding = () => {
       try {
         await googleLogin({ data:access_token });
         if (googleLoginStatus.isSuccess === true) {
+          console.log('hi page reaced here')
           navigate("/dashboard");
         }
       } catch (err) {

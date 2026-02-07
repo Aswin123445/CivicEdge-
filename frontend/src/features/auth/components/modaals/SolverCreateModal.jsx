@@ -1,14 +1,19 @@
 import { useState } from "react";
 import ReactDOM from "react-dom";
+import { useAdminSolver } from "../../hooks/admin/useAdminSolver";
 
 function SolverCreateModal({ onClose, onSave }) {
   const [name, setName] = useState("");
   const [password,setPassword] = useState("");
   const [email,setMail] = useState("")
+  const [zoneId,setZoneId] = useState("")
 
+  const {zones} = useAdminSolver()
+  console.log(zones,"zones in modal");
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave({  name ,password, email }); // Pass updated values
+    const zone_id = zoneId;
+    onSave({  name ,password, email, zone_id }); // Pass updated values
     onClose();
   };
 
@@ -37,18 +42,45 @@ function SolverCreateModal({ onClose, onSave }) {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="w-full p-2 rounded-md bg-[#1e1e1e] text-gray-200 border border-gray-600 focus:outline-none"
+              required
             />
+            <div className="pt-2">
+             <label className="block text-sm text-gray-400 mb-1">
+               Zone of Operation
+             </label>
+           
+             <select
+               value={zoneId}
+               onChange={(e) => setZoneId(e.target.value)}
+               className="w-full p-2 rounded-md bg-[#1e1e1e] text-gray-200 border border-gray-600 focus:outline-none"
+               required
+             >
+               {/* Default message */}
+               <option value="" disabled>
+                 Select a zone
+               </option>
+               {/* Options from list */}
+               {zones.map((r) => (
+                 <option key={r.id} value={r.id}>
+                   {r.name}
+                 </option>
+               ))}
+             </select>
+           </div>
+
             <label className="block pt-2 text-sm text-gray-400 mb-1">Email</label>
             <input
               value={email}
               onChange={(e) => setMail(e.target.value)}
               className="w-full p-2 rounded-md bg-[#1e1e1e] text-gray-200 border border-gray-600 focus:outline-none"
+              required
             />
             <label className="block pt-2 text-sm text-gray-400 mb-1">Password</label>
             <input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full p-2 rounded-md bg-[#1e1e1e] text-gray-200 border border-gray-600 focus:outline-none"
+              required
             />
           </div>
 

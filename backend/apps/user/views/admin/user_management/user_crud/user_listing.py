@@ -5,6 +5,6 @@ from rest_framework.generics import ListAPIView
 class AdminCitizenListView(ListAPIView):
         queryset = get_all_citizens()
         serializer_class  = AdminCitizenSerializer
-        search_fields = ['email','profile__location','is_active']
+        search_fields = ['email','profile__name']
         ordering_fields = ['created_at', 'profile__name','zone',]
         ordering = ['-created_at']

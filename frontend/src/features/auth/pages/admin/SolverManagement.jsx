@@ -4,14 +4,16 @@ import FlagModal from "../../components/modaals/UserFlagModal";
 import { useAdminSolver } from "../../hooks/admin/useAdminSolver";
 import { UserPlus } from "lucide-react";
 import SolverCreateModal from "../../components/modaals/SolverCreateModal";
+import Pagination from "../../../../components/common/PaginationBar";
+import UserManagementSectionLoader from "../../components/skeltons/loaders_skelton/UserManagementSectionLoader";
+import DottedLoaderIndicator from "../../../../components/common/DottedLoaderIndicator";
+
+
 
 // Sample user data
 const SolverManagement = () => {
   const { 
-    setSolvers,
     solvers,
-    search,
-    setSearch,
     isCreateModal,
     setIsCreateModal,
     addSolver,
@@ -21,35 +23,51 @@ const SolverManagement = () => {
     flagData,
     setFlagData,
     handleSave,
-    handleFlag
-    
-  } = useAdminSolver();
+    handleFlag,
+    zoneSuccess,
+    page,
+    goToPage,
+    totalPages,
+    isSinglePage,
+    isFirstPage,
+    isLastPage,
+    setSearchValue,
+    searchValue,
+    isLoading,
+    isFetching
+    } = useAdminSolver();
 
 
-  const filteredsolvers = solvers.filter((u) =>
-    u.name.toLowerCase().includes(search.toLowerCase())
-  );
+
 
   const handleCreate = async(createdUser)=>{
     try{
       const data = await addSolver(createdUser).unwrap();
-      setSolvers((prev) => [...prev, data]);
-
+      console.log(data);
     }catch{
       console.log(addStatus.error);
     }
   }
-
+  if (isLoading) {
+    return <UserManagementSectionLoader />;
+  }
   return (
     <>
-      <div className="mb-6 flex justify-between">
+      <div className="mb-6 ml-2 flex justify-between">
+        <div className=" relative inline-block ">
         <input
           type="text"
           placeholder="search for user"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-48 h-8 pl-3 pb-1 rounded-md bg-[#2B2B2B] border border-gray-600 text-white"
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          className="w-44 h-8 pr-8 pl-3 pb-1 rounded-md bg-[#2B2B2B] border border-gray-600 text-white"
         />
+        {isFetching && (
+          <div className="absolute right-2 top-1/2 -translate-y-1/2 ">
+            <DottedLoaderIndicator />
+          </div>
+        )}
+        </div>
         <div className="bg-[#222121] hover:bg-gray-800 h-9 w-9 mr-4 p-1 flex justify-center items-center rounded-lg">
           <UserPlus
             className="w-6 h-6 cursor-pointer"
@@ -60,7 +78,7 @@ const SolverManagement = () => {
 
       {/* User cards */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-        {filteredsolvers.map((solver) => (
+        {solvers.map((solver) => (
           <div
             key={solver.id}
             className="flex justify-between items-center p-4 border border-gray-700 rounded-md bg-[#1e1e1e]"
@@ -155,7 +173,7 @@ const SolverManagement = () => {
             onSave={(updatedUser) => handleFlag(updatedUser)}
           />
         )}
-        {isCreateModal && (
+        {isCreateModal && zoneSuccess && (
           <SolverCreateModal
             onClose={() =>setIsCreateModal(false)}
             onSave = {(createdUser) => handleCreate(createdUser)}
@@ -163,6 +181,17 @@ const SolverManagement = () => {
 
         )}
       </div>
+            {!isSinglePage && (
+              <div className="sticky bottom-0 py-4 ">
+              <Pagination
+                currentPage={page}
+                totalPages={totalPages}
+                isFirstPage={isFirstPage}
+                isLastPage={isLastPage}
+                onPageChange={goToPage}
+              />
+              </div>
+            )}
     </>
   );
 };

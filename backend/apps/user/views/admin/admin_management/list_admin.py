@@ -8,6 +8,6 @@ class AdminListView(ListAPIView):
 
     queryset = get_all_admins()
     serializer_class = AdminListSerializer
-    search_fields = ['email', 'profile__name', 'is_active']
+    search_fields = ['email', 'profile__name']
     ordering_fields = ['created_at', 'profile__name']
     ordering = ['-created_at']

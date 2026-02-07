@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from apps.user.models.user import Profile
-from rest_framework.exceptions import NotAuthenticated, ValidationError
+from rest_framework.exceptions import NotAuthenticated, ValidationError ,PermissionDenied
 from rest_framework_simplejwt.tokens import RefreshToken
 
 User = get_user_model()
@@ -32,6 +32,9 @@ def google_register_signin_service(user_info):
     if created:
         user.set_unusable_password()
         user.save()
+    else :
+        if user.role != 'citizen':
+            raise PermissionDenied('only citizen can access the endpoint')
 
     # Handle profile
     profile, profile_created = Profile.objects.get_or_create(user=user)

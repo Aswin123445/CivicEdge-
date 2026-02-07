@@ -42,12 +42,9 @@ class GoogleLoginView(APIView):
     authentication_classes = []  # 👈 disables session/JWT auth for this view
 
     def post(self, request):
-        print(request.data)
 
         data = request.data.get("data")
         if not data:
-            print('missing access token')
-            print(request.data)
             return Response({"error": "Missing access token"}, status=status.HTTP_400_BAD_REQUEST)
 
         resp = requests.get(

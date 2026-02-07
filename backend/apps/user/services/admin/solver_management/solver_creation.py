@@ -8,10 +8,12 @@ from rest_framework.exceptions import ValidationError as DRFValidationError
 from rest_framework.exceptions import AuthenticationFailed
 User = get_user_model()
 def create_solver(validated_data: dict):
+    print(validated_data)
     name = validated_data['profile'].pop('name')
     password = validated_data.pop('password')
     email = validated_data.pop('email')
-    try:
+    zone = validated_data['profile'].pop('zone')
+    try: 
         with transaction.atomic():
             user = User.objects.create_user(
                 email=email,
@@ -25,6 +27,7 @@ def create_solver(validated_data: dict):
             if not hasattr(user, "profile"):
                 raise ValidationError("Profile was not created for the user.")
             user.profile.name = name
+            user.profile.zone = zone
             user.profile.save()
             send_solver_welcome_email.delay(
                 to_email = user.email,
