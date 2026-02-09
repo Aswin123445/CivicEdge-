@@ -1,0 +1,100 @@
+✅ 1. Plan Database & User Flows (Before Any Code or UI)
+
+This ensures you:
+
+    Know what data you need.
+
+    Understand how different types of users (citizen, solver, admin) interact with the system.
+
+    Avoid major changes later by designing things right from the start.
+
+
+📘 DATABASE SCHEMA DESIGN: WHAT TO KNOW & DO
+🔹 1. Identify All Entities (Tables)
+
+Ask: “What things do I need to store?”
+For your project: User, Complaint, ForumPost, Army, Reward, etc.
+
+🔹 2. Define Attributes (Fields)
+
+For each entity, list all relevant fields.
+Example:
+
+Complaint:
+- id
+- user_id (FK)
+- type
+- description
+- image_url
+- status (Pending, In Progress, Resolved)
+- created_at, updated_at
+
+🔹 3. Use Relationships Properly
+
+Know the relationships between tables:
+
+    One-to-Many: A user can have many complaints
+
+    Many-to-Many: Users can belong to multiple armies
+
+    One-to-One: A user has one profile (if you separate it)
+
+✅ Use Foreign Keys and Join Tables where necessary.
+🔹 4. Data Normalization (Avoid Redundancy)
+
+Example of bad design: storing the same user name in every complaint
+✅ Instead: Link via foreign key (user_id)
+🔹 5. Field Types and Constraints
+
+Choose correct types:
+
+    TextField for long text
+
+    ImageField/FileField for images
+
+    BooleanField for flags
+
+    Add constraints like unique, not null, default
+
+🔹 6. Track Timestamps
+
+Always include:
+
+    created_at
+
+    updated_at
+
+Helps with sorting, filtering, analytics.
+🔹 7. Plan for Scaling
+
+    Index frequently queried fields (e.g., status, user_id)
+
+    Use pagination for large tables (e.g., forum posts, complaints)
+
+
+⚠️ COMMON MISTAKES TO AVOID
+❌ Mistake	✅ Solution
+Mixing logic in database design	Keep business logic in code, not in DB
+Forgetting timestamps	Always include created/updated fields
+Not planning roles early	Define access control early
+Too much denormalization	Normalize data, use joins
+No indexes on large tables	Index filter/sort fields
+
+✅ Checklist Summary
+Area	Check
+Entities identified	✅
+Relationships clear	✅
+Proper data types used	✅
+Role-based flow defined	✅
+Constraints (unique, nullable) set	✅
+Timestamps included	✅
+Scaling in mind	✅
+
+
+📄 Initial brainstorming (Notion / Pen & Paper)
+
+🧱 ER diagrams (dbdiagram.io)
+
+🔁 User flow mapping (Lucidchart / Figma)
+
+🧪 Testing queries (DBeaver / pgAdmin)

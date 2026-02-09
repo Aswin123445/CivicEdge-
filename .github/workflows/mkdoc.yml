@@ -1,0 +1,35 @@
+name: Deploy CivicEdge Documentation
+
+on:
+  push:
+    branches:
+      - feature/user
+      - main
+    paths:
+      - "CivicEdge-docs/**"
+      - ".github/**"
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install MkDocs
+        run: |
+          pip install mkdocs mkdocs-material
+
+      - name: Deploy documentation
+        working-directory: CivicEdge-docs
+        run: |
+          mkdocs gh-deploy --force

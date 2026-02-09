@@ -1,0 +1,129 @@
+🧠 PHASE: Initial Brainstorming (Notion / Pen & Paper)
+🎯 GOAL:
+
+Define what your app will do, who will use it, and what features it needs, before designing the UI or database.
+✅ Step 1: Define the Purpose (1–2 lines)
+
+    Why are you building this?
+
+📌 Example:
+
+    "A platform to let citizens report civic issues, and help civic workers/admins respond in real time using a unified dashboard."
+
+✅ Step 2: Identify the Users (Roles)
+
+Ask: Who will use the app? What will each one do?
+Role	Description	What they can do
+Citizen	Residents of the city	Report issues, view dashboard, join community forum
+Solver	Civic workers who fix reported problems	View assigned issues, mark them as resolved
+Admin	Municipal officers or platform owners	Manage users, assign issues, moderate content
+
+👉 Create this as a table in Notion or draw boxes on paper.
+✅ Step 3: Feature Listing (By Role)
+
+Start listing everything your app should do, grouped by user.
+👤 Citizen:
+
+    Register/Login
+
+    Report civic issues (upload photo, location, category, description)
+
+    Track status of their reports
+
+    View city dashboards (pollution, alerts, weather)
+
+    Join community forum
+
+    Apply to join volunteer armies
+
+🛠️ Solver:
+
+    Login
+
+    See assigned issues
+
+    Update issue status (in-progress, resolved)
+
+    Add comments or feedback
+
+    View their task history
+
+🛡️ Admin:
+
+    Login (with 2FA maybe)
+
+    View all issues
+
+    Assign solvers to issues
+
+    Create/manage volunteer groups (armies)
+
+    Moderate forum (delete/report content)
+
+    View analytics (e.g., most active areas)
+
+✅ Step 4: User Flow Mapping (Simple Diagrams)
+
+Draw flows for key activities.
+Example: "Citizen Reporting an Issue"
+
+Login/Register ➝ Click 'Report Issue' ➝ Fill form + upload photo ➝ Submit ➝ Issue saved ➝ Citizen sees it in their 'My Reports'
+
+Example: "Admin Assigning Issue"
+
+Login ➝ View unassigned issues ➝ Click 'Assign Solver' ➝ Choose solver ➝ Update status ➝ Solver notified
+
+Do this in Notion, a notebook, or tools like Excalidraw / Lucidchart.
+✅ Step 5: Initial Data Model Draft (Pen & Paper Sketch)
+
+Roughly sketch the main data tables you'll need:
+
+User
+- id, name, email, password, role
+
+Issue
+- id, title, description, image, location, status, created_by, assigned_to
+
+Comment
+- id, content, user_id, issue_id, created_at
+
+ForumPost
+- id, title, content, user_id, is_flagged, created_at
+
+VolunteerArmy
+- id, name, description, created_by
+
+ArmyApplication
+- user_id, army_id, status
+
+Don't worry about perfection — just capture the entities you'll need.
+✅ Step 6: Questions to Ask Yourself
+
+    What problems will each user face?
+
+    What information does each role need to see?
+
+    What actions can each role perform?
+
+    Are there any approval steps?
+
+    What notifications are needed?
+
+Write these in your Notion as questions to explore later.
+🛠 Tools You Can Use:
+Task	Recommended Tool
+Notes/Docs	Notion, Obsidian, Google Docs
+Sketching	Pen & Paper, Excalidraw, Figma
+Flows/ERD	Draw.io, Lucidchart
+To-dos & Backlog	Notion Kanban or Trello
+🧭 What You Should Have at the End
+
+    📝 A clear list of users and roles
+
+    ✅ A feature breakdown by role
+
+    🧱 A rough data model (just boxes and fields)
+
+    🔄 Basic user flows
+
+    🤔 A list of questions and unknowns for later exploration

@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.toast-success {
+  @apply bg-green-600/90 text-white border border-green-400/60 pl-10 w-full py-3 rounded-xl shadow-lg backdrop-blur-sm;
+
+}
+
+.toast-error {
+  @apply bg-red-600/90 text-white border border-red-400/60 pl-10 w-full py-3 rounded-xl shadow-lg backdrop-blur-sm;
+}
+
+.toast-info {
+  @apply bg-blue-600 text-white border border-green-400/60 pl-10 w-full py-3 rounded-xl shadow-lg backdrop-blur-sm;
+}
+
+/* Custom Scrollbar Styling */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #181818; /* Matches sidebar background */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #4a4a4a; /* Slightly lighter shade for thumb to be visible */
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #6b6b6b; /* Lighter shade on hover */
+}
+
+/* For main content (slightly different track color to match #1e1e1e) */
+main.custom-scrollbar::-webkit-scrollbar-track {
+  background: #1e1e1e; /* Matches main content background */
+}
+
+/* Firefox scrollbar styling */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #4a4a4a #181818; /* Thumb and track colors for sidebar */
+}
+
+main.custom-scrollbar {
+  scrollbar-color: #4a4a4a #1e1e1e; /* Thumb and track colors for main content */
+}
+

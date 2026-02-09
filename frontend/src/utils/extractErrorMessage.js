@@ -1,0 +1,28 @@
+export function extractErrorMessage(error) {
+  const data = error?.data;
+
+  if (!data) return 'Something went wrong. Please try again.';
+
+  // 1️⃣ DRF non-field errors
+  if (Array.isArray(data.non_field_errors)) {
+    return data.non_field_errors[0];
+  }
+
+  // 2️⃣ DRF detail message
+  if (typeof data.detail === 'string') {
+    return data.detail;
+  }
+
+  // 3️⃣ Field-level errors
+  if (typeof data === 'object') {
+    const firstKey = Object.keys(data)[0];
+    const firstError = data[firstKey];
+
+    if (Array.isArray(firstError)) {
+      return `${firstKey}: ${firstError[0]}`;
+    }
+  }
+
+  // 4️⃣ Fallback
+  return 'Something went wrong. Please try again.';
+}

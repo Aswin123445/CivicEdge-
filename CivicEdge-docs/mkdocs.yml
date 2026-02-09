@@ -1,6 +1,323 @@
 site_name: CivicEdge
 theme:
   name: material
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.footer
+
 nav:
   - Home: index.md
+  - Vision: vision.md
   - About: about.md
+  - Modules:
+      - Citizen: 
+        - Overview: modules/citizen/overview.md
+        - Authentication: modules/citizen/authentication.md
+        - Reporting Complaints: modules/citizen/complaint_system.md
+        - Joining Volunteer Armies: modules/citizen/volunteer_system.md
+        - Community Forum: modules/citizen/community_forum.md
+        - Notifications: modules/citizen/notifications.md
+        - profile_management: modules/citizen/profile_manage.md
+      - Admin:
+        - Overview: modules/admin/overview.md
+        - Complaint Management: modules/admin/complaint_management.md
+        - Solver Management: modules/admin/solver_management.md
+        - User Management: modules/admin/user_management.md
+        - Volunteer Management: modules/admin/volunteer_management.md
+        - Reward Distribution: modules/admin/reward_distribution.md
+        - Forum Moduration: modules/admin/forum_moderation.md
+        - Poll Management: modules/admin/poll_management.md
+        - Notification Broadcasts: modules/admin/notification_broadcasts.md
+        - Notification Management: modules/admin/notification_management.md
+        - Analytics Dashboard: modules/admin/analytics.md
+        - Admin Profile: modules/admin/admin_profile.md
+        - Service Provider: modules/admin/service_provider_management.md
+      - Solver:
+        - Overview: modules/solver/overview.md
+        - Complaint Handling: modules/solver/complaint_handling.md 
+        - Complaint Report: modules/solver/complaint_report.md
+        - Complaint History: modules/solver/complaint_history.md 
+        - Feedback View: modules/solver/feedback_view.md 
+        - Profile Management: modules/solver/profile_management.md
+        - Notifications: modules/solver/notifications.md
+  - API:
+      - Citizen:
+          - Citizen Complaint:
+              - Overview: api/citizen/complaints/overview.md
+              - Submit: api/citizen/complaints/submit.md
+              - List Complaints: api/citizen/complaints/listcomplaints.md
+              - Complaint Details: api/citizen/complaints/complaintdetails.md
+              - Complaint Update: api/citizen/complaints/complaintupdate.md
+              - Upload Media: api/citizen/complaints/upload_complaint_media.md
+              - View Media: api/citizen/complaints/view_complaint_media.md
+              - Status Log: api/citizen/complaints/view_complaint_status_log.md
+              - Submit Feedback: api/citizen/complaints/submit_feedback.md
+  
+          - Citizen Authentication:
+              - Overview: api/citizen/auth/overview.md
+              - Register: api/citizen/auth/register.md
+              - Verify Email: api/citizen/auth/verify_email.md
+              - Login: api/citizen/auth/login.md
+              - Google Login: api/citizen/auth/google_login.md
+              - Google Callback: api/citizen/auth/google_callback.md
+              - Refresh Token: api/citizen/auth/refresh_token.md
+              - Logout: api/citizen/auth/logout.md
+              - Forgot Password: api/citizen/auth/forgot_password.md
+              - Reset Password: api/citizen/auth/reset_password.md
+              - Get Profile: api/citizen/auth/get_profile.md
+              - Update Profile: api/citizen/auth/update_profile.md
+  
+          - Citizen Community Forum:
+              - Overview: api/citizen/forum/overview.md
+  
+              - Threads:
+                  - Create Thread: api/citizen/forum/threads/create_thread.md
+                  - List Threads: api/citizen/forum/threads/list_threads.md
+                  - Thread Details: api/citizen/forum/threads/thread_details.md
+                  - Update Thread: api/citizen/forum/threads/update_thread.md
+                  - Delete Thread: api/citizen/forum/threads/delete_thread.md
+  
+              - Comments:
+                  - Add Comment: api/citizen/forum/comments/add_comment.md
+                  - List Comments: api/citizen/forum/comments/list_comments.md
+                  - Update Comment: api/citizen/forum/comments/update_comment.md
+                  - Delete Comment: api/citizen/forum/comments/delete_comment.md
+  
+              - Reactions:
+                  - React to Thread/Comment: api/citizen/forum/reactions/add_reaction.md
+                  - Remove Reaction: api/citizen/forum/reactions/remove_reaction.md
+  
+              - Reports:
+                  - Report Content: api/citizen/forum/reports/report_content.md
+                  - View My Reports: api/citizen/forum/reports/my_reports.md
+  
+              - Polls:
+                  - View Polls: api/citizen/forum/polls/list_polls.md
+                  - Poll Details: api/citizen/forum/polls/poll_details.md
+                  - Vote in Poll: api/citizen/forum/polls/vote_poll.md
+                  - Poll Results: api/citizen/forum/polls/poll_results.md
+  
+          - Citizen Armies:
+              - Overview: api/citizen/armies/overview.md
+  
+              - Armies:
+                  - List Armies: api/citizen/armies/list_armies.md
+                  - Army Details: api/citizen/armies/army_details.md
+                  - Join Army: api/citizen/armies/join_army.md
+                  - Leave Army: api/citizen/armies/leave_army.md
+                  - My Armies: api/citizen/armies/my_armies.md
+  
+              - Army Events:
+                  - List Events: api/citizen/armies/events/list_events.md
+                  - Event Details: api/citizen/armies/events/event_details.md
+                  - Join Event: api/citizen/armies/events/join_event.md
+                  - Cancel Event Registration: api/citizen/armies/events/cancel_event.md
+  
+              - Participation & Recognition:
+                  - My Participations: api/citizen/armies/participation/my_participations.md
+                  - Certificates: api/citizen/armies/certificates/list_certificates.md
+                  - Download Certificate: api/citizen/armies/certificates/download_certificate.md
+  
+      - Solver:
+          - Solver Authentication:
+              - Overview: api/solver/auth/overview.md
+              - Login: api/solver/auth/login.md
+              - Refresh Token: api/solver/auth/refresh_token.md
+              - Logout: api/solver/auth/logout.md
+              - Change Password: api/solver/auth/change_password.md
+  
+          - Solver Task Management:
+              - Overview: api/solver/tasks/overview.md
+  
+              - Tasks:
+                  - List Assigned Tasks: api/solver/tasks/list_tasks.md
+                  - Task Details: api/solver/tasks/task_details.md
+  
+              - Inspection & Reporting:
+                  - Submit Inspection Report: api/solver/tasks/inspection/submit_inspection_report.md
+                  - Upload Inspection Media: api/solver/tasks/inspection/upload_inspection_media.md
+  
+              - Task Execution & Updates:
+                  - Submit Task Update: api/solver/tasks/updates/submit_task_update.md
+                  - Upload Update Media: api/solver/tasks/updates/upload_update_media.md
+                  - View Update History: api/solver/tasks/updates/view_update_history.md
+  
+              - Verification & Closure:
+                  - Submit Completion Verification: api/solver/tasks/verification/verify_task.md
+
+
+      - Admin:
+        - Admin Authentication:
+          - Overview: api/admin/auth/overview.md
+          - Login: api/admin/auth/login.md
+          - Refresh Token: api/admin/auth/refresh_token.md
+          - Logout: api/admin/auth/logout.md
+
+        - Admin Complaint Management:
+          - Overview: api/admin/complaints/overview.md
+        
+          - List Complaints: api/admin/complaints/list_complaints.md
+          - Complaint Details: api/admin/complaints/complaint_details.md
+        
+          - Verify Complaint: api/admin/complaints/verify_complaint.md
+          - Reject Complaint: api/admin/complaints/reject_complaint.md
+          - Merge Duplicate Complaints: api/admin/complaints/merge_complaints.md
+        
+          - Assign Solver: api/admin/complaints/assign_solver.md
+        
+          - View Inspection Report: api/admin/complaints/view_inspection_report.md
+          - Approve Proposal: api/admin/complaints/approve_proposal.md
+          - Move to Future Planning: api/admin/complaints/move_to_future_planning.md
+        
+          - Monitor Progress: api/admin/complaints/monitor_progress.md
+          - View Status Logs: api/admin/complaints/view_status_logs.md
+        
+          - Close Complaint: api/admin/complaints/close_complaint.md
+          - View Feedback: api/admin/complaints/view_feedback.md 
+      
+        - Admin Solver Management:
+          - Overview: api/admin/solvers/overview.md
+        
+          - Create Solver: api/admin/solvers/create_solver.md
+          - List Solvers: api/admin/solvers/list_solvers.md
+          - Solver Details: api/admin/solvers/solver_details.md
+        
+          - Activate Solver: api/admin/solvers/activate_solver.md
+          - Deactivate Solver: api/admin/solvers/deactivate_solver.md
+        
+          - Block Solver: api/admin/solvers/block_solver.md
+          - Unblock Solver: api/admin/solvers/unblock_solver.md
+        
+          - View Solver Workload: api/admin/solvers/view_workload.md
+          - View Solver Performance: api/admin/solvers/view_performance.md
+
+        - Admin User Management:
+          - Overview: api/admin/users/overview.md
+        
+          - List Users: api/admin/users/list_users.md
+          - User Details: api/admin/users/user_details.md
+        
+          - Activate User: api/admin/users/activate_user.md
+          - Deactivate User: api/admin/users/deactivate_user.md
+        
+          - View User Activity: api/admin/users/view_user_activity.md
+        
+        - Admin Volunteer Management:
+          - Overview: api/admin/volunteers/overview.md
+        
+          # Volunteer Groups (Armies)
+          - Create Volunteer Group: api/admin/volunteers/create_group.md
+          - List Volunteer Groups: api/admin/volunteers/list_groups.md
+          - Group Details: api/admin/volunteers/group_details.md
+          - Update Volunteer Group: api/admin/volunteers/update_group.md
+          - Delete Volunteer Group: api/admin/volunteers/delete_group.md
+
+          # Join Requests (Tier 2 Only)
+          - List Join Requests: api/admin/volunteers/list_join_requests.md
+          - Review Join Request: api/admin/volunteers/review_join_request.md
+
+          # Volunteer Members
+          - List Group Members: api/admin/volunteers/list_group_members.md
+          - Remove Volunteer Member: api/admin/volunteers/remove_member.md
+        
+          # Events Management
+          - Create Event: api/admin/volunteers/create_event.md
+          - List Events: api/admin/volunteers/list_events.md
+          - Event Details: api/admin/volunteers/event_details.md
+          - Update Event: api/admin/volunteers/update_event.md
+          - Cancel Event: api/admin/volunteers/cancel_event.md
+
+          # Participation Management
+          - View Event Participants: api/admin/volunteers/view_participants.md
+          - Approve Participation (Optional): api/admin/volunteers/approve_participation.md
+          - Mark Attendance: api/admin/volunteers/mark_attendance.md
+        
+          # Recognition & Certification
+          - Issue Certificate: api/admin/volunteers/issue_certificate.md
+          - List Certificates: api/admin/volunteers/list_certificates.md
+          - Issue Badge: api/admin/volunteers/issue_badge.md
+        
+          # Insights
+          - Volunteer Activity Summary: api/admin/volunteers/activity_summary.md
+        - Admin Reward Management:
+          - Overview: api/admin/rewards/overview.md
+          - List Rewards: api/admin/rewards/list_rewards.md
+          - Create Reward: api/admin/rewards/create_reward.md
+          - Assign Reward: api/admin/rewards/assign_reward.md
+          - User Reward History: api/admin/rewards/user_reward_history.md
+          - Revoke Reward: api/admin/rewards/revoke_reward.md
+
+        - Forum Moderation (Admin):
+          - Overview: api/admin/forum/overview.md
+          - List Reports: api/admin/forum/list_reports.md
+          - Review Report: api/admin/forum/review_report.md
+          - Delete Content: api/admin/forum/delete_content.md
+          - Restore Content: api/admin/forum/restore_content.md
+          - Warn User: api/admin/forum/warn_user.md
+          - Pin Thread: api/admin/forum/pin_thread.md
+          - Unpin Thread: api/admin/forum/unpin_thread.md
+          - Moderation Logs: api/admin/forum/moderation_logs.md
+        
+        - Poll Management (Admin):
+          - Overview: api/admin/polls/overview.md
+          - Create Poll: api/admin/polls/create_poll.md
+          - List Polls: api/admin/polls/list_polls.md
+          - Poll Details: api/admin/polls/poll_details.md
+          - Update Poll: api/admin/polls/update_poll.md
+          - Close Poll: api/admin/polls/close_poll.md
+          - Poll Results: api/admin/polls/poll_results.md
+          - Export Results: api/admin/polls/export_poll_results.md
+        - Notification Broadcasts (Admin):
+          - Overview: api/admin/notifications/overview.md
+          - Create Broadcast: api/admin/notifications/create_broadcast.md
+          - List Broadcasts: api/admin/notifications/list_broadcasts.md
+          - Broadcast Details: api/admin/notifications/broadcast_details.md
+          - Schedule Broadcast: api/admin/notifications/schedule_broadcast.md
+          - Cancel Scheduled Broadcast: api/admin/notifications/cancel_broadcast.md
+          - Broadcast Logs: api/admin/notifications/broadcast_logs.md
+
+        - Analytics Dashboard (Admin):
+          - Overview: api/admin/analytics/overview.md
+          - Platform Summary: api/admin/analytics/platform_summary.md
+          - Complaint Analytics: api/admin/analytics/complaints.md
+          - Solver Analytics: api/admin/analytics/solvers.md
+          - Community Analytics: api/admin/analytics/community.md
+          - Volunteer Analytics: api/admin/analytics/volunteers.md
+          - User Engagement: api/admin/analytics/users.md
+
+        - Service Provider Management (Admin):
+          - Overview: api/admin/service_providers/overview.md
+
+          - Provider Registry:
+            - Create Provider: api/admin/service_providers/create_provider.md
+            - List Providers: api/admin/service_providers/list_providers.md
+        
+          - Provider Status:
+            - Activate Provider: api/admin/service_providers/activate_provider.md
+            - Deactivate Provider: api/admin/service_providers/deactivate_provider.md
+        
+          - Payments:
+            - Mark Payment Paid: api/admin/service_providers/mark_payment_paid.md
+            - Payment History: api/admin/service_providers/payment_history.md
+  - Database: 
+      - Overview: database/overview.md 
+      - User Context: database/user-context/overview.md
+      - Complaint Context: database/complaint-context/overview.md
+      - Task Context: database/task-context/overview.md
+      - Provider Context: database/provider-context/overview.md
+      - Volunteer Context: database/volunteer-context/overview.md
+      - Forum Context: database/forum-context/overview.md
+      - Polling Context: database/polling-context/overview.md
+      - Rewards Context: database/rewards-context/overview.md
+      - Analytics Context: database/analytics-context/overview.md
+      - Payments Context: database/payments-context/overview.md
+      
+        
+        
+        
+        
+
+
+
+

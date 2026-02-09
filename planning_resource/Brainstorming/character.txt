@@ -1,0 +1,63 @@
+🎭 Character 1: Citizen (The Voice of the People)
+
+    "The one who notices problems, shares ideas, and takes the first step."
+
+    Role: The citizen is the initiator — without them, the system stays silent.
+
+    Motivation: Wants to make the place they live in cleaner, safer, and smarter.
+
+    Key Actions:
+
+        Report complaints with images/maps
+
+        Suggest ideas and improvements
+
+        Join community armies
+
+        Participate in forums and discussions
+
+        Earn recognition for contribution
+
+📌 Tagline: “I see, I speak, I change.”
+🎭 Character 2: Solver (The Society in Action)
+
+    "They are the hands that fix — the physical response to digital voices."
+
+    Role: The solver is the societal response — either civic workers or organized community volunteers who resolve the reported issues.
+
+    Motivation: Wants to serve the community and make a visible impact.
+
+    Key Actions:
+
+        Receive and act on assigned issues
+
+        Upload progress and solutions
+
+        Share success stories (pending approval)
+
+        Respond to service requests
+
+        Earn rewards based on contribution
+
+📌 Tagline: “Your problem, my action.”
+🎭 Character 3: Admin (The Bridge Between Voice and Action)
+
+    "The one who ensures fairness, order, and flow between citizens and solvers."
+
+    Role: The admin is the overseer and coordinator who manages users, assigns tasks, approves content, and monitors data.
+
+    Motivation: Wants efficient governance and healthy civic participation.
+
+    Key Actions:
+
+        Assign solvers to issues
+
+        Monitor and approve forum content
+
+        Push notifications for alerts/emergencies
+
+        Track performance and generate analytics
+
+        Manage rewards and roles
+
+📌 Tagline: “I turn your voices into impact.”

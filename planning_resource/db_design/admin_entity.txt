@@ -1,0 +1,66 @@
+🔁 1. Complaint & Task Management
+
+Handles all complaints, task assignments, updates, and resolution tracking.
+Entity	Description
+Complaint	Original citizen complaint (type, location, media)
+Task	Created from a complaint and assigned to a solver
+TaskAssignment	Links a task to a solver (with assigned date, status)
+TaskUpdateSubmission (aka TaskLog)	Progress updates, notes, and evidence
+TaskMedia	Photos/videos uploaded by solvers
+ComplaintLog	Admin-side status tracking or notes history
+🧑‍🔧 2. Solver Management
+
+Focuses on solver lifecycle, performance, and availability.
+Entity	Description
+User (role='solver')	Solver account data
+Profile	Zone, skills, contact info
+Availability	Optional: working hours or availability flag
+Reward	Rewards/badges earned by the solver
+PaymentRequest	Payment requests submitted by solvers for completed tasks
+👥 3. Citizen/User Management
+
+Manages citizen accounts, behavior, and participation.
+Entity	Description
+User (role='citizen')	Citizen account data
+Profile	Location, interests, points, etc.
+Reward	Badges/recognition earned
+Log	Activity history (optional)
+Warning	Optional: If admin issues behavior warnings
+🛡️ 4. Volunteer Army Management
+
+Handles community volunteer groups and related operations.
+Entity	Description
+Army / ArmyGroup	Red Army, Clean Army, etc.
+CauseCategory	Cleanliness, Blood donation, etc.
+ArmyMembership	Citizens enrolled in armies
+MissionApplication	Optional: Citizens applying for specific missions
+🗣️ 5. Community & Forum Moderation
+
+Enables content control and user safety in community posts.
+Entity	Description
+Post	Forum posts
+Comment	Comments under posts
+Like, Share	Reactions
+ReportUser	Reports against citizens or content
+PostModerationLog	Track admin actions taken on posts/comments
+📢 6. Notification & Announcement System
+
+Manages system-wide or targeted communications.
+Entity	Description
+Notification	Generic messages/alerts for all users
+NotificationLog	Optional: Who received, when, and if read
+Broadcast (if separated)	Mass announcements to zones/roles (can reuse Notification)
+📊 7. Analytics & Reward Insights
+
+Provides visual summaries and stats for admin decision-making.
+Entity	Description
+AnalyticsSnapshot	Optional: Cached metrics per day/week
+RewardCriteria	Rules based on which rewards are assigned
+RewardClaim	Optional: If rewards need approval flow
+👤 8. Admin Account & Profile
+
+Handles the admin's own data.
+Entity	Description
+User (role='admin')	Admin login credentials
+Profile	Name, contact, zone responsibility
+Log	Audit trail for actions (assignments, deletions, etc.)
