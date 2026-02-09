@@ -48,5 +48,5 @@ def send_solver_welcome_email(
         email.attach_alternative(html_content, "text/html")
         email.send()
         logger.info("Sent welcome email to %s (role=%s)", to_email, role)
-    except Exception as exc:
+    except Exception :
         logger.exception("Failed to send solver welcome email to %s", to_email)

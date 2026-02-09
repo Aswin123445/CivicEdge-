@@ -6,8 +6,6 @@ REGISTER_URL = "/api/v1/user/register/"
 @pytest.mark.django_db
 class TestInvalidUserRegistration:
     
-    def setup_method(self):
-        self.client = APIClient()
 
     def test_missing_email(self):
         payload = {"password": "StrongPass123!", "confirm_password": "StrongPass123!"}

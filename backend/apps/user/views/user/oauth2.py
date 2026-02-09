@@ -1,13 +1,9 @@
-from django.shortcuts import redirect
-from django.contrib.auth import login
 from django.http import JsonResponse
-from django.contrib.auth.models import User
 import requests
 from apps.user.utils.oauth_registry.oauth_registry import oauth
 from apps.user.services.user.google_register_signin import google_register_signin_service
 from rest_framework.decorators import  permission_classes
 from rest_framework.permissions import AllowAny
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status

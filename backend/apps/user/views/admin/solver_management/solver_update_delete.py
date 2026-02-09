@@ -2,7 +2,6 @@ from django.forms import ValidationError
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAdminUser
 from django.contrib.auth import get_user_model
-from apps.user.serializers.admin.user_management.user_crud.user_update_delete_serializer import CitizenUpdateSerializer
 from apps.user.serializers.admin.solver_management.solver_update_delete_serializer import SolverUpdateSerializer
 from shared.enums.user_role import UserRole
 

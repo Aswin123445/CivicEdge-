@@ -7,5 +7,6 @@ class UserConfig(AppConfig):
     label = 'user'
 
     def ready(self):
-        import apps.user.signals
+        # Import signals to register signal handlers
+        import apps.user.signals # noqa: F401
 

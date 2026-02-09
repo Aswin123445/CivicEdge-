@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError as DjangoValidationError
 from apps.user.services.user.signin import generate_refresh_access_token
 from django.core.validators import validate_email as django_validate_email
 from apps.user.utils.auth_backend import EmailAuthBackend
-from rest_framework.exceptions import AuthenticationFailed, PermissionDenied 
+from rest_framework.exceptions import  PermissionDenied 
 class SignInSerializer(BaseUserSerializer):
     password = serializers.CharField(write_only=True)
 

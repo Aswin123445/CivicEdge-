@@ -1,6 +1,4 @@
 import pytest
-from django.urls import reverse
-from apps.user.models.user import User
 CREATE_SOLVER_URL = "/api/v1/user/admin/create-solver/"  
 
 @pytest.mark.django_db
@@ -175,7 +173,6 @@ class TestInvalidCreateSolver:
             "password": "StrongPass1!"
         }
         # Hit repeatedly—depending on your throttling config, later ones should be throttled
-        first = client.post(CREATE_SOLVER_URL, payload, **admin_auth_headers)
         second = client.post(CREATE_SOLVER_URL, payload, **admin_auth_headers)
         # Either duplicate email error or rate limit response
         assert second.status_code in (400, 429)
