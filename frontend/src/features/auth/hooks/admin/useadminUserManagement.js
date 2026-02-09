@@ -6,6 +6,9 @@ import {
 import { useSearchParams } from "react-router-dom";
 import { useState ,useEffect} from "react";
 import { useDebounce } from "../../../../utils/debounce";
+import { extractErrorMessage } from "../../../../utils/extractErrorMessage";
+import { errorToast, successToast } from "../../../../utils/Toaster";
+
 
 export default function useAdminUserManagement() {
   /* =========================
@@ -70,10 +73,14 @@ export default function useAdminUserManagement() {
         id: updatedCard.id,
         role: updatedCard.role,
       }).unwrap();
-
+      successToast({
+        title: "Success",
+        description: "User role has been updated successfully.",
+      })
       setSelectedCard(null);
     } catch (error) {
-      console.log(error);
+      const message = extractErrorMessage(error);
+      errorToast({ title: "Error", description: message });
     }
   };
 
@@ -83,10 +90,16 @@ export default function useAdminUserManagement() {
         id: updatedUser.id,
         is_active: updatedUser.is_active,
       }).unwrap();
-
+      successToast({
+        title: "Success",
+        description: updatedUser.is_active
+          ? "User has been activated successfully."
+          : "User has been deactivated successfully.",
+      })
       setSelectedCard(null);
     } catch (error) {
-      console.log(error);
+      const message = extractErrorMessage(error);  
+      errorToast({ title: "Error", description: message });
     }
   };
 

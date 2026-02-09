@@ -28,7 +28,6 @@ const UserManagement = () => {
   if (isLoading) {
     return <UserManagementSectionLoader />;
   }
-  console.log("is is feting working", isFetching);
   return (
     <>
       <div className="relative mb-6 ml-2 w-48">

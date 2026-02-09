@@ -1,18 +1,14 @@
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useLogoutMutation } from "../../features/auth/services/authApi";
-import { logout_user } from "../../features/auth/authSlice";
 import LogoHeader from "../../features/auth/components/LogoHeader";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/civic_edge.svg";
 import AdminDropDown from "../ui/AdminDropDown";
 import { useState, useRef, useEffect } from "react";
 import LogoutIcon from "../ui/LogoutIcon";
 import ProfileIcon from "../ui/ProfileIcon";
 import SettingsIcon from "../ui/SettingsIcon";
+import useCommon from "../../features/auth/hooks/useCommon";
+
 export default function AdminNavbar() {
-  const dispatch = useDispatch();
-  const [logout] = useLogoutMutation();
-  const navigate = useNavigate();
+  const { handleLogoutAdmin } = useCommon();
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
@@ -31,15 +27,6 @@ export default function AdminNavbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSubmit = async () => {
-    try {
-      await logout().unwrap();
-      dispatch(logout_user());
-      navigate("/auth/admin/login");
-    } catch (err) {
-      console.error("Logout failed:", err);
-    }
-  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-[#1f1f1f] border-b border-gray-700 shadow flex items-center justify-between px-6">
@@ -64,7 +51,7 @@ export default function AdminNavbar() {
           </div>
           <div className="flex items-center justify-center gap-1 hover:bg-[#404040]">
             <LogoutIcon />
-            <button className="py-2 " onClick={handleSubmit}>
+            <button className="py-2 " onClick={handleLogoutAdmin}>
               Logout
             </button>
           </div>

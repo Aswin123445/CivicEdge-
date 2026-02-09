@@ -1,5 +1,5 @@
 import LogoHeader from '../../components/LogoHeader';
-import logo from '../../../../assets/logo.png';
+import logo from '../../../../assets/civic_edge.svg';
 import BackArrow from '../../../../components/ui/BackArrow';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";

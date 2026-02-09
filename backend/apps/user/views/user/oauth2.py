@@ -68,6 +68,7 @@ class GoogleLoginView(APIView):
                 "email": user.email,
                 "name": user.profile.name,
                 "avatar": user.profile.avatar_url,
+                "role": user.role
             }
         }, status=status.HTTP_200_OK)
         response.set_cookie(

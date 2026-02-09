@@ -1,20 +1,15 @@
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import LogoHeader from '../../components/LogoHeader';
-import logo from '../../../../assets/logo.png';
-import EmailField from '../../components/EmailField ';
+import logo from '../../../../assets/civic_edge.svg';
+import EmailField from '../../components/EmailField';
 import PasswordField from '../../components/PasswordField';
 import { useAuth } from '../../hooks/useAuth';
 import Spinner from '../../../../components/ui/Spinner';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
-
 
 export default function AuthLogin() {
-  const { user } = useSelector((state) => state.auth);
-  const navigate = useNavigate();
-  const { login, loginStatus } = useAuth();
+  const { loginStatus, onSubmit } = useAuth();
+
   const {
     register,
     handleSubmit,
@@ -24,63 +19,71 @@ export default function AuthLogin() {
     mode: 'onTouched',
   });
 
-  const onSubmit = async (data) => {
-    await login(data);
-    if (loginStatus.isSuccess === true) {
-      navigate('/dashboard');
-    }
-    if (loginStatus.isError) {
-      console.error('Login failed:', loginStatus.message);
-    }
-  };
+  const password = watch('password') ?? '';
 
-  const password = watch('password') || '';
   const unmetCriteria = [];
   if (!/[A-Z]/.test(password)) unmetCriteria.push('one uppercase');
   if (!/[a-z]/.test(password)) unmetCriteria.push('one lowercase');
   if (!/[^A-Za-z0-9]/.test(password)) unmetCriteria.push('one special character');
-  if (password.length < 9) unmetCriteria.push('minimum 8 characters');
-  if (user) {
-    return <Navigate to="/dashboard" replace />;
-  }
+  if (password.length < 8) unmetCriteria.push('minimum 8 characters');
+
+  const isSubmitDisabled =
+    !isValid ||
+    unmetCriteria.length > 0 ||
+    loginStatus.isLoading;
 
   return (
     <div className="flex flex-col items-center my-3">
       <LogoHeader logo={logo} />
+
       <h2 className="text-3xl font-bold">Sign In</h2>
+
       <form
         className="flex flex-col gap-4 w-72 mt-8"
         onSubmit={handleSubmit(onSubmit)}
         noValidate
       >
-        <EmailField register={register} errors={errors} touchedFields={touchedFields} />
+        <EmailField
+          register={register}
+          errors={errors}
+          touchedFields={touchedFields}
+        />
+
         <PasswordField
           register={register}
           errors={errors}
           touchedFields={touchedFields}
           unmetCriteria={unmetCriteria}
-          label={'Password'}
+          label="Password"
           form_control_name="password"
-          error_prefix ={"Password must contain"}
+          error_prefix="Password must contain"
         />
 
         {/* Forgot Password */}
         <div className="text-xs text-center text-gray-500">
           Forgot{' '}
-          <Link to="/forgot-password" className="text-blue-500 hover:underline">
+          <Link
+            to="/forgot-password"
+            className="text-blue-500 hover:underline"
+          >
             Password
           </Link>
           ?
         </div>
 
-        {/* Buttons */}
+        {/* Actions */}
         <div className="flex justify-between items-center mt-2">
-          <button type="button" className="text-md font-semibold text-black" onClick={() => window.history.back()}>
+          <button
+            type="button"
+            className="text-md font-semibold text-black"
+            onClick={() => window.history.back()}
+          >
             Back
           </button>
+
           <button
             type="submit"
-            disabled={!isValid || unmetCriteria.length > 0 || unmetCriteria.length > 0 || loginStatus.isLoading}
+            disabled={isSubmitDisabled}
             className="bg-sky-400 w-28 text-white px-5 py-1.5 rounded-full font-semibold hover:bg-sky-500 disabled:cursor-not-allowed"
           >
             {loginStatus.isLoading ? <Spinner /> : 'Sign In'}

@@ -3,13 +3,13 @@ import axiosBaseQuery from '../../../services/axiosBaseQuery';
 
 export const commonApi = createApi({
     reducerPath: 'commonApi',
-    baseQuery: axiosBaseQuery({ baseUrl: '/api/v1/user' }),
+    baseQuery: axiosBaseQuery({ baseUrl: '/api/v1/user/common/' }),
 
     endpoints: (builder) => ({
         role: builder.query({
             query: () => {
                 return {
-                    url: '/common/me/',
+                    url: 'me/',
                     method: 'get',
                     withCredentials: false,
                     meta : { skipAuth: false },
@@ -19,7 +19,18 @@ export const commonApi = createApi({
                 return response;
             },
         }),
+        logout: builder.mutation({
+          query: () => ({
+            url: '/logout/',
+            method: 'post',
+            withCredentials: true,
+            meta: { skipAuth: false },
+          }),
+          transformResponse: (response) => {
+            return response;
+          },
+        }),
     }),
 });
 
-export const { useRoleQuery,useLazyRoleQuery } = commonApi;
+export const { useRoleQuery,useLazyRoleQuery,useLogoutMutation } = commonApi;

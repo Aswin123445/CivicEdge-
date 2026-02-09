@@ -5,11 +5,11 @@ import logo from "../../../../assets/civic_edge.svg";
 import EmailField from "../../components/EmailField";
 import PasswordField from "../../components/PasswordField";
 import Spinner from "../../../../components/ui/Spinner";
-import { useAdminAuth } from "../../hooks/useAdminAuth";
-import AdminBadge from "../../components/AdminBadge";
+import useSolverAuth from "../../hooks/useSolverAuth";
+import SolverBadge from "../../components/SolverBadge";
 
-export default function AuthAdminLogin() {
-  const { loginStatus, onSubmit } = useAdminAuth();
+export default function Login() {
+  const { isLoading, onSubmit } = useSolverAuth();
   const {
     register,
     handleSubmit,
@@ -26,9 +26,10 @@ export default function AuthAdminLogin() {
   if (!/[^A-Za-z0-9]/.test(password))
     unmetCriteria.push("one special character");
   if (password.length < 9) unmetCriteria.push("minimum 8 characters");
+
   return (
     <div className="flex flex-col items-center my-3 relative">
-      <AdminBadge />
+      <SolverBadge />
       <LogoHeader logo={logo} />
       <h2 className="text-3xl font-bold">Sign In</h2>
       <form
@@ -75,11 +76,11 @@ export default function AuthAdminLogin() {
               !isValid ||
               unmetCriteria.length > 0 ||
               unmetCriteria.length > 0 ||
-              loginStatus.isLoading
+              isLoading
             }
             className="bg-sky-400 w-28 text-white px-5 py-1.5 rounded-full font-semibold hover:bg-sky-500 disabled:cursor-not-allowed"
           >
-            {loginStatus.isLoading ? <Spinner /> : "Sign In"}
+            {isLoading ? <Spinner /> : "Sign In"}
           </button>
         </div>
       </form>

@@ -1,19 +1,18 @@
 import { Outlet } from "react-router-dom";
-import { useNavigate,useLocation} from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 // import useAdminUserManagement from "../hooks/admin/useadminUserManagement"; // Sample user data
 
 const UserManagementLayout = () => {
   const location = useLocation(); // 👈 this always holds the current pathname
-  let Tab ;
-  if (location.pathname.includes("/admin/management/citizens")){
-    Tab = "user"
-  }else if (location.pathname.includes("/admin/management/solvers")){
-    Tab = "solver"
-  }else {
-    Tab = "admin"
+  let Tab;
+  if (location.pathname.includes("/admin/management/citizens")) {
+    Tab = "user";
+  } else if (location.pathname.includes("/admin/management/solvers")) {
+    Tab = "solver";
+  } else {
+    Tab = "admin";
   }
   // const Tab = location.pathname.includes("/admin/management/citizens") ? "user" : "solver";
-  console.log(location,Tab)
   // const { users, activeTab, setActiveTab } = useAdminUserManagement();
 
   const navigate = useNavigate();
@@ -21,10 +20,10 @@ const UserManagementLayout = () => {
     navigate("/admin/management/solvers");
   };
   const handleUserClick = () => {
-    navigate("/admin/management/citizens");    
+    navigate("/admin/management/citizens");
   };
   const handleAdminClick = () => {
-    navigate("/admin/management/admins");    
+    navigate("/admin/management/admins");
   };
 
   return (

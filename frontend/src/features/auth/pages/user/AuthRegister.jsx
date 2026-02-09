@@ -1,19 +1,13 @@
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
 import LogoHeader from '../../components/LogoHeader';
-import logo from '../../../../assets/logo.png';
-import EmailField from '../../components/EmailField ';
+import logo from '../../../../assets/civic_edge.svg';
+import EmailField from '../../components/EmailField';
 import PasswordField from '../../components/PasswordField';
 import { useAuth } from '../../hooks/useAuth';
 import Spinner from '../../../../components/ui/Spinner';
-import {useNavigate} from 'react-router-dom'; 
-import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
 
 export default function AuthRegister() {
-  const { user } = useSelector((state) => state.auth);
-  const navigate = useNavigate();
-  const { signup, signupStatus } = useAuth();
+  const { signupStatus,onSignUpSubmit } = useAuth();
   const {
     register,
     handleSubmit,
@@ -22,45 +16,24 @@ export default function AuthRegister() {
   } = useForm({
     mode: 'onTouched',
   });
-
-  const onSubmit = async (data) => {
-    console.log('Form submitted:', data);
-    try {
-      const result = await signup(data);
-      if (result.error) {
-        console.error(result)
-        console.error('Signup failed:', result.message);
-      } else {
-        console.log(result)
-        console.log('Signup success:', result.data.user);
-        navigate('/verify-email-info');
-        // Optionally redirect to login/home page
-      }
-    } catch (e) {
-      console.error('Unexpected signup error:', e);
-    }
-  };
   const password = watch('password') || '';
-  const conformPassword = watch('confirm_password') || '';
+  const confirmPassword = watch('confirm_password') || '';
   const unmetCriteria = [];
   const confirmUnmetCriteria = [];
   if (!/[A-Z]/.test(password)) unmetCriteria.push('one uppercase');
   if (!/[a-z]/.test(password)) unmetCriteria.push('one lowercase');
   if (!/[^A-Za-z0-9]/.test(password)) unmetCriteria.push('one special character');
   if (password.length < 7) unmetCriteria.push('minimum 7 characters');
-  if (password !== conformPassword) confirmUnmetCriteria.push('passwords do not match');
-  const passwordMatch = conformPassword === password;
+  if (password !== confirmPassword) confirmUnmetCriteria.push('passwords do not match');
+  const passwordMatch = confirmPassword === password;
 
-  if (user) {
-    return <Navigate to="/dashboard" replace />;
-  }
   return (
     <div className="flex flex-col items-center my-3">
       <LogoHeader logo={logo} />
       <h2 className="text-3xl font-bold">Sign Up</h2>
       <form
         className="flex flex-col gap-4 w-72 mt-8"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSignUpSubmit)}
         noValidate
       >
         <EmailField register={register} errors={errors} touchedFields={touchedFields} />

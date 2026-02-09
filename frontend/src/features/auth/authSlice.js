@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 // import { getToken } from './services/tokenStorage';
 import { authApi } from './services/authApi';
+import {solverAuthApi} from './services/solverAuthApi'
 import { commonApi } from './services/commonApi';
 import { adminAuthApi } from './services/adminAuthApi';
 
@@ -19,6 +20,7 @@ const slice = createSlice({
       state.user = null;
       state.access_token = null;
       state.loading = false
+      state.role = null
     },
     setUser(state, action) {
       const {access,user_id} = action.payload;
@@ -29,9 +31,19 @@ const slice = createSlice({
       state.access_token = action.payload;
     },
   },
+
   extraReducers: (builder) => {
     builder.addMatcher(
       authApi.endpoints.login.matchFulfilled,
+      (state, { payload }) => {
+        state.role = payload.role
+        state.access_token = payload.access;
+        state.user = payload.email
+        state.loading = false
+      }
+    );
+    builder.addMatcher(
+      solverAuthApi.endpoints.login.matchFulfilled,
       (state, { payload }) => {
         state.role = payload.role
         state.access_token = payload.access;
@@ -45,12 +57,12 @@ const slice = createSlice({
         state.user = payload.user.email;
         state.access_token = payload.access;
         state.loading = false
+        state.role = payload.user.role
       }
     );
     builder.addMatcher(
       authApi.endpoints.refresh.matchFulfilled,
       (state, { payload }) => {
-        console.log(payload)
         state.access_token = payload.access;
         state.loading = false
       }

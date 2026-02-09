@@ -1,6 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.toast-success {
+  @apply bg-green-600/90 text-white border border-green-400/60 pl-10 w-full py-3 rounded-xl shadow-lg backdrop-blur-sm;
+
+}
+
+.toast-error {
+  @apply bg-red-600/90 text-white border border-red-400/60 pl-10 w-full py-3 rounded-xl shadow-lg backdrop-blur-sm;
+}
+
+.toast-info {
+  @apply bg-blue-600 text-white border border-green-400/60 pl-10 w-full py-3 rounded-xl shadow-lg backdrop-blur-sm;
+}
 
 /* Custom Scrollbar Styling */
 .custom-scrollbar::-webkit-scrollbar {
@@ -34,3 +46,4 @@ main.custom-scrollbar::-webkit-scrollbar-track {
 main.custom-scrollbar {
   scrollbar-color: #4a4a4a #1e1e1e; /* Thumb and track colors for main content */
 }
+

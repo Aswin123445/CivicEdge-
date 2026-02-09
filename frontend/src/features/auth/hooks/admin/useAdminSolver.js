@@ -5,9 +5,10 @@ import {
   useFetchZonesQuery,
 } from "../../services/adminAuthApi";
 import { useSearchParams } from "react-router-dom";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDebounce } from "../../../../utils/debounce";
-
+import { extractErrorMessage } from "../../../../utils/extractErrorMessage";
+import { errorToast, successToast } from "../../../../utils/Toaster";
 
 export const useAdminSolver = () => {
   /* =========================
@@ -21,7 +22,7 @@ export const useAdminSolver = () => {
   /* =========================
      Queries
      ========================= */
-  const { data,isLoading,isFetching } = useListSolversQuery({ page, search });
+  const { data, isLoading, isFetching } = useListSolversQuery({ page, search });
   const { data: zoneData, isSuccess: zoneSuccess } = useFetchZonesQuery();
 
   /* =========================
@@ -88,9 +89,15 @@ export const useAdminSolver = () => {
         role: updatedCard.role,
       }).unwrap();
 
+      successToast({
+        title: "Success",
+        description: "User role has been updated successfully.",
+      });
+
       setRoleData(null);
     } catch (error) {
-      console.log(error);
+      const message = extractErrorMessage(error);
+      errorToast({ title: "Error", description: message });
     }
   };
 
@@ -100,10 +107,16 @@ export const useAdminSolver = () => {
         id: updatedUser.id,
         is_active: updatedUser.is_active,
       }).unwrap();
-
+      successToast({
+        title: "Success",
+        description: updatedUser.is_active
+          ? "User has been activated successfully."
+          : "User has been deactivated successfully.",
+      });
       setFlagData(null);
     } catch (error) {
-      console.log(error);
+      const message = extractErrorMessage(error);
+      errorToast({ title: "Error", description: message });
     }
   };
 
@@ -146,6 +159,6 @@ export const useAdminSolver = () => {
     setSearchValue,
     searchValue,
     isLoading,
-    isFetching
+    isFetching,
   };
 };

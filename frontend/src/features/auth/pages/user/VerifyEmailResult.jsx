@@ -3,21 +3,14 @@ import { useVerifyEmailQuery } from "../../services/authApi";
 import { Loader2 } from "lucide-react";
 import LogoHeader from "../../components/LogoHeader";
 import BackArrow from "../../../../components/ui/BackArrow";
-import logo from "../../../../assets/logo.png";
-import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import logo from "../../../../assets/civic_edge.svg";
 
 
 export default function VerifyEmailResult() {
-  const { user } = useSelector((state) => state.auth);
-
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const { data, error, isLoading } = useVerifyEmailQuery({ token });
-  if (user) {
-    return <Navigate to="/dashboard" replace />;
-  }
 
   return (
     <div className="flex flex-col items-center my-6 px-4 text-center">

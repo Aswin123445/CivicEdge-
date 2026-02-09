@@ -1,29 +1,37 @@
 import { useNavigate } from "react-router-dom";
-import React, { useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { useAuth } from "../hooks/useAuth";
+import { errorToast } from "../../../utils/Toaster";
+import { extractErrorMessage } from "../../../utils/extractErrorMessage";
+
 // Hook encapsulating landing logic
 const useAuthLanding = () => {
-  const {googleLogin,googleLoginStatus} = useAuth();
+  const { googleLogin } = useAuth();
   const [mode, setMode] = useState("signIn"); // "signIn" | "signUp"
   const navigate = useNavigate();
 
-  const handleGoogle = useCallback((access_token) => {
-    // placeholder: trigger Google OAuth / popup / redirect
-    async function handleGoogleLogin() {
-      try {
-        await googleLogin({ data:access_token });
-        if (googleLoginStatus.isSuccess === true) {
-          console.log('hi page reaced here')
+  const handleGoogle = useCallback(
+    (access_token) => {
+      // placeholder: trigger Google OAuth / popup / redirect
+      async function handleGoogleLogin() {
+        try {
+          await googleLogin({ data: access_token }).unwrap();
           navigate("/dashboard");
+        } catch (err) {
+          const message = extractErrorMessage(err);
+          errorToast({
+            title: "Login failed",
+            description: `${message || "An error occurred during login."}`,
+          });
+          throw err; 
         }
-      } catch (err) {
-        console.error(err);
       }
-    }
-    handleGoogleLogin();
+      handleGoogleLogin();
 
-    // e.g., navigate or open popup depending on mode
-  }, [googleLogin,googleLoginStatus,navigate]);
+      // e.g., navigate or open popup depending on mode
+    },
+    [googleLogin, navigate],
+  );
   const handleEmail = useCallback(() => {
     if (mode === "signIn") {
       navigate("/login");

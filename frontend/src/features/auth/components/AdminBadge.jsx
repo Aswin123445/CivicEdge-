@@ -1,8 +1,8 @@
-import adminbadge from '../../../assets/adminbadge.png';
+import adminbadge from '../../../assets/adminbadge.svg';
 
 const AdminBadge = () => {
     return (
-        <div className="flex justify-start h-28 w-32 absolute right-64 bottom-72 ">
+        <div className="flex justify-start h-28 w-32 absolute right-[17rem] bottom-72 ">
           <img
             src={adminbadge}
             alt="Rotated"

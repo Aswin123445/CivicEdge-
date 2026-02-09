@@ -7,6 +7,8 @@ import RoleGuard from "./guards/RoleGuard";
 import AuthLayout from "../features/auth/layout/AuthLayout";
 import MainLayout from "../features/core/layouts/MainLayout";
 import AdminLayout from "../features/auth/layout/adminLayout";
+import SolverLayout from "../features/core/layouts/SolverLayout";
+
 const UserManagementLayout = lazy(() => import("../features/auth/layout/RoleManagementLayout")); // UserManagementLayout
 
 /* ========== AUTH PAGES (GUEST) ========== */
@@ -20,8 +22,10 @@ import AuthResetPassword from "../features/auth/pages/user/AuthResetPassword";
 import AuthResetPasswordInfo from "../features/auth/pages/user/AuthResetPasswordInfo";
 import ResetPasswordConfirmation from "../features/auth/pages/user/AuthResetConfirmation";
 import AuthAdminLogin from "../features/auth/pages/admin/AdminLogin";
+import Login from "../features/auth/pages/solver/Login";
 
 /* ========== CORE PAGES ========== */
+import SolverDashboard from '../features/core/pages/solver/Dashboard'
 import Dashboard from "../features/core/pages/Dashboard";
 import PostLoginRedirect from "../pages/PostLoginRedirect";
 import Unauthorized from "../pages/Unauthorized";
@@ -58,7 +62,13 @@ export default function AppRoutes() {
             element={<ResetPasswordConfirmation />}
           />
 
+      {/* ================== SYSTEM ================== */}
+      <Route path="/unauthorized" element={<Unauthorized />} />
+      {/* ================== FALLBACK ================== */}
+      <Route path="*" element={<Navigate to="/unauthorized" replace />} />
+
           <Route path="/auth/admin/login" element={<AuthAdminLogin />} />
+          <Route path = "/auth/solver/login" element={<Login/>} />
         </Route>
       </Route>
 
@@ -71,6 +81,11 @@ export default function AppRoutes() {
         <Route element={<RoleGuard roles={["citizen"]} />}>
           <Route element={<MainLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
+        </Route>
+        <Route element={<RoleGuard roles={["solver"]} />}>
+          <Route element={<SolverLayout />}>
+            <Route path="solver/dashboard" element={<SolverDashboard />} />
           </Route>
         </Route>
 
@@ -116,11 +131,8 @@ export default function AppRoutes() {
         </Route>
       </Route>
 
-      {/* ================== SYSTEM ================== */}
-      <Route path="/unauthorized" element={<Unauthorized />} />
 
-      {/* ================== FALLBACK ================== */}
-      <Route path="*" element={<Navigate to="/landing" replace />} />
+
     </Routes>
   );
 }

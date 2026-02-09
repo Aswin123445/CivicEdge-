@@ -7,8 +7,8 @@ import SolverCreateModal from "../../components/modaals/SolverCreateModal";
 import Pagination from "../../../../components/common/PaginationBar";
 import UserManagementSectionLoader from "../../components/skeltons/loaders_skelton/UserManagementSectionLoader";
 import DottedLoaderIndicator from "../../../../components/common/DottedLoaderIndicator";
-
-
+import { extractErrorMessage } from "../../../../utils/extractErrorMessage";
+import { errorToast, successToast } from "../../../../utils/Toaster";
 
 // Sample user data
 const SolverManagement = () => {
@@ -17,7 +17,6 @@ const SolverManagement = () => {
     isCreateModal,
     setIsCreateModal,
     addSolver,
-    addStatus,
     roleData,
     setRoleData,
     flagData,
@@ -42,10 +41,11 @@ const SolverManagement = () => {
 
   const handleCreate = async(createdUser)=>{
     try{
-      const data = await addSolver(createdUser).unwrap();
-      console.log(data);
-    }catch{
-      console.log(addStatus.error);
+      await addSolver(createdUser).unwrap();
+      successToast({ title: "Solver Created", description: "The solver has been created successfully." });
+    }catch(err){
+      const message = extractErrorMessage(err);
+      errorToast({ title: "Failed to Create Solver", description: message });
     }
   }
   if (isLoading) {

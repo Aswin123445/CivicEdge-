@@ -1,43 +1,34 @@
 
-import logo from "../../../../assets/logo.png";
-import google_logo from "../../../../assets/google_logo.png";
-import email_logo from "../../../../assets/email_logo.png";
+import logo from "../../../../assets/civic_edge.svg";
+import google_logo from "../../../../assets/google_logo.svg";
+import email_logo from "../../../../assets/email_logo.svg";
 import TabButton from "../../../../components/ui/tab_button";
 import SocialButton from "../../components/SocialButton";
 import AuthFooter from "../../components/AuthFooter";
 import LogoHeader from "../../components/LogoHeader";
 import useAuthLanding from "../../hooks/useAuthLanding";
 import { useGoogleLogin } from "@react-oauth/google";
-import { Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { errorToast } from "../../../../utils/Toaster";
 
 
 // animated underline with enter/exit
 const AuthLanding = () => {
-    const data = useSelector((state) => state.auth);
-    console.log(data)
-    const { user } = useSelector((state) => state.auth);
     const { mode, switchTo, handleGoogle, handleEmail } = useAuthLanding();
     const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
         // Exchange access token with your backend
-        handleGoogle(tokenResponse.access_token);
-      } catch (err) {
-        console.error(err);
-        alert("Login failed");
+        await handleGoogle(tokenResponse.access_token);
+      } catch  {
+        //already handled in handleGoogle
       }
     },
     onError: (err) => {
-      console.log(err)
-      alert("Login failed");
+      errorToast({ title: "Google Login Failed", description: err.error });
     },
   });
-  const handleGoogleLogin = async()=> {
-    await login();
-  }
-  if (user) {
-    return <Navigate to="/dashboard" replace />;
+  const handleGoogleLogin = ()=> {
+    login();
   }
 
   return (

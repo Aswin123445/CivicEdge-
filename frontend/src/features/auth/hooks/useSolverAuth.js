@@ -1,11 +1,13 @@
 import { extractErrorMessage } from "../../../utils/extractErrorMessage";
 import { errorToast } from "../../../utils/Toaster";
-import { useLoginMutation } from "../services/adminAuthApi";
-import { useNavigate } from 'react-router-dom';
+import { useLoginMutation } from "../services/solverAuthApi";
+import { useNavigate } from "react-router-dom";
 
-export function useAdminAuth() {
-  const [login, loginResult] = useLoginMutation();
+export default function useSolverAuth() {
   const navigate = useNavigate();
+  const [login, { data, isLoading, isSuccess, isError, error }] =
+    useLoginMutation();
+
   const onSubmit = async (data) => {
     try {
       await login(data).unwrap(); // result contains your API response
@@ -13,13 +15,20 @@ export function useAdminAuth() {
       navigate("/post-login", { replace: true });
     } catch (error) {
       const message = extractErrorMessage(error);
-      errorToast({title:"Login failed",description:`${message || 'An error occurred during login.'}`});
+      errorToast({
+        title: "Login failed",
+        description: `${message || "An error occurred during login."}`,
+      });
     }
   };
 
   return {
     login,
-    loginStatus: loginResult,
-    onSubmit
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+    data,
+    onSubmit,
   };
 }

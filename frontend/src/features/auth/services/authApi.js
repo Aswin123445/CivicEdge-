@@ -36,7 +36,6 @@ export const authApi = createApi({
         meta: { skipAuth: true },
       }),
       transformResponse: (response) => {
-        console.log(response,'for the  data is here')
         return response;
       },
     }),
@@ -101,17 +100,6 @@ export const authApi = createApi({
         return response;
       },
     }),
-    logout: builder.mutation({
-      query: () => ({
-        url: '/logout/',
-        method: 'post',
-        withCredentials: true,
-        meta: { skipAuth: false },
-      }),
-      transformResponse: (response) => {
-        return response;
-      },
-    }),
   }),
 });
 export const { 
@@ -122,5 +110,4 @@ export const {
   useForgotPasswordMutation,
   useResetPasswordMutation,
   useRefreshMutation,
-  useLogoutMutation
 } = authApi;

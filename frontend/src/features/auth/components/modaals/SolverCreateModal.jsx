@@ -9,7 +9,6 @@ function SolverCreateModal({ onClose, onSave }) {
   const [zoneId,setZoneId] = useState("")
 
   const {zones} = useAdminSolver()
-  console.log(zones,"zones in modal");
   const handleSubmit = (e) => {
     e.preventDefault();
     const zone_id = zoneId;

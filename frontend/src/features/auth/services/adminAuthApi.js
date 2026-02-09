@@ -24,7 +24,6 @@ export const adminAuthApi = createApi({
         }),
         providesTags: ['Zones'],
         transformResponse: (response) => {
-          console.log(response,'response')
           return response;
         }
       }),
@@ -75,7 +74,6 @@ export const adminAuthApi = createApi({
         }),
         providesTags: ['Solvers'],
         transformResponse: (response) => {
-          console.log(response,"response")
           return response;
         },
       }),
@@ -115,7 +113,6 @@ export const adminAuthApi = createApi({
         }),
         providesTags: ['Admins'],
         transformResponse: (response) => {
-          console.log(response,"response" )
           return response;
         },
       }),

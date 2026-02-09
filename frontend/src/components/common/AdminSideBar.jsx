@@ -6,7 +6,7 @@ function AdminSidebar() {
   const [isOpen, setIsOpen] = useState(false);
     const location = useLocation();
 
-  const { setActiveTab, activeTab } = useAdminUserManagement();
+  const { setActiveTab } = useAdminUserManagement();
   return (
     <>
       {/* Toggle Button - only visible on small screens */}
@@ -46,7 +46,7 @@ function AdminSidebar() {
         <nav className="flex-1 overflow-y-auto px-2 py-3 space-y-1">
           <NavLink
             to="/admin/management/citizens"
-            onClick={() => {setActiveTab("user"),console.log("clicked",activeTab)}}
+            onClick={() => {setActiveTab("user")}}
 
             end
             className={() =>
