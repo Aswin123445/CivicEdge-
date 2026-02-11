@@ -1,16 +1,20 @@
-# backend/core/settings/production.py
-from .base import * # noqa: F403
-import os
+# config/settings/production.py
+from .base import *
+import dj_database_url
+
 DEBUG = False
-ALLOWED_HOSTS = ["yourdomain.com"]
+
+ALLOWED_HOSTS = [
+    ".fly.dev",
+]
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("DB_NAME"),
-        "USER": os.environ.get("DB_USER"),
-        "PASSWORD": os.environ.get("DB_PASSWORD"),
-        "HOST": os.environ.get("DB_HOST", "localhost"),
-        "PORT": os.environ.get("DB_PORT", "5432"),
-    }
+    "default": dj_database_url.parse(
+        os.getenv("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True,
+    )
 }
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+CSRF_TRUSTED_ORIGINS = ["https://*.fly.dev"]
