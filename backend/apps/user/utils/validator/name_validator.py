@@ -11,6 +11,8 @@ def name_validator(name: str):
     """
     if not isinstance(name, str):
         raise ValidationError("Name must be a string.")
+    if "<" in name or ">" in name:
+        raise ValidationError("Invalid characters in name")
 
     name = name.strip()
 

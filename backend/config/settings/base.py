@@ -4,6 +4,8 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 import sys
+import cloudinary
+from shared.utils.redis_startup import redis_available
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -26,7 +28,7 @@ INSTALLED_APPS = [
     
     #project apps
     'apps.user',
-    
+    'apps.profiles',
     # Third-party apps   
     'corsheaders',
     'rest_framework',
@@ -133,9 +135,20 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "password")
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "from email")
 
 # backend/core/settings/base.py 
+REDIS_HOST = os.getenv("REDIS_HOST", "redis")
+REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
 
-CELERY_BROKER_URL = 'redis://redis:6379/0'
-CELERY_RESULT_BACKEND = 'redis://redis:6379/1'
+if redis_available(REDIS_HOST, REDIS_PORT):
+    CELERY_BROKER_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}/0"
+    CELERY_RESULT_BACKEND = f"redis://{REDIS_HOST}:{REDIS_PORT}/1"
+else:
+    CELERY_TASK_ALWAYS_EAGER = True
+    CELERY_TASK_EAGER_PROPAGATES = True  
+# CELERY_BROKER_URL = 'redis://redis:6379/0'
+# CELERY_RESULT_BACKEND = 'redis://redis:6379/1'
+CELERY_TASK_ALWAYS_EAGER = True #for local envirnmen
+CELERY_TASK_EAGER_PROPAGATES = True #for  local envirment
+
 CELERY_ACCEPT_CONTENT = ['json']  
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
@@ -145,6 +158,9 @@ CELERY_TIMEZONE = 'UTC'  # or your timezone
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
 DATA_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024
+
+#cloudinary
+cloudinary.config(secure = not DEBUG)
 
 
 

@@ -83,7 +83,7 @@ class TestInvalidCreateSolver:
     #     assert response.status_code == 201  # depends on your email sanitizer
 
     def test_duplicate_email(self, client, admin_auth_headers, django_user_model):
-        django_user_model.objects.create_user(email="solver@example.com", password="StrongPass1!", role="solver")
+        django_user_model.objects.create_user(email="solver@example.com", password="StrongPass1!", role="solver",zone ="81b90f7a-8da3-413f-86b3-1cd2bcdbd77f")
         payload = {"name": "Solver Dup", "email": "solver@example.com", "password": "StrongPass1!"}
         response = client.post(CREATE_SOLVER_URL, payload, **admin_auth_headers)
         assert response.status_code == 400

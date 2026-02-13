@@ -149,14 +149,15 @@ class Profile(models.Model):
         null=True,
         blank=True,
         validators=[indian_phone_validator],
-        help_text="Valid 10-digit Indian mobile number"
+        help_text="Valid 10-digit Indian mobile number",
+        unique=True
     )
     avatar_url = models.URLField(null=True, blank=True, help_text="Profile picture URL")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     # Citizen fields
-    location = models.CharField(max_length=200, null=True, blank=True)
+    is_available = models.BooleanField(default=False)
     interests = models.JSONField(null=True, blank=True, help_text="List of user's interests")
     # zone = models.CharField(max_length=50, null=True, blank=True)
 
