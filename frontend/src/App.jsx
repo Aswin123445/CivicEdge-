@@ -6,8 +6,14 @@ function App() {
   useAuthInit()
   return (
     <>
+    <div className="min-h-screen flex flex-col ">
       <AppRoutes />
-      <Toaster richColors position="top-right" />    </>
+      {/* INSIDE root, AFTER footer is fine */}
+      
+    </div>
+        <Toaster richColors position="top-right" />
+
+       </>
   );
 }
 export default App;

@@ -4,11 +4,12 @@ import { authApi } from '../features/auth/services/authApi';
 import { adminAuthApi } from '../features/auth/services/adminAuthApi';
 import { commonApi } from '../features/auth/services/commonApi';
 import { solverAuthApi } from '../features/auth/services/solverAuthApi';
-
+import { profileApi } from '../features/core/services/coreApi';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    [profileApi.reducerPath]: profileApi.reducer,
     [authApi.reducerPath]: authApi.reducer,  
     [adminAuthApi.reducerPath]: adminAuthApi.reducer,
     [commonApi.reducerPath]: commonApi.reducer,
@@ -20,5 +21,6 @@ export const store = configureStore({
   .concat(adminAuthApi.middleware)
   .concat(commonApi.middleware)
   .concat(solverAuthApi.middleware)
+  .concat(profileApi.middleware),
 });
 export default store;

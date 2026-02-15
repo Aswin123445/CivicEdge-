@@ -16,7 +16,7 @@ const useAuthLanding = () => {
       async function handleGoogleLogin() {
         try {
           await googleLogin({ data: access_token }).unwrap();
-          navigate("/dashboard");
+          navigate("/home");
         } catch (err) {
           const message = extractErrorMessage(err);
           errorToast({

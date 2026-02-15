@@ -26,7 +26,7 @@ import Login from "../features/auth/pages/solver/Login";
 
 /* ========== CORE PAGES ========== */
 import SolverDashboard from '../features/core/pages/solver/Dashboard'
-import Dashboard from "../features/core/pages/Dashboard";
+import CivicEdgeHome from "../features/core/pages/citizen/CitizenHome";
 import PostLoginRedirect from "../pages/PostLoginRedirect";
 import Unauthorized from "../pages/Unauthorized";
 
@@ -38,6 +38,7 @@ const  AdminManagement = lazy(() => import("../features/auth/pages/admin/AdminMa
 import Test from "../features/auth/pages/admin/Test";
 
 import UserManagementSectionLoader from "../features/auth/components/skeltons/loaders_skelton/UserManagementSectionLoader";
+import CitizenProfile from "../features/core/pages/citizen/CitizenProfile";
 export default function AppRoutes() {
   return (
     <Routes>
@@ -80,7 +81,8 @@ export default function AppRoutes() {
         {/* citizen authenticated area */}
         <Route element={<RoleGuard roles={["citizen"]} />}>
           <Route element={<MainLayout />}>
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/home" element={< CivicEdgeHome/>} />
+            <Route path="/profile" element={<CitizenProfile />} />
           </Route>
         </Route>
         <Route element={<RoleGuard roles={["solver"]} />}>

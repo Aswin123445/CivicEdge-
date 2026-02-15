@@ -39,6 +39,18 @@ const dispatch = useDispatch();
       errorToast({title:"Logout failed",description:`${message || 'An error occurred during logout.'}`});
     }
   };
+    const handleLogoutCitizen = async () => {
+    try { 
+      await logout().unwrap(); // fresh response from backend
+      dispatch(logout_user()); // clear redux state
+      setTimeout(()=>{
+        navigate("/landing");
+      },[0])
+    } catch (err) {
+      const message = extractErrorMessage(err);
+      errorToast({title:"Logout failed",description:`${message || 'An error occurred during logout.'}`});
+    }
+  };
 
   return {
     data,
@@ -46,6 +58,7 @@ const dispatch = useDispatch();
     isSucess,
     logout,
     handleLogoutAdmin,
-    handleLogout
+    handleLogout,
+    handleLogoutCitizen
   };
 }

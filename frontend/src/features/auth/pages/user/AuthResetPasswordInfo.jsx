@@ -10,7 +10,7 @@ export default function AuthResetPasswordInfo() {
 
   const navigate = useNavigate()
   if (user) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/home" replace />;
   }
   return (
 <div className="flex flex-col items-center my-6 px-4 text-center">

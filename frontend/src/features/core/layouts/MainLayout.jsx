@@ -1,42 +1,25 @@
 // src/layout/MainLayout.jsx
 import { Outlet } from "react-router-dom";
-import LogoHeader from "../../auth/components/LogoHeader";
-import logo from "../../../assets/civic_edge.svg";
-import { useAuth } from "../../auth/hooks/useAuth";
+import HomeNavbar from "../components/citizen/Navbar";
+import Footer from "../../../components/common/Footer";
+
 export default function MainLayout() {
-  const { handleLogout } = useAuth();
-
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex flex-col bg-blue-700">
       {/* Navbar */}
-      <header className="flex justify-between items-center  text-white p-4">
-        <LogoHeader
-          logo={logo}
-          classname={" h-16 w-12"}
-          classname2={"h-44 w-44"}
-        />
-
-        <div className="flex text-black text-2xl gap-4">
-          <div className="cursor-pointer">profile</div>
-          <div
-            onClick={() => {
-              handleLogout();
-            }}
-            className="cursor-pointer"
-          >
-            logout
-          </div>
-        </div>
-      </header>
+      <HomeNavbar />
 
       {/* Main content */}
-      <main className="flex-1 p-4 bg-gray-50">
+      <main className="flex-1 bg-slate-50">
         <Outlet />
       </main>
+
       {/* Footer */}
-      <footer className="bg-gray-200 text-center p-2 text-sm">
-        &copy; {new Date().getFullYear()} CivicEdge
-      </footer>
+      {/* Footer wrapper owns footer color */}
+
+      <div className="bg-blue-700">
+        <Footer />
+      </div>
     </div>
   );
 }

@@ -3,24 +3,22 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 
 
 // here just created auth slice for core feature like home page about and contact page
-export const authApi = createApi({
-  reducerPath: 'authApi',
-  baseQuery: axiosBaseQuery({ baseUrl: '/api/v1/user' }),
+export const profileApi = createApi({
+  reducerPath: 'profileApi',
+  baseQuery: axiosBaseQuery({ baseUrl: '/api/v1/me' }),
   endpoints: (builder) => ({
-    signup: builder.mutation({
-      query: (credentials) => ({
-        url: '/register/',
-        method: 'post',
-        data: credentials,
-        // meta: { skipAuth: true },
-        withCredentials: false
+    home: builder.query({
+      query: () => ({
+        url: '/home',
+        method: 'get',
+        meta: { skipAuth: false },  
+
       }),
       transformResponse: (response) => {
-        return {
-          user: response.user,
-          message: response.message,
-        }
+        console.log(response);
+        return response;
       },
     }),
   }),
 });
+export const { useHomeQuery } = profileApi

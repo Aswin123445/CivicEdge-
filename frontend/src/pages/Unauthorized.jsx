@@ -16,7 +16,7 @@ export default function Unauthorized() {
         <Link to="/solver-dashboard">Go to Solver Home</Link>
       )}
       {role === "citizen" && (
-        <Link to="/dashboard">Go to Dashboard</Link>
+        <Link to="/home">Go to Home</Link>
       )}
     </div>
   );
