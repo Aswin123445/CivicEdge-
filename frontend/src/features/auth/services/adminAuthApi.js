@@ -1,9 +1,9 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import axiosBaseQuery from '../../../services/axiosBaseQuery'; 
-
+import {adminLogin} from '../authSlice'
+import baseQueryWithReauth from '../../../services/baseQueryWithReauth';
 export const adminAuthApi = createApi({
     reducerPath: 'adminAuthApi',
-    baseQuery: axiosBaseQuery({ baseUrl: '/api/v1/user/admin' }),
+    baseQuery: baseQueryWithReauth({ baseUrl: '/api/v1/user/admin' }),
     tagTypes: ['Citizens', 'Solvers', 'Admins', 'Zones'], 
     endpoints: (builder) => ({
       login: builder.mutation({
@@ -14,6 +14,14 @@ export const adminAuthApi = createApi({
           data: credentials,
           meta: { skipAuth: true },
         }),
+        onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+          try {
+            const { data } = await queryFulfilled;
+            dispatch(adminLogin(data));
+          } catch (error) {
+            console.log(error);
+          }
+        }
       }),
       fetchZones: builder.query({
         query: () => ({

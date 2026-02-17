@@ -19,7 +19,7 @@ class SolverLoginView(APIView):
                 httponly=True,
                 secure=False,      # local HTTP
                 samesite='Lax',    # same-origin via proxy
-                max_age=10*60*3,
+                max_age=60*60*24,
                 path='/',
             )
             return response

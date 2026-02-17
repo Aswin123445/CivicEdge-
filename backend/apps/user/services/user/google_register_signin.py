@@ -8,7 +8,6 @@ User = get_user_model()
 def google_register_signin_service(user_info):
     if not user_info:
         raise ValidationError("Invalid token data")
-    print(user_info)
     email_verified = user_info.get("verified_email")
     email = user_info.get("email")
     name = user_info.get("name")
@@ -46,7 +45,7 @@ def google_register_signin_service(user_info):
         profile.save()
     else:
         # Only update avatar if picture is valid and avatar is missing or outdated
-        if picture and (not profile.avatar_url or profile.avatar_url != picture):
+        if picture and (not profile.avatar_url ):
             profile.avatar_url = picture
             profile.save()
     refresh = RefreshToken.for_user(user)

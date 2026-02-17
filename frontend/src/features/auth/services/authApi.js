@@ -1,5 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import axiosBaseQuery from '../../../services/axiosBaseQuery';
+import baseQueryWithReauth from '../../../services/baseQueryWithReauth';
+import { citizenLogin, googleLogin, refreshToken } from '../authSlice';
 // import { saveToken, getToken } from './tokenStorage';
 
 
@@ -10,7 +11,7 @@ import axiosBaseQuery from '../../../services/axiosBaseQuery';
 
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: axiosBaseQuery({ baseUrl: '/api/v1/user' }),
+  baseQuery: baseQueryWithReauth({ baseUrl: '/api/v1/user' }),
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: (credentials) => ({
@@ -35,6 +36,14 @@ export const authApi = createApi({
         data: credentials,
         meta: { skipAuth: true },
       }),
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(citizenLogin(data));
+        } catch (error) {
+          console.log(error);
+        }
+      },
       transformResponse: (response) => {
         return response;
       },
@@ -46,6 +55,16 @@ export const authApi = createApi({
         withCredentials: true,
         meta: { skipAuth: true },
       }),
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        dispatch(refreshToken({access:null,loading:true}));
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(refreshToken({...data,loading:false}));
+        } catch (error) {
+          dispatch(refreshToken({access:null,loading:false}));
+          console.log(error);
+        }
+      },
       transformResponse: (response) => {
         // save new access token to storage
         return response;
@@ -71,6 +90,14 @@ export const authApi = createApi({
         meta: { skipAuth: true },
         withCredentials: false
       }),
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(googleLogin(data));
+        } catch (error) {
+          console.log(error);
+        }
+      },
       transformResponse: (response) => {
         // saveToken(response.refresh);
         return response;

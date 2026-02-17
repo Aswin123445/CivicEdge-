@@ -1,3 +1,6 @@
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
+
 import UserUpdateModal from "../../components/modaals/UserUpdateModal";
 import FlagModal from "../../components/modaals/UserFlagModal";
 import useAdminUserManagement from "../../hooks/admin/useadminUserManagement";
@@ -5,6 +8,13 @@ import UserCard from "../../components/UserCard";
 import Pagination from "../../../../components/common/PaginationBar";
 import UserManagementSectionLoader from "../../components/skeltons/loaders_skelton/UserManagementSectionLoader";
 import DottedLoaderIndicator from "../../../../components/common/DottedLoaderIndicator";
+
+const fadeUp = {
+  initial: { opacity: 0, y: 10 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.3, ease: "easeOut" },
+};
+
 const UserManagement = () => {
   const {
     selectedCard,
@@ -25,18 +35,31 @@ const UserManagement = () => {
     isLoading,
     isFetching,
   } = useAdminUserManagement();
+
   if (isLoading) {
     return <UserManagementSectionLoader />;
   }
+
   return (
-    <>
-      <div className="relative mb-6 ml-2 w-48">
+    <motion.section
+      {...fadeUp}
+      className="px-4 py-4 text-slate-100"
+    >
+      {/* ===================== */}
+      {/* SEARCH BAR */}
+      {/* ===================== */}
+      <div className="relative mb-6 w-56">
         <input
           type="text"
-          placeholder="search for user"
+          placeholder="Search users"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
-          className="w-full h-8 pl-3 pr-8 rounded-md bg-[#2B2B2B] border border-gray-600 text-white"
+          className="
+            w-full h-9 pl-3 pr-9 rounded-md
+            bg-neutral-800 border border-neutral-600
+            text-sm text-white
+            focus:outline-none focus:ring-1 focus:ring-blue-500
+          "
         />
 
         {isFetching && (
@@ -45,34 +68,56 @@ const UserManagement = () => {
           </div>
         )}
       </div>
-      {/* User cards */}
+
+      {/* ===================== */}
+      {/* USER CARDS GRID */}
+      {/* ===================== */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-        {citizens?.map((user) => (
-          <UserCard
+        {citizens?.map((user, index) => (
+          <motion.div
             key={user.id}
-            user={user}
-            setSelectedCard={setSelectedCard}
-            setIsFlagModalUser={setisFlagModalUser}
-          />
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.25,
+              ease: "easeOut",
+              delay: index * 0.04,
+            }}
+          >
+            <UserCard
+              user={user}
+              setSelectedCard={setSelectedCard}
+              setIsFlagModalUser={setisFlagModalUser}
+            />
+          </motion.div>
         ))}
-        {selectedCard && (
-          <UserUpdateModal
-            user={selectedCard}
-            onClose={() => setSelectedCard(null)}
-            onSave={(updatedUser) => handleSave(updatedUser)}
-            options={{ role1: "citizen", role2: "solver" }}
-          />
-        )}
-        {isFlagModalUser && (
-          <FlagModal
-            user={isFlagModalUser}
-            onClose={() => setisFlagModalUser(null)}
-            onSave={(updatedUser) => handleFlag(updatedUser)}
-          />
-        )}
       </div>
+
+      {/* ===================== */}
+      {/* MODALS */}
+      {/* ===================== */}
+      {selectedCard && (
+        <UserUpdateModal
+          user={selectedCard}
+          onClose={() => setSelectedCard(null)}
+          onSave={(updatedUser) => handleSave(updatedUser)}
+          options={{ role1: "citizen", role2: "solver" }}
+        />
+      )}
+
+      {isFlagModalUser && (
+        <FlagModal
+          user={isFlagModalUser}
+          onClose={() => setisFlagModalUser(null)}
+          onSave={(updatedUser) => handleFlag(updatedUser)}
+        />
+      )}
+
+      {/* ===================== */}
+      {/* PAGINATION */}
+      {/* ===================== */}
       {!isSinglePage && (
-        <div className="sticky bottom-0 py-4 ">
+        <div className="sticky bottom-0 mt-6 py-4 bg-neutral-900">
           <Pagination
             currentPage={page}
             totalPages={totalPages}
@@ -81,8 +126,8 @@ const UserManagement = () => {
             onPageChange={goToPage}
           />
         </div>
-      )}{" "}
-    </>
+      )}
+    </motion.section>
   );
 };
 

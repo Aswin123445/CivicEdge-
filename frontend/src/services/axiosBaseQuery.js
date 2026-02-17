@@ -1,14 +1,12 @@
 import axios from 'axios';
 const axiosBaseQuery =
   ({ baseUrl } = { baseUrl: '' }) =>
-  async ({ url, method, data, params ,withCredentials = true,meta = {skipAuth: true} }) => {
-    const { default: store } = await import('../store');
-    const token = store.getState().auth.access_token;
-      const headers = meta?.skipAuth
-      ? {} // public endpoints: no Authorization header
-      : token
-      ? { Authorization: `Bearer ${token}` }
-      : {};
+  async ({ url, method, data, params ,withCredentials = true,meta = {skipAuth: true} },api) => {
+     const token = api.getState().auth.access_token;
+      const headers = {};
+      if (token && !meta.skipAuth) {
+        headers.Authorization = `Bearer ${token}`;
+      }
     try {
       const result = await axios({
         url: baseUrl + url,

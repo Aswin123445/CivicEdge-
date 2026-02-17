@@ -14,11 +14,11 @@ class MyAvatarUploadView(APIView):
     parser_classes = [MultiPartParser, FormParser]
 
     def post(self, request):
+
         serializer = AvatarUploadSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
         avatar_url = AvatarService.upload_avatar(
-            serializer.validated_data["avatar"],
+            serializer.validated_data["avatar"].file,
             request.user
         )
         return Response({"avatar_url": avatar_url}, status=status.HTTP_200_OK)

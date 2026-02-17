@@ -1,0 +1,42 @@
+# ---------- STAGE 1: builder ----------
+FROM python:3.11-slim AS builder
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /install
+
+# build deps (ONLY here)
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install --prefix=/install -r requirements.txt
+
+
+# ---------- STAGE 2: runtime ----------
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /app/backend
+
+# runtime-only deps
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
+
+# copy installed python packages
+COPY --from=builder /install /usr/local
+
+# copy django app
+COPY backend/ /app/backend/
+
+# gunicorn (PROD)
+CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000"]

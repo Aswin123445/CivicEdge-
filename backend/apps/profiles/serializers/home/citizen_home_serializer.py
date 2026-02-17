@@ -6,6 +6,8 @@ class CitizenProfileSummarySerializer(serializers.Serializer):
     avatar = serializers.URLField(allow_null=True)
     zone = serializers.CharField(allow_null=True)
     interests = serializers.ListField(child=serializers.CharField(), allow_null=True)
+    email = serializers.EmailField()
+    bio = serializers.CharField(allow_null=True)
 
 class CitizenHomeSerializer(HomeBaseSerializer):
     profile = CitizenProfileSummarySerializer()

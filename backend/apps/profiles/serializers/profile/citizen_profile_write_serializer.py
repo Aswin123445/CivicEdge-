@@ -2,17 +2,23 @@ from rest_framework import serializers
 from apps.user.models.user import Profile
 from apps.user.utils.validator.indian_phone_validator import indian_phone_validator
 from apps.profiles.utils.validators import interest_validator
-from apps.user.utils.validator import name_validator
-
+from apps.user.utils.validator.name_validator import name_validator
+from apps.user.models.user import Zone
 
 class CitizenProfileWriteSerializer(serializers.ModelSerializer):
+    zone_id = serializers.PrimaryKeyRelatedField(
+        queryset=Zone.objects.all(),
+        source="zone",
+        write_only=True
+    )
     class Meta:
         model = Profile
         fields = [
             "phone",
-            "zone", #zone id is expected 
+            "zone_id", 
             "name",
             "interests",
+            "bio"
         ]
     def validate_phone(self, value):
         indian_phone_validator(value)

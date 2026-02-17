@@ -7,7 +7,9 @@ class SolverProfileSummarySerializer(serializers.Serializer):
     zone = serializers.CharField(allow_null=True)
     interests = serializers.ListField(child=serializers.CharField(), allow_null=True)
     skills = serializers.ListField(child=serializers.CharField(), allow_null=True)
+    email = serializers.EmailField()
     availability = serializers.BooleanField()
+    bio = serializers.CharField(allow_null=True)
 
 class SolverHomeSerializer(HomeBaseSerializer):
     profile = SolverProfileSummarySerializer()

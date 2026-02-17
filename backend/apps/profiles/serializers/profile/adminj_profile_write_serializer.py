@@ -7,4 +7,6 @@ class AdminProfileWriteSerializer(serializers.ModelSerializer):
         model = Profile
         fields = [
             "phone",
+            "name",
+            "bio"
         ]

@@ -9,6 +9,8 @@ class AdminHomeBuilder:
             "profile": {
                 "name": user.profile.name,
                 "avatar": user.profile.avatar_url,
+                "bio": user.profile.bio if user.profile.bio else None, 
+                "email": user.email 
             },
             # "dashboard": {
             #     "system": AdminStatsSelector.system(),

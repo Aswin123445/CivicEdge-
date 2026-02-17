@@ -8,7 +8,6 @@ from rest_framework.exceptions import ValidationError as DRFValidationError
 from rest_framework.exceptions import AuthenticationFailed
 User = get_user_model()
 def create_solver(validated_data: dict):
-    print(validated_data)
     name = validated_data['profile'].pop('name')
     password = validated_data.pop('password')
     email = validated_data.pop('email')

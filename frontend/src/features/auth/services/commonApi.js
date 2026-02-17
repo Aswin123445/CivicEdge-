@@ -1,9 +1,10 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import axiosBaseQuery from '../../../services/axiosBaseQuery';
+import baseQueryWithReauth from '../../../services/baseQueryWithReauth';
+import { role,logout_user } from '../authSlice';
 
 export const commonApi = createApi({
     reducerPath: 'commonApi',
-    baseQuery: axiosBaseQuery({ baseUrl: '/api/v1/user/common/' }),
+    baseQuery: baseQueryWithReauth({ baseUrl: '/api/v1/user/common/' }),
 
     endpoints: (builder) => ({
         role: builder.query({
@@ -14,6 +15,14 @@ export const commonApi = createApi({
                     withCredentials: false,
                     meta : { skipAuth: false },
                 };
+            },
+            onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(role(data));
+                } catch (error) {
+                    console.log(error);
+                }
             },
             transformResponse: (response) => {
                 return response;
@@ -26,6 +35,14 @@ export const commonApi = createApi({
             withCredentials: true,
             meta: { skipAuth: false },
           }),
+          onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+            try {
+              const { data } = await queryFulfilled;
+              dispatch(logout_user(data));
+            } catch (error) {
+              console.log(error);
+            }
+          },
           transformResponse: (response) => {
             return response;
           },

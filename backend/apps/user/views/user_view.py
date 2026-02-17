@@ -47,8 +47,7 @@ class SignInView(GenericAPIView):
             httponly=True,
             secure=False,      # local HTTP
             samesite='Lax',    # same-origin via proxy
-            max_age=10*60,
+            max_age=60*60*24,
             path='/',
         )
-        print(response)
         return response

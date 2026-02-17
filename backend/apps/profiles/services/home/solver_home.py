@@ -12,6 +12,8 @@ class SolverHomeBuilder:
                 "zone": user.profile.zone.name if user.profile.zone else None,
                 "skills": user.profile.skills if user.profile.skills else [],
                 "availability": user.profile.is_available,
+                "email": user.email,
+                "bio": user.profile.bio,
                 # "completion": ProfileService.completion(user),
             },
             # "dashboard": {

@@ -10,7 +10,7 @@ import UserMenu from "../UserMenu";
 
 import {User} from "lucide-react"
 const HomeNavbar = () => {
-  const { userData, userDataLoading } = useCitizenService();
+  const { userData, userDataLoading, userDataFetching } = useCitizenService();
   const { userMenuOpen: menuOpen, setUserMenuOpen: setMenuOpen } =
     useCitizenUi();
   return (
@@ -32,7 +32,7 @@ const HomeNavbar = () => {
         </div>
 
         <MobileMenButton />
-        {userDataLoading ? (
+        {userDataLoading || userDataFetching ? (
           <UserSkeleton />
         ) : (
           <div

@@ -11,7 +11,7 @@ class ToggleAvailabilityView(APIView):
     def post(self, request):
         is_available = SolverAvailabilityService.toggle(request.user)
         serializer = SolverAvailabilitySerializer({
-            "availability": is_available,
+            "is_available": is_available,
             "status": "working" if is_available else "not_working"
         })
 

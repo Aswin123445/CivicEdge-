@@ -1,0 +1,84 @@
+version: "3.9"
+
+services:
+  django:
+    container_name: civicedge-django-dev
+    build:
+      context: .
+      dockerfile: docker/django/Dockerfile.dev
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings
+      DB_HOST: postgres
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    volumes:
+      - ./backend:/app/backend
+    depends_on:
+      - postgres
+      - redis
+    restart: always
+
+  celery:
+    container_name: civicedge-celery-dev
+    build:
+      context: .
+      dockerfile: docker/django/Dockerfile.dev
+    command: celery -A config worker -l info
+    env_file:
+      - .env
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      DJANGO_SETTINGS_MODULE: config.settings
+    volumes:
+      - ./backend:/app/backend
+    depends_on:
+      - django
+      - postgres
+      - redis
+    restart: always
+
+  postgres:
+    image: postgres:15
+    container_name: civicedge-postgres-dev
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+    restart: always
+
+  redis:
+    image: redis:alpine
+    container_name: civicedge-redis-dev
+    ports:
+      - "6379:6379"
+    restart: always
+
+  frontend:
+    container_name: civicedge-frontend-dev
+    build:
+      context: ./frontend
+      dockerfile: ../docker/react/Dockerfile.dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      VITE_BACKEND_URL: http://django:8000
+      CHOKIDAR_USEPOLLING: "true"
+    depends_on:
+      - django
+    restart: always
+
+volumes:
+  postgres_data_dev:

@@ -6,6 +6,7 @@ import ROLE_REDIRECT_MAP from  "../utils/role_mapper";
 export default function PostLoginRedirect() {
   const { isFetching } = useCommon();
   const { access_token,role } = useSelector((s) => s.auth);
+
   if (!access_token) {
     return <Navigate to="/auth/solver/login" replace />;
   }

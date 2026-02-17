@@ -11,6 +11,8 @@ class CitizenHomeBuilder:
                 "avatar": user.profile.avatar_url,
                 "zone": user.profile.zone.name if user.profile.zone else None,
                 "interests": user.profile.interests if user.profile.interests else [],
+                "email": user.email,
+                "bio": user.profile.bio,
                 # "completion": ProfileService.completion(user),
             },
             # "dashboard": {

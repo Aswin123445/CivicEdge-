@@ -18,5 +18,6 @@ class CitizenProfileReadSerializer(serializers.ModelSerializer):
             "zone",
             'interests',
             "avatar_url",
+            "bio"
         ]
         read_only_fields = fields  # entire serializer is read-only

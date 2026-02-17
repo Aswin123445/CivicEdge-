@@ -1,12 +1,15 @@
 import { useState } from "react";
-import { X, User } from "lucide-react";
-import { NavLink, useLocation } from "react-router-dom";
-import useAdminUserManagement from "../../features/auth/hooks/admin/useadminUserManagement";
-function AdminSidebar() {
-  const [isOpen, setIsOpen] = useState(false);
-    const location = useLocation();
+import { X, User,LayoutDashboard } from "lucide-react";
+import { NavLink, useNavigate } from "react-router-dom";
+import useCitizenService from "../../features/core/hooks/citizen/useCitizenService";
+import { AdminIdentitySkeleton } from "../../features/core/ui/skeltons/admin/AdminIdentitySkeleton";
+import AdminIdentity from "../../features/core/ui/AdminIdentity";
 
-  const { setActiveTab } = useAdminUserManagement();
+function AdminSidebar() {
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const {userData,userDataLoading,userDataFetching} = useCitizenService()
+
   return (
     <>
       {/* Toggle Button - only visible on small screens */}
@@ -30,9 +33,11 @@ function AdminSidebar() {
         `}
       >
         {/* Sidebar Header */}
-        <div className="flex justify-between items-center px-4 py-3 border-b border-gray-700">
-          <h2 className="text-gray-300 font-semibold text-lg">Admin Panel</h2>
-
+        <div onClick={() => navigate("/admin/profile")} className="cursor-pointer flex justify-between items-center px-4 py-3 border-b border-gray-700">
+          {userDataLoading || userDataFetching ? (
+            <AdminIdentitySkeleton />):
+             <AdminIdentity user={userData?.profile || {}}/>
+}
           {/* Close button - only on mobile */}
           <button
             onClick={() => setIsOpen(false)}
@@ -44,35 +49,36 @@ function AdminSidebar() {
 
         {/* Sidebar Nav */}
         <nav className="flex-1 overflow-y-auto px-2 py-3 space-y-1">
-          <NavLink
-            to="/admin/management/citizens"
-            onClick={() => {setActiveTab("user")}}
-
-            end
-            className={() =>
-              `flex items-center rounded-md px-3 py-2 text-sm font-medium transition ${
-                location.pathname.startsWith("/admin/management")
-                  ? "bg-gray-700 text-white"
-                  : "text-gray-400 hover:bg-gray-700 hover:text-white"
-              }`
-            }
-          >
-            <User className="w-5 h-5 mr-2" />
-            Role Management
-          </NavLink>
-
-          <NavLink
-            to="/admin/test"
+            <NavLink
+            to="/admin/dashboard"
             className={({ isActive }) =>
-              `block rounded-md px-3 py-2 text-sm font-medium transition ${
+              `flex items-center rounded-md px-3 py-2 text-sm font-medium transition ${
                 isActive
                   ? "bg-gray-700 text-white"
                   : "text-gray-400 hover:bg-gray-700 hover:text-white"
               }`
             }
           >
-            Test
+           <LayoutDashboard className="w-5 h-5 mr-2" /> 
+            Dashboard
           </NavLink>
+         <NavLink
+  to="/admin/management/citizens"
+  end
+  className={({ isActive }) =>
+    `flex items-center rounded-md px-3 py-2 text-sm font-medium transition ${
+      isActive
+        ? "bg-gray-700 text-white"
+        : "text-gray-400 hover:bg-gray-700 hover:text-white"
+    }`
+  }
+>
+  <User className="w-5 h-5 mr-2" />
+  Role Management
+</NavLink>
+
+
+
 
           <NavLink
             to="/admin/reports"

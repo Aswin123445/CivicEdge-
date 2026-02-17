@@ -1,11 +1,12 @@
 import { Outlet } from "react-router-dom";
 import AdminNavbar from "../../../components/common/AdminNavbar";
 import AdminSidebar from "../../../components/common/AdminSideBar";
+import AdminFooter from "../../../components/common/AdminFooter";
 
 // Layout
 export default function AdminLayout() {
   return (
-    <div className="h-screen flex flex-col overflow-hidden">
+    <div className="h-screen flex flex-col overflow-hidden bg-[#1e1e1e]">
       {/* Navbar */}
       <AdminNavbar />
 
@@ -15,7 +16,7 @@ export default function AdminLayout() {
 
         {/* Main content */}
         <main className="flex-1 overflow-y-auto bg-[#1e1e1e] custom-scrollbar">
-          <div className="w-full h-screen text-white pl-12 pt-5 sm:pl-12">
+          <div >
             <Outlet />
           </div>
         </main>

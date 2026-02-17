@@ -1,7 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-
 import { createPortal } from "react-dom";
 import { Bell, LogOut, Settings, User, AlertTriangle } from "lucide-react";
 import { HomeIcons } from "../ui/HomeIcons";
@@ -10,7 +9,9 @@ import useCitizenService from "../hooks/citizen/useCitizenService";
 import NameUrlGet from "./NameUrlGet";
 import useCommon from "../../auth/hooks/useCommon";
 import MobileMenuSkeleton from "../ui/skeltons/MobileMenuSkelton";
+import { useNavigate } from "react-router-dom";
 export default function MobileMenu({ open, onClose }) {
+  const navigate = useNavigate();
   const { userData, userDataLoading } = useCitizenService();
   const { handleLogoutCitizen } = useCommon();
   return createPortal(
@@ -126,7 +127,9 @@ export default function MobileMenu({ open, onClose }) {
                 <p className="px-4 text-[10px] font-bold uppercase tracking-widest text-blue-400/60 mb-2">
                   Account
                 </p>
+                <div onClick ={() => {navigate("/profile/"); onClose();}}>
                 <MobileMenuItem icon={User} label="My Profile" />
+                </div>
                 <MobileMenuItem icon={Bell} label="Notifications" badge />
                 <MobileMenuItem icon={Settings} label="Settings" />
                 <div onClick={() => handleLogoutCitizen()}>

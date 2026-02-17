@@ -1,43 +1,62 @@
 import React from "react";
+import { Youtube, Linkedin } from "lucide-react";
 
-const Footer = () => {
+const SolverFooter = () => {
   return (
-    <footer className="bg-blue-700 text-blue-100">
-      <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 items-center gap-6 text-sm">
+    <footer className="bg-blue-700 text-blue-200 border-t border-blue-900">
+      <div className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 md:grid-cols-3 items-center gap-6 text-sm">
+        
         {/* Left: Brand */}
-        <div className="text-center md:text-left text-blue-200">
+        <div className="text-center md:text-left">
           © {new Date().getFullYear()}{" "}
-          <span className="font-semibold text-white">CivicEdge</span>
+          <span className="font-semibold text-blue-50">CivicEdge</span>
         </div>
 
         {/* Center: Developer Credit */}
-        <div className="text-center text-blue-100">
+        <div className="text-center">
           Developed by{" "}
-          <span className="font-semibold text-white">Aswin Sandeep</span>
+          <a
+            href="https://www.linkedin.com/in/your-linkedin-username"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="
+              font-semibold text-blue-50
+              hover:text-white
+              transition-colors
+            "
+          >
+            Aswin Sandeep
+          </a>
         </div>
 
-        {/* Right: Social Links */}
-        <div className="flex justify-center md:justify-end gap-6 text-blue-200">
+        {/* Right: Social Icons */}
+        <div className="flex justify-center md:justify-end gap-5">
           <a
-            href="#"
-            className="hover:text-white transition-colors"
+            href="https://www.youtube.com"
+            target="_blank"
+            rel="noopener noreferrer"
             aria-label="YouTube"
+            className="
+              text-blue-300
+              hover:text-white
+              transition-colors
+            "
           >
-            YouTube
+            <Youtube className="w-5 h-5" />
           </a>
+
           <a
-            href="#"
-            className="hover:text-white transition-colors"
+            href="https://www.linkedin.com/in/your-linkedin-username"
+            target="_blank"
+            rel="noopener noreferrer"
             aria-label="LinkedIn"
+            className="
+              text-blue-300
+              hover:text-white
+              transition-colors
+            "
           >
-            LinkedIn
-          </a>
-          <a
-            href="#"
-            className="hover:text-white transition-colors"
-            aria-label="GitHub"
-          >
-            GitHub
+            <Linkedin className="w-5 h-5" />
           </a>
         </div>
       </div>
@@ -45,4 +64,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default SolverFooter;

@@ -49,11 +49,9 @@ class GoogleLoginView(APIView):
         )
 
         if resp.status_code != 200:
-            print('invalid google token')
             return Response({"error": "Invalid Google token"}, status=status.HTTP_400_BAD_REQUEST)
 
         user_info = resp.json()
-        print(user_info)
         user, access, refresh = google_register_signin_service(user_info)
 
         response = Response({
@@ -73,7 +71,7 @@ class GoogleLoginView(APIView):
             httponly=True,
             secure=False,      # local HTTP
             samesite='Lax',    # same-origin via proxy
-            max_age=3*60,
+            max_age=60*60*24,
             path='/',
         )
         return response

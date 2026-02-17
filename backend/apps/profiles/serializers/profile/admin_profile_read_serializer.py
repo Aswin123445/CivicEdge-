@@ -18,5 +18,6 @@ class AdminProfileReadSerializer(serializers.ModelSerializer):
             # admin/system level fields (if exist)
             "created_at",
             "updated_at",
+            "bio",
         ]
         read_only_fields = fields

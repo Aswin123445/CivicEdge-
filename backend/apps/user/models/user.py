@@ -152,6 +152,8 @@ class Profile(models.Model):
         help_text="Valid 10-digit Indian mobile number",
         unique=True
     )
+    bio = models.TextField(null=True, blank=True)
+
     avatar_url = models.URLField(null=True, blank=True, help_text="Profile picture URL")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -9,7 +9,9 @@ import MainLayout from "../features/core/layouts/MainLayout";
 import AdminLayout from "../features/auth/layout/adminLayout";
 import SolverLayout from "../features/core/layouts/SolverLayout";
 
-const UserManagementLayout = lazy(() => import("../features/auth/layout/RoleManagementLayout")); // UserManagementLayout
+const UserManagementLayout = lazy(
+  () => import("../features/auth/layout/RoleManagementLayout"),
+); // UserManagementLayout
 
 /* ========== AUTH PAGES (GUEST) ========== */
 import AuthLanding from "../features/auth/pages/user/AuthLanding";
@@ -25,20 +27,31 @@ import AuthAdminLogin from "../features/auth/pages/admin/AdminLogin";
 import Login from "../features/auth/pages/solver/Login";
 
 /* ========== CORE PAGES ========== */
-import SolverDashboard from '../features/core/pages/solver/Dashboard'
 import CivicEdgeHome from "../features/core/pages/citizen/CitizenHome";
 import PostLoginRedirect from "../pages/PostLoginRedirect";
 import Unauthorized from "../pages/Unauthorized";
 
 /* ========== ADMIN PAGES ========== */
-const UserManagement = lazy(() => import("../features/auth/pages/admin/CitizenManagemnt")); // UserManagement
-const SolverManagement = lazy(() => import("../features/auth/pages/admin/SolverManagement")); // SolverManagement
-const  AdminManagement = lazy(() => import("../features/auth/pages/admin/AdminManagement")); // AdminManagement
+const UserManagement = lazy(
+  () => import("../features/auth/pages/admin/CitizenManagemnt"),
+); // UserManagement
+const SolverManagement = lazy(
+  () => import("../features/auth/pages/admin/SolverManagement"),
+); // SolverManagement
+const AdminManagement = lazy(
+  () => import("../features/auth/pages/admin/AdminManagement"),
+); // AdminManagement
 
 import Test from "../features/auth/pages/admin/Test";
 
 import UserManagementSectionLoader from "../features/auth/components/skeltons/loaders_skelton/UserManagementSectionLoader";
 import CitizenProfile from "../features/core/pages/citizen/CitizenProfile";
+import SolverDashBoard from "../features/core/pages/solver/SolverDashBoard";
+import SolverProfile from "../features/core/pages/solver/SolverProfile";
+import AdminDashboardMain from "../features/core/pages/admin/AdminDashboardMain";
+import AdminProfile from "../features/core/pages/admin/AdminProfile";
+import AdminDashboardSkeleton from "../features/core/ui/skeltons/admin/AdminDashboardSkeleton";
+import AdminFooterLayout from "../features/core/layouts/AdminFooterLayout";
 export default function AppRoutes() {
   return (
     <Routes>
@@ -63,13 +76,13 @@ export default function AppRoutes() {
             element={<ResetPasswordConfirmation />}
           />
 
-      {/* ================== SYSTEM ================== */}
-      <Route path="/unauthorized" element={<Unauthorized />} />
-      {/* ================== FALLBACK ================== */}
-      <Route path="*" element={<Navigate to="/unauthorized" replace />} />
+          {/* ================== SYSTEM ================== */}
+          <Route path="/unauthorized" element={<Unauthorized />} />
+          {/* ================== FALLBACK ================== */}
+          <Route path="*" element={<Navigate to="/unauthorized" replace />} />
 
           <Route path="/auth/admin/login" element={<AuthAdminLogin />} />
-          <Route path = "/auth/solver/login" element={<Login/>} />
+          <Route path="/auth/solver/login" element={<Login />} />
         </Route>
       </Route>
 
@@ -81,60 +94,63 @@ export default function AppRoutes() {
         {/* citizen authenticated area */}
         <Route element={<RoleGuard roles={["citizen"]} />}>
           <Route element={<MainLayout />}>
-            <Route path="/home" element={< CivicEdgeHome/>} />
+            <Route path="/home" element={<CivicEdgeHome />} />
             <Route path="/profile" element={<CitizenProfile />} />
           </Route>
         </Route>
         <Route element={<RoleGuard roles={["solver"]} />}>
           <Route element={<SolverLayout />}>
-            <Route path="solver/dashboard" element={<SolverDashboard />} />
+            <Route path="solver/dashboard" element={<SolverDashBoard />} />
+            <Route path="solver/profile" element={<SolverProfile />} />
           </Route>
         </Route>
 
         {/* ================== ADMIN ONLY ================== */}
         <Route element={<RoleGuard roles={["admin"]} />}>
           <Route element={<AdminLayout />}>
-            {/* User Management Section */}
-            <Route
-              element={
-                <Suspense fallback={<UserManagementSectionLoader />}>
-                  <UserManagementLayout />
-                </Suspense>
-              }
-            >
+            <Route element={<AdminFooterLayout />}>
+              {/* User Management Section */}
+              <Route element={<UserManagementLayout />}>
+                <Route
+                  path="/admin/management/citizens"
+                  element={
+                    <Suspense fallback={<UserManagementSectionLoader />}>
+                      <UserManagement />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/admin/management/solvers"
+                  element={
+                    <Suspense fallback={<UserManagementSectionLoader />}>
+                      <SolverManagement />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/admin/management/admins"
+                  element={
+                    <Suspense fallback={<UserManagementSectionLoader />}>
+                      <AdminManagement />
+                    </Suspense>
+                  }
+                />
+              </Route>
               <Route
-                path="/admin/management/citizens"
+                path="/admin/dashboard"
                 element={
-                  <Suspense fallback={<UserManagementSectionLoader />}>
-                    <UserManagement />
+                  <Suspense fallback={<AdminDashboardSkeleton />}>
+                    <AdminDashboardMain />
                   </Suspense>
                 }
               />
-              <Route
-                path="/admin/management/solvers"
-                element={
-                  <Suspense fallback={<UserManagementSectionLoader />}>
-                    <SolverManagement />
-                  </Suspense>
-                }
-              />
-              <Route
-                path="/admin/management/admins"
-                element={
-                  <Suspense fallback={<UserManagementSectionLoader />}>
-                    <AdminManagement />
-                  </Suspense>
-                }
-              />
-            </Route>
+              <Route path="/admin/profile" element={<AdminProfile />} />
 
-            <Route path="/admin/test" element={<Test />} />
+              <Route path="/admin/test" element={<Test />} />
+            </Route>
           </Route>
         </Route>
       </Route>
-
-
-
     </Routes>
   );
 }

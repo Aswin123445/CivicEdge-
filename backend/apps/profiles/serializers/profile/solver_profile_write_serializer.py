@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from apps.user.models.user import Profile
-from apps.user.utils.validator import indian_phone_validator, name_validator
+from apps.user.utils.validator.indian_phone_validator import indian_phone_validator
+from apps.user.utils.validator.name_validator import name_validator
 
 
 class SolverProfileWriteSerializer(serializers.ModelSerializer):
@@ -9,7 +10,8 @@ class SolverProfileWriteSerializer(serializers.ModelSerializer):
         fields = [
             "phone",
             "skills",
-            "name"
+            "name",
+            "bio",
         ]
 
     def validate_name(self, value):

@@ -31,7 +31,6 @@ def generate_refresh_access_token(data):
 
         refresh = RefreshToken.for_user(user)
         update_last_login(None, user)
-        print(  f"Generated tokens for user {user.email}"  )
         return {
             'access': str(refresh.access_token),
             'refresh': str(refresh),
