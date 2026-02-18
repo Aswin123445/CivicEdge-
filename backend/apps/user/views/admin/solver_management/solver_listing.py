@@ -5,7 +5,7 @@ from apps.user.serializers.admin.solver_management.listing_serializer import Adm
 class AdminSolverListView(ListAPIView):
         queryset = get_all_solvers()
         serializer_class  = AdminSolverSerializer
-        search_fields = ['email','profile__name']
+        search_fields = ['email','profile__name','reference_id']
         ordering_fields = ['created_at', 'profile__name','zone',]
         ordering = ['-created_at']
         

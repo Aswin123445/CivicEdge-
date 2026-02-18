@@ -11,5 +11,5 @@ class AdminSerializer(serializers.ModelSerializer):
         fields = ['id', 'email', 
                   'name', 'is_active', 
                   'created_at', 'role', 
-                  'phone', 'zone', 'is_active', 
+                  'phone', 'zone', 'is_active','reference_id'
             ]

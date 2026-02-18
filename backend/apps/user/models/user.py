@@ -4,6 +4,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from shared.validators.phone_validators import indian_phone_validator
 from shared.enums.user_role import UserRole
+from shared.utils.generate_reference_id import generate_reference_id
 
 class UserManager(BaseUserManager):
     """
@@ -64,6 +65,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    reference_id = models.CharField(
+        max_length=20,
+        unique=True,
+        db_index=True,
+        editable=False,
+    )
     email = models.EmailField(unique=True,max_length=256)
     password = models.CharField(max_length=128,blank=True)
 
@@ -89,6 +96,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         """
         Save the user after performing full validation.
         """
+        if not self.reference_id:
+            self.reference_id = generate_reference_id(model=User, field_name="reference_id", prefix="USR", padding=10)
         self.full_clean()
         super().save(*args, **kwargs)
 

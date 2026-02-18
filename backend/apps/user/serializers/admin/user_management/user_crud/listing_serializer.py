@@ -9,4 +9,4 @@ class AdminCitizenSerializer(serializers.ModelSerializer):
     profile = serializers.URLField(source='profile.avatar_url', read_only=True)
     class Meta:
         model = User
-        fields = ['id', 'email', 'name', 'is_active', 'created_at', 'role', 'phone', 'zone', 'is_active', 'profile']
+        fields = ['id', 'email', 'name', 'is_active', 'created_at', 'role', 'phone', 'zone', 'is_active', 'profile','reference_id']

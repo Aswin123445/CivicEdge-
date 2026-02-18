@@ -13,5 +13,5 @@ class AdminSolverSerializer(serializers.ModelSerializer):
                   'name', 'is_active', 
                   'created_at', 'role', 
                   'phone', 'zone', 'is_active', 
-                  'profile'
+                  'profile', 'reference_id'
             ]
