@@ -111,6 +111,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         ordering = ["-created_at"]
+        app_label = "user"
 
     def __str__(self):
         return f"user {self.email} ({self.role})"
@@ -141,6 +142,8 @@ class Zone(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     def __str__(self):
         return f"zone {self.name}"
+    class Meta:
+        app_label = "user"
 
 class Profile(models.Model):
     """
@@ -180,3 +183,6 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"{self.user.email} ({self.user.role})"
+    
+    class Meta:
+        app_label = "user"
