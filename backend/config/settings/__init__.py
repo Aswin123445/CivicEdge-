@@ -1,4 +1,5 @@
 # config/settings/__init__.py
+# ruff: noqa: F403,F401
 import os
 
 ENV = os.getenv("ENV", "development")

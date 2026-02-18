@@ -35,7 +35,6 @@ const UserManagement = () => {
     isLoading,
     isFetching,
   } = useAdminUserManagement();
-  console.log(citizens);
   if (isLoading) {
     return <UserManagementSectionLoader />;
   }

@@ -1,6 +1,8 @@
 # config/settings/production.py
+# ruff: noqa: F403,F401
 from .base import *
 import dj_database_url
+import os 
 
 DEBUG = False
 
