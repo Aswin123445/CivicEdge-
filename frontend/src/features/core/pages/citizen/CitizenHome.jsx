@@ -1,4 +1,3 @@
-import HomeNavbar from "../../components/citizen/Navbar";
 import HeroSection from "../../components/citizen/HeroSection"; 
 import QuickActions from "../../components/citizen/QuickActions"; 
 import FeaturesSection from "../../components/citizen/FeatureSection"; 

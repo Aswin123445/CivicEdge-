@@ -102,7 +102,7 @@ const SolverManagement = () => {
                 </h3>
                 <p className="text-sm text-gray-400">{solver.email}</p>
                 <p className="text-sm text-gray-400">
-                  ID: {solver.id.substring(solver.id.length - 6)}
+                  ID: {solver.reference_id}
                 </p>
                 <p className="text-sm text-gray-400">
                   Zone: {solver.zone ? solver.zone : "N/A"}

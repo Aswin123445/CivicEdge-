@@ -8,11 +8,13 @@ import { authApi } from "../services/authApi";
 import { adminAuthApi } from "../services/adminAuthApi";
 import { solverAuthApi } from "../services/solverAuthApi";
 
+
 export default function useCommon() {
 const navigate = useNavigate();
 const dispatch = useDispatch();
   const { access_token } = useSelector((s) => s.auth);
-  const { data, isFetching, isSucess } = useRoleQuery(undefined, {
+
+  const { data, isFetching, isSuccess } = useRoleQuery(undefined, {
     skip: !access_token,
   });
   const [logout] = useLogoutMutation();
@@ -65,7 +67,7 @@ const dispatch = useDispatch();
   return {
     data,
     isFetching,
-    isSucess,
+    isSuccess,
     logout,
     handleLogoutAdmin,
     handleLogout,

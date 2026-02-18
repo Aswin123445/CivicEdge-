@@ -61,8 +61,7 @@ export default function SolverMenu({ open, onClose, user }) {
             className="w-full flex items-center gap-4 p-4 text-left hover:bg-slate-50 transition"
           >
             <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">
-              {user?.name?.[0]?.toUpperCase() || "U"}
-              <NameUrlGet name = {user?.name} avatarUrl = {user?.avatar}/>
+              <NameUrlGet name = {user?.name} avatarUrl = {user?.avatar} />
             </div>
 
             <div className="min-w-0">

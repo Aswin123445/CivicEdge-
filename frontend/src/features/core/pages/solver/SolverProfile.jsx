@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Award, Calendar, Clock, ShieldCheck, CheckCircle } from "lucide-react";
+import {  Clock, ShieldCheck, CheckCircle } from "lucide-react";
 import EditableAvatar from "../../components/EditableAvatar";
 import InlineEditableText from "../../components/InlineEditableText";
 import useProfileHook from "../../hooks/useProfileHook";
@@ -14,21 +14,13 @@ import EditableAvatarSkeletonDark from "../../ui/skeltons/EditableAvatarSkelton"
 const SolverProfile = () => {
   const {
     handleUpload,
-    updateProfile: changeProfile,
     profle_loading,
     avatarIsLoading,
+    updateProfileData,
   } = useProfileHook();
   const { userData, userDataLoading, userDataFetching } = useCitizenService();
   const pageLoad = userDataLoading || profle_loading || userDataFetching
   const name = capitalizeWords(userData?.profile?.name || "User");
-  const updateProfile = (data) => {
-    // send to server
-    try {
-      changeProfile(data).unwrap();
-    } catch (error) {
-      console.error("Failed to update profile:", error);
-    }
-  };
   const [activeTab, setActiveTab] = useState("impact");
 
   const stats = [
@@ -73,7 +65,7 @@ const SolverProfile = () => {
             <div className="text-center md:text-left flex-1 space-y-3">
               <InlineEditableText
                 value={name}
-                onSave={(data) => updateProfile({ name: data })}
+                onSave={(data) => updateProfileData({ name: data })}
                 className="text-3xl font-extrabold text-slate-800"
                 placeholder="Your name"
               />
@@ -95,7 +87,7 @@ const SolverProfile = () => {
                   userData.profile?.bio ||
                   "I will change myself to make my community better!"
                 }
-                onSave={(v) => updateProfile({ bio: v })}
+                onSave={(v) => updateProfileData({ bio: v })}
                 className="mt-4 text-slate-600 max-w-lg italic"
                 placeholder="Add a short bio"
               />

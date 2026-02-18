@@ -9,9 +9,7 @@ import useProfileHook from "../../hooks/useProfileHook";
 import { capitalizeWords } from "../../utils";
 import ProfileHeaderSkeleton from "../../ui/skeltons/ProfileHeaderSkeleton";
 import useCitizenService from "../../hooks/citizen/useCitizenService";
-import DutyStatus from "../../ui/solver/DutyStatus";
 import RoleBadge from "../../ui/RoleBadge";
-import EditableAvatarSkeleton from "../../ui/skeltons/EditableAvatarSkelton";
 import EditableAvatarSkeletonDark from "../../ui/skeltons/EditableAvatarSkelton";
 
 const fadeUp = {
@@ -23,23 +21,15 @@ const fadeUp = {
 const AdminProfile = () => {
   const {
     handleUpload,
-    updateProfile: changeProfile,
     profle_loading,
     avatarIsLoading,
+    updateProfileData
   } = useProfileHook();
   console.log(profle_loading,avatarIsLoading);
   const { userData, userDataLoading, userDataFetching } = useCitizenService();
   const name = capitalizeWords(userData?.profile?.name || "Admin");
   const [activeTab, setActiveTab] = useState("activity");
   const isPageLoading = userDataLoading || userDataFetching || profle_loading ;
-
-  const updateProfileData = (data) => {
-    try {
-      changeProfile(data);
-    } catch (error) {
-      console.error("Failed to update profile:", error);
-    }
-  };
 
   const activityStats = [
     {

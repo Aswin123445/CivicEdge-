@@ -6,7 +6,6 @@ import SolverMenu from "./SolverMenu";
 import solverUi from "../../hooks/solver/solverUi"
 import useCitizenService from "../../hooks/citizen/useCitizenService";
 import NameUrlGet from "../NameUrlGet";
-import ProfileHeaderSkeleton from "../../ui/skeltons/ProfileHeaderSkeleton";
 import UserSkeleton from "../../ui/skeltons/UserButtonSkelton";
 
 export default function SolverNavbar() {
@@ -30,7 +29,7 @@ export default function SolverNavbar() {
       <div className="flex items-center gap-8">
         {/* Logo */}
 
-        <CitizenLogo />
+        <CitizenLogo navigate_route="/solver/dashboard"/>
         {/* Desktop Nav Links */}
         <div className="hidden md:flex items-center gap-6 text-sm font-medium text-blue-100">
           <NavItem active>Dashboard</NavItem>

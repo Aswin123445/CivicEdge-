@@ -23,7 +23,7 @@ export default function UserCard({ user, setSelectedCard, setIsFlagModalUser,rol
           <h3 className="font-semibold">{user.name || "N/A"}</h3>
           <p className="text-sm text-gray-400">{user.email}</p>
           <p className="text-sm text-gray-400">
-            ID: {user.id?.slice(-6)}
+            ID: {user.reference_id}
 
           </p>
           <p className="text-sm text-gray-400">Zone: {user.zone || "N/A"}</p>

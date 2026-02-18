@@ -1,16 +1,21 @@
-import CitizenLogo from "../../../../components/ui/CitizenLogo";
+import CitizenLogo from "../../../../components/ui/CitizenLogo.jsx";
 import useCitizenUi from "../../hooks/citizen/uiHooks";
-import useCitizenService from "../../hooks/citizen/useCitizenService";
+import useCitizenService from "../../hooks/citizen/useCitizenService"; 
+import LoginPill from "../../ui/citizen/LoginPhill.jsx";
 import { HomeIcons } from "../../ui/HomeIcons";
 import MobileMenButton from "../../ui/MobileMenuButton";
 import NavItem from "../../ui/NavItem";
 import UserSkeleton from "../../ui/skeltons/UserButtonSkelton";
 import NameUrlGet from "../NameUrlGet";
 import UserMenu from "../UserMenu";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import {User} from "lucide-react"
 const HomeNavbar = () => {
+  const navigate = useNavigate()
+  const {role} = useSelector((s) => s.auth);
   const { userData, userDataLoading, userDataFetching } = useCitizenService();
+  const handleNavigate = (route) => navigate('/landing');
   const { userMenuOpen: menuOpen, setUserMenuOpen: setMenuOpen } =
     useCitizenUi();
   return (
@@ -21,7 +26,7 @@ const HomeNavbar = () => {
           className=" hidden md:flex group  items-center gap-4 px-4 py-2 rounded-full
         text-white/90 text-sm font-medium
         transition-all duration-300
-        hover: hover:backdrop-blur-md
+         hover:backdrop-blur-md
         hover:text-white
         hover:shadow-sm"
         >
@@ -31,25 +36,27 @@ const HomeNavbar = () => {
           <NavItem icon={<HomeIcons.Polls />} label="Polls" />
         </div>
 
-        <MobileMenButton />
+        {role === "citizen" ? <MobileMenButton />: <LoginPill className="flex md:hidden" onClick={() => handleNavigate()}/>}
         {userDataLoading || userDataFetching ? (
           <UserSkeleton />
         ) : (
+          role === "citizen" ? (
           <div
             onClick={() => setMenuOpen((pre) => !pre)}
             className="hidden md:flex cursor-pointer items-center gap-3 bg-blue-700/50 px-3 py-1.5 rounded-full"
           >
             <div className="w-7 h-7 bg-blue-200 rounded-full flex items-center justify-center text-blue-700 text-sm font-semibold">
               <NameUrlGet
-                name={userData.profile?.name}
-                avatarUrl={userData.profile?.avatar}
+                name={userData?.profile?.name}
+                avatarUrl={userData?.profile?.avatar}
                 classname="w-7 h-7"
               />
             </div>
             <span className="text-sm pb-1">
-              {userData.profile?.name || "User"}
+              {userData?.profile?.name || "User"}
             </span>
           </div>
+          ): (<LoginPill onClick={() => handleNavigate()}/>)
         )}
         <UserMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
       </nav>

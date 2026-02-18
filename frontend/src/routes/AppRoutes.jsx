@@ -28,8 +28,6 @@ import Login from "../features/auth/pages/solver/Login";
 
 /* ========== CORE PAGES ========== */
 import CivicEdgeHome from "../features/core/pages/citizen/CitizenHome";
-import PostLoginRedirect from "../pages/PostLoginRedirect";
-import Unauthorized from "../pages/Unauthorized";
 
 /* ========== ADMIN PAGES ========== */
 const UserManagement = lazy(
@@ -52,11 +50,17 @@ import AdminDashboardMain from "../features/core/pages/admin/AdminDashboardMain"
 import AdminProfile from "../features/core/pages/admin/AdminProfile";
 import AdminDashboardSkeleton from "../features/core/ui/skeltons/admin/AdminDashboardSkeleton";
 import AdminFooterLayout from "../features/core/layouts/AdminFooterLayout";
+import NotFound from "../pages/NotFound";
 export default function AppRoutes() {
   return (
     <Routes>
+
+      <Route element={<MainLayout/>}>
+        <Route path="/home" element={<CivicEdgeHome />} />
+        <Route path="/" element={<Navigate to="/home" />} />
+      </Route>
       {/* ================== GUEST ROUTES ================== */}
-      <Route element={<RequireNoAuth redirectTo="/post-login" />}>
+      <Route element={<RequireNoAuth />}>
         <Route element={<AuthLayout />}>
           <Route path="/landing" element={<AuthLanding />} />
           <Route path="/login" element={<AuthLogin />} />
@@ -76,10 +80,7 @@ export default function AppRoutes() {
             element={<ResetPasswordConfirmation />}
           />
 
-          {/* ================== SYSTEM ================== */}
-          <Route path="/unauthorized" element={<Unauthorized />} />
-          {/* ================== FALLBACK ================== */}
-          <Route path="*" element={<Navigate to="/unauthorized" replace />} />
+
 
           <Route path="/auth/admin/login" element={<AuthAdminLogin />} />
           <Route path="/auth/solver/login" element={<Login />} />
@@ -88,13 +89,9 @@ export default function AppRoutes() {
 
       {/* ================== AUTHENTICATED ROUTES ================== */}
       <Route element={<RequireAuth />}>
-        {/* 🔀 post-login navigation policy */}
-        <Route path="/post-login" element={<PostLoginRedirect />} />
-
         {/* citizen authenticated area */}
         <Route element={<RoleGuard roles={["citizen"]} />}>
           <Route element={<MainLayout />}>
-            <Route path="/home" element={<CivicEdgeHome />} />
             <Route path="/profile" element={<CitizenProfile />} />
           </Route>
         </Route>
@@ -151,6 +148,10 @@ export default function AppRoutes() {
           </Route>
         </Route>
       </Route>
+                    {/* ================== SYSTEM ================== */}
+          <Route path="/not-found" element={<NotFound />} />
+          {/* ================== FALLBACK ================== */}
+          <Route path="*" element={<Navigate to="/not-found" replace />} />
     </Routes>
   );
 }

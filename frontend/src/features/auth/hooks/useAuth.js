@@ -26,7 +26,7 @@ export function useAuth() {
     try {
       await login(data).unwrap(); // result contains your API response
       // Navigate based on role
-      navigate("/post-login", { replace: true });
+      navigate("/home", { replace: true });
     } catch (error) {
       const message = extractErrorMessage(error);
       errorToast({title:"Login failed",description:`${message || 'An error occurred during login.'}`});

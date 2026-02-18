@@ -9,7 +9,8 @@ const initialState = {
   role:null,
   user: null,
   access_token:null,
-  loading:true
+  loading:true,
+  status:'loading'
 };
 
 const slice = createSlice({
@@ -21,6 +22,9 @@ const slice = createSlice({
       state.access_token = null;
       state.loading = false
       state.role = null
+    },
+    setStatus(state,action){
+      state.status = action.payload
     },
     setUser(state, action) {
       const {access,user_id} = action.payload;
@@ -37,9 +41,9 @@ const slice = createSlice({
       state.loading = false
     },
     solverLogin(state,action){
-      state.role = action.payload.role 
+      state.role = action.payload.user.role 
       state.access_token = action.payload.access;
-      state.user = action.payload.email
+      state.user = action.payload.user.email
       state.loading = false
     },
     googleLogin(state, action) {
@@ -53,9 +57,10 @@ const slice = createSlice({
       state.loading = action.payload.loading
     },
     adminLogin(state,action){
-      state.role = action.payload.role 
+      state.role = action.payload.user.role 
       state.access_token = action.payload.access;
       state.loading = false
+      state.user = action.payload.user.email
     },
     role(state,action){
       state.role = action.payload.role 
@@ -66,5 +71,5 @@ const slice = createSlice({
   },
 });
 
-export const { logout_user, setUser, setToken, googleLogin,refreshToken,role,citizenLogin,solverLogin,adminLogin } = slice.actions;
+export const { logout_user,setStatus, setUser, setToken, googleLogin,refreshToken,role,citizenLogin,solverLogin,adminLogin } = slice.actions;
 export default slice.reducer;

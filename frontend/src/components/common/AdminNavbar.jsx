@@ -51,7 +51,7 @@ export default function AdminNavbar() {
       {/* LEFT: BRAND */}
       {/* ===================== */}
       <div className="flex items-center gap-4">
-        <CitizenLogo classname="text-blue-500" />
+        <CitizenLogo classname="text-blue-500" navigate_route ="/admin/dashboard" />
         <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide">
           Admin Panel
         </span>

@@ -42,6 +42,15 @@ export default function useProfileHook() {
       });
     }
   };
+    const updateProfileData = (data) => {
+      console.log('data')
+    // send to server
+    try {
+      updateProfile(data).unwrap();
+    } catch (error) {
+      console.error("Failed to update profile:", error);
+    }
+  };
   return {
     uploadAvatar,
     data,
@@ -51,6 +60,7 @@ export default function useProfileHook() {
     updateProfile,
     profile_data,
     profle_loading,
-    profileError
+    profileError,
+    updateProfileData
   };
 }

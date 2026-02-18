@@ -9,9 +9,16 @@ const VanishingFact = () => {
         visible ? "opacity-100" : "opacity-0"
       }`}
     >
-      <p className="text-xl font-bold text-white/75 max-w-[220px] leading-relaxed tracking-wide">
-        {AWARENESS_FACTS[index]}
-      </p>
+<p
+  className="
+    font-bold text-white/75 tracking-wide leading-relaxed
+    text-sm sm:text-base md:text-lg lg:text-xl
+    max-w-[180px] sm:max-w-[220px] md:max-w-[280px] lg:max-w-[340px]
+  "
+>
+  {AWARENESS_FACTS[index]}
+</p>
+
     </div>
   );
 };

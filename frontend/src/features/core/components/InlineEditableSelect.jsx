@@ -9,7 +9,7 @@ export default function InlineEditableSelect({
   placeholder = "Select",
 }) {
   const [editing, setEditing] = useState(false);
-  const [selected, setSelected] = useState(value || "");
+  const [selected, setSelected] = useState("");
 
   const save = (val) => {
     setEditing(false);
@@ -34,9 +34,9 @@ export default function InlineEditableSelect({
             focus:ring-2 focus:ring-blue-500
           "
         >
-          <option value="" disabled>
-             place near you
-          </option>
+           <option value="" disabled>
+    Select location
+  </option>
           {options.map((opt) => (
             <option key={opt.id} value={opt.id}>
               {opt.name}

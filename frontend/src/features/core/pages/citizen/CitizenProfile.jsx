@@ -1,38 +1,30 @@
-import  { useState } from "react";
+import { useState } from "react";
 
-import {
-  Award,
-  Calendar,
-  CheckCircle,
-
-} from "lucide-react";
+import { Award, Calendar, CheckCircle } from "lucide-react";
 import EditableAvatar from "../../components/EditableAvatar";
 import InlineEditableText from "../../components/InlineEditableText";
 import useProfileHook from "../../hooks/useProfileHook";
 import useCitizenService from "../../hooks/citizen/useCitizenService";
 import { capitalizeWords } from "../../utils";
 import InlineEditableSelect from "../../components/InlineEditableSelect";
-import { useAdminSolver } from "../../../auth/hooks/admin/useAdminSolver";
 import ProfileHeaderSkeleton from "../../ui/skeltons/ProfileHeaderSkeleton";
 import VerifyBadge from "../../ui/solver/VerifyBadge";
 import EditableAvatarSkeletonDark from "../../ui/skeltons/EditableAvatarSkelton";
+import { useFetchZonesQuery } from "../../../auth/services/adminAuthApi";
 
 const CitizenProfile = () => {
-  const {zones} = useAdminSolver();
-  const { handleUpload ,updateProfile:changeProfile,profle_loading,avatarIsLoading} = useProfileHook();
+  const { data: zonesData,isLoading,isFetching,isSuccess } = useFetchZonesQuery();
+  const  zones = zonesData ?? [];
+  const {
+    handleUpload,
+    profle_loading,
+    avatarIsLoading,
+    updateProfileData
+  } = useProfileHook();
   const { userData, userDataLoading, userDataFetching } = useCitizenService();
-  const name = capitalizeWords(userData.profile?.name || "User");
-  const pageLoading = userDataLoading || profle_loading || userDataFetching 
-  const updateProfile = (data) => {
-    // send to server
-    try { 
-        changeProfile(data).unwrap();
-     changeProfile(data);
-    } catch (error) {
-      console.error("Failed to update profile:", error);
+  const name = capitalizeWords(userData?.profile?.name || "User");
+  const pageLoading = userDataLoading || profle_loading || userDataFetching;
 
-    }
-  };
   const [activeTab, setActiveTab] = useState("impact");
 
   const stats = [
@@ -60,53 +52,58 @@ const CitizenProfile = () => {
         {pageLoading ? (
           <ProfileHeaderSkeleton />
         ) : (
-        <header className="flex flex-col md:flex-row items-center gap-8 mb-12">
-          {/* Avatar */}
-          <div className="relative">
-            {avatarIsLoading ? (
-              <EditableAvatarSkeletonDark className="light"/>
-            ):(<EditableAvatar
-              avatarUrl={userData.profile?.avatar}
-              onUpload={(file) => handleUpload(file)} // send to server
-            />)}
-          </div>
-
-          {/* Info */}
-          <div className="text-center md:text-left flex-1 space-y-3">
-            <InlineEditableText
-              value={name}
-              onSave={(data) => updateProfile({name:data})}
-              className="text-3xl font-extrabold text-slate-800"
-              placeholder="Your name"
-            />
-
-            <div className="flex flex-wrap justify-center md:justify-start gap-4 text-slate-500 font-medium">
-              <InlineEditableSelect
-                value={userData.profile?.zone || "Location not set"}
-                options={zones}
-                onSave={(data) => updateProfile(data )}
-                className="flex items-center gap-1"
-                placeholder="Select location"
-              />
-              <div className="flex items-center gap-1 text-slate-500 font-medium">
-  <div size={16} />
-  <span className="select-all">{userData.profile.email}</span>
-</div>
-
-              <VerifyBadge/>
+          <header className="flex flex-col md:flex-row items-center gap-8 mb-12">
+            {/* Avatar */}
+            <div className="relative">
+              {avatarIsLoading ? (
+                <EditableAvatarSkeletonDark className="light" />
+              ) : (
+                <EditableAvatar
+                  avatarUrl={userData?.profile?.avatar}
+                  onUpload={(file) => handleUpload(file)} // send to server
+                />
+              )}
             </div>
 
-            <InlineEditableText
-              value={userData.profile?.bio || "I will change myself to make my community better!"}
-              onSave={(v) => updateProfile({ bio: v })}
-              className="mt-4 text-slate-600 max-w-lg italic"
-              placeholder="Add a short bio"
-            />
-          </div>
+            {/* Info */}
+            <div className="text-center md:text-left flex-1 space-y-3">
+              <InlineEditableText
+                value={name}
+                onSave={(data) => updateProfileData({ name: data })}
+                className="text-3xl font-extrabold text-slate-800"
+                placeholder="Your name"
+              />
 
-          {/* CTA */}
-          <button
-            className="
+              <div className="flex flex-wrap justify-center md:justify-start gap-4 text-slate-500 font-medium">
+                <InlineEditableSelect
+                  value={userData?.profile?.zone || ""}
+                  options={zones}
+                  onSave={(data) => updateProfileData(data)}
+                  className="flex items-center gap-1"
+                  placeholder="Select location"
+                />
+                <div className="flex items-center gap-1 text-slate-500 font-medium">
+                  <div size={16} />
+                  <span className="select-all">{userData?.profile.email}</span>
+                </div>
+
+                <VerifyBadge />
+              </div>
+
+              <InlineEditableText
+                value={
+                  userData?.profile?.bio ||
+                  "I will change myself to make my community better!"
+                }
+                onSave={(v) => updateProfileData({ bio: v })}
+                className="mt-4 text-slate-600 max-w-lg italic"
+                placeholder="Add a short bio"
+              />
+            </div>
+
+            {/* CTA */}
+            <button
+              className="
     bg-blue-700 text-white
     px-6 py-2.5 rounded-xl
     font-semibold
@@ -114,10 +111,10 @@ const CitizenProfile = () => {
     transition-all
     shadow-md shadow-blue-900/20
   "
-          >
-            Report New Issue
-          </button>
-        </header>
+            >
+              Report New Issue
+            </button>
+          </header>
         )}
         {/* --- Impact Metrics --- */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">

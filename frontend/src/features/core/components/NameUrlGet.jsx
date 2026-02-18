@@ -1,7 +1,6 @@
-import React from 'react'
 import getInitial from '../utils';
 
-const NameUrlGet = ({ name, avatarUrl,classname = "" }) => {
+const NameUrlGet = ({ name, avatarUrl,classname = "",classname2="" }) => {
   if (avatarUrl) {
     return (
       <img
@@ -13,7 +12,7 @@ const NameUrlGet = ({ name, avatarUrl,classname = "" }) => {
   }
 
   return (
-    <div className="w-7 h-7 bg-blue-200 rounded-full flex items-center justify-center text-blue-700 text-sm font-semibold">
+    <div className={`w-7 h-7 bg-blue-200 rounded-full flex items-center justify-center text-blue-700 text-sm font-semibold${classname2}`}>
       {getInitial(name)}
     </div>
   );

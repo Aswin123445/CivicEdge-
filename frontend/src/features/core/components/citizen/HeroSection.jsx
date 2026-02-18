@@ -38,7 +38,7 @@ const HeroSection = () => {
           </div>
         </div>
         {/* Awareness Facts – lg & above only */}
-        <div className="hidden lg:block absolute top-40 right-12">
+        <div className="hidden lg:block absolute top-24 right-12">
           <VanishingFact />
         </div>
       </div>
