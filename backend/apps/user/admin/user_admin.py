@@ -1,17 +1,9 @@
 from django.contrib import admin
-from apps.user.models.user import User, Profile, Zone
 
+# Register your models here.
 
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Profile)
-class ProfileAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Zone)
-class ZoneAdmin(admin.ModelAdmin):
-    pass
+# Register your models here.
+from apps.user.models.user import User,Profile,Zone
+admin.site.register(User)
+admin.site.register(Profile)
+admin.site.register(Zone)

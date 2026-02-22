@@ -137,11 +137,32 @@ class User(AbstractBaseUser, PermissionsMixin):
         """
         return self.role == UserRole.CITIZEN
 
-class Zone(models.Model):  
-    name = models.CharField(max_length=100)
+import uuid
+from django.core.exceptions import ValidationError
+from django.db import models
+
+
+class Zone(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=100, unique=True)
+
+    def clean(self):
+        """
+        Model-level validation (case-insensitive uniqueness)
+        """
+        if Zone.objects.filter(name__iexact=self.name).exclude(pk=self.pk).exists():
+            raise ValidationError({
+                "name": "Zone with this name already exists."
+            })
+
+    def save(self, *args, **kwargs):
+        self.name = self.name.strip()  # normalize spaces
+        self.full_clean()              # 👈 THIS calls clean()
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return f"zone {self.name}"
+        return self.name
+
     class Meta:
         app_label = "user"
 

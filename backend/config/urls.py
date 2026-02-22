@@ -33,4 +33,6 @@ urlpatterns = [
     #apps url prefix
     path('api/v1/user/', include('apps.user.routes')),  # User-related routes
     path('api/v1/me/', include('apps.profiles.routes')),
+    path('api/v1/civic/', include('apps.issues.routes')),
+    
 ]

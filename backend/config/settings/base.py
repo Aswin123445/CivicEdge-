@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     #project apps
     'apps.user',
     'apps.profiles',
+    'apps.issues',
     # Third-party apps   
     'corsheaders',
     'rest_framework',
