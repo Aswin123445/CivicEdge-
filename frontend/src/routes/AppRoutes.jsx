@@ -51,13 +51,24 @@ import AdminProfile from "../features/core/pages/admin/AdminProfile";
 import AdminDashboardSkeleton from "../features/core/ui/skeltons/admin/AdminDashboardSkeleton";
 import AdminFooterLayout from "../features/core/layouts/AdminFooterLayout";
 import NotFound from "../pages/NotFound";
+import IssueHome from "../features/issues/pages/IssueHome";
+import DraftIssuesPage from "../features/issues/pages/DraftIssuesPage";
+import DraftIssueDetails from "../features/issues/pages/DraftIssueDetails";
+import IssueCreateStep1 from "../features/issues/pages/IssueCreateStep1";
+import IssueCreateLocationStep from "../features/issues/pages/IssueCreateLocationStep";
+import IssueCreateMediaStep from "../features/issues/pages/IssueCreateMediaStep";
+import IssueCreateBehaviorStep from "../features/issues/pages/IssueCreateBehaviorStep";
+import IssueReviewSubmitPage from "../features/issues/pages/IssueReviewSubmitPage";
+import IssueSubmitSuccessPage from "../features/issues/pages/IssueSubmitSuccessPage";
+import IssuesLayout from "../features/issues/layouts/IssuesLayout";
+
 export default function AppRoutes() {
   return (
     <Routes>
-
-      <Route element={<MainLayout/>}>
+      <Route element={<MainLayout />}>
         <Route path="/home" element={<CivicEdgeHome />} />
         <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="/complaints" element={<IssueHome />} />
       </Route>
       {/* ================== GUEST ROUTES ================== */}
       <Route element={<RequireNoAuth />}>
@@ -80,8 +91,6 @@ export default function AppRoutes() {
             element={<ResetPasswordConfirmation />}
           />
 
-
-
           <Route path="/auth/admin/login" element={<AuthAdminLogin />} />
           <Route path="/auth/solver/login" element={<Login />} />
         </Route>
@@ -93,6 +102,31 @@ export default function AppRoutes() {
         <Route element={<RoleGuard roles={["citizen"]} />}>
           <Route element={<MainLayout />}>
             <Route path="/profile" element={<CitizenProfile />} />
+            <Route element={<IssuesLayout />}>
+              <Route path="/drafts" element={<DraftIssuesPage />} />
+              <Route path="/draft/:id" element={<DraftIssueDetails />} />
+              <Route path="/issue/new" element={<IssueCreateStep1 />} />
+              <Route
+                path="/issue/:id/location"
+                element={<IssueCreateLocationStep />}
+              />
+              <Route
+                path="/issue/:id/evidence"
+                element={<IssueCreateMediaStep />}
+              />
+              <Route
+                path="/issue/:id/behavioral-prompts"
+                element={<IssueCreateBehaviorStep />}
+              />
+              <Route
+                path="/issue/:id/submit"
+                element={<IssueReviewSubmitPage />}
+              />
+              <Route
+                path="/successfull/:id"
+                element={<IssueSubmitSuccessPage />}
+              />
+            </Route>
           </Route>
         </Route>
         <Route element={<RoleGuard roles={["solver"]} />}>
@@ -148,10 +182,10 @@ export default function AppRoutes() {
           </Route>
         </Route>
       </Route>
-                    {/* ================== SYSTEM ================== */}
-          <Route path="/not-found" element={<NotFound />} />
-          {/* ================== FALLBACK ================== */}
-          <Route path="*" element={<Navigate to="/not-found" replace />} />
+      {/* ================== SYSTEM ================== */}
+      <Route path="/not-found" element={<NotFound />} />
+      {/* ================== FALLBACK ================== */}
+      <Route path="*" element={<Navigate to="/not-found" replace />} />
     </Routes>
   );
 }

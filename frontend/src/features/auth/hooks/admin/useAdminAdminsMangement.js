@@ -50,22 +50,31 @@ export const useAdmin = () => {
   /* =========================
      Pagination actions
      ========================= */
-  const goToPage = (targetPage) => {
-    if (targetPage < 1 || targetPage > totalPages) return;
-    setSearchParams({ page: String(targetPage) });
-  };
-  useEffect(() => {
-    setSearchParams((prev) => {
-      if (debouncedSearch.trim()) {
-        prev.set("search", debouncedSearch);
-        prev.set("page", "1");
-      } else {
-        prev.delete("search");
-        prev.set("page", "1");
-      }
-      return prev;
-    });
-  }, [debouncedSearch, setSearchParams]);
+const goToPage = (targetPage) => {
+  if (targetPage < 1 || targetPage > totalPages) return;
+
+  setSearchParams((prev) => {
+    prev.set("page", String(targetPage));
+    if (search) prev.set("search", search);
+    return prev;
+  });
+};
+useEffect(() => {
+  setSearchParams((prev) => {
+    const currentSearch = prev.get("search") || "";
+
+    if (currentSearch === debouncedSearch) return prev;
+
+    if (debouncedSearch.trim()) {
+      prev.set("search", debouncedSearch);
+    } else {
+      prev.delete("search");
+    }
+
+    prev.set("page", "1");
+    return prev;
+  });
+}, [debouncedSearch, setSearchParams]);
 
   /* =========================
      Public API

@@ -50,6 +50,6 @@ def submit_issue_behavior(*, issue, user, responses):
         issue.behavioral_responses.values_list("prompt_id", flat=True)
     )
     if set(prompts_by_id.keys()).issubset(answered_ids):
-        issue.draft_step = issue.DraftStep.REVIEW
+        issue.draft_step = issue.DraftStep.BEHAVIOR
         issue.is_draft = False
         issue.save(update_fields=["draft_step"])

@@ -11,4 +11,5 @@ def discard_issue_draft(*, issue):
     if not issue.is_draft:
         raise ValidationError("Only draft issues can be discarded.")
 
-    issue.delete()
+    issue.is_active = False
+    issue.save(update_fields=["is_active", "is_draft"])

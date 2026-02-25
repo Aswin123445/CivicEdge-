@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import HeroBanner from "../../../../assets/herosection.webp";
 import VanishingFact from "./VanishingFact";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   return (
     <section className="bg-gradient-to-b from-blue-700 to-blue-200 text-white pt-16 pb-32">
       <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
@@ -18,7 +20,7 @@ const HeroSection = () => {
           </p>
 
           <div className="flex flex-wrap gap-4">
-            <button className="px-8 py-3 bg-white text-blue-600 font-bold rounded-xl shadow-lg hover:scale-105 transition-transform">
+            <button onClick={() => navigate("/complaints")} className="px-8 py-3 bg-white text-blue-600 font-bold rounded-xl shadow-lg hover:scale-105 transition-transform">
               Report An Issue
             </button>
             <button className="px-8 py-3 border-2 border-white/50 rounded-xl hover:bg-white/10 transition-colors">

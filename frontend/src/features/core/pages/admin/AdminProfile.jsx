@@ -25,7 +25,6 @@ const AdminProfile = () => {
     avatarIsLoading,
     updateProfileData
   } = useProfileHook();
-  console.log(profle_loading,avatarIsLoading);
   const { userData, userDataLoading, userDataFetching } = useCitizenService();
   const name = capitalizeWords(userData?.profile?.name || "Admin");
   const [activeTab, setActiveTab] = useState("activity");

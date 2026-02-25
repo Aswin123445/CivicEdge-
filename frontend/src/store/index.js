@@ -5,6 +5,7 @@ import { adminAuthApi } from '../features/auth/services/adminAuthApi';
 import { commonApi } from '../features/auth/services/commonApi';
 import { solverAuthApi } from '../features/auth/services/solverAuthApi';
 import { profileApi } from '../features/core/services/coreApi';
+import { issueApi } from '../features/issues/services/issue_services';
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +14,8 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,  
     [adminAuthApi.reducerPath]: adminAuthApi.reducer,
     [commonApi.reducerPath]: commonApi.reducer,
-    [solverAuthApi.reducerPath]: solverAuthApi.reducer
+    [solverAuthApi.reducerPath]: solverAuthApi.reducer,
+    [issueApi.reducerPath]: issueApi.reducer
 
   },
   middleware: (getDefault) => getDefault()
@@ -21,6 +23,7 @@ export const store = configureStore({
   .concat(adminAuthApi.middleware)
   .concat(commonApi.middleware)
   .concat(solverAuthApi.middleware)
-  .concat(profileApi.middleware),
+  .concat(profileApi.middleware)
+  .concat(issueApi.middleware)
 });
 export default store;

@@ -14,7 +14,9 @@ class IssueCreateSerializer(serializers.ModelSerializer):
             "title",
             "description",
             "category",
+            "id"
         )
+        read_only_fields = ("id",)
 
     def validate_title(self, value):
         if len(value.strip()) < 5:

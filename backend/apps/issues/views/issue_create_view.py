@@ -10,7 +10,8 @@ class IssueCreateView(CreateAPIView):
     permission_classes = [IsCitizen]
 
     def perform_create(self, serializer):
-        create_draft_issue(
+        issue = create_draft_issue(
             user=self.request.user,
             data=serializer.validated_data,
         )
+        serializer.instance = issue 

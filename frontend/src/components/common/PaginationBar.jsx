@@ -1,6 +1,7 @@
 import React from "react";
 import LeftArrow from "../ui/LeftArrow";
 import RightArrow from "../ui/RightArrow";
+import clsx from "clsx";
 
 const Pagination = ({
   currentPage,
@@ -8,6 +9,8 @@ const Pagination = ({
   isFirstPage,
   isLastPage,
   onPageChange,
+  className = "",
+  buttonClassName = "",
 }) => {
   if (totalPages <= 1) return null;
 
@@ -15,13 +18,29 @@ const Pagination = ({
 
   return (
     <div className="w-full flex justify-center mt-10">
-      <div className="flex items-center gap-4 bg-[#1e1e1e] border border-[#333b49] rounded-full px-6 py-2 shadow">
-
+      <div
+        className={clsx(
+          `
+          flex items-center gap-4
+          rounded-full px-6 py-2 shadow
+          bg-[#1e1e1e] border border-[#333b49]
+        `,
+          className
+        )}
+      >
         {/* Left Arrow */}
         {!isFirstPage && (
           <button
             onClick={() => onPageChange(currentPage - 1)}
-            className="rounded-full hover:bg-gray-600 p-2"
+            className={clsx(
+              `
+              rounded-full p-2
+              text-gray-400
+              hover:bg-gray-600 hover:text-white
+              transition
+            `,
+              buttonClassName
+            )}
           >
             <LeftArrow />
           </button>
@@ -32,13 +51,16 @@ const Pagination = ({
           <button
             key={page}
             onClick={() => onPageChange(page)}
-            className={`w-9 h-9 flex items-center justify-center rounded-full text-lg font-medium transition
-              ${
-                page === currentPage
-                  ? "bg-gray-500 text-white shadow"
-                  : "text-gray-400 hover:bg-gray-600 hover:text-white"
-              }
-            `}
+            className={clsx(
+              `
+              w-9 h-9 flex items-center justify-center
+              rounded-full text-sm font-medium transition
+            `,
+              page === currentPage
+                ? "bg-gray-500 text-white shadow"
+                : "text-gray-400 hover:bg-gray-600 hover:text-white",
+              buttonClassName
+            )}
           >
             {page}
           </button>
@@ -48,7 +70,15 @@ const Pagination = ({
         {!isLastPage && (
           <button
             onClick={() => onPageChange(currentPage + 1)}
-            className="rounded-full hover:bg-gray-600 p-2"
+            className={clsx(
+              `
+              rounded-full p-2
+              text-gray-400
+              hover:bg-gray-600 hover:text-white
+              transition
+            `,
+              buttonClassName
+            )}
           >
             <RightArrow />
           </button>

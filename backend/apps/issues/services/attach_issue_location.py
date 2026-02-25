@@ -1,6 +1,7 @@
 from django.db import transaction
 from apps.issues.models.issue_location import IssueLocation
-
+from rest_framework.exceptions import PermissionDenied
+from apps.issues.models.issues import Issue
 
 @transaction.atomic
 def attach_issue_location(*, issue, data):
@@ -8,7 +9,8 @@ def attach_issue_location(*, issue, data):
     Creates or updates the IssueLocation for a draft issue.
     Advances draft_step to EVIDENCE.
     """
-
+    if issue.draft_step != Issue.DraftStep.BASIC:
+        raise PermissionDenied("Please complete basic details first.")
     IssueLocation.objects.update_or_create(
         issue=issue,
         defaults={
