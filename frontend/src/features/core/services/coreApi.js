@@ -30,7 +30,6 @@ export const profileApi = createApi({
       }},
       invalidatesTags: ['Home','Avatar'],
       transformResponse: (response) => {
-        console.log(response);
         return response;
       },
     }),

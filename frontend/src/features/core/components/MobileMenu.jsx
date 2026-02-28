@@ -45,98 +45,113 @@ export default function MobileMenu({ open, onClose }) {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            {userDataLoading?<MobileMenuSkeleton />:(
+            {userDataLoading ? (
+              <MobileMenuSkeleton />
+            ) : (
               <>
-              <div className="px-6 py-8 border-b border-white/10 bg-white/5">
-              <div className="flex items-center gap-4">
-                <div className="flex items-center justify-between">
+                <div className="px-6 py-8 border-b border-white/10 bg-white/5">
                   <div className="flex items-center gap-4">
-                    <div className="relative">
-                      <div className="h-14 w-14 rounded-full bg-blue-500/20 flex items-center justify-center border border-blue-400/30">
-                        <NameUrlGet
-                          name={userData.profile?.name}
-                          avatarUrl={userData.profile?.avatar}
-                          classname="h-14 w-14"
-                        />
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="relative">
+                          <div className="h-14 w-14 rounded-full bg-blue-500/20 flex items-center justify-center border border-blue-400/30">
+                            <NameUrlGet
+                              name={userData.profile?.name}
+                              avatarUrl={userData.profile?.avatar}
+                              classname="h-14 w-14"
+                            />
+                          </div>
+                          <span className="absolute inset-0 rounded-full ring-2 ring-blue-400/40 animate-pulse" />
+                        </div>
+
+                        <div>
+                          <h2 className="text-lg font-bold tracking-tight">
+                            {userData.profile?.name || "User"}
+                          </h2>
+                          <p className="text-xs text-blue-300/80 font-medium">
+                            {userData.profile?.email || "user@example.com"}
+                          </p>
+                        </div>
                       </div>
-                      <span className="absolute inset-0 rounded-full ring-2 ring-blue-400/40 animate-pulse" />
-                    </div>
 
-                    <div>
-                      <h2 className="text-lg font-bold tracking-tight">
-                        {userData.profile?.name || "User"}
-                      </h2>
-                      <p className="text-xs text-blue-300/80 font-medium">
-                        {userData.profile?.email || "user@example.com"}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Close button */}
-                  <button
-                    onClick={onClose}
-                    aria-label="Close menu"
-                    className="
+                      {/* Close button */}
+                      <button
+                        onClick={onClose}
+                        aria-label="Close menu"
+                        className="
                          absolute top-4 right-4
                          z-50
                          p-2 rounded-full
                          text-blue-200 hover:text-white
                          bg-white/10 hover:bg-white/20
                          transition"
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
+                      >
+                        <X className="h-5 w-5" />
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
 
-            {/* Content */}
-            <nav className="px-4 py-6 space-y-6 overflow-y-auto h-[calc(100vh-120px)]">
-              {/* Primary CTA */}
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="
+                {/* Content */}
+                <nav className="px-4 py-6 space-y-6 overflow-y-auto h-[calc(100vh-120px)]">
+                  {/* Primary CTA */}
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="
                   w-full flex items-center justify-center gap-3 px-5 py-4 rounded-xl
                   bg-gradient-to-r from-amber-500 to-yellow-400
                   text-blue-950 font-bold shadow-xl shadow-amber-900/20
                 "
-              >
-                <AlertTriangle className="h-5 w-5" />
-                Report Issue
-              </motion.button>
+                  >
+                    <AlertTriangle className="h-5 w-5" />
+                    Report Issue
+                  </motion.button>
 
-              {/* Main navigation */}
-              <div className="space-y-1">
-                <p className="px-4 text-[10px] font-bold uppercase tracking-widest text-blue-400/60 mb-2">
-                  Menu
-                </p>
-                <MobileMenuItem icon={HomeIcons.Issues} label="Issues" />
-                <MobileMenuItem icon={HomeIcons.Talk} label="Civic Talk" />
-                <MobileMenuItem
-                  icon={HomeIcons.Army}
-                  label="Volunteer Armies"
-                />
-                <MobileMenuItem icon={HomeIcons.Polls} label="Polls" />
-              </div>
+                  {/* Main navigation */}
+                  <div className="space-y-1">
+                    <p className="px-4 text-[10px] font-bold uppercase tracking-widest text-blue-400/60 mb-2">
+                      Menu
+                    </p>
+                    <MobileMenuItem icon={HomeIcons.Issues} label="Issues" />
+                    <MobileMenuItem icon={HomeIcons.Talk} label="Civic Talk" />
+                    <MobileMenuItem
+                      icon={HomeIcons.Army}
+                      label="Volunteer Armies"
+                    />
+                    <MobileMenuItem icon={HomeIcons.Polls} label="Polls" />
+                  </div>
 
-              <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                  <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-              {/* Secondary */}
-              <div className="space-y-1">
-                <p className="px-4 text-[10px] font-bold uppercase tracking-widest text-blue-400/60 mb-2">
-                  Account
-                </p>
-                <div onClick ={() => {navigate("/profile/"); onClose();}}>
-                <MobileMenuItem icon={User} label="My Profile" />
-                </div>
-                <MobileMenuItem icon={Bell} label="Notifications" badge />
-                <MobileMenuItem icon={Settings} label="Settings" />
-                <div onClick={() => handleLogoutCitizen()}>
-                  <MobileMenuItem icon={LogOut} label="Logout" danger />
-                </div>
-              </div>
-            </nav></>)}
+                  {/* Secondary */}
+                  <div className="space-y-1">
+                    <p className="px-4 text-[10px] font-bold uppercase tracking-widest text-blue-400/60 mb-2">
+                      Account
+                    </p>
+                    <div
+                      onClick={() => {
+                        navigate("/profile/");
+                        onClose();
+                      }}
+                    >
+                      <MobileMenuItem icon={User} label="My Profile" />
+                    </div>
+                    <MobileMenuItem icon={Bell} label="Notifications" badge />
+                    <div
+                      onClick={() => {
+                        navigate("/settings");
+                      }}
+                    >
+                      <MobileMenuItem icon={Settings} label="Settings" />
+                    </div>
+                    <div onClick={() => handleLogoutCitizen()}>
+                      <MobileMenuItem icon={LogOut} label="Logout" danger />
+                    </div>
+                  </div>
+                </nav>
+              </>
+            )}
           </motion.aside>
         </>
       )}
