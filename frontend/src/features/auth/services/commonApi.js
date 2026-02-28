@@ -47,7 +47,19 @@ export const commonApi = createApi({
             return response;
           },
         }),
+        changePassword: builder.mutation({
+          query: (credentials) => ({
+            url: '/change-password/',
+            method: 'post',
+            withCredentials: true,
+            meta: { skipAuth: false },
+            data: credentials,
+          }),
+          transformResponse: (response) => {
+            return response;
+          },
+        }),
     }),
 });
 
-export const { useRoleQuery,useLazyRoleQuery,useLogoutMutation } = commonApi;
+export const { useRoleQuery,useLazyRoleQuery,useLogoutMutation,useChangePasswordMutation } = commonApi;

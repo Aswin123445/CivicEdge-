@@ -25,6 +25,7 @@ import AuthResetPasswordInfo from "../features/auth/pages/user/AuthResetPassword
 import ResetPasswordConfirmation from "../features/auth/pages/user/AuthResetConfirmation";
 import AuthAdminLogin from "../features/auth/pages/admin/AdminLogin";
 import Login from "../features/auth/pages/solver/Login";
+import SettingsPage from "../features/core/pages/citizen/SettingsPage"
 
 /* ========== CORE PAGES ========== */
 import CivicEdgeHome from "../features/core/pages/citizen/CitizenHome";
@@ -105,6 +106,7 @@ export default function AppRoutes() {
         <Route element={<RoleGuard roles={["citizen"]} />}>
           <Route element={<MainLayout />}>
             <Route path="/profile" element={<CitizenProfile />} />
+            <Route path="/settings" element={< SettingsPage/>} />
             <Route element={<IssuesLayout />}>
               <Route path="/drafts" element={<DraftIssuesPage />} />
               <Route path="/draft/:id" element={<DraftIssueDetails />} />
@@ -144,6 +146,9 @@ export default function AppRoutes() {
           <Route element={<SolverLayout />}>
             <Route path="solver/dashboard" element={<SolverDashBoard />} />
             <Route path="solver/profile" element={<SolverProfile />} />
+            <Route path="/solver/settings" element={<SettingsPage />} />
+
+
           </Route>
         </Route>
 
@@ -187,6 +192,7 @@ export default function AppRoutes() {
                 }
               />
               <Route path="/admin/profile" element={<AdminProfile />} />
+              <Route path="/admin/settings" element={<SettingsPage />} />
 
               <Route path="/admin/test" element={<Test />} />
             </Route>

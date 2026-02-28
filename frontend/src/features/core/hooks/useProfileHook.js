@@ -1,6 +1,9 @@
 import { extractErrorMessage } from "../../../utils/extractErrorMessage";
 import { errorToast } from "../../../utils/Toaster";
-import { useUpdateProfileMutation, useUploadAvatarMutation } from "../services/coreApi";
+import {
+  useUpdateProfileMutation,
+  useUploadAvatarMutation,
+} from "../services/coreApi";
 
 import imageFileExtensionValidaator, {
   getImageDimensions,
@@ -9,7 +12,10 @@ import imageFileExtensionValidaator, {
 export default function useProfileHook() {
   const [uploadAvatar, { data, isLoading: avatarIsLoading, isError }] =
     useUploadAvatarMutation();
-  const [updateProfile,{ data: profile_data, isLoading: profle_loading, isError: profileError}] = useUpdateProfileMutation();
+  const [
+    updateProfile,
+    { data: profile_data, isLoading: profle_loading, isError: profileError },
+  ] = useUpdateProfileMutation();
   const handleUpload = async (file) => {
     // send to server
     if (!file) return;
@@ -42,7 +48,9 @@ export default function useProfileHook() {
       });
     }
   };
-    const updateProfileData = (data) => {
+  const updateProfileData = (data) => {
+      console.log('data')
+    // send to server
     try {
       updateProfile(data).unwrap();
     } catch (error) {
@@ -59,6 +67,6 @@ export default function useProfileHook() {
     profile_data,
     profle_loading,
     profileError,
-    updateProfileData
+    updateProfileData,
   };
 }

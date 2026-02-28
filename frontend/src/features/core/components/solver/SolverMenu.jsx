@@ -85,7 +85,7 @@ export default function SolverMenu({ open, onClose, user }) {
           {/* ACCOUNT ACTIONS */}
           <div className="border-t border-slate-100 px-2 py-2 space-y-1">
             <SolverMenuItem icon={User} label="Profile" onClick={() => go("/solver/profile")} />
-            <SolverMenuItem icon={Settings} label="Settings" onClick={() => go("/settings")} />
+            <SolverMenuItem icon={Settings} label="Settings" onClick={() => go("/solver/settings")} />
 
             <button
               onClick={() => {
