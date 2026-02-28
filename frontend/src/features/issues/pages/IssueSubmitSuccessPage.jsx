@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 import useBehavioralService from '../hooks/behaviouralService';
 import ReviewIssueCombinedSkeleton from '../ui/skeltons/ReviewIssueCombinedSkeleton';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // --- Animation Variants (CivicEdge Standard) ---
 const CONTAINER_VARIANTS = {
@@ -34,6 +34,7 @@ const ITEM_VARIANTS = {
 
 const IssueSubmitSuccessPage = ({ issueId = "CE-774291", issueTitle = "Damaged Pavement on Oak Street" }) => {
   const navigate = useNavigate();
+  const {id} = useParams();
   const { reviewData,isLoadingReview } = useBehavioralService();
   
   const handleCopyId = () => {
@@ -109,7 +110,7 @@ const IssueSubmitSuccessPage = ({ issueId = "CE-774291", issueTitle = "Damaged P
 
         {/* 🟦 Section 4: Primary Actions */}
         <motion.footer variants={ITEM_VARIANTS} className="flex flex-col sm:flex-row gap-4 mb-12">
-          <button className="flex-1 px-8 py-4 bg-blue-600 text-white font-bold rounded-2xl shadow-lg shadow-blue-900/10 hover:bg-blue-700 transition-all flex items-center justify-center gap-2 group">
+          <button onClick={() => navigate(`/complaints/${id}`)} className="flex-1 px-8 py-4 bg-blue-600 text-white font-bold rounded-2xl shadow-lg shadow-blue-900/10 hover:bg-blue-700 transition-all flex items-center justify-center gap-2 group">
             View Issue Details
             <ExternalLink size={18} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </button>
