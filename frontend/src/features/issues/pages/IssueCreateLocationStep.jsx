@@ -1,22 +1,33 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { fadeInUp,containerVariants } from "../ui/motion";
+import { useNavigate, useParams } from "react-router-dom";
+import { fadeInUp, containerVariants } from "../ui/motion";
 import LocationHeader from "../components/issue_step2_location/LocationHeader";
 import LocationProgress from "../components/issue_step2_location/LocationProgress";
 import MapSection from "../components/issue_step2_location/MapSection";
 import LocationDetailsPanel from "../components/issue_step2_location/LocationDetailsPanel";
 import LocationFooter from "../components/issue_step2_location/LocationFooter";
-
-
-
-
+import MapSearchBox from "../components/issue_step2_location/MapSearchBox";
+import useLocationService from "../hooks/locationServiceHook";
+import { errorToast, successToast } from "../../../utils/Toaster";
+import { extractErrorMessage } from "../../../utils/extractErrorMessage";
 const IssueCreateLocationPage = () => {
+  const { addLocation } = useLocationService();
   const navigate = useNavigate();
-
-  const [coords, setCoords] = useState({ lat: 11.8745, lng: 75.3704 });
+  const {id} = useParams()
+  const [coords, setCoords] = useState({ lat: 11.8745, lng: 75.3704,landmark:"N/A" });
   const [selectedZone, setSelectedZone] = useState("");
-
+  const handleContinue = async() => {
+    const req = { latitude: coords.lat, longitude: coords.lng, zone_id: selectedZone };
+    try {
+      await addLocation({req,id}).unwrap();
+      successToast({ title: "Success", description: "Location added successfully." });
+      navigate(`/issue/${id}/evidence`);
+    } catch (error) {
+      const message = extractErrorMessage(error);
+      errorToast({ title: "Error", description: message });
+    }
+  };
   return (
     <div className="min-h-screen bg-slate-50 pb-12">
       <motion.main
@@ -27,9 +38,11 @@ const IssueCreateLocationPage = () => {
       >
         <LocationHeader />
         <LocationProgress />
+        <MapSearchBox onSelect = {setCoords}/>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-          <MapSection />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start mt-4">
+          <MapSection setCoords={setCoords} coords={coords} />
+
           <LocationDetailsPanel
             coords={coords}
             selectedZone={selectedZone}
@@ -39,8 +52,7 @@ const IssueCreateLocationPage = () => {
 
         <LocationFooter
           canContinue={!!selectedZone}
-          onBack={() => navigate("/issue/1/media")}
-          onContinue={() => navigate("/issue/1/evidence")}
+          onContinue={() => handleContinue()}
         />
       </motion.main>
     </div>

@@ -12,7 +12,6 @@ class IssueBehaviorSubmitView(APIView):
 
     def post(self, request, id):
         issue = get_user_draft_issue(issue_id=id, user=request.user)
-
         serializer = IssueBehaviorSubmitSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 

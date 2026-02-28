@@ -11,6 +11,5 @@ class IssueHomeSummaryAPIView(APIView):
 
     def get(self, request):
         summary = get_issue_home_summary(user=request.user)
-        print(summary)
         serializer = IssueHomeSummarySerializer(summary)
         return Response(serializer.data)

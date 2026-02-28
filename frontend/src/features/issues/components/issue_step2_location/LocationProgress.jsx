@@ -10,7 +10,7 @@ const steps = [
 ];
 
 const LocationProgress = () => (
-  <motion.section variants={fadeInUp} className="mb-12">
+  <motion.section variants={fadeInUp} className="mb-9 ">
     <div className="rounded-3xl p-6 bg-gradient-to-br from-blue-50 via-blue-100/60 to-white border border-blue-200/60">
       <div className="grid grid-cols-5 gap-3">
         {steps.map((name, idx) => (

@@ -10,25 +10,37 @@ from apps.issues.models.issue_log import IssueLog
 
 ALLOWED_TRANSITIONS = {
     IssueStatus.OPEN: {
+        IssueStatus.IN_REVIEW,
         IssueStatus.CANCELLED,
-        IssueStatus.ACKNOWLEDGED,
         IssueStatus.REJECTED,
     },
-    IssueStatus.ACKNOWLEDGED: {
+
+    IssueStatus.IN_REVIEW: {
+        IssueStatus.IN_PROGRESS,
+        IssueStatus.REJECTED,
+    },
+
+    IssueStatus.IN_PROGRESS: {
         IssueStatus.RESOLVED,
-        IssueStatus.REJECTED,
     },
+
     IssueStatus.RESOLVED: {
         IssueStatus.CLOSED,
+        IssueStatus.REOPENED,  # optional, if citizen disputes resolution
     },
+
     IssueStatus.CLOSED: {
         IssueStatus.REOPENED,
     },
-    IssueStatus.REOPENED: {
-        IssueStatus.ACKNOWLEDGED,
-    },
-}
 
+    IssueStatus.REOPENED: {
+        IssueStatus.IN_REVIEW,
+    },
+
+    # Terminal states (no outgoing transitions)
+    IssueStatus.CANCELLED: set(),
+    IssueStatus.REJECTED: set(),
+}
 
 User = get_user_model()
 class Issue(models.Model):
@@ -162,46 +174,116 @@ class Issue(models.Model):
     # Domain Methods (ONLY way to mutate status)
     # -----------------------------
 
-    def cancel(self, *, by, reason=None):
+
+    def submit(self, *, by):
+        """
+        Called when a citizen completes and submits a complaint.
+        """
         if self.status != IssueStatus.OPEN:
-            raise ValidationError("Only open issues can be cancelled.")
+            raise ValidationError("Only open issues can be submitted for review.")
+
+        self._transition(
+            to_status=IssueStatus.IN_REVIEW,
+            by=by,
+        )
+
+    def cancel(self, *, by, reason=None):
+        """
+        Citizen cancels before work starts.
+        """
+        if self.status not in {IssueStatus.OPEN, IssueStatus.IN_REVIEW}:
+            raise ValidationError("This issue can no longer be cancelled.")
+
         self._transition(
             to_status=IssueStatus.CANCELLED,
             by=by,
             reason=reason,
         )
 
-    def acknowledge(self, *, by):
+    # ----------------------------
+    # Admin Actions
+    # ----------------------------
+
+    def move_to_review(self, *, by):
+        """
+        Explicit admin action to place issue under review
+        (mostly useful for reopened issues).
+        """
+        if self.status not in {IssueStatus.OPEN, IssueStatus.REOPENED}:
+            raise ValidationError("Issue cannot be moved to review from current state.")
+
         self._transition(
-            to_status=IssueStatus.ACKNOWLEDGED,
+            to_status=IssueStatus.IN_REVIEW,
+            by=by,
+        )
+
+    def start_progress(self, *, by):
+        """
+        Called when admin assigns a solver and work begins.
+        """
+        if self.status != IssueStatus.IN_REVIEW:
+            raise ValidationError("Work can only start on issues under review.")
+
+        self._transition(
+            to_status=IssueStatus.IN_PROGRESS,
             by=by,
         )
 
     def reject(self, *, by, reason=None):
+        """
+        Admin rejects the issue during review.
+        """
+        if self.status != IssueStatus.IN_REVIEW:
+            raise ValidationError("Only issues under review can be rejected.")
+
         self._transition(
             to_status=IssueStatus.REJECTED,
             by=by,
             reason=reason,
         )
 
+    # ----------------------------
+    # Solver / Resolution Actions
+    # ----------------------------
+
     def resolve(self, *, by):
+        """
+        Solver marks work as completed.
+        """
+        if self.status != IssueStatus.IN_PROGRESS:
+            raise ValidationError("Only issues in progress can be resolved.")
+
         self._transition(
             to_status=IssueStatus.RESOLVED,
             by=by,
         )
 
     def close(self, *, by):
+        """
+        Admin closes a resolved issue.
+        """
+        if self.status != IssueStatus.RESOLVED:
+            raise ValidationError("Only resolved issues can be closed.")
+
         self._transition(
             to_status=IssueStatus.CLOSED,
             by=by,
         )
 
     def reopen(self, *, by, reason=None):
+        """
+        Citizen or admin reopens a closed/resolved issue.
+        """
+        if self.status not in {IssueStatus.CLOSED, IssueStatus.RESOLVED}:
+            raise ValidationError("Only closed or resolved issues can be reopened.")
+
         self._transition(
             to_status=IssueStatus.REOPENED,
             by=by,
             reason=reason,
         )
 
+    # ----------------------------
+
     def __str__(self):
-        return f"{self.title} ({self.status})"
+        return f"{self.title} ({self.get_status_display()})"

@@ -11,6 +11,10 @@ from apps.issues.views.issue_draft_delete_view import IssueDraftDeleteView
 from apps.issues.views.issue_cancel_view import IssueCancelView
 from apps.issues.views.issue_home_summary_api_view import IssueHomeSummaryAPIView
 from apps.issues.views.issue_category_list_api_view import IssueCategoryListAPIView
+from apps.issues.views.issue_review_view import IssueReviewView
+from apps.issues.views.issue_submit_view import IssueSubmitView
+from apps.issues.views.complaint_list_view import ComplaintListView
+from apps.issues.views.complaint_details_view import ComplaintDetailsView
 urlpatterns = [
     path("issues/", IssueCreateView.as_view(), name="issue-create"),
     path("issues/drafts/", IssueDraftListView.as_view(), name="issue-draft-list"),
@@ -22,5 +26,9 @@ urlpatterns = [
     path("issues/<uuid:id>/behavioral-response/",IssueBehaviorSubmitView.as_view(),name = "issue-behavioral-response"),
     path("issues/<uuid:id>/cancel/",IssueCancelView.as_view(),name = "issue-cancel"), 
     path("issues/summary", IssueHomeSummaryAPIView.as_view(), name="issue-home-summary"),
-    path("issues/categories",IssueCategoryListAPIView.as_view(), name = "issue-categgory-list")
+    path("issues/categories",IssueCategoryListAPIView.as_view(), name = "issue-categgory-list"),
+    path("issues/<uuid:id>/review/",IssueReviewView.as_view(), name="issue-review"),
+    path("issues/<uuid:id>/submit/",IssueSubmitView.as_view(), name="issue-submit"),
+    path("issues/complaints/list/",ComplaintListView.as_view(), name="complaint-list"),
+    path("issues/complaints/<uuid:id>/detail/",ComplaintDetailsView.as_view(), name="complaint-details"),
 ]

@@ -13,7 +13,6 @@ const DraftCard = ({ draft, onDeleteRequest }) => {
   const handleContinue = () => {
     const routeTemplate = ISSUE_STEP_ROUTE_MAP[draft?.next_step];
     const route = routeTemplate.replace(":id", draft?.id);
-    console.log(route);
     navigate(route);
   }
 

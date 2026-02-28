@@ -38,6 +38,7 @@ class IssueEvidence(models.Model):
     evidence_type = models.CharField(
         max_length=10,
         choices=EvidenceType.choices,
+        default=EvidenceType.IMAGE,
     )
 
     file_format = models.CharField(max_length=10)

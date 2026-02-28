@@ -3,7 +3,6 @@ import AppRoutes from "./routes/AppRoutes";
 import { Toaster } from "sonner";
 import { useSelector } from "react-redux";
 import CivicEdgeLoader from "./components/Loaders/CivicEdgeLoaders";
-
 function App() {
   useAuthBootstrap()
   const {status,access_token,role} = useSelector((state) => state.auth);

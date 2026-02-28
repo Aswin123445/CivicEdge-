@@ -19,6 +19,7 @@ class IssueAdministrativeDecision(models.Model):
         "Issue",
         on_delete=models.CASCADE,
         related_name="administrative_decisions",
+        db_index=True,
     )
     
     decision_type = models.CharField(
@@ -27,6 +28,11 @@ class IssueAdministrativeDecision(models.Model):
     )
 
     reason = models.TextField()
+    public_message = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Citizen-facing explanation of the current review state",
+    )
 
     decided_by = models.ForeignKey(
         User,
@@ -42,6 +48,14 @@ class IssueAdministrativeDecision(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     is_active = models.BooleanField(default=True)
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["issue"],
+                condition=models.Q(is_active=True),
+                name="one_active_admin_decision_per_issue",
+            )
+        ]
     
     def save(self, *args, **kwargs):
         if not self.reference_id:

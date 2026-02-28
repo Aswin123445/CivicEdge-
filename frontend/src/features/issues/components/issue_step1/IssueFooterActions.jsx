@@ -13,11 +13,11 @@ export default function IssueFooterActions({ onContinue }) {
   return (
     <motion.footer
       variants={ITEM_VARIANTS}
-      className="mt-12 flex flex-col sm:flex-row justify-between gap-6"
+      className="mt-12 flex justify-center md:justify-end gap-6"
     >
-      <button className="text-slate-400 hover:text-slate-600 font-bold text-sm">
+      {/* <button className="text-slate-400 hover:text-slate-600 font-bold text-sm">
         Save & Exit
-      </button>
+      </button> */}
 
       <button
         disabled={issueStep1Fetching || issueStep1Loading}

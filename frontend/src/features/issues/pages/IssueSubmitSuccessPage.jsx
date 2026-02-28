@@ -10,6 +10,9 @@ import {
   ShieldCheck, 
   Bell 
 } from 'lucide-react';
+import useBehavioralService from '../hooks/behaviouralService';
+import ReviewIssueCombinedSkeleton from '../ui/skeltons/ReviewIssueCombinedSkeleton';
+import { useNavigate } from 'react-router-dom';
 
 // --- Animation Variants (CivicEdge Standard) ---
 const CONTAINER_VARIANTS = {
@@ -30,11 +33,14 @@ const ITEM_VARIANTS = {
 };
 
 const IssueSubmitSuccessPage = ({ issueId = "CE-774291", issueTitle = "Damaged Pavement on Oak Street" }) => {
+  const navigate = useNavigate();
+  const { reviewData,isLoadingReview } = useBehavioralService();
   
   const handleCopyId = () => {
     navigator.clipboard.writeText(issueId);
   };
-
+  const issue = reviewData.issue;
+  if (isLoadingReview) return (<ReviewIssueCombinedSkeleton/>);
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 font-sans antialiased text-slate-900">
       <motion.main 
@@ -59,7 +65,7 @@ const IssueSubmitSuccessPage = ({ issueId = "CE-774291", issueTitle = "Damaged P
           <div className="space-y-4">
             <div>
               <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.15em] block mb-1">Issue Title</span>
-              <p className="text-base font-bold text-slate-800">{issueTitle}</p>
+              <p className="text-base font-bold text-slate-800">{issue?.title}</p>
             </div>
             
             <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-50">
@@ -69,7 +75,7 @@ const IssueSubmitSuccessPage = ({ issueId = "CE-774291", issueTitle = "Damaged P
                   onClick={handleCopyId}
                   className="flex items-center gap-2 text-sm font-mono text-slate-600 hover:text-blue-600 transition-colors group"
                 >
-                  {issueId}
+                  {issue.reference_id}
                   <Clipboard size={14} className="text-slate-300 group-hover:text-blue-400" />
                 </button>
               </div>
@@ -108,9 +114,9 @@ const IssueSubmitSuccessPage = ({ issueId = "CE-774291", issueTitle = "Damaged P
             <ExternalLink size={18} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </button>
           
-          <button className="flex-1 px-8 py-4 bg-white text-slate-700 border border-slate-200 font-bold rounded-2xl hover:bg-slate-50 transition-all flex items-center justify-center gap-2 group">
+          <button onClick={() => navigate('/complaints')} className="flex-1 px-8 py-4 bg-white text-slate-700 border border-slate-200 font-bold rounded-2xl hover:bg-slate-50 transition-all flex items-center justify-center gap-2 group">
             <List size={18} className="text-slate-400" />
-            My Dashboard
+            Issue Home
           </button>
         </motion.footer>
 

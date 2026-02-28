@@ -61,6 +61,9 @@ import IssueCreateBehaviorStep from "../features/issues/pages/IssueCreateBehavio
 import IssueReviewSubmitPage from "../features/issues/pages/IssueReviewSubmitPage";
 import IssueSubmitSuccessPage from "../features/issues/pages/IssueSubmitSuccessPage";
 import IssuesLayout from "../features/issues/layouts/IssuesLayout";
+import ComplaintListPage from "../features/issues/pages/ComplaintListPage";
+import ComplaintDetails from "../features/issues/pages/ComplaintDetails";
+
 
 export default function AppRoutes() {
   return (
@@ -125,6 +128,14 @@ export default function AppRoutes() {
               <Route
                 path="/successfull/:id"
                 element={<IssueSubmitSuccessPage />}
+              />
+              <Route 
+                path="/complaints/list"
+                element ={<ComplaintListPage/>}
+              />
+              <Route 
+                path="/complaints/:id"
+                element={<ComplaintDetails/>}
               />
             </Route>
           </Route>

@@ -1,32 +1,78 @@
 import { motion } from "framer-motion";
-import { MapPin, Crosshair, Globe, Info } from "lucide-react";
+import { MapPin,  Info } from "lucide-react";
 import { fadeInUp } from "../../ui/motion";
+import { MapContainer, TileLayer } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import { ClickHandler } from "../../utils";
+import RecenterMap from "./Map";
 
-const MapSection = () => (
-  <motion.section
-    variants={fadeInUp}
-    className="lg:col-span-2 space-y-4"
-  >
-    <div className="relative h-[450px] bg-slate-200 rounded-[2.5rem] border overflow-hidden">
-      <div className="absolute inset-0 bg-blue-50 flex items-center justify-center">
-        <Globe className="w-32 h-32 text-blue-100" />
-      </div>
-
-      <div className="absolute top-4 left-4 right-4 flex justify-between">
-        <div className="bg-white/90 px-4 py-2 rounded-2xl border flex items-center gap-2">
-          <Info size={14} className="text-blue-600" />
-          <span className="text-xs font-bold">Click map to place pin</span>
+const MapSection = ({setCoords, coords}) => {
+  return (
+    <motion.section
+      variants={fadeInUp}
+      className="lg:col-span-2 space-y-4"
+    >
+      <div className="
+        relative
+        h-[450px]
+        bg-slate-200
+        rounded-[2.5rem]
+        border
+        overflow-hidden
+      ">
+        {/* 🗺️ Map layer */}
+        <div className="absolute inset-0 z-10">
+          <MapContainer
+            center={[	coords.lat, coords.lng]} // Kannur
+            zoom={13}
+            className="w-full h-full"
+          >
+            <TileLayer
+              attribution="© OpenStreetMap contributors"
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <RecenterMap lat={coords.lat} lng={coords.lng} />
+            <ClickHandler onSelect={setCoords} />
+          </MapContainer>
         </div>
-        <button className="bg-white p-3 rounded-2xl border">
-          <Crosshair size={20} className="text-blue-600" />
-        </button>
-      </div>
 
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <MapPin size={40} className="text-blue-600 fill-blue-600/20" />
+        {/* 🧭 Center pin (visual only) */}
+        <div className="
+          absolute inset-0
+          flex items-center justify-center
+          pointer-events-none
+          z-20
+        ">
+          <MapPin
+            size={40}
+            className="text-blue-600 fill-blue-600/20"
+          />
+        </div>
+
+        {/* ℹ️ Top overlay UI */}
+        <div className="
+          absolute top-4 left-4 right-4
+          flex justify-between
+          z-30
+          pointer-events-none
+        ">
+          <div className="
+            bg-white/90 px-4 py-2
+            rounded-2xl border
+            flex items-center gap-2
+            pointer-events-auto
+          ">
+            <Info size={14} className="text-blue-600" />
+            <span className="text-xs font-bold">
+              Click map to place pin
+            </span>
+          </div>
+        </div>
+
+
       </div>
-    </div>
-  </motion.section>
-);
+    </motion.section>
+  );
+};
 
 export default MapSection;

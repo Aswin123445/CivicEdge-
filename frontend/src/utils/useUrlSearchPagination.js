@@ -69,5 +69,7 @@ export function useUrlSearchPagination({
     setSearchValue,
     getPaginationState,
     goToPage,
+    setSearchParams,
+    searchParams
   };
 }

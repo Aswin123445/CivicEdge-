@@ -26,7 +26,7 @@ const ActionCard = ({ icon, title, desc, badge, path }) => {
       <div className="flex-1">
         <div className="flex justify-between">
           <h3 className="font-bold">{title}</h3>
-          {badge && <span className="text-xs font-bold">{badge}</span>}
+          {badge && <span className="text-indigo-600 font-semibold">{badge}</span>}
         </div>
         <p className="text-sm text-slate-500">{desc}</p>
       </div>

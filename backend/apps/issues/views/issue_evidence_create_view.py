@@ -4,7 +4,7 @@ from rest_framework import status
 
 from apps.issues.serializers.issue_evidence_create_serializer import IssueEvidenceCreateSerializer
 from apps.issues.selectors.get_user_draft_issue import get_user_draft_issue
-from apps.issues.services.add_issue_evidence import add_issue_evidence
+from apps.issues.services.add_issue_evidence import add_issue_evidences
 from apps.user.permissions.user_permissions import IsCitizen
 from apps.issues.permissions.citizen_issue_change_permisson import IsComplaintOpen
 
@@ -17,20 +17,26 @@ class IssueEvidenceCreateView(APIView):
             user=request.user,
         )
         self.check_object_permissions(request, issue)
-        serializer = IssueEvidenceCreateSerializer(data=request.data)
+        serializer = IssueEvidenceCreateSerializer(data=request.data['evidences'],many=True)
         serializer.is_valid(raise_exception=True)
 
-        evidence = add_issue_evidence(
+        evidences = add_issue_evidences(
             issue=issue,
             user=request.user,
-            data=serializer.validated_data,
+            evidences=serializer.validated_data,
         )
 
         return Response(
             {
-                "id": evidence.id,
-                "reference_id": evidence.reference_id,
-                "detail": "Evidence added successfully.",
+                "count": len(evidences),
+                "evidences": [
+                    {
+                        "id": ev.id,
+                        "reference_id": ev.reference_id,
+                    }
+                    for ev in evidences
+                ],
+                "detail": "Evidences added successfully.",
             },
             status=status.HTTP_201_CREATED,
         )

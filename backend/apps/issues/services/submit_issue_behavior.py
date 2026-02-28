@@ -3,9 +3,13 @@ from rest_framework.exceptions import ValidationError
 from apps.issues.models.behavioral_prompt import BehavioralPrompt
 from apps.issues.models.behavioral_prompt import IssueBehavioralResponse
 from apps.issues.selectors.get_behavioral_prompts_for_issue import get_behavioral_prompts_for_issue
-
+from rest_framework.exceptions import PermissionDenied
+from apps.issues.models.issues import Issue
 @transaction.atomic
 def submit_issue_behavior(*, issue, user, responses):
+    
+    if issue.draft_step != Issue.DraftStep.EVIDENCE:
+        raise PermissionDenied("Not allowed to perform this action.")
     # Fetch applicable prompts
     prompts = list(get_behavioral_prompts_for_issue(issue = issue))
     prompts_by_id = {p.id: p for p in prompts}
@@ -51,5 +55,4 @@ def submit_issue_behavior(*, issue, user, responses):
     )
     if set(prompts_by_id.keys()).issubset(answered_ids):
         issue.draft_step = issue.DraftStep.BEHAVIOR
-        issue.is_draft = False
         issue.save(update_fields=["draft_step"])

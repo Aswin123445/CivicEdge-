@@ -17,6 +17,6 @@ def get_issue_home_counts(*, user):
         "awaiting_review_count": Issue.objects.filter(
             reporter=user,
             is_active=True,
-            status=IssueStatus.ACKNOWLEDGED
+            status=IssueStatus.IN_REVIEW
         ).count(),
     }

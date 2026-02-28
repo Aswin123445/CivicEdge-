@@ -69,6 +69,8 @@ const DraftIssuesPage = () => {
                 onDeleteRequest={setActiveDraft}
                 drafts={drafts}
                 draftsLoading={draftsLoading}
+                draftDeleteLoading={draftDeleteLoading}
+                draftsFetching={draftsFetching}
               />
             </motion.div>
           </>
@@ -92,7 +94,7 @@ const DraftIssuesPage = () => {
       {/* PAGINATION */}
       {/* ===================== */}
       {!isSinglePage && (
-        <div className="sticky bottom-0 mt-6 py-4 ">
+        <div className=" bottom-0 mt-6 py-4 ">
           <Pagination
             currentPage={page}
             totalPages={totalPages}

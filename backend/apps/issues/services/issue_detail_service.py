@@ -1,0 +1,51 @@
+from apps.issues.selectors.complaint_details_selectors import (
+    get_issue_by_id,
+    get_latest_admin_decision,
+)
+
+from apps.issues.serializers.issue_core_serializer import IssueCoreSerializer
+from apps.issues.serializers.administrative_decision_serializer import AdministrativeDecisionSerializer
+from apps.issues.permissions.issue_edit import build_issue_permissions
+from apps.issues.utils.timeline import build_issue_timeline
+from rest_framework.exceptions import PermissionDenied
+
+def get_issue_detail(issue_id, user):
+    issue = get_issue_by_id(issue_id)
+    decision = get_latest_admin_decision(issue)
+    if issue.reporter != user :
+        raise PermissionDenied("Not allowed")
+
+    return {
+        "issue": IssueCoreSerializer(issue).data,
+
+        "permissions": build_issue_permissions(issue, decision, user),
+
+        "administrative_decision": (
+            AdministrativeDecisionSerializer(decision).data
+            if decision else None
+        ),
+
+        "submission": {
+            "description": issue.description,
+            "location": issue.location.landmark_description if issue.location.landmark_description else issue.location.zone.name,
+            "submitted_at": issue.created_at,
+        },
+
+        "citizen_media": [
+            {
+                "id": media.id,
+                "type": media.evidence_type,
+                "url": media.cloudinary_url,
+            }
+            for media in issue.evidences.all()
+        ],
+
+        "timeline": build_issue_timeline(issue),
+
+        "resolution": {
+            "note": None, #issue.resolution_note if issue.reolution_note else None,
+            "resolved_at": None,#issue.resolved_at if issue.resolved_at else None,
+            "after_media": [],
+        },
+    }
+    

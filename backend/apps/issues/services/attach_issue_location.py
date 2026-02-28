@@ -10,7 +10,7 @@ def attach_issue_location(*, issue, data):
     Advances draft_step to EVIDENCE.
     """
     if issue.draft_step != Issue.DraftStep.BASIC:
-        raise PermissionDenied("Please complete basic details first.")
+        raise PermissionDenied("Not allowed to perform this action.")
     IssueLocation.objects.update_or_create(
         issue=issue,
         defaults={
