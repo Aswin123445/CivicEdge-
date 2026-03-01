@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'apps.user',
     'apps.profiles',
     'apps.issues',
+    'apps.issue_execution',
     # Third-party apps   
     'corsheaders',
     'rest_framework',
