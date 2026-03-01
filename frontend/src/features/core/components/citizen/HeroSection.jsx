@@ -5,7 +5,7 @@ import VanishingFact from "./VanishingFact";
 const HeroSection = () => {
   const navigate = useNavigate();
   return (
-    <section className="bg-gradient-to-b from-blue-700 to-blue-200 text-white pt-16 pb-32">
+    <section className="bg-gradient-to-b from-blue-600 to-white text-white pt-16 pb-28">
       <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
         {/* Left: Text Content */}
         <div>

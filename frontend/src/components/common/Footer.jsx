@@ -3,7 +3,7 @@ import { Youtube, Linkedin } from "lucide-react";
 
 const SolverFooter = () => {
   return (
-    <footer className="bg-blue-700 text-blue-200 border-t border-blue-900">
+    <footer className="bg-blue-700 text-blue-200 border-t border-blue-700">
       <div className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 md:grid-cols-3 items-center gap-6 text-sm">
         
         {/* Left: Brand */}

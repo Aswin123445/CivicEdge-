@@ -1,12 +1,10 @@
-import { motion } from "framer-motion";
 import { FileText, MapPin, AlertTriangle } from "lucide-react";
 import ActionCard from "./ActionCard";
-import { containerVariants } from "../../ui/motion";
 import useIssueHomePageService from "../../hooks/home_page_service";
 
 const ACTIONS = (summary) => [
   {
-    key: "drafts",
+    id: "drafts",
     icon: <FileText />,
     title: "Draft Issues",
     desc: "Continue incomplete reports",
@@ -14,7 +12,7 @@ const ACTIONS = (summary) => [
     path: "/drafts",
   },
   {
-    key: "my-issues",
+    id: "my-issues",
     icon: <AlertTriangle />,
     title: "My Issues",
     desc: "Track submitted complaints",
@@ -25,7 +23,7 @@ const ACTIONS = (summary) => [
     path: "/complaints/list",
   },
   {
-    key: "nearby",
+    id: "nearby",
     icon: <MapPin />,
     title: "Nearby Complaints",
     desc: "View issues around you",
@@ -68,7 +66,7 @@ export default function ActionStrip() {
           {!issueLoading &&
             !issueError &&
             ACTIONS(issueSummary).map((action) => (
-              <ActionCard key={action.key} {...action} />
+              <ActionCard key={action.id} {...action} />
             ))}
         </div>
       </div>

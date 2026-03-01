@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const CategoryCard = ({ icon, label, color = 'text-blue-600' }) => {
+const CategoryCard = ({ icon, label, color = 'text-blue-600',id }) => {
+  const navigate = useNavigate();
   return (
     <button
       type="button"
@@ -14,6 +16,7 @@ const CategoryCard = ({ icon, label, color = 'text-blue-600' }) => {
         focus:outline-none focus:ring-2 focus:ring-blue-200
         group
       "
+      onClick={() => {navigate('/issue/new',{state:{category:id}})}}
     >
       {/* Icon */}
       <div

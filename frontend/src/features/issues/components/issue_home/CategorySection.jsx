@@ -19,7 +19,7 @@ export default function CategorySection() {
             categoryData?.map(({ id, name, icon}) => {
               const Icon = civicIconMap[icon];
               return (
-                <CategoryCard key={id} icon={<Icon />} label={name} />
+                <CategoryCard key={id} icon={<Icon />} label={name} id={id} />
               )
             })
           )}

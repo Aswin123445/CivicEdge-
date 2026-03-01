@@ -3,6 +3,7 @@ import AppRoutes from "./routes/AppRoutes";
 import { Toaster } from "sonner";
 import { useSelector } from "react-redux";
 import CivicEdgeLoader from "./components/Loaders/CivicEdgeLoaders";
+import ScrollManager from "./components/common/ScrollManager";
 function App() {
   useAuthBootstrap()
   const {status,access_token,role} = useSelector((state) => state.auth);
@@ -12,6 +13,7 @@ function App() {
   return (
     <>
     <div className="min-h-screen flex flex-col ">
+      <ScrollManager/>
       <AppRoutes />
       {/* INSIDE root, AFTER footer is fine */}
       
