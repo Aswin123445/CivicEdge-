@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from apps.user.serializers.common.user_base_serializer import BaseUserSerializer
-from django.core.exceptions import ValidationError as DjangoValidationError
+from rest_framework.exceptions import ValidationError as DjangoValidationError
 from apps.user.services.user.signin import generate_refresh_access_token
 from django.core.validators import validate_email as django_validate_email
 from apps.user.utils.auth_backend import EmailAuthBackend

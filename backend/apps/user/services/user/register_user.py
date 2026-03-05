@@ -1,6 +1,6 @@
 from apps.user.models.user import User
 from apps.user.utils.celery_task.verify_email import send_verification_email_task
-from django.core.exceptions import ValidationError as DjangoValidationError
+from rest_framework.exceptions import ValidationError as DjangoValidationError
 from rest_framework.exceptions import ValidationError as DRFValidationError
 
 def register_user(data: dict) -> User:

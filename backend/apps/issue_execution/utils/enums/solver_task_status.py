@@ -6,6 +6,7 @@ class SolverTaskStatus(models.TextChoices):
     IN_EXECUTION = "IN_EXECUTION", "In Execution"
     COMPLETION_SUBMITTED = "COMPLETION_SUBMITTED", "Completion Submitted"
     COMPLETED = "COMPLETED", "Completed"
+    TERMINATED = "TERMINATED", "Terminated"
     
     
 ALLOWED_SOLVER_TASK_TRANSITIONS = {
@@ -15,6 +16,7 @@ ALLOWED_SOLVER_TASK_TRANSITIONS = {
     SolverTaskStatus.VERIFICATION_SUBMITTED: {
         SolverTaskStatus.APPROVED_FOR_EXECUTION,
         SolverTaskStatus.ASSIGNED,  # verification rejected
+        SolverTaskStatus.TERMINATED,
     },
     SolverTaskStatus.APPROVED_FOR_EXECUTION: {
         SolverTaskStatus.IN_EXECUTION,

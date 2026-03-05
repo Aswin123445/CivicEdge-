@@ -5,11 +5,12 @@ from django.template.loader import render_to_string
 from django.conf import settings
 from apps.user.models.user import User
 from apps.user.utils.jwt.jwt import create_access_token
+from django.shortcuts import get_object_or_404
 
 @shared_task
 def send_verification_email_task(user_id):
     try:
-        user = User.objects.get(id=user_id)
+        user = get_object_or_404(User, id=user_id)
         user_data = {
             "user_id": str(user.id),
             "email": user.email,

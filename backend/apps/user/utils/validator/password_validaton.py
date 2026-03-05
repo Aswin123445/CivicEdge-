@@ -1,5 +1,5 @@
 import re
-from django.core.exceptions import ValidationError
+from rest_framework.exceptions import ValidationError
 
 def validate_strong_password(password: str) -> None:
     min_len = 8

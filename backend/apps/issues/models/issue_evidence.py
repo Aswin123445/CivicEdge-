@@ -1,6 +1,6 @@
 import uuid
 from django.db import models
-from django.core.exceptions import ValidationError
+from rest_framework.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from shared.utils.generate_reference_id import generate_reference_id
 User = get_user_model()

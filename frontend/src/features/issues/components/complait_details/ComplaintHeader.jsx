@@ -33,7 +33,7 @@ export default function ComplaintHeader({ issue }) {
           </div>
 
           <span
-            className={`px-6 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 font-bold text-sm uppercase tracking-widest ${STATUS_STYLES[complaint?.status.code]}`}
+            className={`px-6 py-2 rounded-full bg-blue-50 border text-center border-blue-100 text-blue-700 font-bold text-sm uppercase tracking-widest ${STATUS_STYLES[complaint?.status.code]}`}
           >
             {complaint?.status.label}
           </span>

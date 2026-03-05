@@ -15,6 +15,7 @@ export default function ComplaintDetails() {
     complaintsLoading,
     complaintFetching,
   } = useComplaintDetailsService();
+  console.log("Complaint Details Data:", complaint);
   return (
     <>
       {complaintsLoading || complaintFetching ? (
@@ -26,13 +27,13 @@ export default function ComplaintDetails() {
           <main className="max-w-3xl mx-auto px-6 mt-8 space-y-6">
             <CurrentStatusCard complaint={complaint} />
 
-            {complaint.administrative_decision && (
-              <AdministrativeDecisionCard decision={complaint.administrative_decision} />
+            {complaint?.administrative_decision && (
+              <AdministrativeDecisionCard decision={complaint.administrative_decision} issue_status={complaint?.issue?.status} />
             )}
-
-            {complaint?.resolution?.resolved_at && <ResolutionEvidenceCard complaint={complaint} />}
-
             <ComplaintTimeline timeline={complaint?.timeline} />
+
+
+            {complaint?.resolution?.after_media && <ResolutionEvidenceCard complaint={complaint} />}
 
             <OriginalComplaintCard complaint={complaint} />
           </main>

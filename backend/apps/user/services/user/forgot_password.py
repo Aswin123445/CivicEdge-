@@ -5,6 +5,7 @@ from apps.user.models.user import User
 from rest_framework.exceptions import ValidationError, NotFound
 from django.conf import settings
 from apps.user.utils.celery_task.reset_mail import send_reset_password_email_task
+from django.shortcuts import get_object_or_404
 
 
 def initiate_password_reset(email: str):
@@ -12,7 +13,7 @@ def initiate_password_reset(email: str):
         raise ValidationError("Email is required")
 
     try:
-        user = User.objects.get(email=email)
+        user = get_object_or_404(User, email=email)
     except User.DoesNotExist:
         raise NotFound("User not found")
 

@@ -1,49 +1,68 @@
-import { ShieldCheck } from "lucide-react";
+import { ShieldCheck, Clock } from "lucide-react";
+import { formatDate } from "../../../../utils/datenormalize";
 
 export default function CurrentStatusCard({ complaint }) {
-  const currentEvent = complaint?.timeline.find(e => e.is_current === true);
+  const currentEvent = complaint?.timeline?.[complaint.timeline.length - 1];
   const currentMessage = currentEvent?.description;
+  const updatedAt = currentEvent?.created_at;
+
+  const formattedTime = formatDate(updatedAt)
+
   return (
     <section
       className="
       relative
-      rounded-2xl
+      bg-white
+      border border-slate-200
+      rounded-xl
       p-8
-      bg-blue-50/60
-      border border-blue-100
+      shadow-sm
       overflow-hidden
     "
     >
-      {/* Soft background icon */}
-      <div className="absolute top-6 right-6 opacity-[0.06] pointer-events-none">
-        <ShieldCheck className="w-20 h-20 text-blue-600" />
+      {/* Blue Accent Line */}
+      <div className="absolute left-0 top-0 h-full w-1 bg-blue-600 rounded-l-xl" />
+
+      {/* Background Icon */}
+      <div className="absolute top-6 right-6 opacity-[0.05] pointer-events-none">
+        <ShieldCheck className="w-24 h-24 text-blue-600" />
       </div>
 
-      {/* Label */}
-      <h2
-        className="
-        text-blue-700
-        font-semibold
-        text-xs
-        uppercase
-        tracking-[0.18em]
-        mb-3
-      "
-      >
-        Current Update
-      </h2>
+      {/* Header */}
+      <div className="flex items-start justify-between mb-4">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-blue-50">
+            <ShieldCheck className="w-5 h-5 text-blue-600" />
+          </div>
+
+          <h2 className="text-sm font-semibold tracking-wide uppercase text-blue-700">
+            Current Status
+          </h2>
+        </div>
+
+        {/* Time Container */}
+        {formattedTime && (
+          <div
+            className="
+            flex items-center gap-2
+            text-xs
+            text-slate-500
+            bg-slate-50
+            border border-slate-200
+            px-3 py-1.5
+            rounded-full
+          "
+          >
+            <Clock className="w-3.5 h-3.5" />
+            {formattedTime}
+          </div>
+        )}
+      </div>
 
       {/* Message */}
-      <p
-        className="
-        text-lg
-        text-slate-800
-        leading-relaxed
-        max-w-2xl
-      "
-      >
+      <p className="text-slate-700 text-[15px] leading-relaxed max-w-2xl pl-5 ">
         {currentMessage ||
-          "Your complaint is currently under review by our team. We will share updates as progress is made."}
+          "Your complaint is currently under review by the civic team. Updates will appear here as progress is made."}
       </p>
     </section>
   );

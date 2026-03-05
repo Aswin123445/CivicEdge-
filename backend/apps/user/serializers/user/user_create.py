@@ -3,7 +3,7 @@ from rest_framework import serializers
 from apps.user.utils.validator.password_validaton import validate_strong_password
 from apps.user.services.user.register_user import register_user
 from django.core.validators import validate_email as django_validate_email
-from django.core.exceptions import ValidationError as DjangoValidationError
+from rest_framework.exceptions import ValidationError as DjangoValidationError
 
 class UserCreateSerializer(BaseUserSerializer):
     """

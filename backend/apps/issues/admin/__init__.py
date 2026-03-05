@@ -6,6 +6,7 @@ from apps.issues.models.issue_location import IssueLocation
 from apps.issues.models.issue_evidence import IssueEvidence
 from apps.issues.models.issue_log import IssueLog,IssueStats
 from apps.issues.models.issue_status_history import IssueStatusHistory 
+from apps.issues.models.issue_timeline_event import IssueTimelineEvent
 
 from django.contrib import admin
 
@@ -19,3 +20,4 @@ admin.site.register(IssueStatusHistory)
 admin.site.register(IssueStats)
 admin.site.register(IssueLocation)
 admin.site.register(IssueBehavioralResponse)
+admin.site.register(IssueTimelineEvent)

@@ -5,7 +5,8 @@ def get_issue_by_id(issue_id):
     return Issue.objects.select_related(
         "category"
     ).prefetch_related(
-        "evidences"
+        "evidences",
+        "timeline_events",
     ).get(id=issue_id,is_draft=False,is_active=True)
 
 

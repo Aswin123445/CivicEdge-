@@ -9,6 +9,10 @@ class IssueAdministrativeDecision(models.Model):
         POSTPONED = "POSTPONED", "Postponed"
         BLOCKED = "BLOCKED", "Blocked"
         ESCALATED = "ESCALATED", "Escalated"
+    class DecisionContext(models.TextChoices):
+        INITIAL_REVIEW = "INITIAL_REVIEW", "Initial Review"
+        VERIFICATION_REVIEW = "VERIFICATION_REVIEW", "Verification Review"
+        CLOSURE_REVIEW = "CLOSURE_REVIEW", "Closure Review"
 
 
     
@@ -34,6 +38,13 @@ class IssueAdministrativeDecision(models.Model):
         help_text="Citizen-facing explanation of the current review state",
     )
 
+    context = models.CharField(
+        max_length=30,
+        choices=DecisionContext.choices,
+        db_index=True,
+        default=DecisionContext.INITIAL_REVIEW
+    )
+
     decided_by = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
@@ -51,9 +62,9 @@ class IssueAdministrativeDecision(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=["issue"],
+                fields=["issue", "context"],
                 condition=models.Q(is_active=True),
-                name="one_active_admin_decision_per_issue",
+                name="one_active_decision_per_issue_per_context",
             )
         ]
     

@@ -1,16 +1,21 @@
 from rest_framework import serializers
-class AdministrativeDecisionSerializer(serializers.Serializer):
-    type = serializers.CharField(source="decision_type")
-    label = serializers.CharField()
-    reason = serializers.CharField()
-    created_at = serializers.DateTimeField()
+from apps.issues.models.issue_administrative_decision import IssueAdministrativeDecision
 
-    decided_by = serializers.SerializerMethodField()
 
-    def get_decided_by(self, obj):
-        return {
-            "id": obj.decided_by.id,
-            "name": obj.decided_by.get_full_name(),
-        }
-        
-        
+class AdministrativeDecisionSerializer(serializers.ModelSerializer):
+    type = serializers.CharField(source="decision_type", read_only=True)
+    label = serializers.CharField(source="get_decision_type_display", read_only=True)
+
+    class Meta:
+        model = IssueAdministrativeDecision
+        fields = [
+            "reference_id",
+            "type",
+            "label",
+            "reason",
+            "public_message",
+            "created_at",
+            "decided_by",
+        ]
+        read_only_fields = fields
+

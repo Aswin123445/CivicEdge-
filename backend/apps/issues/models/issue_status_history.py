@@ -32,8 +32,15 @@ class IssueStatusHistory(models.Model):
         ordering = ["created_at"]
 
     def save(self, *args, **kwargs):
-        if self.pk:
+        if self._state.adding is False:
             raise RuntimeError("IssueStatusHistory records are immutable.")
+    
         if not self.reference_id:
-            self.reference_id = generate_reference_id(model=IssueStatusHistory, field_name="reference_id", prefix="ISH", padding=10)
+            self.reference_id = generate_reference_id(
+                model=IssueStatusHistory,
+                field_name="reference_id",
+                prefix="ISH",
+                padding=10
+            )
+    
         super().save(*args, **kwargs)

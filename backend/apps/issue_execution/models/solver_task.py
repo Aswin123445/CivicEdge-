@@ -1,12 +1,13 @@
 import uuid
 from django.db import models
-from django.core.exceptions import ValidationError
+from rest_framework.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
 from apps.issues.models.issues import Issue
 from apps.issue_execution.utils.enums.solver_task_status import ALLOWED_SOLVER_TASK_TRANSITIONS, SolverTaskStatus
 from shared.utils.generate_reference_id import generate_reference_id
+from django.shortcuts import get_object_or_404
 
 User = get_user_model()
 
@@ -106,7 +107,7 @@ class SolverTask(models.Model):
         if not SolverTask.objects.filter(pk=self.pk).exists():
             return  # New object
 
-        previous = SolverTask.objects.get(pk=self.pk)
+        previous = get_object_or_404(SolverTask, pk=self.pk)
 
         if self.issue_id != previous.issue_id:
             raise ValidationError("Issue cannot be changed once task is created.")
@@ -148,13 +149,28 @@ class SolverTask(models.Model):
             raise ValidationError("Only assigned solver can submit verification.")
 
         self._transition(to_status=SolverTaskStatus.VERIFICATION_SUBMITTED)
+    
+    def terminate(self, *, by):
+        if by.role != "admin":
+            raise ValidationError("Only admin can terminate task.")
+
+        self._transition(to_status=SolverTaskStatus.TERMINATED)
+
+
 
     def start_execution(self, *, by):
-        if by != self.solver:
+        if self.status != SolverTaskStatus.APPROVED_FOR_EXECUTION:
+            raise ValidationError("Not allowed to perform this action.")
+    
+        if not self.contractor:
+            raise ValidationError("Contractor must be assigned before execution starts.")
+    
+        if self.solver_id != by.id:
             raise ValidationError("Only assigned solver can start execution.")
-
-        self.started_at = timezone.now()
-        self._transition(to_status=SolverTaskStatus.IN_EXECUTION)
+    
+        self._transition(
+            to_status=SolverTaskStatus.IN_EXECUTION,
+        )
 
     def submit_completion(self, *, by):
         if by != self.solver:
@@ -169,7 +185,6 @@ class SolverTask(models.Model):
     def approve_execution(self, *, by):
         if not by.is_staff:
             raise ValidationError("Only admin can approve execution.")
-
         self._transition(to_status=SolverTaskStatus.APPROVED_FOR_EXECUTION)
 
     def reject_verification(self, *, by):
@@ -198,3 +213,6 @@ class SolverTask(models.Model):
     def _transition(self, *, to_status):
         self.status = to_status
         self.save()
+        
+    def __str__(self):
+        return f"{self.reference_id} {self.status} ({self.pk})"

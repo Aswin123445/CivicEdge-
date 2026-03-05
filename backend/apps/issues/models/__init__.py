@@ -6,6 +6,7 @@ from .issue_location import IssueLocation
 from .issue_status_history import IssueStatusHistory
 from .issue_log import IssueLog,IssueStats
 from .behavioral_prompt import BehavioralPrompt, IssueBehavioralResponse
+from .issue_timeline_event import IssueTimelineEvent
 __all__ = [
     "Issue",
     "IssueCategory",
@@ -13,7 +14,8 @@ __all__ = [
     "IssueLocation",
     "IssueStatusHistory",
     "IssueLog",
-    "IssueStats"
+    "IssueStats",
     "BehavioralPrompt",
     "IssueBehavioralResponse",
+    "IssueTimelineEvent"
 ]

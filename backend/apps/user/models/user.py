@@ -1,7 +1,7 @@
 import uuid
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.db import models
-from django.core.exceptions import ValidationError
+from rest_framework.exceptions import ValidationError
 from shared.validators.phone_validators import indian_phone_validator
 from shared.enums.user_role import UserRole
 from shared.utils.generate_reference_id import generate_reference_id
@@ -114,7 +114,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         app_label = "user"
 
     def __str__(self):
-        return f"user {self.email} ({self.role})"
+        return f"user {self.email} ({self.role}) {self.id}"
 
     @property
     def is_admin(self):
@@ -136,11 +136,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         Check if the user has a citizen role.
         """
         return self.role == UserRole.CITIZEN
-
-import uuid
-from django.core.exceptions import ValidationError
-from django.db import models
-
 
 class Zone(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

@@ -5,6 +5,7 @@ from rest_framework.exceptions import ValidationError, PermissionDenied
 from apps.issues.models.issues import Issue
 from apps.issues.models.issue_log import IssueLog
 from apps.issues.utils.enums.issue_status import IssueStatus
+from apps.issues.services.timeline_service import add_issue_timeline_event
 
 
 @transaction.atomic
@@ -35,6 +36,11 @@ def submit_issue(*, issue: Issue, user):
         metadata={
             "submitted_by": str(user.id),
         },
+    )
+    add_issue_timeline_event(
+        issue=issue,
+        message="Issue submitted successfully. Your report is now under review.",
+        created_by=user,
     )
 
     return issue

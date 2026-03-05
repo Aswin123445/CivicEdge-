@@ -1,5 +1,5 @@
 import uuid
-from django.core.exceptions import ValidationError
+from rest_framework.exceptions import ValidationError
 from django.db import models
 from apps.issues.utils.enums.issue_status import IssueStatus
 from django.contrib.auth import get_user_model
@@ -163,11 +163,25 @@ class Issue(models.Model):
         )
 
         # --- Issue Log (TIMELINE) ---
-        IssueLog.objects.create(
-            issue=self,
-            event_type=to_status,
-            actor=by,
-        )
+        if to_status == IssueStatus.IN_REVIEW:
+            event = IssueLog.EventType.ACKNOWLEDGED
+        elif to_status == IssueStatus.REJECTED:
+            event = IssueLog.EventType.REJECTED
+        elif to_status == IssueStatus.RESOLVED:
+            event = IssueLog.EventType.RESOLVED
+        elif to_status == IssueStatus.REOPENED:
+            event = IssueLog.EventType.REOPENED
+        elif to_status == IssueStatus.CANCELLED:
+            event = IssueLog.EventType.CANCELLED
+        else:
+            event = None
+
+        if event:
+            IssueLog.objects.create(
+                issue=self,
+                event_type=event,
+                actor=by,
+            )
     
 
     # -----------------------------

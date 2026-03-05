@@ -1,6 +1,6 @@
 import uuid
 from django.db import models, IntegrityError
-from django.core.exceptions import ValidationError
+from rest_framework.exceptions import ValidationError
 from django.db.models import UniqueConstraint
 from django.db.models.functions import Lower
 from shared.utils.generate_reference_id import generate_reference_id

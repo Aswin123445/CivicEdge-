@@ -46,6 +46,9 @@ class IssueLog(models.Model):
         if validate:
             self.full_clean()
         super().save(*args, **kwargs)
+        
+    def __str__(self):
+        return f"{self.reference_id} - {self.issue.title}"
 
     class Meta:
         ordering = ["created_at"]

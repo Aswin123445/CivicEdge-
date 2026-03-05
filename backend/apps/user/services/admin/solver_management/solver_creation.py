@@ -3,7 +3,7 @@ from apps.user.utils.celery_task.admin_solver_creation_notification import send_
 from shared.enums.user_role import UserRole
 from django.db import IntegrityError, transaction
 from rest_framework.exceptions import ValidationError
-from django.core.exceptions import ValidationError as DjangoValidationError
+from rest_framework.exceptions import ValidationError as DjangoValidationError
 from rest_framework.exceptions import ValidationError as DRFValidationError
 from rest_framework.exceptions import AuthenticationFailed
 User = get_user_model()
