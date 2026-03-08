@@ -15,5 +15,5 @@ class IsActiveSolverForWrite(BasePermission):
         return bool(
             user.is_authenticated
             and getattr(user, "role", "solver")
-            and user.is_active
+            and user.profile.is_available
         )

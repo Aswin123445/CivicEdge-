@@ -63,6 +63,7 @@ class AdminIssueDetailSerializer(serializers.ModelSerializer):
 
     administrative_decisions = AdminDecisionSerializer(many=True)
     solver_tasks = AdminSolverTaskSerializer(many=True)
+    location = serializers.SerializerMethodField()
 
     class Meta:
         model = Issue
@@ -79,4 +80,13 @@ class AdminIssueDetailSerializer(serializers.ModelSerializer):
             # admin-only context
             "administrative_decisions",
             "solver_tasks",
+            "location"
         ]
+
+    def get_location(self, obj):
+        return {
+            "latitude": obj.location.latitude,
+            "longitude": obj.location.longitude,
+            "landmark_description": obj.location.landmark_description,
+            "zone": obj.location.zone.name
+        }

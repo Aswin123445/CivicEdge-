@@ -6,25 +6,25 @@ import "leaflet/dist/leaflet.css";
 import { ClickHandler } from "../../utils";
 import RecenterMap from "./Map";
 
-const MapSection = ({setCoords, coords}) => {
+const MapSection = ({setCoords, coords, height = "h-[450px]",zoom = 13}) => {
   return (
     <motion.section
       variants={fadeInUp}
       className="lg:col-span-2 space-y-4"
     >
-      <div className="
+      <div className={`
         relative
-        h-[450px]
+        ${height}
         bg-slate-200
         rounded-[2.5rem]
         border
         overflow-hidden
-      ">
+      `}>
         {/* 🗺️ Map layer */}
         <div className="absolute inset-0 z-10">
           <MapContainer
             center={[	coords.lat, coords.lng]} // Kannur
-            zoom={13}
+            zoom={zoom}
             className="w-full h-full"
           >
             <TileLayer

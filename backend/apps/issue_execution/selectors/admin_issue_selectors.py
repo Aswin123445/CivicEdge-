@@ -11,6 +11,7 @@ def get_issues_pending_initial_review():
         Issue.objects
         .filter(status=IssueStatus.IN_REVIEW)
         .filter(solver_tasks__isnull=True)
+        .filter(administrative_decisions__isnull=True)
         .select_related("reporter", "category")
         .order_by("-created_at")
     )

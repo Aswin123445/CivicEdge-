@@ -2,10 +2,12 @@
 from apps.user.services.admin.solver_management.solver_listing import get_all_solvers
 from rest_framework.generics import ListAPIView
 from apps.user.serializers.admin.solver_management.listing_serializer import AdminSolverSerializer
+# from django_filters.rest_framework import DjangoFilterBackend
 class AdminSolverListView(ListAPIView):
         queryset = get_all_solvers()
         serializer_class  = AdminSolverSerializer
         search_fields = ['email','profile__name','reference_id']
         ordering_fields = ['created_at', 'profile__name','zone',]
-        ordering = ['-created_at']
-        
+        ordering = ['-profile__is_available','-created_at']
+        # filter_backends = [DjangoFilterBackend]
+        filterset_fields = ['profile__zone']

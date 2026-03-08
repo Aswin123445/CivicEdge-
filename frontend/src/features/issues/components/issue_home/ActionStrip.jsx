@@ -22,13 +22,13 @@ const ACTIONS = (summary) => [
         : undefined,
     path: "/complaints/list",
   },
-  {
-    id: "nearby",
-    icon: <MapPin />,
-    title: "Nearby Complaints",
-    desc: "View issues around you",
-    path: "/nearby",
-  },
+  // {
+  //   id: "nearby",
+  //   icon: <MapPin />,
+  //   title: "Nearby Complaints",
+  //   desc: "View issues around you",
+  //   path: "/nearby",
+  // },
 ];
 
 export default function ActionStrip() {

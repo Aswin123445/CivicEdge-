@@ -1,14 +1,34 @@
 import { useState } from "react";
-import { X, User,LayoutDashboard } from "lucide-react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { X, User, LayoutDashboard, ClipboardCheck } from "lucide-react";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import useCitizenService from "../../features/core/hooks/citizen/useCitizenService";
 import { AdminIdentitySkeleton } from "../../features/core/ui/skeltons/admin/AdminIdentitySkeleton";
 import AdminIdentity from "../../features/core/ui/AdminIdentity";
 
 function AdminSidebar() {
+  const location = useLocation();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  const {userData,userDataLoading,userDataFetching} = useCitizenService()
+  const { userData, userDataLoading, userDataFetching } = useCitizenService();
+  const executionPaths = [
+    "/admin/execution/in-review/issues",
+    "/admin/execution/solver-assignment",
+    "/admin/execution/verification-reports",
+    "/admin/execution/solver-tasks",
+    "/admin/execution/execution-proofs",
+  ];
+  const roleManagementPaths = [
+    "/admin/management/citizens",
+    "/admin/management/solvers",
+    "/admin/management/admins",
+  ];
+  const isRoleManagementPath = roleManagementPaths.some((path) =>
+    location.pathname.startsWith(path),
+  );
+
+  const isExecutionPath = executionPaths.some((path) =>
+    location.pathname.startsWith(path),
+  );
 
   return (
     <>
@@ -33,11 +53,15 @@ function AdminSidebar() {
         `}
       >
         {/* Sidebar Header */}
-        <div onClick={() => navigate("/admin/profile")} className="cursor-pointer flex justify-between items-center px-4 py-3 border-b border-gray-700">
+        <div
+          onClick={() => navigate("/admin/profile")}
+          className="cursor-pointer flex justify-between items-center px-4 py-3 border-b border-gray-700"
+        >
           {userDataLoading || userDataFetching ? (
-            <AdminIdentitySkeleton />):
-             <AdminIdentity user={userData?.profile || {}}/>
-}
+            <AdminIdentitySkeleton />
+          ) : (
+            <AdminIdentity user={userData?.profile || {}} />
+          )}
           {/* Close button - only on mobile */}
           <button
             onClick={() => setIsOpen(false)}
@@ -49,7 +73,7 @@ function AdminSidebar() {
 
         {/* Sidebar Nav */}
         <nav className="flex-1 overflow-y-auto px-2 py-3 space-y-1">
-            <NavLink
+          <NavLink
             to="/admin/dashboard"
             className={({ isActive }) =>
               `flex items-center rounded-md px-3 py-2 text-sm font-medium transition ${
@@ -59,26 +83,37 @@ function AdminSidebar() {
               }`
             }
           >
-           <LayoutDashboard className="w-5 h-5 mr-2" /> 
+            <LayoutDashboard className="w-5 h-5 mr-2" />
             Dashboard
           </NavLink>
-         <NavLink
-  to="/admin/management/citizens"
-  end
-  className={({ isActive }) =>
-    `flex items-center rounded-md px-3 py-2 text-sm font-medium transition ${
-      isActive
-        ? "bg-gray-700 text-white"
-        : "text-gray-400 hover:bg-gray-700 hover:text-white"
-    }`
-  }
->
-  <User className="w-5 h-5 mr-2" />
-  Role Management
-</NavLink>
-
-
-
+          <NavLink
+            to="/admin/management/citizens"
+            end
+            className={() =>
+              `flex items-center rounded-md px-3 py-2 text-sm font-medium transition ${
+                isRoleManagementPath
+                  ? "bg-gray-700 text-white"
+                  : "text-gray-400 hover:bg-gray-700 hover:text-white"
+              }`
+            }
+          >
+            <User className="w-5 h-5 mr-2" />
+            Role Management
+          </NavLink>
+          <NavLink
+            to="/admin/execution/in-review/issues"
+            end
+            className={() =>
+              `flex items-center rounded-md px-3 py-2 text-sm font-medium transition ${
+                isExecutionPath
+                  ? "bg-gray-700 text-white"
+                  : "text-gray-400 hover:bg-gray-700 hover:text-white"
+              }`
+            }
+          >
+            <ClipboardCheck className="w-5 h-5 mr-2" />
+            Issue Execution
+          </NavLink>
 
           <NavLink
             to="/admin/reports"

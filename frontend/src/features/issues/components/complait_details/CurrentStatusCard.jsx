@@ -1,12 +1,26 @@
 import { ShieldCheck, Clock } from "lucide-react";
 import { formatDate } from "../../../../utils/datenormalize";
 
+const STATUS_STYLES = {
+  OPEN: "bg-blue-100 text-blue-700 border-blue-200",
+  IN_REVIEW: "bg-purple-100 text-purple-700 border-purple-200",
+  IN_PROGRESS: "bg-amber-100 text-amber-700 border-amber-200",
+  RESOLVED: "bg-green-100 text-green-700 border-green-200",
+  CLOSED: "bg-slate-200 text-slate-700 border-slate-300",
+  REJECTED: "bg-red-100 text-red-700 border-red-200",
+  CANCELLED: "bg-gray-100 text-gray-600 border-gray-200",
+  REOPENED: "bg-orange-100 text-orange-700 border-orange-200",
+};
+
 export default function CurrentStatusCard({ complaint }) {
   const currentEvent = complaint?.timeline?.[complaint.timeline.length - 1];
   const currentMessage = currentEvent?.description;
   const updatedAt = currentEvent?.created_at;
 
-  const formattedTime = formatDate(updatedAt)
+  const formattedTime = formatDate(updatedAt);
+
+  const statusCode = complaint?.issue?.status?.code;
+  const statusLabel = complaint?.issue?.status?.label;
 
   return (
     <section
@@ -38,6 +52,21 @@ export default function CurrentStatusCard({ complaint }) {
           <h2 className="text-sm font-semibold tracking-wide uppercase text-blue-700">
             Current Status
           </h2>
+
+          {/* Status Badge */}
+          {statusLabel && (
+            <span
+              className={`
+                text-xs font-medium
+                px-2.5 py-1
+                rounded-full
+                border
+                ${STATUS_STYLES[statusCode] || "bg-gray-100 text-gray-600 border-gray-200"}
+              `}
+            >
+              {statusLabel}
+            </span>
+          )}
         </div>
 
         {/* Time Container */}
@@ -60,7 +89,7 @@ export default function CurrentStatusCard({ complaint }) {
       </div>
 
       {/* Message */}
-      <p className="text-slate-700 text-[15px] leading-relaxed max-w-2xl pl-5 ">
+      <p className="text-slate-700 text-[15px] leading-relaxed max-w-2xl pl-5">
         {currentMessage ||
           "Your complaint is currently under review by the civic team. Updates will appear here as progress is made."}
       </p>

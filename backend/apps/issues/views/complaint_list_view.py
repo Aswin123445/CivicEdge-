@@ -21,6 +21,7 @@ class ComplaintListView(ListAPIView):
     filterset_fields = [
         "status",
     ]
+    ordering = ["-created_at"]
 
     def get_queryset(self):
         return get_citizen_complaints_queryset(

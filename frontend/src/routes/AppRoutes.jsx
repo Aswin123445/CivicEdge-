@@ -64,6 +64,11 @@ import IssueSubmitSuccessPage from "../features/issues/pages/IssueSubmitSuccessP
 import IssuesLayout from "../features/issues/layouts/IssuesLayout";
 import ComplaintListPage from "../features/issues/pages/ComplaintListPage";
 import ComplaintDetails from "../features/issues/pages/ComplaintDetails";
+import ExecutionManagementLayout from "../features/issues_execution/layouts/ExecutionManagementLayout";
+import PendingReviewPage from "../features/issues_execution/pages/PendingReviewPage";
+import IssueDetailPage from "../features/issues_execution/pages/IssueDetailPage";
+import SolverAssignmentQueuePage from "../features/issues_execution/pages/SolverAssignmentQueuePage";
+import AdminIssueAssignmentPage from "../features/issues_execution/pages/AdminIssueAssignmentPage";
 
 
 export default function AppRoutes() {
@@ -157,9 +162,9 @@ export default function AppRoutes() {
           <Route element={<AdminLayout />}>
             <Route element={<AdminFooterLayout />}>
               {/* User Management Section */}
-              <Route element={<UserManagementLayout />}>
+              <Route path="/admin/management" element={<UserManagementLayout />}>
                 <Route
-                  path="/admin/management/citizens"
+                  path="citizens"
                   element={
                     <Suspense fallback={<UserManagementSectionLoader />}>
                       <UserManagement />
@@ -167,7 +172,7 @@ export default function AppRoutes() {
                   }
                 />
                 <Route
-                  path="/admin/management/solvers"
+                  path="solvers"
                   element={
                     <Suspense fallback={<UserManagementSectionLoader />}>
                       <SolverManagement />
@@ -175,13 +180,22 @@ export default function AppRoutes() {
                   }
                 />
                 <Route
-                  path="/admin/management/admins"
+                  path="admins"
                   element={
                     <Suspense fallback={<UserManagementSectionLoader />}>
                       <AdminManagement />
                     </Suspense>
                   }
                 />
+              </Route>
+              <Route path="/admin/execution" element={<ExecutionManagementLayout />}>
+                <Route path="in-review/issues" element={<PendingReviewPage/>} />
+                <Route path="in-review/issues/:id/details" element={<IssueDetailPage/>} />
+                <Route path="solver-assignment" element={<SolverAssignmentQueuePage/>} />
+                <Route path="solver-assignment/:id/decision" element={<AdminIssueAssignmentPage/>} />
+                <Route path="verification-reports" element={<div>Verification Reports</div>} />
+                <Route path="solver-tasks" element={<div>Solver Tasks</div>} />
+                <Route path="execution-proofs" element={<div>Execution Proofs</div>} />
               </Route>
               <Route
                 path="/admin/dashboard"
