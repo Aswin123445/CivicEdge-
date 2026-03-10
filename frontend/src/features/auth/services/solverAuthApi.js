@@ -1,14 +1,13 @@
 import {createApi} from '@reduxjs/toolkit/query/react'; 
 import baseQueryWithReauth from "../../../services/baseQueryWithReauth";
 import { solverLogin } from "../authSlice";
+import { baseApi } from '../../../services/baseApi';
 
-export const solverAuthApi = createApi({
-    reducerPath: 'solverAuthApi',
-    baseQuery: baseQueryWithReauth({ baseUrl: '/api/v1/user/solver/' }),
+export const solverAuthApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        login: builder.mutation({
+        solverLogin: builder.mutation({
             query: (credentials) => ({
-                url: 'login/',
+                url: '/user/solver/login/',
                 method: 'post',
                 data: credentials,
                 withCredentials: true,
@@ -29,4 +28,4 @@ export const solverAuthApi = createApi({
     }),
 })
 
-export const { useLoginMutation } = solverAuthApi
+export const { useSolverLoginMutation } = solverAuthApi

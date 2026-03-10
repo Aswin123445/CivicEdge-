@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { errorToast } from '../../../utils/Toaster';
 import { useParams } from "react-router-dom";
 import { useSignupMutation,
-   useLoginMutation,
+   useCitizenLoginMutation as useLoginMutation,
    useGoogleLoginMutation,
    useForgotPasswordMutation,
    useResetPasswordMutation } from '../services/authApi';

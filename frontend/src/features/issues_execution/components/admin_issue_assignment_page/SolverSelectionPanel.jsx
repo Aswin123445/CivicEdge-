@@ -37,7 +37,7 @@ const SolverSelectionPanel = ({
         <div className="flex justify-between items-center">
           <h2 className="font-semibold text-slate-200">Recommended Solvers</h2>
           <span className="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded border border-emerald-500/20">
-            Zone Match: {issue.location.zone}
+            Zone Match: {issue?.location.zone}
           </span>
         </div>
       </div>

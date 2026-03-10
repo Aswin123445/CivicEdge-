@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 
-function UserUpdateModal({ user, onClose, onSave,options }) {
+function UserUpdateModal({ user, onClose, onSave,options ,status}) {
   const [role, setRole] = useState("");
   const {role1,role2} = options
 
@@ -12,10 +12,10 @@ function UserUpdateModal({ user, onClose, onSave,options }) {
     }
   }, [role1]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    onSave({ ...user, role }); // Pass updated values
-    onClose();
+    await onSave({ ...user, role }); // Pass updated values
+    if (!status.isLoading) onClose();
   };
 
   if (!user) return null;
@@ -64,7 +64,7 @@ function UserUpdateModal({ user, onClose, onSave,options }) {
               type="submit"
               className="px-4 py-2 rounded-md font-semibold bg-cyan-400 hover:bg-cyan-500 text-sm"
             >
-              Save Changes
+              {status.isLoading ? "Saving..." : "Save Changes"}
             </button>
           </div>
         </form>

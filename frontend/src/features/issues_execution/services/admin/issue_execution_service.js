@@ -1,11 +1,8 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-import baseQueryWithReauth from "../../../../services/baseQueryWithReauth";
 
-export const adminExecutionIssueApi = createApi({
-  reducerPath: "adminExecutionIssueApi",
-  baseQuery: baseQueryWithReauth({ baseUrl: "/api/v1/civic/execute/" }),
-  tagTypes: ["PendingIssues", "PendingIssueDetails", "PendingIssueDecision"],
+import { baseApi } from "../../../../services/baseApi";
 
+const EXECUTION_PREFIX = "/civic/execute";
+export const adminExecutionIssueApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     fetchIssues: builder.query({
       query: ({ page = 1, search = "", category, ordering }) => {
@@ -14,7 +11,7 @@ export const adminExecutionIssueApi = createApi({
         if (category) params.category__reference_id = category;
         if (ordering) params.ordering = ordering;
         return {
-          url: "admin/in-review/issues/",
+          url: `${EXECUTION_PREFIX}/admin/in-review/issues/`,
           method: "get",
           meta: { skipAuth: false },
           params,
@@ -28,7 +25,7 @@ export const adminExecutionIssueApi = createApi({
     }),
     fetchIssueDetails: builder.query({
       query: (id) => ({
-        url: `admin/in-review/${id}/issue/`,
+        url: `${EXECUTION_PREFIX}/admin/in-review/${id}/issue/`,
         method: "get",
         meta: { skipAuth: false },
       }),
@@ -39,7 +36,7 @@ export const adminExecutionIssueApi = createApi({
     }),
     adminInReviewDecition: builder.mutation({
       query: ({ data, id }) => ({
-        url: `admin/in-review/${id}/decision/`,
+        url: `${EXECUTION_PREFIX}/admin/in-review/${id}/decision/`,
         method: "post",
         meta: { skipAuth: false },
         data,
@@ -50,7 +47,6 @@ export const adminExecutionIssueApi = createApi({
         "IssuesToSolvers",
       ],
       transformResponse: (response) => {
-        console.log(response);
         return response;
       },
     }),
@@ -61,7 +57,7 @@ export const adminExecutionIssueApi = createApi({
         if (ordering) params.ordering = ordering;
         if (category) params.category__reference_id = category;
         return {
-          url: "admin/in-review/issues/solver-assignment/",
+          url: `${EXECUTION_PREFIX}/admin/in-review/issues/solver-assignment/`,
           method: "get",
           meta: { skipAuth: false },
           params,
@@ -74,12 +70,12 @@ export const adminExecutionIssueApi = createApi({
     }),
     assignSolverVerification: builder.mutation({
       query: ({ data, id }) => ({
-        url: `admin/in-review/issues/${id}/assign-solver/`,
+        url: `${EXECUTION_PREFIX}/admin/in-review/issues/${id}/assign-solver/`,
         method: "post",
         meta: { skipAuth: false },
         data,
       }),
-      invalidatesTags: ["IssuesToSolvers"],
+      invalidatesTags: ["IssuesToSolvers","Solvers"],
       transformResponse: (response) => {
         return response;
       },

@@ -1,16 +1,14 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import baseQueryWithReauth from '../../../services/baseQueryWithReauth';
 import { role,logout_user } from '../authSlice';
+import { baseApi } from '../../../services/baseApi';
 
-export const commonApi = createApi({
-    reducerPath: 'commonApi',
-    baseQuery: baseQueryWithReauth({ baseUrl: '/api/v1/user/common/' }),
-
+export const commonApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         role: builder.query({
             query: () => {
                 return {
-                    url: 'me/',
+                    url: '/user/common/me/',
                     method: 'get',
                     withCredentials: false,
                     meta : { skipAuth: false },
@@ -30,7 +28,7 @@ export const commonApi = createApi({
         }),
         logout: builder.mutation({
           query: () => ({
-            url: '/logout/',
+            url: '/user/common/logout/',
             method: 'post',
             withCredentials: true,
             meta: { skipAuth: false },
@@ -49,7 +47,7 @@ export const commonApi = createApi({
         }),
         changePassword: builder.mutation({
           query: (credentials) => ({
-            url: '/change-password/',
+            url: '/user/common/change-password/',
             method: 'post',
             withCredentials: true,
             meta: { skipAuth: false },

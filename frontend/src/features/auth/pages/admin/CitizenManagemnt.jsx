@@ -34,6 +34,7 @@ const UserManagement = () => {
     searchValue,
     isLoading,
     isFetching,
+    roleStatus
   } = useAdminUserManagement();
   if (isLoading) {
     return <UserManagementSectionLoader />;
@@ -101,6 +102,7 @@ const UserManagement = () => {
           onClose={() => setSelectedCard(null)}
           onSave={(updatedUser) => handleSave(updatedUser)}
           options={{ role1: "citizen", role2: "solver" }}
+          status = {roleStatus}
         />
       )}
 

@@ -1,14 +1,15 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { adminLogin } from "../authSlice";
 import baseQueryWithReauth from "../../../services/baseQueryWithReauth";
-export const adminAuthApi = createApi({
-  reducerPath: "adminAuthApi",
-  baseQuery: baseQueryWithReauth({ baseUrl: "/api/v1/user/admin" }),
-  tagTypes: ["Citizens", "Solvers", "Admins", "Zones"],
+import { baseApi } from "../../../services/baseApi";
+
+
+const ADMINAUTH_PREFIX = "/user/admin";
+export const adminAuthApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation({
+    adminLogin: builder.mutation({
       query: (credentials) => ({
-        url: "/login/",
+        url: `${ADMINAUTH_PREFIX}/login/`,
         method: "post",
         withCredentials: false,
         data: credentials,
@@ -25,7 +26,7 @@ export const adminAuthApi = createApi({
     }),
     fetchZones: builder.query({
       query: () => ({
-        url: "/zones/",
+        url: `${ADMINAUTH_PREFIX}/zones/`,
         method: "get",
         withCredentials: true,
         meta: { skipAuth: false },
@@ -37,7 +38,7 @@ export const adminAuthApi = createApi({
     }),
     getCitizens: builder.query({
       query: ({ page = 1, search = "" }) => ({
-        url: "/citizens/",
+        url: `${ADMINAUTH_PREFIX}/citizens/`,
         method: "get",
         params: { page, search },
         withCredentials: false,
@@ -48,7 +49,7 @@ export const adminAuthApi = createApi({
 
     roleChange: builder.mutation({
       query: (credentials) => ({
-        url: `/citizens/${credentials.id}/`,
+        url: `${ADMINAUTH_PREFIX}/citizens/${credentials.id}/`,
         method: "patch",
         withCredentials: false,
         data: credentials,
@@ -61,7 +62,7 @@ export const adminAuthApi = createApi({
     }),
     flagCitizen: builder.mutation({
       query: (credentials) => ({
-        url: `/citizens/${credentials.id}/`,
+        url: `${ADMINAUTH_PREFIX}/citizens/${credentials.id}/`,
         method: "patch",
         withCredentials: false,
         data: credentials,
@@ -78,7 +79,7 @@ export const adminAuthApi = createApi({
         if (search) params.search = search;
         if (location) params.profile__zone = location;
         return {
-          url: "/solvers/",
+          url: `${ADMINAUTH_PREFIX}/solvers/`,
           params,
           method: "get",
           withCredentials: false,
@@ -92,7 +93,7 @@ export const adminAuthApi = createApi({
     }),
     createSolver: builder.mutation({
       query: (credentials) => ({
-        url: "/create-solver/",
+        url: `${ADMINAUTH_PREFIX}/create-solver/`,
         method: "post",
         withCredentials: true,
         data: credentials,
@@ -105,7 +106,7 @@ export const adminAuthApi = createApi({
     }),
     updateSolver: builder.mutation({
       query: (credentials) => ({
-        url: `/solvers/${credentials.id}/`,
+        url: `${ADMINAUTH_PREFIX}/solvers/${credentials.id}/`,
         method: "patch",
         withCredentials: false,
         data: credentials,
@@ -118,7 +119,7 @@ export const adminAuthApi = createApi({
     }),
     listAdmins: builder.query({
       query: ({ page = 1, search = "" }) => ({
-        url: "/admins/",
+        url: `${ADMINAUTH_PREFIX}/admins/`,
         params: { search, page },
         method: "get",
         withCredentials: false,
@@ -132,7 +133,7 @@ export const adminAuthApi = createApi({
   }),
 });
 export const {
-  useLoginMutation,
+  useAdminLoginMutation,
   useGetCitizensQuery,
   useRoleChangeMutation,
   useFlagCitizenMutation,

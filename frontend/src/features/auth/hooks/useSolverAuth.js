@@ -1,6 +1,6 @@
 import { extractErrorMessage } from "../../../utils/extractErrorMessage";
 import { errorToast } from "../../../utils/Toaster";
-import { useLoginMutation } from "../services/solverAuthApi";
+import { useSolverLoginMutation as useLoginMutation  } from "../services/solverAuthApi";
 import { useNavigate } from "react-router-dom";
 
 export default function useSolverAuth() {

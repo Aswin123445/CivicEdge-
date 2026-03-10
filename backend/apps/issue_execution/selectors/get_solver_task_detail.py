@@ -13,7 +13,8 @@ def get_solver_task_detail(*, task_id, solver):
             "issue",
             "issue__category",
             "issue__location",
-        ),
+        )
+        .prefetch_related("verification_reports"),
         id=task_id,
         solver=solver,
         is_active=True,

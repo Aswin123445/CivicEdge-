@@ -1,15 +1,15 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import baseQueryWithReauth from "../../../services/baseQueryWithReauth";
+import { baseApi } from "../../../services/baseApi";
 
 // here just created auth slice for core feature like home page about and contact page
-export const issueApi = createApi({
-  reducerPath: 'issueApi',
-  baseQuery: baseQueryWithReauth({ baseUrl: '/api/v1/civic/issues' }),
-  tagTypes: ['Summary','Category','IssueStep1','Drafts','Question','Review','Complaints','Detail'],
+const ISSUE_PREFIX = "/civic/issues";
+
+export const issueApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     issueSummary : builder.query({
       query: (data) => ({
-        url: '/summary',
+        url: `${ISSUE_PREFIX}/summary`,
         method: 'get',
         data,
         meta: { skipAuth: false },  
@@ -21,7 +21,7 @@ export const issueApi = createApi({
     }),
     issueCategory : builder.query({
       query: (data) => ({
-        url: '/categories',
+        url: `${ISSUE_PREFIX}/categories`,
         method: 'get',
         data,
         meta: { skipAuth: false },  
@@ -33,7 +33,7 @@ export const issueApi = createApi({
     }),
     issueStep1 : builder.mutation({
       query: (data) => ({
-        url: '/',
+        url: `${ISSUE_PREFIX}/`,
         method: 'post',
         data,
         meta: { skipAuth: false },  
@@ -45,7 +45,7 @@ export const issueApi = createApi({
     }),
     getDrafts: builder.query({
       query: ({page = 1,search = ""}) => ({
-        url: '/drafts/',
+        url: `${ISSUE_PREFIX}/drafts/`,
         method: 'get',
         meta: { skipAuth: false },  
         params: {page,search},
@@ -58,7 +58,7 @@ export const issueApi = createApi({
     }),
     deleteDraft: builder.mutation({
       query: (id) => ({
-        url: `/${id}/draft/delete/`,
+        url: `${ISSUE_PREFIX}/${id}/draft/delete/`,
         method: 'delete',
         meta: { skipAuth: false },  
       }),
@@ -69,7 +69,7 @@ export const issueApi = createApi({
     }),
     addLocation: builder.mutation({
       query: (data) => ({
-        url: `/${data.id}/location/`,
+        url: `${ISSUE_PREFIX}/${data.id}/location/`,
         method: 'post',
         data: data.req,
         meta: { skipAuth: false },  
@@ -81,7 +81,7 @@ export const issueApi = createApi({
     }),
     addEvidence: builder.mutation({
       query: (data) => ({
-        url: `/${data.id}/evidence/`,
+        url: `${ISSUE_PREFIX}/${data.id}/evidence/`,
         method: 'post',
         data: data.req,
         meta: { skipAuth: false },  
@@ -93,7 +93,7 @@ export const issueApi = createApi({
     }),
     getBehaviorals: builder.query({
       query: (id) => ({
-        url: `/${id}/behavioral-prompts/`,
+        url: `${ISSUE_PREFIX}/${id}/behavioral-prompts/`,
         method: 'get',
         meta: { skipAuth: false },  
       }),
@@ -104,7 +104,7 @@ export const issueApi = createApi({
     }),
     getBehavioralsResponse : builder.mutation({
       query: (data) => ({
-        url: `/${data.id}/behavioral-response/`,
+        url: `${ISSUE_PREFIX}/${data.id}/behavioral-response/`,
         method: 'post',
         data: data.req,
         meta: { skipAuth: false },  
@@ -116,7 +116,7 @@ export const issueApi = createApi({
     }),
     finalReview : builder.query({
       query: (id) => ({
-        url: `/${id}/review/`,
+        url: `${ISSUE_PREFIX}/${id}/review/`,
         method: 'get',
         meta: { skipAuth: false },  
       }),
@@ -127,7 +127,7 @@ export const issueApi = createApi({
     }),
     issueSubmit: builder.mutation({
       query: (data) => ({
-        url: `/${data.id}/submit/`,
+        url: `${ISSUE_PREFIX}/${data.id}/submit/`,
         method: 'post',
         data: data.req,
         meta: { skipAuth: false },  
@@ -143,7 +143,7 @@ export const issueApi = createApi({
         if(search) params.search = search;
         if(status) params.status = status;
         return {
-          url: '/complaints/list/',
+          url: `${ISSUE_PREFIX}/complaints/list/`,
           method: 'get',
           meta: { skipAuth: false },  
           params
@@ -157,7 +157,7 @@ export const issueApi = createApi({
     }),
     complaintDetail: builder.query({
       query: (id) => ({
-        url: `/complaints/${id}/detail/`,
+        url: `${ISSUE_PREFIX}/complaints/${id}/detail/`,
         method: 'get',
         meta: { skipAuth: false },  
       }),

@@ -1,15 +1,13 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import baseQueryWithReauth from "../../../services/baseQueryWithReauth";
-
+import { baseApi } from "../../../services/baseApi";
+const PROFILE_PREFIX = "/me";
 // here just created auth slice for core feature like home page about and contact page
-export const profileApi = createApi({
-  reducerPath: 'profileApi',
-  baseQuery: baseQueryWithReauth({ baseUrl: '/api/v1/me' }),
-  tagTypes: ['Home','Avatar'],
+export const profileApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     home: builder.query({
       query: () => ({
-        url: '/home',
+        url: `${PROFILE_PREFIX}/home`,
         method: 'get',
         meta: { skipAuth: false },  
       }),
@@ -23,7 +21,7 @@ export const profileApi = createApi({
       const formData = new FormData();
       formData.append('avatar', file);
       return {
-        url: '/profile/avatar/',
+        url: `${PROFILE_PREFIX}/profile/avatar/`,
         method: 'post',
         data: formData,
         meta: { skipAuth: false },  
@@ -35,7 +33,7 @@ export const profileApi = createApi({
     }),
     updateProfile: builder.mutation({
       query: (data) => ({
-        url: '/profile/',
+        url: `${PROFILE_PREFIX}/profile/`,
         method: 'patch',
         data,
         meta: { skipAuth: false },  
@@ -47,7 +45,7 @@ export const profileApi = createApi({
     }), 
     solverWorkToggle : builder.mutation({
       query: (data) => ({
-        url: '/work/toggle/',
+        url: `${PROFILE_PREFIX}/work/toggle/`,
         method: 'post',
         data,
         meta: { skipAuth: false },  

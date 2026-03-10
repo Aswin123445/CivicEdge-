@@ -50,8 +50,8 @@ export default function UserMenu({ open, onClose }) {
               <div className="relative">
                 <div className="h-12 w-12 rounded-full bg-blue-500/20 flex items-center justify-center">
                   <NameUrlGet
-                    name={userData.profile?.name}
-                    avatarUrl={userData.profile?.avatar}
+                    name={userData?.profile?.name}
+                    avatarUrl={userData?.profile?.avatar}
                     classname="h-12 w-12"
                   />
                 </div>
@@ -61,10 +61,10 @@ export default function UserMenu({ open, onClose }) {
 
               <div>
                 <p className="text-sm font-semibold">
-                  {userData.profile?.name ? userData.profile?.name : "User"}
+                  {userData?.profile?.name ? userData.profile?.name : "User"}
                 </p>
                 <p className="text-xs text-blue-300/80">
-                  {userData.profile?.email}
+                  {userData?.profile?.email}
                 </p>
               </div>
             </div>

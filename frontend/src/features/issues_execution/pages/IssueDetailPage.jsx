@@ -30,7 +30,6 @@ const IssueDetailPage = () => {
     setIsApproveModalOpen(false);
     setIsRejectModalOpen(false);
   };
-  console.log("Fetched Issue Details:", issueDetails, "Loading State:", issueDetailsLoading);
   if (issueDetailsLoading ) {
     return <IssueDetailSkeleton/>
   }

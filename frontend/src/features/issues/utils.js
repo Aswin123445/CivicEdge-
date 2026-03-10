@@ -39,6 +39,17 @@ export const normalizeCloudinaryEvidence = (res) => {
     height: res.height,
   };
 };
+export const normalizeCloudinaryEvidenceSolverVerification = (res) => {
+  return {
+    public_id: res.public_id,
+    secure_url: res.secure_url,
+    resource_type: res.resource_type,
+    format: res.format,
+    width: res.width,
+    height: res.height,
+    bytes: res.bytes,
+}
+};
 
 export const STATUS_STYLES = {
   OPEN: "bg-slate-50 text-slate-700 border-slate-200",

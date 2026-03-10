@@ -69,6 +69,13 @@ import PendingReviewPage from "../features/issues_execution/pages/PendingReviewP
 import IssueDetailPage from "../features/issues_execution/pages/IssueDetailPage";
 import SolverAssignmentQueuePage from "../features/issues_execution/pages/SolverAssignmentQueuePage";
 import AdminIssueAssignmentPage from "../features/issues_execution/pages/AdminIssueAssignmentPage";
+import SolverTaskListPage from "../features/issues_execution/pages/SolverTaskListPage";
+import SolverTaskDetailPage from "../features/issues_execution/pages/SolverTaskDetailPage";
+import VerificationEntryPage from "../features/issues_execution/pages/VerificationEntryPage";
+import GroundVerificationPage from "../features/issues_execution/pages/GroundVerificationPage";
+import ImpactAssessmentPage from "../features/issues_execution/pages/ImpactAssessmentPage";
+import VerificationStepRouter from "../features/issues_execution/ui/VerificationStepRouter";
+import SolverReportView from "../features/issues_execution/pages/SolverReportView";
 
 
 export default function AppRoutes() {
@@ -149,9 +156,17 @@ export default function AppRoutes() {
         </Route>
         <Route element={<RoleGuard roles={["solver"]} />}>
           <Route element={<SolverLayout />}>
-            <Route path="solver/dashboard" element={<SolverDashBoard />} />
-            <Route path="solver/profile" element={<SolverProfile />} />
+            <Route path="/solver/:task_id/verification-reports" element={<SolverReportView />} />
+            <Route path="/solver/dashboard" element={<SolverDashBoard />} />
+            <Route path="/solver/profile" element={<SolverProfile />} />
             <Route path="/solver/settings" element={<SettingsPage />} />
+            <Route path="/solver/task/list" element={<SolverTaskListPage />} />
+            <Route path="/solver/task/:id" element={<SolverTaskDetailPage />} />
+            <Route path="/solver/task/verification-entry/:id/" element={<VerificationEntryPage />} />
+            <Route
+              path="/solver/tasks/:draft_id/verification/:step"
+              element={<VerificationStepRouter />}
+            />
 
 
           </Route>

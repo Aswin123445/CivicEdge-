@@ -1,6 +1,6 @@
 import { extractErrorMessage } from "../../../utils/extractErrorMessage";
 import { errorToast } from "../../../utils/Toaster";
-import { useLoginMutation } from "../services/adminAuthApi";
+import { useAdminLoginMutation as  useLoginMutation } from "../services/adminAuthApi";
 import { useNavigate } from 'react-router-dom';
 
 export function useAdminAuth() {

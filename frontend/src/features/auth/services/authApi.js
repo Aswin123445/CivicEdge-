@@ -1,21 +1,16 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import baseQueryWithReauth from '../../../services/baseQueryWithReauth';
 import { citizenLogin, googleLogin, refreshToken } from '../authSlice';
-// import { saveToken, getToken } from './tokenStorage';
+import { baseApi } from '../../../services/baseApi';
 
 
-// const getAuthHeaders = () => {
-//   const token = getToken();
-//   return token ? { Authorization: `Bearer ${token}` } : {};
-// };
+const AUTH_PREFIX = '/user';
 
-export const authApi = createApi({
-  reducerPath: 'authApi',
-  baseQuery: baseQueryWithReauth({ baseUrl: '/api/v1/user' }),
+export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: (credentials) => ({
-        url: '/register/',
+        url: `${AUTH_PREFIX}/AUTH_PREFIX/register/`,
         method: 'post',
         data: credentials,
         meta: { skipAuth: true },
@@ -28,9 +23,9 @@ export const authApi = createApi({
         }
       },
     }),
-    login: builder.mutation({
+    citizenLogin: builder.mutation({
       query: (credentials) => ({
-        url: '/signin/',
+        url: `${AUTH_PREFIX}/signin/`,
         method: 'post',
         withCredentials: true,
         data: credentials,
@@ -50,7 +45,7 @@ export const authApi = createApi({
     }),
     refresh: builder.mutation({
       query: () => ({
-        url: '/refresh/',
+        url: `${AUTH_PREFIX}/refresh/`,
         method: 'post',
         withCredentials: true,
         meta: { skipAuth: true },
@@ -72,7 +67,7 @@ export const authApi = createApi({
     }),
     verifyEmail: builder.query({
       query: (params) => ({
-        url: '/verify-email',
+        url: `${AUTH_PREFIX}/verify-email`,
         method: 'get',
         params,
         withCredentials: false,
@@ -84,7 +79,7 @@ export const authApi = createApi({
     }), 
     googleLogin: builder.mutation({
       query: (credentials) => ({
-        url: '/auth/google/login/',
+        url: `${AUTH_PREFIX}/auth/google/login/`,
         method: 'post',
         data: credentials,
         meta: { skipAuth: true },
@@ -105,7 +100,7 @@ export const authApi = createApi({
     }),
     forgotPassword: builder.mutation({
       query: (credentials) => ({
-        url: '/forgot-password/',
+        url: `${AUTH_PREFIX}/forgot-password/`,
         method: 'post',
         data: credentials,
         withCredentials: false,
@@ -117,7 +112,7 @@ export const authApi = createApi({
     }),
     resetPassword: builder.mutation({
       query: ({uid,token,credentials}) => ({
-        url: `/reset-password/${uid}/${token}/`,
+        url: `${AUTH_PREFIX}/reset-password/${uid}/${token}/`,
         method: 'post',
         data: credentials,
         meta: { skipAuth: true },
@@ -131,7 +126,7 @@ export const authApi = createApi({
 });
 export const { 
   useSignupMutation, 
-  useLoginMutation , 
+  useCitizenLoginMutation , 
   useVerifyEmailQuery ,
   useGoogleLoginMutation, 
   useForgotPasswordMutation,

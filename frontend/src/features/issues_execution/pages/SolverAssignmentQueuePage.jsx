@@ -38,12 +38,6 @@ const SolverAssignmentQueuePage = () => {
       return pre;
     });
   };
-  console.log(pendingIssueAssign, "pendingIssueAssign");
-
-  const handleAssignSolver = (issueId) => {
-    console.log(`Initiating assignment workflow for Issue ID: ${issueId}`);
-    // Future logic: Open assignment modal or navigate to /admin/assign/:id
-  };
   if (pendingIssueAssignLoading) {
     return <SolverAssignmentQueueSkeleton />;
   }

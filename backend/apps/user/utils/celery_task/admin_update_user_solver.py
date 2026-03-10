@@ -2,9 +2,16 @@ from celery import shared_task
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
+import smtplib
+import socket
 
-@shared_task
-def send_updatemessage_to_user_solver_admin_data_change(to_email: str, role: str):
+@shared_task(
+    bind=True,
+    autoretry_for=(smtplib.SMTPException, socket.error),
+    retry_backoff=True,
+    retry_kwargs={"max_retries": 5},
+)
+def send_updatemessage_to_user_solver_admin_data_change(self,to_email: str, role: str):
     subject = "Your profile data has been updated by the admin"
     from_email = settings.DEFAULT_FROM_EMAIL
 

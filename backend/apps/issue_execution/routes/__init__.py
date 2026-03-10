@@ -27,6 +27,7 @@ from apps.issue_execution.views.admin_execution_proof_detail_view import AdminEx
 from apps.issue_execution.views.admin_pending_execution_proof_list_view import AdminPendingExecutionProofListView
 from apps.issue_execution.views.solver_execution_proof_list_view import SolverExecutionProofListView
 from apps.issue_execution.views.solver_execution_proof_detail_view import SolverExecutionProofDetailView
+from apps.issue_execution.views.solver_draft_detail_view import SolverVerificationReportDetailAPIView
  
 
 urlpatterns = [
@@ -42,6 +43,7 @@ urlpatterns = [
     path("solver/verification-draft/<uuid:id>/impact/",SolverVerificationImpactUpdateView.as_view(), name="solver-verification-impact-update"), 
     path("solver/verification-draft/<uuid:draft_id>/estimation/",SolverVerificationEstimationUpdateView.as_view(), name="solver-verification-estimation-update"), 
     path("solver/verification-draft/<uuid:draft_id>/evidence/",SolverVerificationEvidenceBulkCreateView.as_view(), name="solver-verification-evidence-bulk-create"),
+    path("solver/draft/<uuid:draft_id>/get-draft/", SolverVerificationReportDetailAPIView.as_view(), name="solver-submit-completion"),
     path("solver/tasks/<uuid:task_id>/submit-verification/", SolverSubmitVerificationView.as_view(), name="solver-submit-verification"),  
     path("admin/verification-reports/", AdminVerificationReportListView.as_view(), name="admin-verification-report-list"),
     path("admin/verification-reports/<uuid:report_id>/", AdminVerificationReportDetailView.as_view(), name="admin-verification-report-detail"),
