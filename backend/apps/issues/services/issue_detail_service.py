@@ -6,13 +6,10 @@ from apps.issues.selectors.complaint_details_selectors import (
 from apps.issues.serializers.issue_core_serializer import IssueCoreSerializer
 from apps.issues.serializers.administrative_decision_serializer import AdministrativeDecisionSerializer
 from apps.issues.permissions.issue_edit import build_issue_permissions
-from apps.issues.utils.timeline import build_issue_timeline
 from rest_framework.exceptions import PermissionDenied
 
 from apps.issues.serializers.issue_timeline_event_read_serializer import IssueTimelineEventReadSerializer
 from apps.issues.serializers.submission_evidence_seralizer import ExecutionEvidenceReadSerializer
-from apps.issues.utils.enums.issue_status import IssueStatus
-from apps.issues.models.issues import Issue
 from apps.issue_execution.models.execution_evidence import ExecutionEvidence
 
 def get_issue_detail(issue_id, user):

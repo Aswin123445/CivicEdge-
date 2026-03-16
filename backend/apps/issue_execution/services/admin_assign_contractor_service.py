@@ -4,7 +4,6 @@ from django.db import transaction
 from apps.issue_execution.models.solver_task import SolverTask
 from apps.issue_execution.models.contractor import Contractor
 from apps.issue_execution.models.solver_task import SolverTaskStatus
-from apps.issues.models.issue_log import IssueLog
 from apps.issues.services.timeline_service import add_issue_timeline_event
 
 

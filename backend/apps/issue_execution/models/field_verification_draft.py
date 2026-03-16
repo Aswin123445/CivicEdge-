@@ -2,7 +2,6 @@ import uuid
 from django.db import models
 from rest_framework.exceptions import ValidationError
 from django.contrib.auth import get_user_model
-from shared.utils.generate_reference_id import generate_reference_id
 
 from apps.issue_execution.models.solver_task import SolverTask
 

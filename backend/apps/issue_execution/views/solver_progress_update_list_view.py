@@ -1,7 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.generics import ListAPIView
 from rest_framework.exceptions import ValidationError
-from django.utils.timezone import now
 from apps.issue_execution.models.solver_task import SolverTask
 from apps.user.permissions.user_permissions import IsSolver 
 from apps.user.permissions.is_active_solver_for_write import IsActiveSolverForWrite

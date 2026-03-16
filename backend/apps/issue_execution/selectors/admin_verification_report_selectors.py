@@ -1,5 +1,4 @@
 from apps.issue_execution.models.field_verification_report import FieldVerificationReport
-from apps.issues.models.issue_administrative_decision import IssueAdministrativeDecision
 
 
 def get_pending_verification_reports():

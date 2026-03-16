@@ -1,8 +1,10 @@
 from django.db import models 
 from django.contrib.auth import get_user_model
 import uuid
-User = get_user_model()
 from shared.utils.generate_reference_id import generate_reference_id
+
+User = get_user_model()
+
 class IssueAdministrativeDecision(models.Model):
     class DecisionType(models.TextChoices):
         APPROVED = "APPROVED", "Approved"
