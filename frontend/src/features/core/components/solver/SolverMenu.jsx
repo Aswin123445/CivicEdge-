@@ -76,10 +76,10 @@ export default function SolverMenu({ open, onClose, user }) {
 
           {/* FEATURE NAVIGATION */}
           <div className="px-2 py-2 space-y-1">
-            <SolverMenuItem icon={LayoutDashboard} label="Dashboard" onClick={() => go("/solver")} />
-            <SolverMenuItem icon={ClipboardList} label="View Tasks" onClick={() => go("/solver/tasks")} />
-            <SolverMenuItem icon={Inbox} label="New Assignments" onClick={() => go("/solver/tasks?status=new")} />
-            <SolverMenuItem icon={Loader} label="In Progress" onClick={() => go("/solver/tasks?status=in_progress")} />
+            <SolverMenuItem icon={LayoutDashboard} label="Dashboard" onClick={() => go("/solver/dashboard")} />
+            <SolverMenuItem icon={ClipboardList} label="View Tasks" onClick={() => go("/solver/task/list")} />
+            <SolverMenuItem icon={Inbox} label="New Assignments" onClick={() => go("/solver/task/list?status=ASSIGNED&page=1")} />
+            <SolverMenuItem icon={Loader} label="In Progress" onClick={() => go("/solver/task/list?page=1&status=IN_EXECUTIONs")} />
           </div>
 
           {/* ACCOUNT ACTIONS */}

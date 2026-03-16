@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 import { pulseAnimation, statVariants } from "../../utils";
 import AnimatedNumber from "../../ui/solver/AnimatedNumber";
-import { ArrowRight } from "lucide-react";
 import useSolverService from "../../hooks/solver/solverServiceHook";
 import useCitizenService from "../../hooks/citizen/useCitizenService";
 import AvailabilitySkeleton from "../../ui/skeltons/Solver/AvailabilitySkeleton";
@@ -23,6 +22,7 @@ import NewAssignment from "../../components/solver/solver_dashboard/NewAssignmen
 import InProgressTask from "../../components/solver/solver_dashboard/InProgressTask";
 import RightInProgress from "../../components/solver/solver_dashboard/RighInProgress";
 import Resolved from "../../components/solver/solver_dashboard/Resolved";
+import useSolverDashboardService from "../../hooks/solver/solverDashboardHook";
 
 // --- Mock Data ---
 const STATS = [
@@ -105,17 +105,17 @@ const IN_PROGRESS = [
 ];
 
 const SolverDashBoard = () => {
+  const {solverDashboard, solverDashboardLoading, solverDashboardFetching} = useSolverDashboardService();
   const { toggleWork } = useSolverService();
   const { userDataLoading, userDataFetching, userData } = useCitizenService();
+  console.log('solverDashboard',solverDashboard)
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
       {/* 2. SOLVER CONTEXT HEADER */}
-      {userDataLoading || userDataFetching ? (
+      {userDataLoading || userDataFetching || solverDashboardFetching || solverDashboardLoading ? (
         <AvailabilitySkeleton />
       ) : (
         <SolverDashBoardHeader
-          userDataLoading={userDataLoading}
-          userDataFetching={userDataFetching}
           userData={userData}
           toggleWork={toggleWork}
         />
@@ -123,7 +123,7 @@ const SolverDashBoard = () => {
 
       <main className="p-4 md:p-8 max-w-[1600px] mx-auto">
         {/* 3. TASK SUMMARY STRIP */}
-        <SummaryStrip STATS={STATS} statVariants={statVariants} pulseAnimation={pulseAnimation} AnimatedNumber={AnimatedNumber} />
+        <SummaryStrip metrics={solverDashboard?.metrics} statVariants={statVariants} pulseAnimation={pulseAnimation} AnimatedNumber={AnimatedNumber} />
 
         {/* 4. MAIN DASHBOARD CONTENT */}
         <div className="grid grid-cols-12 gap-8">
@@ -134,22 +134,21 @@ const SolverDashBoard = () => {
               {/* ===================== */}
               {/* NEW ASSIGNMENTS */}
               {/* ===================== */}
-              <NewAssignment NEW_TASKS={NEW_TASKS} />
+              <NewAssignment NEW_TASKS={solverDashboard?.recent_assigned_tasks} />
 
               {/* ===================== */}
               {/* IN PROGRESS TASKS */}
               {/* ===================== */}
-              <InProgressTask IN_PROGRESS={IN_PROGRESS} />
             </div>
           </section>
 
           {/* RIGHT: SIDEBAR */}
           <aside className="col-span-12 lg:col-span-4 space-y-6">
             {/* IN PROGRESS */}
-            <RightInProgress IN_PROGRESS={IN_PROGRESS} />
+            <RightInProgress IN_PROGRESS={solverDashboard?.in_progress_tasks} />
 
             {/* RESOLVED */}
-            <Resolved />
+            <Resolved completedTask={solverDashboard?.recent_resolved_tasks}/>
           </aside>
         </div>
       </main>

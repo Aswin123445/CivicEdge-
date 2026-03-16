@@ -17,7 +17,7 @@ class IssueEvidence(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     reference_id = models.CharField(max_length=20, unique=True, db_index=True, editable=False)
-    
+
     issue = models.ForeignKey(
         "Issue",
         on_delete=models.CASCADE,

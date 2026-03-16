@@ -7,6 +7,7 @@ const HeroIllustration = () => (
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.4, ease: "easeOut", delay: 0.2 }}
     className="
+      hidden lg:block
       relative
       w-72 h-72
       sm:w-96 sm:h-96
@@ -16,6 +17,7 @@ const HeroIllustration = () => (
       overflow-hidden
       bg-gradient-to-br from-blue-50 via-slate-50 to-white
       flex items-center justify-center
+      
     "
   >
     {/* Subtle outer ring */}

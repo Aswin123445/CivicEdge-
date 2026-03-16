@@ -8,7 +8,6 @@ import { containerVariants, fadeInUp } from '../../ui/motion';
 const HeroSection = () => {
   const navigate = useNavigate();
   const { access_token } = useSelector(s => s.auth);
-
   const handleReport = () => {
     if (access_token) navigate('/issue/new');
     else {
@@ -18,7 +17,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative pt-20 pb-32 bg-white overflow-hidden">
+    <section className="relative pb-32 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         
         <motion.div
@@ -49,9 +48,7 @@ const HeroSection = () => {
             >
               Report Issue
             </button>
-            <button className="px-8 py-4 bg-white border border-slate-200 rounded-xl">
-              View Nearby Complaints
-            </button>
+
           </motion.div>
         </motion.div>
 

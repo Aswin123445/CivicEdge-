@@ -9,3 +9,4 @@ class AdminVerificationDecisionSerializer(serializers.Serializer):
     reason = serializers.CharField()
     public_message = serializers.CharField()
     expected_review_date = serializers.DateField(required=False)
+    contractor_id = serializers.UUIDField(required=False)

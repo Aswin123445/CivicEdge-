@@ -12,6 +12,7 @@ import MobileMenuSkeleton from "../ui/skeltons/MobileMenuSkelton";
 import { useNavigate } from "react-router-dom";
 export default function MobileMenu({ open, onClose }) {
   const navigate = useNavigate();
+  const handleNavigate = (path) => navigate(path);
   const { userData, userDataLoading } = useCitizenService();
   const { handleLogoutCitizen } = useCommon();
   return createPortal(
@@ -96,6 +97,7 @@ export default function MobileMenu({ open, onClose }) {
                 <nav className="px-4 py-6 space-y-6 overflow-y-auto h-[calc(100vh-120px)]">
                   {/* Primary CTA */}
                   <motion.button
+                    onClick={() => {navigate('issue/new')}}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     className="
@@ -113,7 +115,7 @@ export default function MobileMenu({ open, onClose }) {
                     <p className="px-4 text-[10px] font-bold uppercase tracking-widest text-blue-400/60 mb-2">
                       Menu
                     </p>
-                    <MobileMenuItem icon={HomeIcons.Issues} label="Issues" />
+                    <MobileMenuItem icon={HomeIcons.Issues} label="My Issues" handleNavigate={() => handleNavigate('/complaints/list')}/>
                     <MobileMenuItem icon={HomeIcons.Talk} label="Civic Talk" />
                     <MobileMenuItem
                       icon={HomeIcons.Army}

@@ -7,8 +7,11 @@ const getVerificationStatus = (status) => {
       return { text: "Submitted", color: "text-blue-600" };
 
     case "APPROVED_FOR_EXECUTION":
+      return { text: "Approved", color: "text-green-600" };
     case "IN_EXECUTION":
+      return { text: "Completed", color: "text-green-600" };
     case "COMPLETION_SUBMITTED":
+      return { text: "Submitted", color: "text-orange-600" };
     case "COMPLETED":
       return { text: "Completed", color: "text-green-600" };
 
@@ -48,16 +51,16 @@ const getActionRoute = (status, taskId) => {
       return `/solver/${taskId}/verification-reports`;
 
     case "APPROVED_FOR_EXECUTION":
-      return `/solver/tasks/${taskId}/execution/start`;
+      return `/solver/tasks/${taskId}/execution`;
 
     case "IN_EXECUTION":
       return `/solver/tasks/${taskId}/execution`;
 
     case "COMPLETION_SUBMITTED":
-      return `/solver/tasks/${taskId}/completion/view`;
+      return `/solver/${taskId}/verification-reports`;
 
     case "COMPLETED":
-      return `/solver/tasks/${taskId}/summary`;
+      return `/solver/${taskId}/verification-reports`;
 
     default:
       return `/solver/tasks/${taskId}`;
@@ -65,15 +68,33 @@ const getActionRoute = (status, taskId) => {
 };
 
 import { useNavigate } from "react-router-dom";
-const TaskStatusCardActionSolver = ({ taskData, actionConfig }) => {
+import Spinner from "../../../../components/ui/Spinner";
+const TaskStatusCardActionSolver = ({
+  taskData,
+  actionConfig,
+  handleStartExecution,
+  startIsLoading,
+}) => {
+  const status = getVerificationStatus(taskData?.status);
   const navigate = useNavigate();
-  const verificationStatus = getVerificationStatus(taskData.status);
-  const executionStatus = getExecutionStatus(taskData.status);
-    const route = getActionRoute(taskData.status, taskData.id);
+  const verificationStatus = getVerificationStatus(taskData?.status);
+  const executionStatus = getExecutionStatus(taskData?.status);
+  const route = getActionRoute(taskData?.status, taskData?.id);
+
+  const handleRoute = async (route, taskId, status) => {
+    if (route === `/solver/tasks/${taskId}/execution`) {
+      if (status === "APPROVED_FOR_EXECUTION") {
+        await handleStartExecution(taskId);
+      }
+      navigate(route);
+    }
+    else {
+      navigate(route);
+    }
+  };
 
   return (
     <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
-      
       {/* Header */}
       <div className="p-6 border-b border-slate-100 bg-slate-50/50">
         <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">
@@ -81,8 +102,8 @@ const TaskStatusCardActionSolver = ({ taskData, actionConfig }) => {
         </h3>
 
         <div className="flex items-center justify-between">
-          <span className="text-2xl font-black text-slate-600">
-            {taskData.status}
+          <span className={`text-2xl font-black  uppercase ${status.color}`}>
+            {status.text}
           </span>
 
           <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
@@ -93,7 +114,6 @@ const TaskStatusCardActionSolver = ({ taskData, actionConfig }) => {
 
       {/* Body */}
       <div className="p-6 space-y-4">
-        
         {/* Verification Status */}
         <div className="flex items-center justify-between text-sm">
           <span className="text-slate-500">Verification</span>
@@ -112,11 +132,11 @@ const TaskStatusCardActionSolver = ({ taskData, actionConfig }) => {
 
         {/* Primary Action Button */}
         <button
-          onClick={() => navigate(route)}
+          onClick={() => handleRoute(route, taskData?.id, taskData?.status)}
           disabled={actionConfig.disabled}
-          className={`w-full py-4 px-6 ${actionConfig.color} text-white font-bold rounded-xl shadow-lg transition duration-200 active:scale-95 flex items-center justify-center gap-2 mt-4`}
+          className={`w-full py-4 px-6 ${actionConfig.color} text-white font-bold rounded-xl shadow-lg transition duration-200 active:scale-95 flex items-center justify-center gap-2 mt-4 ${startIsLoading ? "cursor-not-allowed" : ""}`}
         >
-          {actionConfig.text}
+          {startIsLoading && <Spinner className="w-5 h-5 " />} { actionConfig.text}
 
           {!actionConfig.disabled && (
             <svg

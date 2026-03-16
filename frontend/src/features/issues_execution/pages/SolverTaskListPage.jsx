@@ -38,12 +38,6 @@ const SolverTaskListPage = () => {
       });
     }
   };
-  const handleOderingChange = (ordering) => {
-    setSearchParams((pre) => {
-      pre.set("ordering", ordering);
-      return pre;
-    });
-  };
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans p-4 md:p-8">

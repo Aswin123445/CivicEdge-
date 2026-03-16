@@ -30,6 +30,14 @@ export const baseApi = createApi({
     "SolverTaskDetail",
     "DraftProgress",
     "SolverDraftDetail",
+    "PendingVerification",
+    "PendingVerificationDetail",
+    "Contractors",
+    "SolverTaskProgressUpdates",
+    "AdminFinalReport",
+    "AdminFinalReportDetail",
+    "AdminTask",
+    "SolverDashboard"
   ],
 
   endpoints: () => ({}),

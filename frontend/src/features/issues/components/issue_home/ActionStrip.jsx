@@ -1,11 +1,11 @@
-import { FileText, MapPin, AlertTriangle } from "lucide-react";
+import { FileText, AlertTriangle } from "lucide-react";
 import ActionCard from "./ActionCard";
 import useIssueHomePageService from "../../hooks/home_page_service";
 
 const ACTIONS = (summary) => [
   {
     id: "drafts",
-    icon: <FileText />,
+    icon: <FileText size={20} />,
     title: "Draft Issues",
     desc: "Continue incomplete reports",
     badge: summary?.draft_issues > 0 ? summary.draft_issues : undefined,
@@ -13,26 +13,16 @@ const ACTIONS = (summary) => [
   },
   {
     id: "my-issues",
-    icon: <AlertTriangle />,
+    icon: <AlertTriangle size={20} />,
     title: "My Issues",
     desc: "Track submitted complaints",
-    badge:
-      summary?.submitted_issues > 0
-        ? summary.submitted_issues
-        : undefined,
+    badge: summary?.submitted_issues > 0 ? summary.submitted_issues : undefined,
     path: "/complaints/list",
   },
-  // {
-  //   id: "nearby",
-  //   icon: <MapPin />,
-  //   title: "Nearby Complaints",
-  //   desc: "View issues around you",
-  //   path: "/nearby",
-  // },
 ];
 
 export default function ActionStrip() {
-  const { issueSummary, issueLoading, issueError } =
+  const { issueSummary, issueLoading, issueError, handleNavigate } =
     useIssueHomePageService();
 
   return (
@@ -41,32 +31,32 @@ export default function ActionStrip() {
       aria-labelledby="quick-actions"
     >
       <div className="max-w-7xl mx-auto">
-        <div
-
-          viewport={{ once: true, margin: "-80px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4"
-        >
-          {/* Loading state */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Loading */}
           {issueLoading &&
             Array.from({ length: 3 }).map((_, i) => (
               <div
                 key={i}
-                className="h-28 rounded-2xl bg-slate-100 animate-pulse"
+                className="h-28 rounded-2xl bg-blue-50 border border-blue-100 animate-pulse"
               />
             ))}
 
-          {/* Error state */}
+          {/* Error */}
           {!issueLoading && issueError && (
-            <div className="md:col-span-3 rounded-2xl border bg-white p-6 text-center text-sm text-slate-600">
+            <div className="md:col-span-3 rounded-2xl border border-blue-100 bg-white p-6 text-center text-sm text-slate-600">
               Unable to load issue summary right now. Please try again later.
             </div>
           )}
 
-          {/* Success state */}
+          {/* Success */}
           {!issueLoading &&
             !issueError &&
             ACTIONS(issueSummary).map((action) => (
-              <ActionCard key={action.id} {...action} />
+              <ActionCard
+                key={action.id}
+                {...action}
+                onClick={() => handleNavigate(action.path)}
+              />
             ))}
         </div>
       </div>

@@ -1,21 +1,24 @@
 import { HomeIcons as Icons } from "../../ui/HomeIcons";
-
+import { useNavigate } from "react-router-dom";
 
 const actions = [
-  { title: "Raise Issues", icon: <Icons.Issues />},
+  { title: "Raise Issues", icon: <Icons.Issues />,path:"/complaints"},
   { title: "Connect", icon: <Icons.Talk />},
   { title: "Join Volunteer", icon: <Icons.Army />},
   { title: "Take Polls", icon: <Icons.Polls />},
 ];
 
 const QuickActions = () => {
+  const navigate = useNavigate();
   return (
-    <section className="relative z-10 max-w-7xl mx-auto px-4 -mt-20">
+    <section  className="relative z-10 max-w-7xl mx-auto px-4 -mt-20">
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {actions.map((a) => (
           <div
+            onClick={() => {navigate(a.path)}}
             key={a.title}
             className="
+             cursor-pointer
               group relative rounded-3xl p-8
               bg-white/80 backdrop-blur-xl
               border border-slate-200/60

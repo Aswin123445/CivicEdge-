@@ -28,6 +28,9 @@ from apps.issue_execution.views.admin_pending_execution_proof_list_view import A
 from apps.issue_execution.views.solver_execution_proof_list_view import SolverExecutionProofListView
 from apps.issue_execution.views.solver_execution_proof_detail_view import SolverExecutionProofDetailView
 from apps.issue_execution.views.solver_draft_detail_view import SolverVerificationReportDetailAPIView
+from apps.issue_execution.views.verification_report import SolverVerificationReportPDFView
+from apps.issue_execution.views.admin_approve_verification_view import AdminApproveVerificationView
+from apps.issue_execution.views.contractor_views import ContractorListAPIView
  
 
 urlpatterns = [
@@ -36,6 +39,7 @@ urlpatterns = [
     path("admin/in-review/<uuid:id>/decision/", AdminIssueDecisionView.as_view(), name="admin-issue-decision"),
     path("admin/in-review/issues/solver-assignment/", AdminIssueSolverAssignmentListView.as_view(), name="admin-issue-solver-assignment-list"),
     path("admin/in-review/issues/<uuid:issue_id>/assign-solver/", AdminAssignSolverView.as_view(), name="admin-assign-solver"),
+    path("admin/task", AdminSolverTaskListView.as_view(), name="admin-solver-task-list"),
     path("solver/task-list/", SolverTaskListView.as_view(), name="solver-task-list"),
     path("solver/task/<uuid:id>/", SolverTaskDetailView.as_view(), name="solver-task-detail"),
     path("solver/task/<uuid:id>/verification-draft/", SolverVerificationDraftView.as_view(), name="solver-verification-draft"),
@@ -48,8 +52,10 @@ urlpatterns = [
     path("admin/verification-reports/", AdminVerificationReportListView.as_view(), name="admin-verification-report-list"),
     path("admin/verification-reports/<uuid:report_id>/", AdminVerificationReportDetailView.as_view(), name="admin-verification-report-detail"),
     path("admin/verification-reports/<uuid:report_id>/decision/", AdminVerificationDecisionView.as_view(), name="admin-verification-report-decision"),
-    path("admin/solver-tasks/<uuid:task_id>/assign-contractor/", AdminAssignContractorView.as_view(), name="admin-assign-contractor"),  
+    path("admin/solver-tasks/<uuid:task_id>/assign-contractor/", AdminAssignContractorView.as_view(), name="admin-assign-contractor"), 
+    path("admin/verification-reports/<uuid:report_id>/approve/", AdminApproveVerificationView.as_view(), name="admin-approve-verification"), 
     path("admin/solver-tasks/",AdminSolverTaskListView.as_view(), name="admin-solver-task-list"),
+    path("admin/contractor-list/",ContractorListAPIView.as_view(), name="admin-contractor-list"),
     path("solver/tasks/<uuid:task_id>/start-execution/",SolverStartExecutionView.as_view(), name="solver-start-execution"),
     path("solver/tasks/<uuid:task_id>/progress-updates/",SolverProgressUpdateView.as_view(), name="solver-progress-update"),
     path("solver/tasks/<uuid:task_id>/progress-updates-list/",SolverProgressUpdateListView.as_view(), name="solver-progress-update-list"),
@@ -59,4 +65,5 @@ urlpatterns = [
     path("admin/execution-proof/<uuid:proof_id>/",AdminExecutionProofDetailView.as_view(), name="admin-proof-detail"),
     path("solver/execution-proofs/",SolverExecutionProofListView.as_view(), name="solver-proof-list"),
     path("solver/execution-proof/<str:id>/",SolverExecutionProofDetailView.as_view(), name="solver-proof-detail"),
+    path("solver/field-verification-report-pdf/<uuid:report_id>/", SolverVerificationReportPDFView.as_view(), name="solver-verification-report-pdf"),
 ]   

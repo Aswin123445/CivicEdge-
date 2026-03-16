@@ -2,6 +2,7 @@ from rest_framework import serializers
 from apps.issue_execution.models.field_verification_report import FieldVerificationReport
 from apps.issues.models.issue_administrative_decision import IssueAdministrativeDecision
 from apps.issue_execution.serilalizers.admin_verification_evidence_serializer import AdminVerificationEvidenceSerializer
+from apps.issues.serializers.issue_evidence_serializer import IssueEvidenceSerializer
 
 
 
@@ -24,8 +25,18 @@ class AdminVerificationReportDetailSerializer(serializers.ModelSerializer):
         many=True,
         source="media",
     )
+    issue_category = serializers.CharField(
+        source="solver_task.issue.category.name"
+    )
+    issue_evidence = serializers.SerializerMethodField()
 
     has_verification_decision = serializers.SerializerMethodField()
+    
+    location = serializers.SerializerMethodField()
+    
+    description = serializers.CharField(
+        source="solver_task.issue.description"
+    )
 
     class Meta:
         model = FieldVerificationReport
@@ -66,6 +77,17 @@ class AdminVerificationReportDetailSerializer(serializers.ModelSerializer):
 
             # Decision state
             "has_verification_decision",
+
+            # Issue category
+            "issue_category",
+
+            # Issue evidence
+            "issue_evidence",
+            "location",
+
+            # Issue description
+            "description",
+            
         ]
 
     def get_has_verification_decision(self, obj):
@@ -74,3 +96,10 @@ class AdminVerificationReportDetailSerializer(serializers.ModelSerializer):
             context=IssueAdministrativeDecision.DecisionContext.VERIFICATION_REVIEW,
             is_active=True,
         ).exists()
+        
+    def get_issue_evidence(self, obj):
+        evidences = obj.solver_task.issue.evidences.all()
+        return IssueEvidenceSerializer(evidences, many=True).data
+
+    def get_location(self, obj):
+        return obj.solver_task.issue.location.zone.name

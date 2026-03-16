@@ -60,7 +60,7 @@ const SolverSelectionPanel = ({
           className="bg-[#1e1e1e] border border-slate-700 text-slate-200 text-sm px-3 py-2 rounded-md focus:outline-none focus:border-blue-500"
         >
           <option value="All">All</option>
-          {zones.map((zone) => (
+          {zones?.map((zone) => (
             <option key={zone.id} value={zone.id}>
               {zone.name}
             </option>

@@ -1,37 +1,40 @@
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { infoToast } from '../../../../utils/Toaster';
-import { fadeInUp } from '../../ui/motion';
+import React from "react";
 
-const ActionCard = ({ icon, title, desc, badge, path }) => {
-  const navigate = useNavigate();
-  const { access_token } = useSelector(s => s.auth);
-
-  const handleClick = () => {
-    if (access_token) navigate(path);
-    else {
-      infoToast({ title: 'Login required', description: 'Please login to continue.' });
-      navigate('/landing');
-    }
-  };
-
+export default function ActionCard({ icon, title, desc, badge, onClick }) {
   return (
-    <motion.div
-      variants={fadeInUp}
-      onClick={handleClick}
-      className="bg-white p-6 rounded-2xl border shadow-sm hover:shadow-md cursor-pointer flex gap-4"
+    <button
+      onClick={onClick}
+      className="
+        w-full text-left
+        bg-blue-50
+        border border-blue-100
+        rounded-2xl
+        p-5
+        flex items-center gap-4
+        transition-all
+        hover:bg-blue-100
+        hover:border-blue-200
+        hover:shadow-md
+        group
+      "
     >
-      <div className="p-3 bg-blue-50 rounded-xl">{icon}</div>
-      <div className="flex-1">
-        <div className="flex justify-between">
-          <h3 className="font-bold">{title}</h3>
-          {badge && <span className="text-indigo-600 font-semibold">{badge}</span>}
-        </div>
-        <p className="text-sm text-slate-500">{desc}</p>
+      {/* Icon */}
+      <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-blue-100 text-blue-600 group-hover:bg-blue-200">
+        {icon}
       </div>
-    </motion.div>
-  );
-};
 
-export default ActionCard;
+      {/* Text */}
+      <div className="flex-1">
+        <p className="font-semibold text-slate-800 text-sm">{title}</p>
+        <p className="text-xs text-slate-500">{desc}</p>
+      </div>
+
+      {/* Badge */}
+      {badge && (
+        <span className="text-xs font-semibold bg-blue-600 text-white px-2 py-1 rounded-md">
+          {badge}
+        </span>
+      )}
+    </button>
+  );
+}

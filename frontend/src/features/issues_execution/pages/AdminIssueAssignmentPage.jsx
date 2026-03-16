@@ -105,7 +105,6 @@ const AdminIssueAssignmentPage = () => {
             isAssigning={isAssigning}
             handleConfirmAssignment={handleConfirmAssignment}
             setIsModalOpen={setIsModalOpen}
-
           />
         )}
       </div>

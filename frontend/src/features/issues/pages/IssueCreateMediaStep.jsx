@@ -11,12 +11,11 @@ import useEvidenceService from "../hooks/evidenceServiceHook";
 import { normalizeCloudinaryEvidence } from "../utils";
 import { errorToast } from "../../../utils/Toaster";
 import { extractErrorMessage } from "../../../utils/extractErrorMessage";
-
-
+import { ChevronLeft } from "lucide-react";
 
 const IssueCreateMediaStep = () => {
-  const {id} = useParams();
-  const {addEvidence} = useEvidenceService();
+  const { id } = useParams();
+  const { addEvidence } = useEvidenceService();
   const [cloudinaryLoading, setCloudinaryLoading] = useState(false);
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
@@ -26,21 +25,25 @@ const IssueCreateMediaStep = () => {
   const [loadingPreviews, setLoadingPreviews] = useState([]);
   const canContinue = images.length >= 2;
 
-  const handleSubmit = async() => {
-
+  const handleSubmit = async () => {
     try {
-      const results = await uploadImagesBatch(images,setCloudinaryLoading);
+      const results = await uploadImagesBatch(images, setCloudinaryLoading);
       const normalizedResults = results.map(normalizeCloudinaryEvidence);
-      await addEvidence({id,req:{evidences:normalizedResults}}).unwrap();
+      await addEvidence({ id, req: { evidences: normalizedResults } }).unwrap();
       navigate(`/issue/${id}/behavioral-prompts`);
     } catch (err) {
-      const message = extractErrorMessage(err); 
-      errorToast({title:"Evidence upload failed",description:`${message || 'An error occurred during evidence upload.'}`});
-    }
-    finally{
+      const message = extractErrorMessage(err);
+      errorToast({
+        title: "Evidence upload failed",
+        description: `${message || "An error occurred during evidence upload."}`,
+      });
+    } finally {
       setCloudinaryLoading(false);
     }
-  };  
+  };
+  const handleBack = () => {
+    navigate("/complaints");
+  };
   return (
     <div className="min-h-screen bg-slate-50 pb-24">
       <motion.main
@@ -50,9 +53,14 @@ const IssueCreateMediaStep = () => {
       >
         {/* 🟦 Header */}
         <header>
-          <h1 className="text-3xl font-bold text-slate-900">
-            Add Evidence
-          </h1>
+          <button
+            onClick={handleBack}
+            className="flex items-center gap-1 text-slate-500 hover:text-blue-600 transition-colors mb-6 group"
+          >
+            <ChevronLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+            <span className="text-sm font-medium">Back to Complaints Home</span>
+          </button>
+          <h1 className="text-3xl font-bold text-slate-900">Add Evidence</h1>
           <p className="text-slate-500 mt-3">
             Upload clear photos of the issue to help authorities act faster.
           </p>
@@ -65,25 +73,23 @@ const IssueCreateMediaStep = () => {
         <ProgressSteps currentStep={3} />
 
         {/* 🟦 Upload */}
-        <MediaUploader 
-          imageUrls={imageUrls} 
+        <MediaUploader
+          imageUrls={imageUrls}
           setImageUrls={setImageUrls}
           images={images}
           setImages={setImages}
           setLoadingPreviews={setLoadingPreviews}
-          
           fileInputRef={fileInputRef}
         />
 
         {/* 🟦 Preview */}
         <MediaPreviewGrid
           images={imageUrls}
-          removeImage={(index) =>{
-            setImages((prev) => prev.filter((_, i) => i !== index))
-            setImageUrls((prev) => prev.filter((_, i) => i !== index))
+          removeImage={(index) => {
+            setImages((prev) => prev.filter((_, i) => i !== index));
+            setImageUrls((prev) => prev.filter((_, i) => i !== index));
             setLoadingPreviews((prev) => prev.filter((_, i) => i !== index));
-          }
-          }
+          }}
           loadingPreviews={loadingPreviews}
           setLoadingPreviews={setLoadingPreviews}
         />

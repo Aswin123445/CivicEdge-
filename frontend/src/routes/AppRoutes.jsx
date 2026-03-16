@@ -25,7 +25,7 @@ import AuthResetPasswordInfo from "../features/auth/pages/user/AuthResetPassword
 import ResetPasswordConfirmation from "../features/auth/pages/user/AuthResetConfirmation";
 import AuthAdminLogin from "../features/auth/pages/admin/AdminLogin";
 import Login from "../features/auth/pages/solver/Login";
-import SettingsPage from "../features/core/pages/citizen/SettingsPage"
+import SettingsPage from "../features/core/pages/citizen/SettingsPage";
 
 /* ========== CORE PAGES ========== */
 import CivicEdgeHome from "../features/core/pages/citizen/CitizenHome";
@@ -40,6 +40,44 @@ const SolverManagement = lazy(
 const AdminManagement = lazy(
   () => import("../features/auth/pages/admin/AdminManagement"),
 ); // AdminManagement
+
+const PendingReviewPage = lazy(
+  () => import("../features/issues_execution/pages/PendingReviewPage"),
+);
+
+const AdminSolverCompleteTask = lazy(
+  () => import("../features/issues_execution/pages/AdminSolverCompleteTask"),
+);
+
+const IssueDetailPage = lazy(
+  () => import("../features/issues_execution/pages/IssueDetailPage"),
+);
+
+const SolverAssignmentQueuePage = lazy(
+  () => import("../features/issues_execution/pages/SolverAssignmentQueuePage"),
+);
+
+const AdminIssueAssignmentPage = lazy(
+  () => import("../features/issues_execution/pages/AdminIssueAssignmentPage"),
+);
+
+const AdminPendingVerification = lazy(
+  () => import("../features/issues_execution/pages/AdminPendingVerification"),
+);
+
+const AdminVerificationReportPage = lazy(
+  () =>
+    import("../features/issues_execution/pages/AdminVerificationReportPage"),
+);
+const AdminExecutionProofListPage = lazy(
+  () =>
+    import("../features/issues_execution/pages/AdminExecutionProofListPage"),
+);
+
+const AdminExecutionProofDetailPage = lazy(
+  () =>
+    import("../features/issues_execution/pages/AdminExecutionProofDetailPage"),
+);
 
 import Test from "../features/auth/pages/admin/Test";
 
@@ -65,10 +103,6 @@ import IssuesLayout from "../features/issues/layouts/IssuesLayout";
 import ComplaintListPage from "../features/issues/pages/ComplaintListPage";
 import ComplaintDetails from "../features/issues/pages/ComplaintDetails";
 import ExecutionManagementLayout from "../features/issues_execution/layouts/ExecutionManagementLayout";
-import PendingReviewPage from "../features/issues_execution/pages/PendingReviewPage";
-import IssueDetailPage from "../features/issues_execution/pages/IssueDetailPage";
-import SolverAssignmentQueuePage from "../features/issues_execution/pages/SolverAssignmentQueuePage";
-import AdminIssueAssignmentPage from "../features/issues_execution/pages/AdminIssueAssignmentPage";
 import SolverTaskListPage from "../features/issues_execution/pages/SolverTaskListPage";
 import SolverTaskDetailPage from "../features/issues_execution/pages/SolverTaskDetailPage";
 import VerificationEntryPage from "../features/issues_execution/pages/VerificationEntryPage";
@@ -76,7 +110,14 @@ import GroundVerificationPage from "../features/issues_execution/pages/GroundVer
 import ImpactAssessmentPage from "../features/issues_execution/pages/ImpactAssessmentPage";
 import VerificationStepRouter from "../features/issues_execution/ui/VerificationStepRouter";
 import SolverReportView from "../features/issues_execution/pages/SolverReportView";
-
+import SolverExecutionWorkspace from "../features/issues_execution/pages/SolverExecutionWorkspace";
+import AdminSolverTaskDetailPage from "../features/issues_execution/pages/AdminSolverTaskDetailPage";
+import PendingReviewSkeleton from "../features/issues_execution/components/pending_review_page/PendingReviewSkeleton";
+import IssueDetailSkeleton from "../features/issues_execution/components/issue_details_page/IssueDetailSkeleton";
+import SolverAssignmentQueueSkeleton from "../features/issues_execution/components/solver_assignment_queue_page/SolverAssignmentQueueSkeleton";
+import IssueAssignmentSkeleton from "../features/issues_execution/components/admin_issue_assignment_page/IssueAssignmentSkeleton";
+import TableSkeleton from "../features/issues_execution/components/AdminExecutionProofLIstPage/TableSkeleton";
+import AdminProofDetailsSkelton from "../features/issues_execution/components/admin_execution_proof_details_page/AdminProofDetailsSkelton";
 
 export default function AppRoutes() {
   return (
@@ -118,8 +159,7 @@ export default function AppRoutes() {
         <Route element={<RoleGuard roles={["citizen"]} />}>
           <Route element={<MainLayout />}>
             <Route path="/profile" element={<CitizenProfile />} />
-            <Route path="/settings" element={< SettingsPage/>} />
-            <Route element={<IssuesLayout />}>
+            <Route path="/settings" element={<SettingsPage />} />
               <Route path="/drafts" element={<DraftIssuesPage />} />
               <Route path="/draft/:id" element={<DraftIssueDetails />} />
               <Route path="/issue/new" element={<IssueCreateStep1 />} />
@@ -143,32 +183,33 @@ export default function AppRoutes() {
                 path="/successfull/:id"
                 element={<IssueSubmitSuccessPage />}
               />
-              <Route 
-                path="/complaints/list"
-                element ={<ComplaintListPage/>}
-              />
-              <Route 
-                path="/complaints/:id"
-                element={<ComplaintDetails/>}
-              />
-            </Route>
+              <Route path="/complaints/list" element={<ComplaintListPage />} />
+              <Route path="/complaints/:id" element={<ComplaintDetails />} />
           </Route>
         </Route>
         <Route element={<RoleGuard roles={["solver"]} />}>
           <Route element={<SolverLayout />}>
-            <Route path="/solver/:task_id/verification-reports" element={<SolverReportView />} />
+            <Route
+              path="/solver/:task_id/verification-reports"
+              element={<SolverReportView />}
+            />
             <Route path="/solver/dashboard" element={<SolverDashBoard />} />
             <Route path="/solver/profile" element={<SolverProfile />} />
             <Route path="/solver/settings" element={<SettingsPage />} />
             <Route path="/solver/task/list" element={<SolverTaskListPage />} />
             <Route path="/solver/task/:id" element={<SolverTaskDetailPage />} />
-            <Route path="/solver/task/verification-entry/:id/" element={<VerificationEntryPage />} />
+            <Route
+              path="/solver/task/verification-entry/:id/"
+              element={<VerificationEntryPage />}
+            />
             <Route
               path="/solver/tasks/:draft_id/verification/:step"
               element={<VerificationStepRouter />}
             />
-
-
+            <Route
+              path="/solver/tasks/:task_id/execution/"
+              element={<SolverExecutionWorkspace />}
+            />
           </Route>
         </Route>
 
@@ -177,7 +218,10 @@ export default function AppRoutes() {
           <Route element={<AdminLayout />}>
             <Route element={<AdminFooterLayout />}>
               {/* User Management Section */}
-              <Route path="/admin/management" element={<UserManagementLayout />}>
+              <Route
+                path="/admin/management"
+                element={<UserManagementLayout />}
+              >
                 <Route
                   path="citizens"
                   element={
@@ -203,14 +247,87 @@ export default function AppRoutes() {
                   }
                 />
               </Route>
-              <Route path="/admin/execution" element={<ExecutionManagementLayout />}>
-                <Route path="in-review/issues" element={<PendingReviewPage/>} />
-                <Route path="in-review/issues/:id/details" element={<IssueDetailPage/>} />
-                <Route path="solver-assignment" element={<SolverAssignmentQueuePage/>} />
-                <Route path="solver-assignment/:id/decision" element={<AdminIssueAssignmentPage/>} />
-                <Route path="verification-reports" element={<div>Verification Reports</div>} />
-                <Route path="solver-tasks" element={<div>Solver Tasks</div>} />
-                <Route path="execution-proofs" element={<div>Execution Proofs</div>} />
+
+              <Route
+                path="/admin/execution"
+                element={<ExecutionManagementLayout />}
+              >
+                <Route
+                  path="in-review/issues"
+                  element={
+                    <Suspense fallback={<PendingReviewSkeleton />}>
+                      <PendingReviewPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="tasks/list"
+                  element={
+                    <Suspense fallback={<PendingReviewSkeleton />}>
+                      <AdminSolverCompleteTask />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="in-review/issues/:id/details"
+                  element={
+                    <Suspense fallback={<IssueDetailSkeleton />}>
+                      <IssueDetailPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="solver-assignment"
+                  element={
+                    <Suspense fallback={<SolverAssignmentQueueSkeleton />}>
+                      <SolverAssignmentQueuePage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="solver-assignment/:id/decision"
+                  element={
+                    <Suspense fallback={<IssueAssignmentSkeleton />}>
+                      <AdminIssueAssignmentPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="verification-reports"
+                  element={
+                    <Suspense fallback={<PendingReviewSkeleton />}>
+                      <AdminPendingVerification />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="verification-report/:id"
+                  element={
+                    <Suspense fallback={<IssueDetailSkeleton />}>
+                      <AdminVerificationReportPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="execution-proofs"
+                  element={
+                    <Suspense fallback={<TableSkeleton />}>
+                      <AdminExecutionProofListPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="execution-proof/:id"
+                  element={
+                    <Suspense fallback={<AdminProofDetailsSkelton />}>
+                      <AdminExecutionProofDetailPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="solver-tasks/:id"
+                  element={<AdminSolverTaskDetailPage />}
+                />
               </Route>
               <Route
                 path="/admin/dashboard"
@@ -220,6 +337,7 @@ export default function AppRoutes() {
                   </Suspense>
                 }
               />
+
               <Route path="/admin/profile" element={<AdminProfile />} />
               <Route path="/admin/settings" element={<SettingsPage />} />
 

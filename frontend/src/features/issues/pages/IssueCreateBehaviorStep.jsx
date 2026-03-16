@@ -11,6 +11,8 @@ import useBehavioralService from "../hooks/behaviouralService";
 import { errorToast } from "../../../utils/Toaster";
 import { extractErrorMessage } from "../../../utils/extractErrorMessage";
 import ReviewIssueCombinedSkeleton from "../ui/skeltons/ReviewIssueCombinedSkeleton";
+import { ChevronLeft } from "lucide-react";
+
 
 /* ---------------- Animation ---------------- */
 
@@ -85,6 +87,9 @@ const handleSubmit = async() => {
   // later:
   // submitBehaviorResponses(normalizedPayload)
 }; 
+  const handleBack = () => {
+    navigate("/complaints");
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
@@ -94,6 +99,13 @@ const handleSubmit = async() => {
         animate="visible"
         variants={CONTAINER_VARIANTS}
       >
+        <button
+          onClick={handleBack}
+          className="flex items-center gap-1 text-slate-500 hover:text-blue-600 transition-colors mb-6 group"
+        >
+          <ChevronLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+          <span className="text-sm font-medium">Back to Complaints Home</span>
+        </button>
         {/* Header */}
         <BehaviorHeader />
 

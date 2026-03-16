@@ -6,6 +6,8 @@ class IsActiveSolverForWrite(BasePermission):
 
     def has_permission(self, request, view):
         user = request.user
+        if user.is_superuser:
+            return True
 
         # Allow read-only access always
         if request.method in SAFE_METHODS:

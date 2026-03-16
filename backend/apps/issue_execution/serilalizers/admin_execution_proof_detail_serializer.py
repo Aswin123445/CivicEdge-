@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from apps.issue_execution.models.execution_proof import ExecutionProof
+from apps.issues.serializers.issue_evidence_serializer import IssueEvidenceSerializer
 class AdminExecutionProofDetailSerializer(serializers.ModelSerializer):
 
     issue = serializers.SerializerMethodField()
@@ -26,10 +27,14 @@ class AdminExecutionProofDetailSerializer(serializers.ModelSerializer):
         ]
 
     def get_issue(self, obj):
+        issue_evidence = obj.solver_task.issue.evidences.all()
         return {
             "reference_id": obj.solver_task.issue.reference_id,
             "title": obj.solver_task.issue.title,
             "status": obj.solver_task.issue.status,
+            "created_at": obj.solver_task.issue.created_at,
+            "issue_evidence": IssueEvidenceSerializer(issue_evidence, many=True).data,
+            "location":obj.solver_task.issue.location.zone.name  
         }
 
     def get_solver(self, obj):
@@ -57,5 +62,5 @@ class AdminExecutionProofDetailSerializer(serializers.ModelSerializer):
                 "blockers": e.blockers,
                 "next_steps": e.next_steps
             }
-            for e in obj.solver_task.progress_updates.filter(is_active=True)
+            for e in obj.solver_task.progress_updates.filter(is_active=True).order_by("-created_at")
         ]

@@ -12,7 +12,7 @@ import SolverTaskDetailsSkeleton from '../ui/AdminTaskDetailsSkeleton';
 const SolverReportView = () => {
   // Combined data from your JSON and Serializer
   const {task_id} = useParams();
-  const { task , taskLoading, taskFetching} = useSolverTaskDetail(task_id);
+  const { task , taskLoading, taskFetching,handlePdfDownload} = useSolverTaskDetail(task_id);
 
 
   if (taskLoading || taskFetching) {
@@ -24,7 +24,7 @@ const SolverReportView = () => {
       <div className="max-w-5xl mx-auto">
         
         {/* --- HEADER SECTION --- */}
-        <TaskReportHeader taskData={task} />
+        <TaskReportHeader taskData={task} handlePdfDownload={handlePdfDownload}  />
 
         <div className="grid grid-cols-12 gap-6">
           

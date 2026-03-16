@@ -1,10 +1,10 @@
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
-
 // eslint-disable-next-line no-unused-vars
-export default function MobileMenuItem({ icon: Icon, label, badge, danger }) {
+export default function MobileMenuItem({ icon: Icon, label, badge, danger,handleNavigate}) {
   return (
     <motion.div
+      onClick={handleNavigate}
       whileHover={{ x: 6, backgroundColor: "rgba(255, 255, 255, 0.05)" }}
       className={`
         flex items-center justify-between px-4 py-3 rounded-xl cursor-pointer transition-colors

@@ -131,4 +131,4 @@ class FieldVerificationReport(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"Verification Report {self.reference_id}"
+        return f"Verification Report {self.reference_id} {self.id}"

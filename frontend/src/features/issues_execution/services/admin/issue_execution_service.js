@@ -1,4 +1,3 @@
-
 import { baseApi } from "../../../../services/baseApi";
 
 const EXECUTION_PREFIX = "/civic/execute";
@@ -45,6 +44,7 @@ export const adminExecutionIssueApi = baseApi.injectEndpoints({
         "PendingIssues",
         "PendingIssueDetails",
         "IssuesToSolvers",
+        "AdminTask",
       ],
       transformResponse: (response) => {
         return response;
@@ -52,7 +52,7 @@ export const adminExecutionIssueApi = baseApi.injectEndpoints({
     }),
     getPendingIssueToSolvers: builder.query({
       query: ({ page = 1, search = "", ordering, category }) => {
-        const params = { page }; 
+        const params = { page };
         if (search) params.search = search;
         if (ordering) params.ordering = ordering;
         if (category) params.category__reference_id = category;
@@ -75,7 +75,117 @@ export const adminExecutionIssueApi = baseApi.injectEndpoints({
         meta: { skipAuth: false },
         data,
       }),
-      invalidatesTags: ["IssuesToSolvers","Solvers"],
+      invalidatesTags: ["IssuesToSolvers", "Solvers"],
+      transformResponse: (response) => {
+        return response;
+      },
+    }),
+    getPendingVerification: builder.query({
+      query: ({ page = 1, search = "" }) => {
+        const params = { page };
+        if (search) params.search = search;
+        return {
+          url: `${EXECUTION_PREFIX}/admin/verification-reports/`,
+          method: "get",
+          meta: { skipAuth: false },
+          params,
+        };
+      },
+      providesTags: ["PendingVerification"],
+      transformResponse: (response) => {
+        return response;
+      },
+    }),
+    getPendingVerificationDetail: builder.query({
+      query: (id) => ({
+        url: `${EXECUTION_PREFIX}/admin/verification-reports/${id}/`,
+        method: "get",
+        meta: { skipAuth: false },
+      }),
+      providesTags: ["PendingVerificationDetail"],
+      transformResponse: (response) => {
+        return response;
+      },
+    }),
+    getContractors: builder.query({
+      query: () => ({
+        url: `${EXECUTION_PREFIX}/admin/contractor-list/`,
+        method: "get",
+        meta: { skipAuth: false },
+      }),
+      providesTags: ["Contractors"],
+      transformResponse: (response) => {
+        return response;
+      },
+    }),
+    adminDecisionTask: builder.mutation({
+      query: ({ data, id }) => ({
+        url: `${EXECUTION_PREFIX}/admin/verification-reports/${id}/approve/`,
+        method: "post",
+        meta: { skipAuth: false },
+        data,
+      }),
+      invalidatesTags: [
+        "PendingVerification",
+        "PendingVerificationDetail",
+        "AdminTask",
+      ],
+      transformResponse: (response) => {
+        return response;
+      },
+    }),
+    getAdminFinalReport: builder.query({
+      query: () => ({
+        url: `${EXECUTION_PREFIX}/admin/execution-proofs/`,
+        method: "get",
+        meta: { skipAuth: false },
+      }),
+      providesTags: ["AdminFinalReport"],
+      transformResponse: (response) => {
+        return response;
+      },
+    }),
+    getAdminFinalReportDetail: builder.query({
+      query: (id) => ({
+        url: `${EXECUTION_PREFIX}/admin/execution-proof/${id}/`,
+        method: "get",
+        meta: { skipAuth: false },
+      }),
+      providesTags: ["AdminFinalReportDetail"],
+      transformResponse: (response) => {
+        return response;
+      },
+    }),
+    AdminSubmitFinalReportDecision: builder.mutation({
+      query: ({ data, id }) => ({
+        url: `${EXECUTION_PREFIX}/admin/execution-proofs/${id}/decision/`,
+        method: "post",
+        meta: { skipAuth: false },
+        data,
+      }),
+      invalidatesTags: [
+        "AdminFinalReport",
+        "AdminFinalReportDetail",
+        "AdminTask",
+      ],
+      transformResponse: (response) => {
+        return response;
+      },
+    }),
+    AdminTaskFetch: builder.query({
+      query: ({search = "",page = 1, status,ordering}) => {
+        const params = {page}
+        if (search) params.search = search;
+        if (status) params.status = status;
+        if (ordering) params.ordering = ordering;
+        return {
+          url: `${EXECUTION_PREFIX}/admin/solver-tasks/`,
+          method: "get",
+          meta: { skipAuth: false },
+          params,
+        };
+      },
+      providesTags: ["AdminTask"],
       transformResponse: (response) => {
         return response;
       },
@@ -88,5 +198,13 @@ export const {
   useFetchIssueDetailsQuery,
   useAdminInReviewDecitionMutation,
   useGetPendingIssueToSolversQuery,
-  useAssignSolverVerificationMutation
+  useAssignSolverVerificationMutation,
+  useGetPendingVerificationQuery,
+  useGetPendingVerificationDetailQuery,
+  useGetContractorsQuery,
+  useAdminDecisionTaskMutation,
+  useGetAdminFinalReportQuery,
+  useGetAdminFinalReportDetailQuery,
+  useAdminSubmitFinalReportDecisionMutation,
+  useAdminTaskFetchQuery,
 } = adminExecutionIssueApi;

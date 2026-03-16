@@ -2,7 +2,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CurrentDateTime from "../../../ui/CurrentDateTime";
 
-const SolverDashBoardHeader = ({ userDataLoading, userDataFetching, userData, toggleWork }) => {
+const SolverDashBoardHeader = ({  userData, toggleWork }) => {
   return (
     <header className="bg-white border-b border-slate-200 px-4 md:px-8 py-4 flex flex-wrap items-center gap-6 text-sm">
       <div className="flex items-center gap-3">

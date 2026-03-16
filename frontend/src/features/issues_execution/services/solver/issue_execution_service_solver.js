@@ -108,11 +108,67 @@ export const solverExecutionIssueApi = baseApi.injectEndpoints({
         method: "post",
         meta: { skipAuth: false },
       }),
-      invalidatesTags: ["SolverTasks","SolverTaskDetail","DraftProgress"],
+      invalidatesTags: ["SolverTasks","SolverTaskDetail","DraftProgress","SolverDashboard"],
       transformResponse: (response) => {
         return response;
       },
     }),
+    getPdfReport: builder.query({
+      query: (id) => ({
+        url: `${EXECUTION_PREFIX}/solver/field-verification-report-pdf/${id}/`,
+        method: "get",
+        meta: { skipAuth: false },
+        responseHandler: (response) => response.blob(),
+        responseType: "blob",
+      }),
+      providesTags: ["ReportPdf"],
+    }),
+    solverStartExecution: builder.mutation({
+      query: (id) => ({
+        url: `${EXECUTION_PREFIX}/solver/tasks/${id}/start-execution/`,
+        method: "post",
+        meta: { skipAuth: false },
+      }),
+      invalidatesTags: ["SolverTasks","SolverTaskDetail","SolverDashboard"],
+      transformResponse: (response) => {
+        return response;
+      },
+    }),
+    solverTaskUpdateList: builder.query({
+      query: (id) => ({
+        url: `${EXECUTION_PREFIX}/solver/tasks/${id}/progress-updates-list/`,
+        method: "get",
+        meta: { skipAuth: false },
+      }),
+      providesTags: ["SolverTaskProgressUpdates"],
+      transformResponse: (response) => {
+        return response;
+      },
+    }),
+    solverTaskUpdate: builder.mutation({
+      query: ({data,task_id}) => ({
+        url: `${EXECUTION_PREFIX}/solver/tasks/${task_id}/progress-updates/`,
+        method: "post",
+        meta: { skipAuth: false },
+        data,
+      }),
+      invalidatesTags: ["SolverTaskProgressUpdates","SolverDashboard"],
+      transformResponse: (response) => {
+        return response;
+      },
+    }),
+    solverTaskComplete: builder.mutation({
+      query: ({data,task_id}) => ({
+        url: `${EXECUTION_PREFIX}/solver/tasks/${task_id}/submit-completion/`,
+        method: "post",
+        meta: { skipAuth: false },
+        data
+      }),
+      invalidatesTags: ["SolverTasks","SolverTaskDetail","SolverDashboard"],
+      transformResponse: (response) => {
+        return response;
+      },
+    })
   }),
 });
 
@@ -125,5 +181,10 @@ export const {
   useSolverEstimateStep3Mutation,
   useSolverVerificationEvidenceStep4Mutation,
   useDraftDetailQuery,
-  useSolverSubmitVerificationMutation
+  useSolverSubmitVerificationMutation,
+  useLazyGetPdfReportQuery,
+  useSolverStartExecutionMutation,
+  useSolverTaskUpdateListQuery,
+  useSolverTaskUpdateMutation,
+  useSolverTaskCompleteMutation
 } = solverExecutionIssueApi;

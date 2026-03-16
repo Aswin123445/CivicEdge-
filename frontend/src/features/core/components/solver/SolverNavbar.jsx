@@ -3,15 +3,16 @@ import { motion } from "framer-motion";
 import { Bell, Menu } from "lucide-react";
 import CitizenLogo from "../../../../components/ui/CitizenLogo";
 import SolverMenu from "./SolverMenu";
-import solverUi from "../../hooks/solver/solverUi"
+import solverUi from "../../hooks/solver/solverUi";
 import useCitizenService from "../../hooks/citizen/useCitizenService";
 import NameUrlGet from "../NameUrlGet";
 import UserSkeleton from "../../ui/skeltons/UserButtonSkelton";
+import { NavLink } from "react-router-dom";
 
 export default function SolverNavbar() {
-    const { menuOpen, setMenuOpen } = solverUi();
-    const { userData, userDataLoading, userDataFetching } = useCitizenService();
-    return (
+  const { menuOpen, setMenuOpen } = solverUi();
+  const { userData, userDataLoading, userDataFetching } = useCitizenService();
+  return (
     <motion.nav
       initial={{ y: -12, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -29,22 +30,13 @@ export default function SolverNavbar() {
       <div className="flex items-center gap-8">
         {/* Logo */}
 
-        <CitizenLogo navigate_route="/solver/dashboard"/>
+        <CitizenLogo navigate_route="/solver/dashboard" />
         {/* Desktop Nav Links */}
         <div className="hidden md:flex items-center gap-6 text-sm font-medium text-blue-100">
-          <NavItem active>Dashboard</NavItem>
-          <NavItem>Tasks</NavItem>
-
-          <div className="flex items-center gap-2">
-            <NavItem>New Assignments</NavItem>
-            <motion.span
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              className="bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-md"
-            >
-              3
-            </motion.span>
-          </div>
+          <NavItem to="/solver/dashboard" active>
+            Dashboard
+          </NavItem>
+          <NavItem to="solver/task/list">Tasks</NavItem>
         </div>
       </div>
 
@@ -69,24 +61,27 @@ export default function SolverNavbar() {
         {/* Profile / Menu */}
         {userDataLoading || userDataFetching ? (
           <UserSkeleton />
-        ) : (   
-                 <div
-                   onClick={() => setMenuOpen((pre) => !pre)}
-                   className="hidden md:flex cursor-pointer items-center gap-3 bg-blue-700/50 px-3 py-1.5 rounded-full"
-                 >
-                   <div className="w-7 h-7 bg-blue-200 rounded-full flex items-center justify-center text-blue-700 text-sm font-semibold">
-                     <NameUrlGet
-                       name={userData.profile?.name}
-                       avatarUrl={userData.profile?.avatar}
-                       classname="w-7 h-7"
-                     />
-                   </div>
-                   <span className="text-sm pb-1">
-                     {userData.profile?.name || "User"}
-                   </span>
-                 </div>
-                 )}
-        <button onClick={() => setMenuOpen(pre => !pre)} className="md:hidden p-2 text-white">
+        ) : (
+          <div
+            onClick={() => setMenuOpen((pre) => !pre)}
+            className="hidden md:flex cursor-pointer items-center gap-3 bg-blue-700/50 px-3 py-1.5 rounded-full"
+          >
+            <div className="w-7 h-7 bg-blue-200 rounded-full flex items-center justify-center text-blue-700 text-sm font-semibold">
+              <NameUrlGet
+                name={userData.profile?.name}
+                avatarUrl={userData.profile?.avatar}
+                classname="w-7 h-7"
+              />
+            </div>
+            <span className="text-sm pb-1">
+              {userData.profile?.name || "User"}
+            </span>
+          </div>
+        )}
+        <button
+          onClick={() => setMenuOpen((pre) => !pre)}
+          className="md:hidden p-2 text-white"
+        >
           <Menu size={20} />
         </button>
         <SolverMenu
@@ -101,26 +96,27 @@ export default function SolverNavbar() {
 
 /* ---------------- Nav Item ---------------- */
 
-function NavItem({ children, active }) {
+function NavItem({ to, children }) {
   return (
-    <motion.a
-      href="#"
-      whileHover={{ y: -1 }}
-      className={`
-        relative pb-1 transition-colors
-        ${active ? "text-white" : "hover:text-white"}
-      `}
+    <NavLink
+      to={to}
+      className={({ isActive }) =>
+        `relative pb-1 transition-colors ${
+          isActive ? "text-white" : "text-blue-100 hover:text-white"
+        }`
+      }
     >
-      {children}
-      {active && (
-        <motion.span
-          layoutId="navbar-underline"
-          className="
-            absolute left-0 right-0 -bottom-0.5
-            h-0.5 bg-white rounded-full
-          "
-        />
+      {({ isActive }) => (
+        <>
+          {children}
+          {isActive && (
+            <motion.span
+              layoutId="navbar-underline"
+              className="absolute left-0 right-0 -bottom-0.5 h-0.5 bg-white rounded-full"
+            />
+          )}
+        </>
       )}
-    </motion.a>
+    </NavLink>
   );
 }

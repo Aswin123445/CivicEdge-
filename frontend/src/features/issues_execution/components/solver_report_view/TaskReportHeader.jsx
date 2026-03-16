@@ -1,7 +1,7 @@
 import React from "react";
 import ReportDownloadButton from "../../ui/ReportDownloadButton";
 
-const TaskReportHeader = ({ taskData }) => {
+const TaskReportHeader = ({ taskData , handlePdfDownload }) => {
   return (
     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
       <div>
@@ -22,6 +22,7 @@ const TaskReportHeader = ({ taskData }) => {
         <ReportDownloadButton
           taskData={taskData}
           verificationData={taskData?.verification}
+          handlePdfDownload={handlePdfDownload}
         />
         <a
           href={taskData.navigation_url}

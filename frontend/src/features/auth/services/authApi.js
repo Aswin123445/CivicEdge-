@@ -1,5 +1,3 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
-import baseQueryWithReauth from '../../../services/baseQueryWithReauth';
 import { citizenLogin, googleLogin, refreshToken } from '../authSlice';
 import { baseApi } from '../../../services/baseApi';
 
@@ -10,7 +8,7 @@ export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: (credentials) => ({
-        url: `${AUTH_PREFIX}/AUTH_PREFIX/register/`,
+        url: `${AUTH_PREFIX}/register/`,
         method: 'post',
         data: credentials,
         meta: { skipAuth: true },

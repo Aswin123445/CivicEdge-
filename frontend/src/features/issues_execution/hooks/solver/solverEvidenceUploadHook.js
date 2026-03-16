@@ -68,7 +68,6 @@ export default function useSolverEvidenceUploadHook(draft_id,task_id) {
       });
       return;
     }
-
     setIsSubmitting(true);
     // API Call: POST /solver/verification-draft/<draft_id>/evidence/
     try {

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 /**
  * COMPONENT: ReportDownloadButton
@@ -7,24 +8,14 @@ import React, { useState } from 'react';
  * - taskData: The full object from the Serializer.
  * - verificationData: The field data from your JSON.
  */
-
-const ReportDownloadButton = ({ taskData, verificationData }) => {
+const ReportDownloadButton = ({ taskData, verificationData , handlePdfDownload}) => {
+  const { access_token } = useSelector((state) => state.auth);
   const [isGenerating, setIsGenerating] = useState(false);
 
   const handleDownload = async () => {
     setIsGenerating(true);
-    
-    // In a real implementation, you would:
-    // 1. Use a library like @react-pdf/renderer or jsPDF
-    // 2. Or call a backend endpoint that returns a PDF Buffer
-    
-    console.log("Generating PDF for:", taskData.reference_id);
-    
-    // Simulating generation delay
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
+    await handlePdfDownload(access_token);
     setIsGenerating(false);
-    alert(`Verification_Report_${taskData.reference_id}.pdf has been generated.`);
   };
 
   return (

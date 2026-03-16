@@ -2,7 +2,6 @@ from rest_framework.exceptions import ValidationError
 from django.db import transaction
 
 from apps.issues.models.issue_administrative_decision import IssueAdministrativeDecision
-from apps.issues.utils.enums.issue_status import IssueStatus
 from apps.issues.services.timeline_service import add_issue_timeline_event
 
 
@@ -47,7 +46,7 @@ def create_verification_decision(*, admin, report, data):
 
     elif decision.decision_type == IssueAdministrativeDecision.DecisionType.BLOCKED:
         issue.reject(by=admin, reason=data["reason"])
-        report.solver_task.terminate(by=admin)
+        report.solver_task.approve_completion(by=admin)
 
     elif decision.decision_type in [
         IssueAdministrativeDecision.DecisionType.POSTPONED,

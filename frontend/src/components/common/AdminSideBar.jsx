@@ -10,12 +10,15 @@ function AdminSidebar() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const { userData, userDataLoading, userDataFetching } = useCitizenService();
-  const executionPaths = [
+  const executionPaths = [  
     "/admin/execution/in-review/issues",
     "/admin/execution/solver-assignment",
     "/admin/execution/verification-reports",
     "/admin/execution/solver-tasks",
     "/admin/execution/execution-proofs",
+    "/admin/execution/verification-report",
+    "/admin/execution/tasks/list",
+
   ];
   const roleManagementPaths = [
     "/admin/management/citizens",

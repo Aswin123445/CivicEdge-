@@ -13,5 +13,6 @@ def get_solver_tasks_by_status(*, status: str):
             "solver",
             "contractor",
         )
+        .prefetch_related("progress_updates")
         .order_by("-updated_at")
     )
