@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'apps.profiles',
     'apps.issues',
     'apps.issue_execution',
+    'apps.volunteer_army',
     # Third-party apps   
     'corsheaders',
     'rest_framework',

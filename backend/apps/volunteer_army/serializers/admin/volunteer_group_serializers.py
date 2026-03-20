@@ -1,0 +1,48 @@
+from rest_framework import serializers
+from apps.volunteer_army.models.volunteer_group import VolunteerGroup
+
+
+class VolunteerGroupCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = VolunteerGroup
+        fields = [
+            "name", 
+            "description",
+            "membership_type",
+            "risk_level",
+            "requirements",
+        ]
+
+    def validate_name(self, value):
+        if VolunteerGroup.objects.filter(name=value).exists():
+            raise serializers.ValidationError("Group with this name already exists.")
+        return value
+    
+    
+from rest_framework import serializers
+from apps.volunteer_army.models.volunteer_group import VolunteerGroup
+
+
+class VolunteerGroupUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = VolunteerGroup
+        fields = [
+            "name",
+            "description",
+            "membership_type",
+            "risk_level",
+            "requirements",
+        ]
+
+    def validate_name(self, value):
+        qs = VolunteerGroup.objects.filter(name=value)
+
+        if self.instance:
+            qs = qs.exclude(id=self.instance.id)
+
+        if qs.exists():
+            raise serializers.ValidationError("Group name already exists.")
+
+        return value
