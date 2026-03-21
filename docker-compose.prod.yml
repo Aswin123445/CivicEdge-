@@ -57,8 +57,6 @@ services:
     build:
       context: ./frontend
       dockerfile: ../docker/react/Dockerfile.prod
-      args:
-        VITE_API_BASE_URL: https://api.civicedge.com
     ports:
       - "80:80"
     depends_on:
