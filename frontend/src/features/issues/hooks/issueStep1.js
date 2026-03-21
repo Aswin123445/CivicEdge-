@@ -61,5 +61,9 @@ export default function useIssueStep1() {
     formData,
     setFormData,
     errors,
+    issueStep1Loading,
+    issueStep1Fetching,
+    issueStep1Success,
+    issueStep1Error,
   };
 }
