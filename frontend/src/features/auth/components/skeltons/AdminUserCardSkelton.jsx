@@ -1,4 +1,4 @@
-import Skeleton from '../../../../components/common/skelton';
+import Skeleton from '../../../../components/common/Skelton';
 const AdminUserCardSkeleton = () => {
   return (
     <div className="p-4 rounded-lg bg-[#1f1f1f] border border-gray-700">

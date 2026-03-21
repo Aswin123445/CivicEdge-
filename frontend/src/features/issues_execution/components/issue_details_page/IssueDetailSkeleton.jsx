@@ -1,4 +1,4 @@
-import Skeleton from "../../../../components/common/skelton";
+import Skeleton from "../../../../components/common/Skelton";
 
 /**
  * IssueDetailSkeleton
