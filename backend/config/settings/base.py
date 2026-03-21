@@ -125,8 +125,9 @@ AUTHENTICATION_BACKENDS = [
     "apps.user.utils.auth_backend.EmailAuthBackend",
 ]
 
-FRONTEND_URL = "http://localhost:5173"
-BACKEND_URL = "http://localhost:8000"
+
+FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:5173")
+BACKEND_URL = os.environ.get("BACKEND_URL", "http://localhost:8000")
 CORS_ALLOW_CREDENTIALS = True
 
 #email settings 
