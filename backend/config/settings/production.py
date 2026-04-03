@@ -22,6 +22,6 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-CSRF_TRUSTED_ORIGINS = ["https://*.fly.dev"]
+CSRF_TRUSTED_ORIGINS = ["https://civicedge.site"]
 
-FRONTEND_URL = os.getenv("FRONTEND_URL", "https://cvicedge.site")
+FRONTEND_URL = os.getenv("FRONTEND_URL", "https://civicedge.site")
