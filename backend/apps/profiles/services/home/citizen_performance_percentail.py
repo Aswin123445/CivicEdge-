@@ -9,7 +9,7 @@ def citizen_performance_percentail(user):
     )
     print(user_hours_qs)
     current_user_hours = user_hours_qs.filter(user=user).values_list("total_hours", flat=True).order_by("-total_hours").first()
-    if current_user_hours == None:
+    if current_user_hours is None:
         return 100 
     users_below = user_hours_qs.filter(total_hours__lt=current_user_hours).count()
     total_users = user_hours_qs.count() 

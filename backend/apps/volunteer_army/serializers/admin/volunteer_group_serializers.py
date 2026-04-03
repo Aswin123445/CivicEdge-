@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from apps.volunteer_army.models.volunteer_group import VolunteerGroup
-
+from apps.volunteer_army.models.volunteer_group import VolunteerGroup
 
 class VolunteerGroupCreateSerializer(serializers.ModelSerializer):
 
@@ -18,10 +18,6 @@ class VolunteerGroupCreateSerializer(serializers.ModelSerializer):
         if VolunteerGroup.objects.filter(name=value).exists():
             raise serializers.ValidationError("Group with this name already exists.")
         return value
-    
-    
-from rest_framework import serializers
-from apps.volunteer_army.models.volunteer_group import VolunteerGroup
 
 
 class VolunteerGroupUpdateSerializer(serializers.ModelSerializer):

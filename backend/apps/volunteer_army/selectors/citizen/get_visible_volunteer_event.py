@@ -6,8 +6,6 @@ from apps.volunteer_army.models.volunteer_membership import MembershipStatus
 
 
 def get_visible_volunteer_event(*, event_id, user):
-    now = timezone.now()
-
     return get_object_or_404(
         VolunteerEvent.objects.select_related("group", "created_by").filter(
             id=event_id,

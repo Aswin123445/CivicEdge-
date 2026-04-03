@@ -1,4 +1,4 @@
-from django.db.models import Count, Q, Sum
+from django.db.models import Count, Q
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 
@@ -6,14 +6,11 @@ from apps.volunteer_army.models.volunteer_group import (
     VolunteerGroup,
     VolunteerGroupStatus,
 )
-from apps.volunteer_army.models.volunteer_event import VolunteerEvent, EventStatus
 from apps.volunteer_army.models.volunteer_membership import (
-    VolunteerMembership,
     MembershipStatus,
 )
 from apps.volunteer_army.models.event_participation import EventParticipation, ParticipationStatus
 from apps.volunteer_army.models.volunteer_recognition import (
-    VolunteerRecognition,
     RecognitionStatus,
 )
 

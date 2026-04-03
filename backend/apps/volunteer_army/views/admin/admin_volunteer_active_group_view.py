@@ -1,6 +1,6 @@
 from rest_framework.generics import ListAPIView
 
-from apps.volunteer_army.selectors.admin.list_all_volunteer_groups import list_active_volunteer_groups, list_all_volunteer_groups
+from apps.volunteer_army.selectors.admin.list_all_volunteer_groups import list_active_volunteer_groups
 from apps.user.permissions.user_permissions import IsAdmin
 from apps.volunteer_army.serializers.admin.admin_active_volunteer_group_serializer import AdminActiveVolunteerGroupSerializer
 
