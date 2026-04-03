@@ -29,6 +29,7 @@ WORKDIR /app/backend
 # runtime-only deps
 RUN apt-get update && apt-get install -y \
     libpq-dev \
+    netcat-openbsd \
     --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
