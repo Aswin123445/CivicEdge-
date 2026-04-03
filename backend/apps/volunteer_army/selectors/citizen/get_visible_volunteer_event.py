@@ -1,5 +1,4 @@
 from django.shortcuts import get_object_or_404
-from django.utils import timezone
 
 from apps.volunteer_army.models.volunteer_event import VolunteerEvent, EventStatus
 from apps.volunteer_army.models.volunteer_membership import MembershipStatus

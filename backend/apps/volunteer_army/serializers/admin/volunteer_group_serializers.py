@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from apps.volunteer_army.models.volunteer_group import VolunteerGroup
-from apps.volunteer_army.models.volunteer_group import VolunteerGroup
 
 class VolunteerGroupCreateSerializer(serializers.ModelSerializer):
 
