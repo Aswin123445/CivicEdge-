@@ -4,7 +4,7 @@ from apps.user.utils.validator.password_validaton import validate_strong_passwor
 from apps.user.services.user.register_user import register_user
 from django.core.validators import validate_email as django_validate_email
 from rest_framework.exceptions import ValidationError as DjangoValidationError
-
+from apps.user.models.user import User
 class UserCreateSerializer(BaseUserSerializer):
     """
     Serializer for user registration.
@@ -44,7 +44,8 @@ class UserCreateSerializer(BaseUserSerializer):
             django_validate_email(value)
         except DjangoValidationError:
             raise serializers.ValidationError("Enter a valid email address.")
-
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("User with this email already exists.")
         return value
 
     def validate(self, attrs):
