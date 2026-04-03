@@ -17,8 +17,11 @@ DATABASES = {
         ssl_require=False,
     )
 }
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 CSRF_TRUSTED_ORIGINS = ["https://*.fly.dev"]
 
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://cvicedge.site")
+FRONTEND_URL = os.getenv("FRONTEND_URL", "https://cvicedge.site")
