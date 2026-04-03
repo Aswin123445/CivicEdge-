@@ -94,7 +94,7 @@ export default function ReportTable({ tasks, pagination }) {
         </table>
 
         {!pagination?.isSinglePage && (
-          <div className="sticky bottom-0 py-4 ">
+          <div className=" bottom-0 py-4 ">
             <Pagination
               currentPage={pagination?.page}
               totalPages={pagination?.totalPages}

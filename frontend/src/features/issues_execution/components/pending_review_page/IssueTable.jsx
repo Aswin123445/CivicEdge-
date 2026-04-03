@@ -78,7 +78,7 @@ export default function IssueTable({ issues ,pagination, goToPage,page}) {
         </table>
 
               {!pagination?.isSinglePage && (
-                <div className="sticky bottom-0 py-4 ">
+                <div className=" bottom-0 py-4 ">
                   <Pagination
                     currentPage={page}
                     totalPages={pagination?.totalPages}

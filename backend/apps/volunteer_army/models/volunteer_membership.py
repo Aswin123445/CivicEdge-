@@ -79,7 +79,7 @@ class VolunteerMembership(models.Model):
         default=MembershipStatus.PENDING,
         db_index=True,
     )
-
+    rejection_reason = models.TextField(null=True, blank=True)
     joined_at = models.DateTimeField(null=True, blank=True)
 
     # -----------------------------
@@ -191,20 +191,23 @@ class VolunteerMembership(models.Model):
 
         self._transition(to_status=MembershipStatus.ACTIVE)
 
-    def reject(self, *, by):
+    def reject(self, *, by, reason):
         if not by.is_staff:
             raise ValidationError("Only admin can reject membership.")
 
         if self.status != MembershipStatus.SUBMITTED:
             raise ValidationError("Membership must be SUBMITTED.")
 
+        if not reason:
+            raise ValidationError("Rejection reason is required.")
+
         self.reviewed_by = by
         self.reviewed_at = timezone.now()
+        self.rejection_reason = reason
 
         self._transition(to_status=MembershipStatus.REJECTED)
 
     def remove(self, *, by):
-        print('hi')
         if not by.is_staff:
             raise ValidationError("Only admin can remove members.")
 
@@ -232,7 +235,6 @@ class VolunteerMembership(models.Model):
     # -----------------------------
     def _transition(self, *, to_status):
         allowed = ALLOWED_MEMBERSHIP_TRANSITIONS.get(self.status, set())
-        print(allowed)
         if to_status not in allowed:
             raise ValidationError(
                 f"Invalid transition from {self.status} to {to_status}."

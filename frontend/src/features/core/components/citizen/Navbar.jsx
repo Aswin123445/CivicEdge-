@@ -30,9 +30,9 @@ const HomeNavbar = () => {
         hover:text-white
         hover:shadow-sm"
         >
-          <NavItem icon={<HomeIcons.Issues />} label="Issues" />
-          <NavItem icon={<HomeIcons.Talk />} label="Civic Talk" />
-          <NavItem icon={<HomeIcons.Army />} label="Armies" />
+          <NavItem icon={<HomeIcons.Issues />} label="Issues" path="/complaints" />
+          <NavItem icon={<HomeIcons.Army />} label="Armies" path="volunteer-army" />
+          <NavItem icon={<HomeIcons.Talk />} label="Civic Talk"/>
           <NavItem icon={<HomeIcons.Polls />} label="Polls" />
         </div>
 

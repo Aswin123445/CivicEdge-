@@ -79,6 +79,42 @@ const AdminExecutionProofDetailPage = lazy(
     import("../features/issues_execution/pages/AdminExecutionProofDetailPage"),
 );
 
+const AdminVolunteerGroupsPage = lazy(
+  () =>
+    import("../features/volunteer_army/pages/admin/AdminVolunteerGroupsPage"),
+);
+
+const AdminEventsListPage = lazy(
+  () => import("../features/volunteer_army/pages/admin/AdminEventsListPage"),
+);
+
+const CreateEventPage = lazy(
+  () => import("../features/volunteer_army/pages/admin/CreateEventPage"),
+);
+const AdminEventDetailPage = lazy(
+  () => import("../features/volunteer_army/pages/admin/AdminEventDetailPage"),
+);
+
+const AdminUpdateEventPage = lazy(
+  () => import("../features/volunteer_army/pages/admin/AdminUpdateEventPage"),
+);
+
+const EventParticipantsPage = lazy(
+  () => import ("../features/volunteer_army/pages/admin/EventParticipantsPage"),
+)
+
+const AdminPendingMemberships = lazy(
+  () => import ("../features/volunteer_army/pages/admin/AdminPendingMemberships"),
+)
+
+const MembershipDetailsPage = lazy(
+  () => import ("../features/volunteer_army/pages/admin/MembershipDetailsPage"),
+)
+
+const EventAttendancePage = lazy(
+  () => import ("../features/volunteer_army/pages/admin/EventAttendancePage"),
+)
+
 import Test from "../features/auth/pages/admin/Test";
 
 import UserManagementSectionLoader from "../features/auth/components/skeltons/loaders_skelton/UserManagementSectionLoader";
@@ -118,6 +154,22 @@ import SolverAssignmentQueueSkeleton from "../features/issues_execution/componen
 import IssueAssignmentSkeleton from "../features/issues_execution/components/admin_issue_assignment_page/IssueAssignmentSkeleton";
 import TableSkeleton from "../features/issues_execution/components/AdminExecutionProofLIstPage/TableSkeleton";
 import AdminProofDetailsSkelton from "../features/issues_execution/components/admin_execution_proof_details_page/AdminProofDetailsSkelton";
+import VolunteerHomePage from "../features/volunteer_army/pages/citizen/VolunteerHomePage";
+import VolunteerGroupListPage from "../features/volunteer_army/pages/citizen/VolunteerGroupListPage";
+import VolunteerGroupDetail from "../features/volunteer_army/pages/citizen/VolunteerGroupDetail";
+import MembershipDetailPage from "../features/volunteer_army/pages/citizen/MembershipDetailPage";
+import EventListPage from "../features/volunteer_army/pages/citizen/EventListPage";
+import EventDetailPage from "../features/volunteer_army/pages/citizen/EventDetailPage";
+import MyParticipationsPage from "../features/volunteer_army/pages/citizen/MyParticipationsPage";
+import MyRecognitionsPage from "../features/volunteer_army/pages/citizen/MyRecognitionsPage";
+import RecognitionDetailPage from "../features/volunteer_army/pages/citizen/RecognitionDetailPage";
+import VolunteerManagementLayout from "../features/volunteer_army/layout/VolunteerManagementLayout";
+import AdminVolunteerGroupsPageSkeleton from "../features/volunteer_army/components/admin_group_list_page/AdminVolunteerGroupsPageSkeleton";
+import CreateEventSkeleton from "../features/volunteer_army/components/admin_event_create_page/CreateEventSkeleton ";
+import EventDetailPageSkeleton from "../features/volunteer_army/components/admin_event_details_page/EventDetailPageSkeleton";
+import MembershipRequestsSkeleton from "../features/volunteer_army/components/admin_pending_memberships/MembershipRequestsSkeleton";
+import CertificateVerifyPage from "../features/volunteer_army/pages/citizen/CertificateVerifyPage";
+import MyMembershipsPage from "../features/volunteer_army/pages/citizen/MyMembershipsPage";
 
 export default function AppRoutes() {
   return (
@@ -126,6 +178,8 @@ export default function AppRoutes() {
         <Route path="/home" element={<CivicEdgeHome />} />
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/complaints" element={<IssueHome />} />
+        <Route path="/volunteer-army" element={<VolunteerHomePage />} />
+        <Route path="/volunteer-army/certificate/:id/verify" element={<CertificateVerifyPage />} />
       </Route>
       {/* ================== GUEST ROUTES ================== */}
       <Route element={<RequireNoAuth />}>
@@ -160,31 +214,68 @@ export default function AppRoutes() {
           <Route element={<MainLayout />}>
             <Route path="/profile" element={<CitizenProfile />} />
             <Route path="/settings" element={<SettingsPage />} />
-              <Route path="/drafts" element={<DraftIssuesPage />} />
-              <Route path="/draft/:id" element={<DraftIssueDetails />} />
-              <Route path="/issue/new" element={<IssueCreateStep1 />} />
-              <Route
-                path="/issue/:id/location"
-                element={<IssueCreateLocationStep />}
-              />
-              <Route
-                path="/issue/:id/evidence"
-                element={<IssueCreateMediaStep />}
-              />
-              <Route
-                path="/issue/:id/behavioral-prompts"
-                element={<IssueCreateBehaviorStep />}
-              />
-              <Route
-                path="/issue/:id/submit"
-                element={<IssueReviewSubmitPage />}
-              />
-              <Route
-                path="/successfull/:id"
-                element={<IssueSubmitSuccessPage />}
-              />
-              <Route path="/complaints/list" element={<ComplaintListPage />} />
-              <Route path="/complaints/:id" element={<ComplaintDetails />} />
+            <Route path="/drafts" element={<DraftIssuesPage />} />
+            <Route path="/draft/:id" element={<DraftIssueDetails />} />
+            <Route path="/issue/new" element={<IssueCreateStep1 />} />
+            <Route
+              path="/issue/:id/location"
+              element={<IssueCreateLocationStep />}
+            />
+            <Route
+              path="/issue/:id/evidence"
+              element={<IssueCreateMediaStep />}
+            />
+            <Route
+              path="/issue/:id/behavioral-prompts"
+              element={<IssueCreateBehaviorStep />}
+            />
+            <Route
+              path="/issue/:id/submit"
+              element={<IssueReviewSubmitPage />}
+            />
+            <Route
+              path="/successfull/:id"
+              element={<IssueSubmitSuccessPage />}
+            />
+            <Route path="/complaints/list" element={<ComplaintListPage />} />
+            <Route path="/complaints/:id" element={<ComplaintDetails />} />
+
+            <Route
+              path="/volunteer-army/groups"
+              element={<VolunteerGroupListPage />}
+            />
+            <Route
+              path="/volunteer-army/group/:id"
+              element={<VolunteerGroupDetail />}
+            />
+            <Route
+              path="/volunteer-army/membership/:id"
+              element={<MembershipDetailPage />}
+            />
+            <Route
+              path="/volunteer-army/:group_id/events"
+              element={<EventListPage />}
+            />
+            <Route
+              path="/volunteer-army/:group_id/events/:event_id"
+              element={<EventDetailPage />}
+            />
+            <Route
+              path="/volunteer-army/my-events"
+              element={<MyParticipationsPage />}
+            />
+            <Route
+              path="/volunteer-army/recognitions"
+              element={<MyRecognitionsPage />}
+            />
+            <Route
+              path="/volunteer-army/recognitions/:id"
+              element={<RecognitionDetailPage />}
+            />
+            <Route
+              path="/volunteer-army/my-memberships"
+              element={<MyMembershipsPage />}
+            />
           </Route>
         </Route>
         <Route element={<RoleGuard roles={["solver"]} />}>
@@ -327,6 +418,83 @@ export default function AppRoutes() {
                 <Route
                   path="solver-tasks/:id"
                   element={<AdminSolverTaskDetailPage />}
+                />
+              </Route>
+              <Route
+                path="/admin/volunteer"
+                element={<VolunteerManagementLayout />}
+              >
+                <Route
+                  path="groups"
+                  element={
+                    <Suspense fallback={<AdminVolunteerGroupsPageSkeleton />}>
+                      <AdminVolunteerGroupsPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="events"
+                  element={
+                    <Suspense fallback={<AdminVolunteerGroupsPageSkeleton />}>
+                      <AdminEventsListPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="events/create"
+                  element={
+                    <Suspense fallback={<CreateEventSkeleton />}>
+                      <CreateEventPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="events/:id"
+                  element={
+                    <Suspense fallback={<EventDetailPageSkeleton />}>
+                      <AdminEventDetailPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="events/:id/update"
+                  element={
+                    <Suspense fallback={<CreateEventSkeleton />}>
+                      <AdminUpdateEventPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="events/:id/participants"
+                  element={
+                    <Suspense fallback={<EventDetailPageSkeleton />}>
+                      <EventParticipantsPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/admin/volunteer/memberships"
+                  element={
+                    <Suspense fallback={<MembershipRequestsSkeleton />}>
+                      <AdminPendingMemberships />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/admin/volunteer/memberships/:id"
+                  element={
+                    <Suspense fallback={<MembershipRequestsSkeleton />}>
+                      <MembershipDetailsPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/admin/volunteer/attendance"
+                  element={
+                    <Suspense fallback={<AdminVolunteerGroupsPageSkeleton />}>
+                      <EventAttendancePage />
+                    </Suspense>
+                  }
                 />
               </Route>
               <Route

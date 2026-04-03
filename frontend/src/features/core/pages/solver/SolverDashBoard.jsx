@@ -108,7 +108,6 @@ const SolverDashBoard = () => {
   const {solverDashboard, solverDashboardLoading, solverDashboardFetching} = useSolverDashboardService();
   const { toggleWork } = useSolverService();
   const { userDataLoading, userDataFetching, userData } = useCitizenService();
-  console.log('solverDashboard',solverDashboard)
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
       {/* 2. SOLVER CONTEXT HEADER */}

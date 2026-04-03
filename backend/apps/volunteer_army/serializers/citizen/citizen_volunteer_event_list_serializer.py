@@ -1,10 +1,8 @@
 from rest_framework import serializers
-
 from apps.volunteer_army.models.volunteer_event import VolunteerEvent
 
 
 class CitizenVolunteerEventListSerializer(serializers.ModelSerializer):
-    group_id = serializers.UUIDField(source="group.id", read_only=True)
     group_name = serializers.CharField(source="group.name", read_only=True)
     runtime_status = serializers.SerializerMethodField()
     filled_count = serializers.SerializerMethodField()
@@ -14,27 +12,23 @@ class CitizenVolunteerEventListSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "reference_id",
-            "group_id",
-            "group_name",
             "title",
-            "description",
-            "location_name",
-            "location_address",
+            "group_name",
             "start_time",
             "end_time",
+            "location_name",
             "capacity",
-            "runtime_status",
-            "sponsor_name",
-            "sponsor_website",
-            "sponsor_logo_url",
-            "sponsor_message",
             "filled_count",
-            "created_at",
-            "updated_at",
+            "runtime_status",
         ]
 
     def get_runtime_status(self, obj):
         return obj.get_runtime_status()
 
     def get_filled_count(self, obj):
-        return obj.participations.filter(status = "REGISTERED").count()
+        status = self.get_runtime_status(obj)
+        if status == "COMPLETED" :
+            return obj.participations.filter(status="VERIFIED").count()
+        return obj.participations.filter(status="REGISTERED").count()
+    
+        

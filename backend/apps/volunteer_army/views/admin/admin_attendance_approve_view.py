@@ -14,7 +14,6 @@ class AdminAttendanceApproveView(APIView):
         participation = get_admin_attendance_submission(
             attendance_id=kwargs["attendance_id"],
         )
-
         approve_attendance_submission(
             participation=participation,
             by=request.user,

@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 const actions = [
   { title: "Raise Issues", icon: <Icons.Issues />,path:"/complaints"},
-  { title: "Connect", icon: <Icons.Talk />},
-  { title: "Join Volunteer", icon: <Icons.Army />},
+  { title: "Join Volunteer Army", icon: <Icons.Army />,path:"/volunteer-army/groups"},
+  { title: "Civic Talk", icon: <Icons.Talk />},
   { title: "Take Polls", icon: <Icons.Polls />},
 ];
 
@@ -67,9 +67,9 @@ const getActionDescription = (title) => {
   switch (title) {
     case "Raise Issues":
       return "Report problems in your area and help improve public spaces.";
-    case "Connect":
+    case "Civic Talk":
       return "Discuss ideas and concerns with people from your community.";
-    case "Join Volunteer":
+    case "Join Volunteer Army":
       return "Be part of local efforts that create visible change.";
     case "Take Polls":
       return "Share your voice on issues that affect daily life.";

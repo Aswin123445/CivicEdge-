@@ -52,16 +52,11 @@ class VolunteerEvent(models.Model):
 
     location_address = models.TextField()
 
-    # -----------------------------
-    # Time configuration
-    # -----------------------------
     start_time = models.DateTimeField()
 
     end_time = models.DateTimeField()
 
-    # -----------------------------
-    # Participation control
-    # -----------------------------
+
     capacity = models.PositiveIntegerField()
 
     # -----------------------------
@@ -122,10 +117,10 @@ class VolunteerEvent(models.Model):
         if self.start_time >= self.end_time:
             raise ValidationError("start_time must be before end_time.")
 
-        minimum_start_time = timezone.now() + timedelta(hours=24)
+        minimum_start_time = timezone.now() + timedelta(hours=4)
         if self.start_time < minimum_start_time:
             raise ValidationError(
-                "start_time must be at least 24 hours from now."
+                "start_time must be at least 4 hours from now."
             )
 
     def save(self, *args, **kwargs):

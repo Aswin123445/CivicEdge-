@@ -92,7 +92,6 @@ class EventParticipation(models.Model):
         on_delete=models.CASCADE,
         related_name="participations",
     )
-
     membership = models.ForeignKey(
         "VolunteerMembership",
         on_delete=models.CASCADE,

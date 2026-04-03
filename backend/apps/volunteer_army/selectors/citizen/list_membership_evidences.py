@@ -8,6 +8,6 @@ def list_membership_evidences(*, membership):
 
     return (
         MembershipEvidence.objects
-        .filter(membership=membership)
+        .filter(membership=membership,is_active=True)
         .order_by("-uploaded_at")
     )

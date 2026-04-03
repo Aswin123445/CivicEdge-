@@ -16,5 +16,5 @@ def get_admin_attendance_submission(*, attendance_id):
             "verified_by",
         ),
         id=attendance_id,
-        status=ParticipationStatus.ATTENDANCE_SUBMITTED,
+        status=ParticipationStatus.ATTENDANCE_SUBMITTED ,
     )

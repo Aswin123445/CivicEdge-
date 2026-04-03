@@ -10,11 +10,7 @@ export default function ComplaintHeader({ issue }) {
   const date = formatDate(complaint?.updated_at);
 
   const handleBack = () => {
-    if (window.history.length > 1) {
-      navigate(-1);
-    } else {
-      navigate("/complaints/list");
-    }
+    navigate("/complaints/list");
   };
 
   return (
@@ -26,7 +22,7 @@ export default function ComplaintHeader({ issue }) {
           className="flex items-center gap-1 text-slate-500 hover:text-blue-600 transition-colors mb-6 group"
         >
           <ChevronLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-          <span className="text-sm font-medium">Back to My Complaints</span>
+          <span className="text-sm font-medium">Back to My Issues</span>
         </button>
 
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">

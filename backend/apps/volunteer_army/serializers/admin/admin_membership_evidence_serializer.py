@@ -32,6 +32,7 @@ class AdminVolunteerMembershipDetailSerializer(serializers.ModelSerializer):
         model = VolunteerMembership
         fields = [
             "id",
+            "reference_id",
             "status",
             "created_at",
             "updated_at",

@@ -28,7 +28,8 @@ from apps.volunteer_army.views.admin.admin_volunteer_recognition_detail_view imp
 from apps.volunteer_army.views.admin.admin_volunteer_group_detail_view import AdminVolunteerGroupDetailView
 from apps.volunteer_army.views.admin.admin_volunteer_service_log_create_view import AdminVolunteerServiceLogCreateView
 from apps.volunteer_army.views.admin.admin_service_hours_analytics_view import AdminServiceHoursAnalyticsView
-from apps.volunteer_army.views.admin.admin_top_volunteers_view import AdminTopVolunteersView 
+from apps.volunteer_army.views.admin.admin_top_volunteers_view import AdminTopVolunteersView
+from apps.volunteer_army.views.admin.admin_volunteer_active_group_view import AdminActiveVolunteerGroupListView 
 
 urlpatterns = [
     path("volunteer/groups/",AdminVolunteerGroupCreateView.as_view(),name="admin-volunteer-group-create"), 
@@ -42,6 +43,7 @@ urlpatterns = [
     path("volunteer/memberships/<uuid:membership_id>/approve/",AdminVolunteerMembershipApproveView.as_view(),name="admin-volunteer-membership-approve"),
     path("volunteer/memberships/<uuid:membership_id>/reject/",AdminVolunteerMembershipRejectView.as_view(),name="admin-volunteer-membership-reject"),
     path("volunteer/memberships/<uuid:membership_id>/remove/",AdminVolunteerMembershipRemoveView.as_view(),name="admin-volunteer-membership-remove"),
+    path("volunteer/events/groups-list",AdminActiveVolunteerGroupListView.as_view(),name="admin-volunteer-group-list"),
     path("volunteer/events-create/",AdminVolunteerEventCreateView.as_view(),name="admin-volunteer-event-create"),
     path("volunteer/events-list/",AdminVolunteerEventListView.as_view(),name="admin-volunteer-event-list"),
     path("volunteer/events/<uuid:event_id>/details/",AdminVolunteerEventDetailView.as_view(),name="admin-volunteer-event-detail"),

@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { X, User, LayoutDashboard, ClipboardCheck } from "lucide-react";
+import {
+  X,
+  User,
+  LayoutDashboard,
+  ClipboardCheck,
+  ShieldCheck,
+} from "lucide-react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import useCitizenService from "../../features/core/hooks/citizen/useCitizenService";
 import { AdminIdentitySkeleton } from "../../features/core/ui/skeltons/admin/AdminIdentitySkeleton";
@@ -10,7 +16,13 @@ function AdminSidebar() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const { userData, userDataLoading, userDataFetching } = useCitizenService();
-  const executionPaths = [  
+  const volunteerPath = [
+    "/admin/volunteer/groups",
+    "/admin/volunteer/events",
+    "/admin/volunteer/memberships",
+    "/admin/volunteer/attendance"
+  ]
+  const executionPaths = [
     "/admin/execution/in-review/issues",
     "/admin/execution/solver-assignment",
     "/admin/execution/verification-reports",
@@ -18,7 +30,6 @@ function AdminSidebar() {
     "/admin/execution/execution-proofs",
     "/admin/execution/verification-report",
     "/admin/execution/tasks/list",
-
   ];
   const roleManagementPaths = [
     "/admin/management/citizens",
@@ -30,6 +41,10 @@ function AdminSidebar() {
   );
 
   const isExecutionPath = executionPaths.some((path) =>
+    location.pathname.startsWith(path),
+  );
+
+  const isVolunteerPath = volunteerPath.some((path) =>
     location.pathname.startsWith(path),
   );
 
@@ -117,19 +132,22 @@ function AdminSidebar() {
             <ClipboardCheck className="w-5 h-5 mr-2" />
             Issue Execution
           </NavLink>
-
           <NavLink
-            to="/admin/reports"
-            className={({ isActive }) =>
-              `block rounded-md px-3 py-2 text-sm font-medium transition ${
-                isActive
-                  ? "bg-blue-600 text-white"
+            to="/admin/volunteer/groups"
+            end
+            className={() =>
+              `flex items-center rounded-md px-3 py-2 text-sm font-medium transition ${
+                isVolunteerPath
+                  ? "bg-gray-700 text-white"
                   : "text-gray-400 hover:bg-gray-700 hover:text-white"
               }`
             }
           >
-            Reports
+            <ShieldCheck className="w-5 h-5 mr-2" />
+            Army Management
           </NavLink>
+
+
         </nav>
       </aside>
 

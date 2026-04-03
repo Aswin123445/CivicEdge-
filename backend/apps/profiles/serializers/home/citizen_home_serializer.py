@@ -9,6 +9,11 @@ class CitizenProfileSummarySerializer(serializers.Serializer):
     email = serializers.EmailField()
     bio = serializers.CharField(allow_null=True)
 
+class CitizenDashboardSerializer(serializers.Serializer):
+    total_complaints = serializers.IntegerField()
+    total_volunteer_hours = serializers.IntegerField()
+    performance_percentail = serializers.IntegerField()
+
 class CitizenHomeSerializer(HomeBaseSerializer):
     profile = CitizenProfileSummarySerializer()
-    # dashboard = CitizenDashboardSerializer()
+    dashboard = CitizenDashboardSerializer()

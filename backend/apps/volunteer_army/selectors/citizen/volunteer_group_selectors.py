@@ -2,6 +2,7 @@
 from django.shortcuts import get_object_or_404
 
 from apps.volunteer_army.models.volunteer_group import VolunteerGroup, VolunteerGroupStatus
+from apps.volunteer_army.models.volunteer_membership import VolunteerMembership
 
 
 def list_active_volunteer_groups():
@@ -12,6 +13,17 @@ def list_active_volunteer_groups():
     return (
         VolunteerGroup.objects
         .filter(status=VolunteerGroupStatus.ACTIVE, is_active=True)
+        .order_by("created_at")
+    )
+    
+def my_list_active_volunteer_memberships(user):
+    """
+    Returns all active volunteer groups visible to citizens.
+    """
+
+    return (
+        VolunteerMembership.objects
+        .filter(user = user)
         .order_by("created_at")
     )
     

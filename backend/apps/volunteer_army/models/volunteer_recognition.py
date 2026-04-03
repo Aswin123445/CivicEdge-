@@ -17,8 +17,9 @@ class RecognitionType(models.TextChoices):
 
 
 class RecognitionStatus(models.TextChoices):
-    ISSUED = "ISSUED", "Issued"
-    REVOKED = "REVOKED", "Revoked"
+    PENDING = "PENDING", "Pending"
+    GENERATED = "GENERATED", "Generated"
+    FAILED = "FAILED", "Failed"
 
 
 class VolunteerRecognition(models.Model):
@@ -67,10 +68,10 @@ class VolunteerRecognition(models.Model):
     status = models.CharField(
         max_length=20,
         choices=RecognitionStatus.choices,
-        default=RecognitionStatus.ISSUED,
+        default=RecognitionStatus.PENDING,
     )
 
-    certificate_url = models.URLField()
+    certificate_url = models.URLField(null=True, blank=True)
 
     # -----------------------------
     # Issuance

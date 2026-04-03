@@ -8,6 +8,12 @@ from apps.volunteer_army.serializers.admin.admin_pending_attendance_list_seriali
 class AdminPendingAttendanceListView(ListAPIView):
     serializer_class = AdminPendingAttendanceListSerializer
     permission_classes = [IsAdmin]
-
+    search_fields = [
+        "membership__reference_id",
+        "membership__user__email",
+    ]
+    ordering_fields = [
+        "-created_at",
+    ]
     def get_queryset(self):
         return list_pending_attendance_submissions()

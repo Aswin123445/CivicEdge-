@@ -1,6 +1,6 @@
 from django.urls import path
 
-from apps.volunteer_army.views.citizen.volunteer_group_views import VolunteerGroupDetailView, VolunteerGroupListView
+from apps.volunteer_army.views.citizen.volunteer_group_views import MyVolunteerGroupListView, VolunteerGroupDetailView, VolunteerGroupListView
 from apps.volunteer_army.views.citizen.volunteer_membership_views import VolunteerGroupJoinView
 from apps.volunteer_army.views.citizen.my_volunteer_membership_list_view import MyVolunteerMembershipListView
 from apps.volunteer_army.views.citizen.volunteer_membership_detail_view import VolunteerMembershipDetailView
@@ -19,9 +19,13 @@ from apps.volunteer_army.views.citizen.citizen_submit_event_attendance_view impo
 from apps.volunteer_army.views.citizen.citizen_participation_attendance_detail_view import CitizenParticipationAttendanceDetailView
 from apps.volunteer_army.views.citizen.citizen_volunteer_recognition_list_view import CitizenVolunteerRecognitionListView
 from apps.volunteer_army.views.citizen.citizen_volunteer_recognition_detail_view import CitizenVolunteerRecognitionDetailView
+from apps.volunteer_army.views.citizen.citizen_home_page_view import CitizenHomePageView
+from apps.volunteer_army.views.citizen.citizen_see_certificate_view import CitizenSeeCertificateView
 
 urlpatterns = [
-    path('volunteer/groups/',VolunteerGroupListView.as_view(),name='volunteer-groups'),
+    path("volunteer/home/", CitizenHomePageView.as_view(), name="citizen-home"),
+    path('volunteer/groups/',VolunteerGroupListView.as_view(),name='volunteer-groups'), 
+    path('volunteer/my-groups/',MyVolunteerGroupListView.as_view(),name='my-volunteer-groups'),
     path('volunteer/groups/<uuid:group_id>/',VolunteerGroupDetailView.as_view(),name='volunteer-group-detail'),
     path('volunteer/groups/<uuid:group_id>/join/',VolunteerGroupJoinView.as_view(),name='volunteer-group-join'),
     path('volunteer/my-memberships/',MyVolunteerMembershipListView.as_view(),name='my-volunteer-memberships'),
@@ -31,7 +35,7 @@ urlpatterns = [
     path('volunteer/memberships/<uuid:membership_id>/evidences/list/',MembershipEvidenceListView.as_view(),name='volunteer-membership-evidences-list'),
     path('volunteer/evidences/<uuid:evidence_id>/delete/',MembershipEvidenceDeleteView.as_view(),name='volunteer-evidence-delete'),
     path('volunteer/memberships/<uuid:membership_id>/submit/',VolunteerMembershipSubmitView.as_view(),name='volunteer-membership-submit'),
-    path('volunteer/events-list/',CitizenVolunteerEventListView.as_view(),name='volunteer-event-list'),
+    path('volunteer/<uuid:group_id>/events-list/',CitizenVolunteerEventListView.as_view(),name='volunteer-event-list'),
     path('volunteer/events/<uuid:event_id>/details/',CitizenVolunteerEventDetailView.as_view(),name='volunteer-event-detail'),
     path('volunteer/events/<uuid:event_id>/join/',CitizenVolunteerEventJoinView.as_view(),name='volunteer-event-join'),
     path('volunteer/participations/<uuid:participation_id>/leave/',CitizenVolunteerParticipationLeaveView.as_view(),name='volunteer-participation-leave'),
@@ -41,4 +45,5 @@ urlpatterns = [
     path('volunteer/participations/<uuid:participation_id>/attendance/',CitizenParticipationAttendanceDetailView.as_view(),name='volunteer-participation-attendance'),
     path('volunteer/my-recognitions/',CitizenVolunteerRecognitionListView.as_view(),name='my-volunteer-recognitions'),
     path('volunteer/recognitions/<uuid:recognition_id>/',CitizenVolunteerRecognitionDetailView.as_view(),name='volunteer-recognition-detail'),
+    path('volunteer/certificates/<uuid:id>/verify/',CitizenSeeCertificateView.as_view(),name='verify-certificate'),
 ]

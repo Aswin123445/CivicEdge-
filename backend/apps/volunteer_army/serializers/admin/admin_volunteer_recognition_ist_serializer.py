@@ -43,8 +43,6 @@ class AdminVolunteerRecognitionListSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "reference_id",
-            "title",
-            "message",
             "certificate_url",
             "issued_at",
             "participation_id",

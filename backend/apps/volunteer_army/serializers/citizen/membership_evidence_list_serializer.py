@@ -7,6 +7,7 @@ class MembershipEvidenceListSerializer(serializers.ModelSerializer):
     class Meta:
         model = MembershipEvidence
         fields = [
+            "reference_id",
             "id",
             "file_url",
             "description",

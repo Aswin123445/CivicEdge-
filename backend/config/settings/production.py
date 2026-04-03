@@ -20,3 +20,5 @@ DATABASES = {
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 CSRF_TRUSTED_ORIGINS = ["https://*.fly.dev"]
+
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://cvicedge.site")

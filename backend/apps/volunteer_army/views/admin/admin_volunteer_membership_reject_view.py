@@ -4,7 +4,7 @@ from rest_framework import status
 from apps.user.permissions.user_permissions import IsAdmin
 from apps.volunteer_army.selectors.admin.get_admin_volunteer_membership import get_admin_volunteer_membership
 from apps.volunteer_army.services.admin.reject_volunteer_membership import reject_volunteer_membership
-
+from rest_framework.exceptions import ValidationError
 
 
 
@@ -15,10 +15,13 @@ class AdminVolunteerMembershipRejectView(APIView):
         membership = get_admin_volunteer_membership(
             membership_id=kwargs["membership_id"],
         )
-
+        reason = request.data.get("reason")
+        if not reason or not reason.strip():
+            raise ValidationError("Rejection reason is required.")
         reject_volunteer_membership(
             membership=membership,
             by=request.user,
+            reason=reason,
         )
 
         return Response(

@@ -13,6 +13,7 @@ class AdminEventParticipantListSerializer(serializers.ModelSerializer):
     verified_by_id = serializers.UUIDField(source="verified_by.id", read_only=True, allow_null=True)
     event_runtime_status = serializers.SerializerMethodField()
 
+
     class Meta:
         model = EventParticipation
         fields = [
@@ -30,6 +31,7 @@ class AdminEventParticipantListSerializer(serializers.ModelSerializer):
             "user_id",
             "email",
             "event_runtime_status",
+
         ]
 
     def get_event_runtime_status(self, obj):

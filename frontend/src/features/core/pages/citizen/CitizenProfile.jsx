@@ -11,6 +11,7 @@ import ProfileHeaderSkeleton from "../../ui/skeltons/ProfileHeaderSkeleton";
 import VerifyBadge from "../../ui/solver/VerifyBadge";
 import EditableAvatarSkeletonDark from "../../ui/skeltons/EditableAvatarSkelton";
 import { useFetchZonesQuery } from "../../../auth/services/adminAuthApi";
+import { useNavigate } from "react-router-dom";
 
 const CitizenProfile = () => {
   const { data: zonesData,isLoading,isFetching,isSuccess } = useFetchZonesQuery();
@@ -21,7 +22,9 @@ const CitizenProfile = () => {
     avatarIsLoading,
     updateProfileData
   } = useProfileHook();
+
   const { userData, userDataLoading, userDataFetching } = useCitizenService();
+  console.log(userData)
   const name = capitalizeWords(userData?.profile?.name || "User");
   const pageLoading = userDataLoading || profle_loading || userDataFetching;
 
@@ -30,21 +33,21 @@ const CitizenProfile = () => {
   const stats = [
     {
       label: "Issues Resolved",
-      value: "24",
+      value: userData?.dashboard?.total_complaints ?? "0",
       icon: <CheckCircle className="text-emerald-500" />,
     },
     {
       label: "Volunteer Hours",
-      value: "142",
+      value: userData?.dashboard?.total_volunteer_hours ?? "0",
       icon: <Calendar className="text-blue-500" />,
     },
     {
       label: "Community Rank",
-      value: "Top 5%",
+        value: `top ${userData?.dashboard?.performance_percentail}%`?? "0",
       icon: <Award className="text-amber-500" />,
     },
   ];
-
+  const navigate = useNavigate();
   return (
     <div className=" bg-slate-50 text-slate-900 font-sans">
       <main className="max-w-5xl mx-auto py-10 px-6">
@@ -102,15 +105,16 @@ const CitizenProfile = () => {
             </div>
 
             {/* CTA */}
-            <button
+            <button 
+              onClick={() => navigate("/issue/new")}
               className="
-    bg-blue-700 text-white
-    px-6 py-2.5 rounded-xl
-    font-semibold
-    hover:bg-blue-600
-    transition-all
-    shadow-md shadow-blue-900/20
-  "
+              bg-blue-700 text-white
+              px-6 py-2.5 rounded-xl
+              font-semibold
+              hover:bg-blue-600
+              transition-all
+              shadow-md shadow-blue-900/20
+            "
             >
               Report New Issue
             </button>

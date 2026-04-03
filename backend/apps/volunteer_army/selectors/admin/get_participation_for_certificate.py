@@ -6,7 +6,7 @@ from apps.volunteer_army.models.volunteer_recognition import RecognitionType, Vo
 
 
 def is_participation_eligible_for_certificate(*, participation) -> bool:
-    if participation.event.get_runtime_status() != 'COMPLETED':
+    if participation.event.get_runtime_status() not in  ['COMPLETED','LIVE'] :
         return False
 
     if participation.status != ParticipationStatus.VERIFIED:
@@ -18,7 +18,7 @@ def is_participation_eligible_for_certificate(*, participation) -> bool:
 def certificate_already_exists(*, participation) -> bool:
     return VolunteerRecognition.objects.filter(
         participation=participation,
-        recognition_type=RecognitionType.CERTIFICATE,
+        recognition_type=RecognitionType.EVENT_PARTICIPATION_CERTIFICATE,
     ).exists()
     
 

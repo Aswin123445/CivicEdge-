@@ -12,7 +12,7 @@ def get_visible_volunteer_event(*, event_id, user):
         VolunteerEvent.objects.select_related("group", "created_by").filter(
             id=event_id,
             status=EventStatus.PUBLISHED,
-            end_time__gte=now,
+            # end_time__gte=now,
             group__memberships__user=user,
             group__memberships__status=MembershipStatus.ACTIVE,
         ).distinct()

@@ -11,10 +11,19 @@ export const uploadToCloudinary = async (file) => {
       import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
     );
 
+    const isImage = file.type.startsWith("image/");
+    const isPDF = file.type === "application/pdf";
+
+    if (!isImage && !isPDF) {
+      throw new Error("Only images and PDF files are allowed");
+    }
+
+    const resourceType = isImage ? "image" : "raw";
+
     const response = await fetch(
       `https://api.cloudinary.com/v1_1/${
         import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
-      }/image/upload`,
+      }/${resourceType}/upload`,
       {
         method: "POST",
         body: formData,
@@ -26,10 +35,14 @@ export const uploadToCloudinary = async (file) => {
       throw new Error(error || "Cloudinary upload failed");
     }
 
-    return await response.json(); // 👈 success response
+    return await response.json();
+
   } catch (err) {
     const message = extractErrorMessage(err);
-    errorToast({title:"Image upload failed",description:`${message || 'An error occurred during image upload.'}`});
+    errorToast({
+      title: "Upload failed",
+      description: message || "An error occurred during upload.",
+    });
   }
 };
 

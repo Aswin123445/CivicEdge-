@@ -4,7 +4,7 @@ from django.db import transaction
 from rest_framework.exceptions import ValidationError
 
 from apps.volunteer_army.models.volunteer_service_log import VolunteerServiceLog
-from apps.volunteer_army.utils.celery_task.maybe_generate_event_certificate_task import maybe_generate_event_certificate_task
+from apps.volunteer_army.utils.celery_task.create_event_certificate_recognition import maybe_generate_event_certificate_task
 
 
 @transaction.atomic
@@ -30,11 +30,11 @@ def approve_attendance_submission(*, participation, by):
         ),
         logged_by=by,
     )
+    participation_id = participation.id
     transaction.on_commit(
-        lambda: maybe_generate_event_certificate_task.delay(participation.event.id)
+        lambda: maybe_generate_event_certificate_task.delay(participation_id)
     )
 
     return participation
 
 
-#is any error it here it is because the on_commit function just remove it or try to resolve it 
