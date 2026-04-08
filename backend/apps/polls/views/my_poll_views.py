@@ -5,7 +5,7 @@ from apps.polls.selectors.get_user_votes import get_user_votes
 from apps.polls.serializers.my_vote_serializer import MyVoteSerializer
 from apps.user.permissions.user_permissions import IsCitizen
 from apps.polls.models.polls import Status
-
+from rest_framework.response import Response
 
 class MyVotesView(ListAPIView):
     permission_classes = [IsCitizen]
