@@ -7,7 +7,6 @@ def citizen_performance_percentail(user):
         .values("user")
         .annotate(total_hours=models.Sum("service_hours"))
     )
-    print(user_hours_qs)
     current_user_hours = user_hours_qs.filter(user=user).values_list("total_hours", flat=True).order_by("-total_hours").first()
     if current_user_hours is None:
         return 100 

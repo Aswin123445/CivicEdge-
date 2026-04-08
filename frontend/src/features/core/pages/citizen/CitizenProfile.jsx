@@ -24,7 +24,6 @@ const CitizenProfile = () => {
   } = useProfileHook();
 
   const { userData, userDataLoading, userDataFetching } = useCitizenService();
-  console.log(userData)
   const name = capitalizeWords(userData?.profile?.name || "User");
   const pageLoading = userDataLoading || profle_loading || userDataFetching;
 

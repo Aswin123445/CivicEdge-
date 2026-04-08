@@ -100,20 +100,41 @@ const AdminUpdateEventPage = lazy(
 );
 
 const EventParticipantsPage = lazy(
-  () => import ("../features/volunteer_army/pages/admin/EventParticipantsPage"),
-)
+  () => import("../features/volunteer_army/pages/admin/EventParticipantsPage"),
+);
 
 const AdminPendingMemberships = lazy(
-  () => import ("../features/volunteer_army/pages/admin/AdminPendingMemberships"),
-)
+  () =>
+    import("../features/volunteer_army/pages/admin/AdminPendingMemberships"),
+);
 
 const MembershipDetailsPage = lazy(
-  () => import ("../features/volunteer_army/pages/admin/MembershipDetailsPage"),
-)
+  () => import("../features/volunteer_army/pages/admin/MembershipDetailsPage"),
+);
 
 const EventAttendancePage = lazy(
-  () => import ("../features/volunteer_army/pages/admin/EventAttendancePage"),
-)
+  () => import("../features/volunteer_army/pages/admin/EventAttendancePage"),
+);
+
+const AdminPollManagementPage = lazy(
+  () => import("../features/polls/pages/AdminPollManagementPage"),
+);
+
+const AdminCreatePollPage = lazy(
+  () => import("../features/polls/pages/AdminCreatePollPage"),
+);
+
+const AdminPollDetailPage = lazy(
+  () => import("../features/polls/pages/AdminPollDetailPage"),
+);
+
+const AdminDetailsOverview = lazy(
+  () => import("../features/polls/pages/AdminDetailsOverview"),
+);
+
+const AdminAnalysisTabPage = lazy(
+  () => import("../features/polls/pages/AdminAnalysisTabPage"),
+);
 
 import Test from "../features/auth/pages/admin/Test";
 
@@ -170,6 +191,13 @@ import EventDetailPageSkeleton from "../features/volunteer_army/components/admin
 import MembershipRequestsSkeleton from "../features/volunteer_army/components/admin_pending_memberships/MembershipRequestsSkeleton";
 import CertificateVerifyPage from "../features/volunteer_army/pages/citizen/CertificateVerifyPage";
 import MyMembershipsPage from "../features/volunteer_army/pages/citizen/MyMembershipsPage";
+import CitizenPollHomePage from "../features/polls/pages/CitizenPollHomePage";
+import CitizenPollListPage from "../features/polls/pages/CitizenPollListPage";
+import PollDetailPage from "../features/polls/pages/PollDetailPage";
+import MyVotesPage from "../features/polls/pages/MyVotePage";
+import PollManagementLayout from "../features/polls/layouts/PollManagementLayout";
+import AdminPollDetailLayout from "../features/polls/layouts/AdminPollDetailLayout";
+import AdminDetailsOverviewSkeleton from "../features/polls/components/adminn_detail_poll_page/AdminDetailsOverviewSkeleton";
 
 export default function AppRoutes() {
   return (
@@ -179,7 +207,11 @@ export default function AppRoutes() {
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/complaints" element={<IssueHome />} />
         <Route path="/volunteer-army" element={<VolunteerHomePage />} />
-        <Route path="/volunteer-army/certificate/:id/verify" element={<CertificateVerifyPage />} />
+        <Route
+          path="/volunteer-army/certificate/:id/verify"
+          element={<CertificateVerifyPage />}
+        />
+        <Route path="/poll/home" element={<CitizenPollHomePage />} />
       </Route>
       {/* ================== GUEST ROUTES ================== */}
       <Route element={<RequireNoAuth />}>
@@ -276,6 +308,9 @@ export default function AppRoutes() {
               path="/volunteer-army/my-memberships"
               element={<MyMembershipsPage />}
             />
+            <Route path="/polls/list" element={<CitizenPollListPage />} />
+            <Route path="/polls/list/:id" element={<PollDetailPage />} />
+            <Route path="/polls/my-votes" element={<MyVotesPage />} />
           </Route>
         </Route>
         <Route element={<RoleGuard roles={["solver"]} />}>
@@ -496,6 +531,55 @@ export default function AppRoutes() {
                     </Suspense>
                   }
                 />
+              </Route>
+              <Route path="/admin" element={<PollManagementLayout />}>
+                <Route
+                  path="/admin/polls"
+                  element={
+                    <Suspense fallback={<AdminVolunteerGroupsPageSkeleton />}>
+                      <AdminPollManagementPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/admin/polls/create"
+                  element={
+                    <Suspense fallback={<AdminDashboardSkeleton />}>
+                      <AdminCreatePollPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/admin/polls/:id"
+                  element={
+                    <Suspense fallback={<AdminDashboardSkeleton />}>
+                      <AdminPollDetailPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/admin/polls/:id"
+                  element={<AdminPollDetailLayout />}
+                >
+                  <Route index element={<Navigate to="overview" replace />} />
+
+                  <Route
+                    path="overview"
+                    element={
+                      <Suspense fallback={<AdminDetailsOverviewSkeleton />}>
+                        <AdminDetailsOverview />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="analysis"
+                    element={
+                      <Suspense fallback={<AdminDetailsOverviewSkeleton />}>
+                        <AdminAnalysisTabPage />
+                      </Suspense>
+                    }
+                  />
+                </Route>
               </Route>
               <Route
                 path="/admin/dashboard"

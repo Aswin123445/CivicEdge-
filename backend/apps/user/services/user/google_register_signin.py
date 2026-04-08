@@ -27,7 +27,6 @@ def google_register_signin_service(user_info):
             "is_active": True,
         }
     )
-
     if created:
         user.set_unusable_password()
         user.save()
@@ -50,5 +49,4 @@ def google_register_signin_service(user_info):
             profile.save()
     refresh = RefreshToken.for_user(user)
     access = refresh.access_token
-    
     return user, str(access), str(refresh)

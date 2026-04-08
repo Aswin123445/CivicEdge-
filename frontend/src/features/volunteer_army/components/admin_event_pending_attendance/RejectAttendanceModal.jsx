@@ -8,7 +8,6 @@ import { AlertTriangle } from "lucide-react";
  */
 const RejectAttendanceModal = ({ target, onConfirm, onClose }) => {
   if (!target) return null;
-  console.log("Rejecting attendance:", target); // Debug log
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
       <div className="bg-[#1e1e1e] border border-slate-700 p-8 rounded-2xl max-w-sm w-full shadow-2xl text-center">

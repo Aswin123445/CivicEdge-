@@ -36,5 +36,6 @@ urlpatterns = [
     path('api/v1/civic/', include('apps.issues.routes')),
     path('api/v1/civic/execute/', include('apps.issue_execution.routes')),
     path('api/v1/army/', include('apps.volunteer_army.routes')),
+    path('api/v1/polls/', include('apps.polls.routes')),
     
 ]

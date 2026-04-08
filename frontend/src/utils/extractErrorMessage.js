@@ -3,6 +3,11 @@ export function extractErrorMessage(error) {
 
   if (!data) return 'Something went wrong. Please try again.';
 
+  // ✅ NEW: Handle array response directly
+  if (Array.isArray(data)) {
+    return data[0];
+  }
+
   // 1️⃣ DRF non-field errors
   if (Array.isArray(data.non_field_errors)) {
     return data.non_field_errors[0];

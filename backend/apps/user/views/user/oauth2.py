@@ -35,7 +35,7 @@ def google_callback_backend(request):
 
 class GoogleLoginView(APIView):
     permission_classes = [AllowAny]
-    authentication_classes = []  # 👈 disables session/JWT auth for this view
+    authentication_classes = []  #  disables session/JWT auth for this view
 
     def post(self, request):
 

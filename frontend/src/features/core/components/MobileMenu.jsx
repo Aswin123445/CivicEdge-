@@ -115,12 +115,14 @@ export default function MobileMenu({ open, onClose }) {
                     <p className="px-4 text-[10px] font-bold uppercase tracking-widest text-blue-400/60 mb-2">
                       Menu
                     </p>
-                    <MobileMenuItem icon={HomeIcons.Issues} label="My Issues" handleNavigate={() => handleNavigate('/complaints/list')}/>
-                    <MobileMenuItem icon={HomeIcons.Talk} label="Civic Talk" />
+                    <MobileMenuItem icon={HomeIcons.Issues} label="My Issues" handleNavigate={() => {handleNavigate('/complaints/list'),onClose()}}/>
                     <MobileMenuItem
                       icon={HomeIcons.Army}
                       label="Volunteer Armies"
+                      handleNavigate={() => {handleNavigate('/volunteer-army'),onClose()}}
                     />
+                    <MobileMenuItem icon={HomeIcons.Talk} label="Civic Talk" />
+
                     <MobileMenuItem icon={HomeIcons.Polls} label="Polls" />
                   </div>
 

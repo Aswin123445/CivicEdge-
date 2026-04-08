@@ -57,6 +57,13 @@ export const baseApi = createApi({
     "EventDetails",
     "MyRecognition",
     "MyGroups",
+    "PollHome",
+    "PollList",
+    "PollDetails",
+    "AdminFetchPolls",
+    "AdminPollDetail",
+    "AdminPollsDetailTimeLine",
+    "AdminPollDetailDistribution",
     
   ],
 

@@ -6,14 +6,14 @@ import { MembershipGridSkeleton } from "../../components/my_membership_page/Memb
 import MembershipCard from "../../components/my_membership_page/MembershipCard";
 import Pagination from "../../../../components/common/PaginationBar";
 
-
 const MyMembershipsPage = () => {
-  const { myGroups, myGroupsLoading, myGroupsFetching ,pagination} = useMyGroups();
+  const { myGroups, myGroupsLoading, myGroupsFetching, pagination } =
+    useMyGroups();
 
   // Prefer real API data; fall back to mock while hook is unconnected.
-  const groups      = myGroups ?? [];
+  const groups = myGroups ?? [];
 
-  const isLoading  = myGroupsLoading  ?? false;
+  const isLoading = myGroupsLoading ?? false;
   const isFetching = myGroupsFetching ?? false;
   const showSkeleton = isLoading || isFetching;
 
@@ -24,7 +24,6 @@ const MyMembershipsPage = () => {
   return (
     <div className="min-h-screen bg-white font-sans antialiased text-slate-900 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
-
         <MembershipsHeader />
 
         {showSkeleton ? (
@@ -33,26 +32,28 @@ const MyMembershipsPage = () => {
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {groups.map((group) => (
-                <MembershipCard key={group?.id ?? group?.group_id} group={group} />
+                <MembershipCard
+                  key={group?.id ?? group?.group_id}
+                  group={group}
+                />
               ))}
             </div>
-                  {!pagination.isSinglePage && (
-                    <div className=" bottom-0 py-4 ">
-                      <Pagination
-                        currentPage={pagination.page}
-                        totalPages={pagination.totalPages}
-                        isFirstPage={pagination.isFirstPage}
-                        isLastPage={pagination.isLastPage}
-                        onPageChange={pagination.goToPage}
-                        className="bg-white border border-gray-400"
-                      />
-                    </div>
-                  )}
+            {!pagination.isSinglePage && (
+              <div className=" bottom-0 py-4 ">
+                <Pagination
+                  currentPage={pagination.page}
+                  totalPages={pagination.totalPages}
+                  isFirstPage={pagination.isFirstPage}
+                  isLastPage={pagination.isLastPage}
+                  onPageChange={pagination.goToPage}
+                  className="bg-white border border-gray-400"
+                />
+              </div>
+            )}
           </>
         ) : (
           <MembershipsEmptyState />
         )}
-
       </div>
     </div>
   );

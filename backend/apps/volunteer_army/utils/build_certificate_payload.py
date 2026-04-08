@@ -3,7 +3,6 @@ from django.conf import settings
 def build_certificate_payload(*, participation, recognition):
     user = participation.membership.user
     event = participation.event
-
     return {
         "participant_name": user.profile.name or user.email.split("@")[0],
         "event_name": event.title,

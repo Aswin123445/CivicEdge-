@@ -33,7 +33,6 @@ const VolunteerHomePage = () => {
     onActionClick,
     navigate
   } = useVolunteerSummary();
-  console.log("Volunteer Summary:", volunteerSummary);
   const { role } = useSelector((s) => s.auth);
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900">

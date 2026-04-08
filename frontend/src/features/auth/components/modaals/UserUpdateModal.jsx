@@ -47,7 +47,7 @@ function UserUpdateModal({ user, onClose, onSave,options ,status}) {
               className="w-full p-2 rounded-md bg-[#1e1e1e] text-gray-200 border border-gray-600 focus:outline-none"
             >
               <option value={user.role}>{user.role === role1 ? role1 : role2}</option>
-              <option value={user.role === role1? role2 :role1}>{user.role === role1? role2 :role1}</option>
+              <option value={user.role === role1? role2 :role1}>{user?.role === role1? role2 :role1}</option>
             </select>
           </div>
 
@@ -64,7 +64,7 @@ function UserUpdateModal({ user, onClose, onSave,options ,status}) {
               type="submit"
               className="px-4 py-2 rounded-md font-semibold bg-cyan-400 hover:bg-cyan-500 text-sm"
             >
-              {status.isLoading ? "Saving..." : "Save Changes"}
+              {status?.isLoading ? "Saving..." : "Save Changes"}
             </button>
           </div>
         </form>

@@ -5,6 +5,7 @@ import {
   LayoutDashboard,
   ClipboardCheck,
   ShieldCheck,
+  Vote,
 } from "lucide-react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import useCitizenService from "../../features/core/hooks/citizen/useCitizenService";
@@ -16,6 +17,10 @@ function AdminSidebar() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const { userData, userDataLoading, userDataFetching } = useCitizenService();
+
+  const pollPath = [
+    "/admin/polls"
+  ];
   const volunteerPath = [
     "/admin/volunteer/groups",
     "/admin/volunteer/events",
@@ -45,6 +50,9 @@ function AdminSidebar() {
   );
 
   const isVolunteerPath = volunteerPath.some((path) =>
+    location.pathname.startsWith(path),
+  );
+  const isPollPath = pollPath.some((path) =>
     location.pathname.startsWith(path),
   );
 
@@ -146,8 +154,20 @@ function AdminSidebar() {
             <ShieldCheck className="w-5 h-5 mr-2" />
             Army Management
           </NavLink>
-
-
+          <NavLink
+            to="/admin/polls"
+            end
+            className={() =>
+              `flex items-center rounded-md px-3 py-2 text-sm font-medium transition ${
+                isPollPath
+                  ? "bg-gray-700 text-white"
+                  : "text-gray-400 hover:bg-gray-700 hover:text-white"
+              }`
+            }
+          >
+            <Vote className="w-5 h-5 mr-2" />
+            Poll Management
+          </NavLink>
         </nav>
       </aside>
 

@@ -32,8 +32,9 @@ const HomeNavbar = () => {
         >
           <NavItem icon={<HomeIcons.Issues />} label="Issues" path="/complaints" />
           <NavItem icon={<HomeIcons.Army />} label="Armies" path="volunteer-army" />
+          <NavItem icon={<HomeIcons.Polls />} label="Polls" path={"/poll/home"}/>
+
           <NavItem icon={<HomeIcons.Talk />} label="Civic Talk"/>
-          <NavItem icon={<HomeIcons.Polls />} label="Polls" />
         </div>
 
         {role === "citizen" ? <MobileMenButton />: <LoginPill className="flex md:hidden" onClick={() => handleNavigate()}/>}
