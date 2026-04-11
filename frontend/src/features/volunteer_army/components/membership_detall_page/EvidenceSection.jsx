@@ -76,9 +76,8 @@ const EvidenceSection = ({ status, evidences, onUpload, onDelete, onError, isFil
     }
 
     onUpload?.(file);
-    e.target.value = ""; // reset input so same file can be re-uploaded
+    e.target.value = ""; 
   };
-
   return (
     <section className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm mt-6">
       {/* Header */}
@@ -124,7 +123,7 @@ const EvidenceSection = ({ status, evidences, onUpload, onDelete, onError, isFil
         {/* Evidence cards */}
         {evidences.map((file,i) => (
           <div
-            key={file.id}
+            key={file.id??i}
             className="bg-slate-50 border border-slate-100 rounded-xl p-4 flex items-center justify-between group"
           >
             <div className="flex items-center gap-3 overflow-hidden">

@@ -18,11 +18,12 @@ class AdminLoginView(APIView):
                 key='refresh_token',
                 value=data['refresh'],
                 httponly=True,
-                secure=False,      # local HTTP
-                samesite='Lax',    # same-origin via proxy
+                secure=False,
+                samesite='Lax',    
                 max_age=60*60*24,
                 path='/',
             )
             return response
         except Exception as e:
             return Response({"detail": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+        

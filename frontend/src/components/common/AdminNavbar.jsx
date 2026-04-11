@@ -3,23 +3,24 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { Bell, Search } from "lucide-react";
 
-import LogoHeader from "../../features/auth/components/LogoHeader";
 import AdminDropDown from "../ui/AdminDropDown";
-import LogoutIcon from "../ui/LogoutIcon";
-import ProfileIcon from "../ui/ProfileIcon";
-import SettingsIcon from "../ui/SettingsIcon";
 import CitizenLogo from "../ui/CitizenLogo";
-import SolverMenu from "../../features/core/components/solver/SolverMenu";
 import AdminMenu from "../../features/core/components/admin/AdminMenu";
 import useCitizenService from "../../features/core/hooks/citizen/useCitizenService";
-
+import NotificationDrawer from "../../features/notifications/pages/NotificationDrawer";
+import CitizenBellIconNotification from "../../features/notifications/components/CitizenBellIconNotification";
+import useNotificationCount from "../../features/notifications/hooks/notificationCountHook";
 
 export default function AdminNavbar() {
   const [open, setOpen] = useState(false);
+  const [userNotificationsOpen, setUserNotificationsOpen] = useState(false);
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
-  const {userData} = useCitizenService()
-
+  const { userData } = useCitizenService();
+  const {
+    notificationCount,
+    countRefetch,
+  } = useNotificationCount({ enabled: !userNotificationsOpen });
   useEffect(() => {
     function handleClickOutside(event) {
       if (
@@ -51,7 +52,10 @@ export default function AdminNavbar() {
       {/* LEFT: BRAND */}
       {/* ===================== */}
       <div className="flex items-center gap-4">
-        <CitizenLogo classname="text-blue-500" navigate_route ="/admin/dashboard" />
+        <CitizenLogo
+          classname="text-blue-500"
+          navigate_route="/admin/dashboard"
+        />
         <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide">
           Admin Panel
         </span>
@@ -87,19 +91,10 @@ export default function AdminNavbar() {
       {/* ===================== */}
       <div className="flex items-center gap-4">
         {/* Notifications */}
-        <button
-          className="
-            relative p-2 rounded-full
-            text-slate-300
-            hover:bg-neutral-800
-            transition-colors
-          "
-          aria-label="Notifications"
-        >
-          <Bell size={18} />
-          {/* Badge */}
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-red-500" />
-        </button>
+        <CitizenBellIconNotification
+          onClick={() => setUserNotificationsOpen(true)}
+          count={notificationCount?.unread_count || 0}
+        />
 
         {/* Admin Menu */}
         <div className="relative">
@@ -108,16 +103,20 @@ export default function AdminNavbar() {
             toggleBar={setOpen}
             togleState={open}
           />
-          <AdminMenu open={open} onClose={() => {setOpen(false)} } user = {userData?.profile} />
-
+          <AdminMenu
+            open={open}
+            onClose={() => {
+              setOpen(false);
+            }}
+            user={userData?.profile}
+          />
+          <NotificationDrawer
+            open={userNotificationsOpen}
+            onClose={() => setUserNotificationsOpen(false)}
+            role="admin"
+          />
         </div>
       </div>
     </motion.nav>
   );
 }
-
-/* ===================== */
-/* MENU ITEM */
-/* ===================== */
-
-

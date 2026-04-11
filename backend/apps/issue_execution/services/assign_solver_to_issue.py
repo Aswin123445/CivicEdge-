@@ -5,6 +5,8 @@ from apps.issues.utils.enums.issue_status import IssueStatus
 from apps.issue_execution.models.solver_task import SolverTask
 from apps.issues.models.issue_administrative_decision import IssueAdministrativeDecision
 from apps.issues.services.timeline_service import add_issue_timeline_event
+from apps.notification.services.dispatcher import NotificationDispatcher
+from apps.notification.utils.event_constants import NotificationEvent
 
 
 @transaction.atomic
@@ -24,6 +26,13 @@ def assign_solver_to_issue(*, issue, solver, assigned_by, remarks=None):
         issue=issue,
         solver=solver,
         assigned_by=assigned_by,
+    )
+    NotificationDispatcher.dispatch(
+        event=NotificationEvent.TASK_ASSIGNED_TO_SOLVER,
+        payload={
+            "task": task,
+            "actor": assigned_by
+        }
     )
     add_issue_timeline_event(
         issue=issue,

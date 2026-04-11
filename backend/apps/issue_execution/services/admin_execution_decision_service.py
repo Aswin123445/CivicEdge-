@@ -5,6 +5,8 @@ from apps.issue_execution.models.solver_task import SolverTaskStatus
 from apps.issues.utils.enums.issue_status import IssueStatus
 from apps.issue_execution.models.execution_proof import ExecutionProof
 from apps.issues.services.timeline_service import add_issue_timeline_event
+from apps.notification.services.dispatcher import NotificationDispatcher
+from apps.notification.utils.event_constants import NotificationEvent
 
 
 @transaction.atomic
@@ -33,12 +35,10 @@ def review_execution_completion(*, admin, proof, data):
     # =============================
     if decision == "APPROVE":
         
-        # 1️⃣ Transition SolverTask
         task._transition(
             to_status=SolverTaskStatus.COMPLETED,
         )
 
-        # 2️⃣ Transition Issue
         issue._transition(
             to_status=IssueStatus.RESOLVED,
             by=admin,
@@ -47,6 +47,20 @@ def review_execution_completion(*, admin, proof, data):
             issue=issue,
             message="Issue as been successfully completed",
             created_by=admin,
+        )
+        NotificationDispatcher.dispatch(
+            event=NotificationEvent.ISSUE_RESOLVED,
+            payload={
+                "issue": issue,
+                "actor": admin
+            }
+        )
+        NotificationDispatcher.dispatch(
+            event=NotificationEvent.TASK_APPROVED_BY_ADMIN,
+            payload={
+                "task": task,
+                "actor": admin
+            }
         )
         proof.review_status = ExecutionProof.ReviewStatus.APPROVED 
         proof.reviewed_by = admin 
@@ -63,16 +77,21 @@ def review_execution_completion(*, admin, proof, data):
     # =============================
     if decision == "REJECT":
 
-        # 1️⃣ Deactivate proof
         proof.is_active = False
         proof.admin_message = data["reason"] 
         proof.review_status = ExecutionProof.ReviewStatus.REJECTED 
         proof.reviewed_by = admin
         proof.save(update_fields=["is_active", "admin_message", "review_status", "reviewed_by"])
 
-        # 2️⃣ Move task back to execution
         task._transition(
             to_status=SolverTaskStatus.IN_EXECUTION,
+        )
+        NotificationDispatcher.dispatch(
+            event=NotificationEvent.TASK_REJECTED_BY_ADMIN,
+            payload={
+                "task": task,
+                "actor": admin,
+            }
         )
         add_issue_timeline_event(
             issue=issue,

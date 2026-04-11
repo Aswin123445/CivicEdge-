@@ -8,8 +8,16 @@ import useCitizenService from "../../hooks/citizen/useCitizenService";
 import NameUrlGet from "../NameUrlGet";
 import UserSkeleton from "../../ui/skeltons/UserButtonSkelton";
 import { NavLink } from "react-router-dom";
+import CitizenBellIconNotification from "../../../notifications/components/CitizenBellIconNotification";
+import { useState } from "react";
+import useNotificationCount from "../../../notifications/hooks/notificationCountHook";
+import NotificationDrawer from "../../../notifications/pages/NotificationDrawer";
 
 export default function SolverNavbar() {
+  const [userNotificationsOpen, setUserNotificationsOpen] = useState(false);
+  const { notificationCount, countRefetch } = useNotificationCount({
+    enabled: !userNotificationsOpen,
+  });
   const { menuOpen, setMenuOpen } = solverUi();
   const { userData, userDataLoading, userDataFetching } = useCitizenService();
   return (
@@ -43,20 +51,10 @@ export default function SolverNavbar() {
       {/* Right Section */}
       <div className="flex items-center gap-4">
         {/* Notifications */}
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="
-            relative p-2
-            text-blue-100
-            hover:bg-blue-500/30
-            rounded-full
-            transition-colors
-          "
-        >
-          <Bell size={20} />
-          <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full ring-2 ring-blue-700" />
-        </motion.button>
+        <CitizenBellIconNotification
+          onClick={() => setUserNotificationsOpen(true)}
+          count={notificationCount?.unread_count || 0}
+        />
 
         {/* Profile / Menu */}
         {userDataLoading || userDataFetching ? (
@@ -88,6 +86,11 @@ export default function SolverNavbar() {
           open={menuOpen}
           onClose={() => setMenuOpen(false)}
           user={userData?.profile}
+        />
+        <NotificationDrawer
+          open={userNotificationsOpen}
+          onClose={() => setUserNotificationsOpen(false)}
+          role="solver"
         />
       </div>
     </motion.nav>

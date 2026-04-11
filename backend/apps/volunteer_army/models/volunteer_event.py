@@ -55,7 +55,8 @@ class VolunteerEvent(models.Model):
     start_time = models.DateTimeField()
 
     end_time = models.DateTimeField()
-
+    
+    reminder_sent = models.BooleanField(default=False)
 
     capacity = models.PositiveIntegerField()
 

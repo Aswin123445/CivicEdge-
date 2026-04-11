@@ -6,6 +6,8 @@ from apps.issues.models.issues import Issue
 from apps.issues.models.issue_log import IssueLog
 from apps.issues.utils.enums.issue_status import IssueStatus
 from apps.issues.services.timeline_service import add_issue_timeline_event
+from apps.notification.services.dispatcher import NotificationDispatcher
+from apps.notification.utils.event_constants import NotificationEvent
 
 
 @transaction.atomic
@@ -22,13 +24,19 @@ def submit_issue(*, issue: Issue, user):
     if issue.reporter != user:
         raise PermissionDenied("You cannot submit this issue.")
 
-    # 🔒 Lock the issue
     issue.is_draft = False
     issue.draft_step = Issue.DraftStep.REVIEW
     issue.status = IssueStatus.IN_REVIEW
     issue.save(update_fields=["is_draft", "draft_step","status"])
+    
+    NotificationDispatcher.dispatch(
+        event=NotificationEvent.ISSUE_REPORTED,
+        payload={
+            "issue": issue,
+            "actor": user
+        }
+    )
 
-    # 🧾 Log submission
     IssueLog.objects.create(
         issue=issue,
         actor=user,

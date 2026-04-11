@@ -4,6 +4,8 @@ from rest_framework.exceptions import ValidationError
 from apps.issue_execution.models.execution_proof import ExecutionProof
 from apps.issue_execution.models.execution_evidence import ExecutionEvidence
 from apps.issue_execution.models.solver_task import SolverTaskStatus
+from apps.notification.services.dispatcher import NotificationDispatcher
+from apps.notification.utils.event_constants import NotificationEvent
 
 
 @transaction.atomic
@@ -55,10 +57,16 @@ def submit_completion(*, solver, task, data):
             height=evidence.get("height"),
             bytes=evidence.get("bytes"),
         )
-
     # -----------------------------
     # Transition task state
     # -----------------------------
     task.submit_completion(by=solver)
+    NotificationDispatcher.dispatch(
+        event=NotificationEvent.TASK_COMPLETED_BY_SOLVER,
+        payload={
+            "task": task,
+            "actor": solver
+        }
+    )
 
     return proof

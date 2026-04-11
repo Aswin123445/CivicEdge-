@@ -5,6 +5,7 @@ export default function useCitizenUi() {
   const [visible, setVisible] = useState(true);
   const [phoneMenuOpne, setPhoneMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [userNotificationsOpen, setUserNotificationsOpen] = useState(false);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 768px)");
@@ -66,5 +67,7 @@ export default function useCitizenUi() {
     setPhoneMenuOpen,
     userMenuOpen,
     setUserMenuOpen,
+    userNotificationsOpen,
+    setUserNotificationsOpen,
   };
 }

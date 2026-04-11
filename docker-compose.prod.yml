@@ -36,6 +36,22 @@ services:
       - redis
     restart: always
 
+  celery-beat:
+    container_name: civicedge-celery-beat
+    build:
+      context: .
+      dockerfile: docker/django/Dockerfile.prod
+    command: celery -A config beat -l info
+    env_file:
+      - .env
+    environment:
+      ENV: production
+      DJANGO_SETTINGS_MODULE: config.settings
+    depends_on:
+      - redis
+      - django
+    restart: always
+
   postgres:
     image: postgres:15
     container_name: civicedge-postgres

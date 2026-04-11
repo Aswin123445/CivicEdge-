@@ -6,6 +6,8 @@ from apps.issue_execution.models.field_verification_report import FieldVerificat
 from apps.issue_execution.models.verification_evidence import VerificationEvidence
 from apps.issue_execution.models.solver_task import SolverTask
 from apps.issues.services.timeline_service import add_issue_timeline_event
+from apps.notification.services.dispatcher import NotificationDispatcher
+from apps.notification.utils.event_constants import NotificationEvent
 
 
 @transaction.atomic
@@ -98,5 +100,12 @@ def submit_field_verification(*, solver, task: SolverTask):
     # Update solver task state
     # -----------------------------
     task.submit_verification(by=solver)
+    NotificationDispatcher.dispatch(
+        event=NotificationEvent.REPORT_SUBMITTED_TO_ADMIN,
+        payload={
+            "report": report,
+            "actor": solver
+        }
+    )
 
     return report
