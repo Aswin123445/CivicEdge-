@@ -31,11 +31,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     #apps url prefix
-    path('api/v1/user/', include('apps.user.routes')),  # User-related routes
+    path('api/v1/user/', include('apps.user.routes')),  
     path('api/v1/me/', include('apps.profiles.routes')),
     path('api/v1/civic/', include('apps.issues.routes')),
     path('api/v1/civic/execute/', include('apps.issue_execution.routes')),
     path('api/v1/army/', include('apps.volunteer_army.routes')),
     path('api/v1/polls/', include('apps.polls.routes')),
     path('api/v1/notifications/', include('apps.notification.routes')),
+    path('api/v1/forum/', include('apps.forum.routes')),
 ]

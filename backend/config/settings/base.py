@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'apps.volunteer_army',
     'apps.polls',
     'apps.notification',
+    'apps.forum',
     # Third-party apps   
     'corsheaders',
     'rest_framework',
