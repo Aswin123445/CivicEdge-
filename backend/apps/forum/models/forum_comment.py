@@ -91,4 +91,4 @@ class ForumComment(models.Model):
         ]
 
     def __str__(self):
-        return f"Comment by {self.user_id} on {self.post_id}"
+        return f"Comment by {self.user_id} on {self.post_id} id {self.id}"

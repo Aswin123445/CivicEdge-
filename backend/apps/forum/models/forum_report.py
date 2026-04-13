@@ -58,7 +58,7 @@ class ForumReport(models.Model):
             )
         super().save(*args, **kwargs)
     def clean(self):
-        from forum.models import ForumPost, ForumComment
+        from apps.forum.models import ForumPost, ForumComment
 
         if self.target_type == ReportTargetType.POST:
             if not ForumPost.objects.filter(id=self.target_id).exists():
@@ -73,7 +73,7 @@ class ForumReport(models.Model):
             models.Index(fields=["target_type", "target_id"]),
             models.Index(fields=["status"]),
         ]
-        unique_together = ("reported_by", "target_type", "target_id")  # prevent spam
+        unique_together = ("reported_by", "target_type", "target_id")  
 
     def __str__(self):
-        return f"{self.reported_by_id} → {self.target_type}:{self.target_id}"
+        return f"reported-by:{self.reported_by_id} → target_type:{self.target_type}:{self.target_id} -> id:{self.id}"
