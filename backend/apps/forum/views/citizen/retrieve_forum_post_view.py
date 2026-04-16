@@ -6,17 +6,17 @@ from apps.forum.selectors.citizen.get_forum_post_detail_selector import get_foru
 from apps.forum.selectors.citizen.get_post_reaction_summary_selector import get_post_reaction_summary
 from apps.forum.selectors.citizen.get_user_post_reaction_selector import get_user_post_reaction
 from apps.forum.serializers.citizen.forum_post_detail_serializer import ForumPostDetailSerializer
-from apps.user.permissions.user_permissions import IsCitizen
+from apps.user.permissions.user_permissions import IsAdminOrCitizen
 
 class RetrieveForumPostAPIView(RetrieveAPIView):
     serializer_class = ForumPostDetailSerializer
-    permission_classes = [IsCitizen]
+    permission_classes = [IsAdminOrCitizen]
     lookup_field = "id"
 
     def retrieve(self, request, *args, **kwargs):
         post_id = kwargs.get("id")
-
-        post = get_forum_post_detail(post_id=post_id)
+        role = self.request.user.role
+        post = get_forum_post_detail(post_id=post_id,role=role)
 
         if not post:
             raise NotFound("Post not found")
@@ -46,6 +46,9 @@ class RetrieveForumPostAPIView(RetrieveAPIView):
             "comments_count": post.comments_count,
             "reaction_summary": reaction_summary,
             "user_reaction": user_reaction,
+            "user": post.user,
+            "is_highlighted": post.is_highlighted,
+            "status": post.status
         })
 
         return Response(serializer.data)

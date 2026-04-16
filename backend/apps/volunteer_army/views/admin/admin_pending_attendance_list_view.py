@@ -13,7 +13,8 @@ class AdminPendingAttendanceListView(ListAPIView):
         "membership__user__email",
     ]
     ordering_fields = [
-        "-created_at",
+        "created_at",
     ]
+    ordering = ["-created_at"]
     def get_queryset(self):
         return list_pending_attendance_submissions()

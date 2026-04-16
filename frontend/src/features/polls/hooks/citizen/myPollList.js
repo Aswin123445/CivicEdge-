@@ -41,6 +41,7 @@ export default function useMyPollList() {
     activeCount,
     closedCount,
     totalCount,
-    handleViewPoll
+    handleViewPoll,
+    navigate
   };
 }

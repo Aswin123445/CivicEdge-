@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 class ModerationLogListSerializer(serializers.Serializer):
     id = serializers.UUIDField()
+    reference_id = serializers.CharField()
     target_type = serializers.CharField()
     target_id = serializers.UUIDField()
     action = serializers.CharField()

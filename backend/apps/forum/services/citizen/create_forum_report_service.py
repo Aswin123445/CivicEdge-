@@ -6,6 +6,7 @@ from apps.forum.models.forum_report import ForumReport, ReportStatus
 
 
 def create_forum_report(*, user, data):
+     
     target_type = data["target_type"]
     target_id = data["target_id"]
     reason = data["reason"]

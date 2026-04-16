@@ -22,48 +22,6 @@ export default function PollManagementLayout() {
         >
           Polls
         </NavLink>
-
-        {/* <NavLink
-          to="/admin/volunteer/events"
-          className={() =>
-            `px-4 py-2 flex-shrink-0 transition-colors duration-200 
-            ${
-              isEvents
-                ? "border-b-2 border-[#56CCF2] text-white"
-                : "text-gray-400 hover:text-white hover:border-b-2 hover:border-gray-500"
-            }`
-          }
-        >
-          Events
-        </NavLink>
-
-        <NavLink
-          to="/admin/volunteer/memberships"
-          className={() =>
-            `px-4 py-2 flex-shrink-0 transition-colors duration-200 
-            ${
-              isMembership
-                ? "border-b-2 border-[#56CCF2] text-white"
-                : "text-gray-400 hover:text-white hover:border-b-2 hover:border-gray-500"
-            }`
-          }
-        >
-          Memberships
-        </NavLink>
-
-        <NavLink
-          to="/admin/volunteer/attendance"
-          className={() =>
-            `px-4 py-2 flex-shrink-0 transition-colors duration-200 
-            ${
-              isAttendancePath
-                ? "border-b-2 border-[#56CCF2] text-white"
-                : "text-gray-400 hover:text-white hover:border-b-2 hover:border-gray-500"
-            }`
-          }
-        >
-          Attendance
-        </NavLink> */}
       </div>
 
       <main className="flex-1 overflow-y-auto bg-[#1e1e1e] custom-scrollbar">

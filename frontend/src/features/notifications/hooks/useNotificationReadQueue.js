@@ -22,7 +22,6 @@ export default function useNotificationReadQueue() {
       // remove only sent IDs
       ids.forEach((id) => queueRef.current.delete(id));
 
-      console.log("✅ Sent batch:", ids);
     } catch (err) {
       console.error("❌ Failed batch", err);
     }

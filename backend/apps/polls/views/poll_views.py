@@ -13,7 +13,8 @@ class PollListView(ListAPIView):
         "context",
     ]
     ordering_fields = [
-        "-created_at",
+        "created_at",
     ]
+    ordering = ["-created_at"]
     def get_queryset(self):
         return get_active_polls(user=self.request.user)

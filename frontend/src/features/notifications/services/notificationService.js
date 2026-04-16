@@ -26,7 +26,6 @@ export const adminNotificationApi = baseApi.injectEndpoints({
       },
       providesTags: ["NotificationList"],
       transformResponse: (response) => {
-        console.log(response);
         return response;
       },
     }),

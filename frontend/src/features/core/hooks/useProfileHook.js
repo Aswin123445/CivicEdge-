@@ -49,7 +49,6 @@ export default function useProfileHook() {
     }
   };
   const updateProfileData = (data) => {
-      console.log('data')
     // send to server
     try {
       updateProfile(data).unwrap();

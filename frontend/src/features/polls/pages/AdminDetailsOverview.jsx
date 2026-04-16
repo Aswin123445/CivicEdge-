@@ -10,7 +10,6 @@ const AdminDetailsOverview = () => {
     adminPollDetailLoading,
     adminPollDetailFetching,
   } = useAdminPollDetails(id);
-  console.log(poll,'dif');    
   if (adminPollDetailLoading || adminPollDetailFetching) return <AdminDetailsOverviewSkeleton />;
   return (
     <div>

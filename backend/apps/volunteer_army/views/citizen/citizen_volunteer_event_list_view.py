@@ -20,8 +20,9 @@ class CitizenVolunteerEventListView(ListAPIView):
         "status",
     ]
     ordering_fields = [
-        "-created_at",
+        "created_at",
     ]
+    ordering = ["-created_at"]
 
     def get_queryset(self):
         group_id = self.kwargs.get("group_id")

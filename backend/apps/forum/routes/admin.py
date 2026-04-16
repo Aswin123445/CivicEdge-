@@ -9,7 +9,8 @@ from apps.forum.views.admin.admin_list_categories_view import AdminListCategorie
 from apps.forum.views.admin.create_category_view import CreateCategoryAPIView
 from apps.forum.views.admin.toggle_category_view import ToggleCategoryAPIView
 from apps.forum.views.admin.toggle_highlight_post_view import ToggleHighlightPostAPIView
-from apps.forum.views.admin.admin_list_moderation_logs_view import AdminListModerationLogsAPIView 
+from apps.forum.views.admin.admin_list_moderation_logs_view import AdminListModerationLogsAPIView
+from apps.forum.views.admin.admin_list_posts_view import AdminListPostsAPIView 
 
 urlpatterns = [
     path("reports/", AdminListForumReportsAPIView.as_view(), name="forum-reports"),
@@ -22,4 +23,5 @@ urlpatterns = [
     path("categories/<uuid:id>/toggle-status/",ToggleCategoryAPIView.as_view(), name="update-category"),
     path("posts/<uuid:id>/highlight-toggle/",ToggleHighlightPostAPIView.as_view(), name="toggle-highlight-post"),
     path("moderation-logs/", AdminListModerationLogsAPIView.as_view(), name="moderation-logs"),
+    path("posts-list/", AdminListPostsAPIView.as_view(), name="admin-list-posts"),
 ]

@@ -26,3 +26,9 @@ class IsAdminOrSolver(BasePermission):
             request.user.is_authenticated and
             request.user.role in [UserRole.ADMIN, UserRole.SOLVER]
         )
+class IsAdminOrCitizen(BasePermission):
+    def has_permission(self, request, view):
+        return (
+            request.user.is_authenticated and
+            request.user.role in [UserRole.ADMIN, UserRole.CITIZEN]
+        )

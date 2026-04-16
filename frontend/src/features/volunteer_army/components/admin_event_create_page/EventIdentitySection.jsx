@@ -1,9 +1,9 @@
 // components/admin/events/create/EventIdentitySection.jsx
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Users, Search, ChevronDown } from "lucide-react";
 import Skeleton from "./Skeleton";
 import { InputField, SectionContainer } from "./FormPrimitives";
-
+import { useRef } from "react";
 // ─── Group selector skeleton ───────────────────────────
 const GroupSelectorSkeleton = () => (
   <div className="space-y-2">
@@ -14,9 +14,23 @@ const GroupSelectorSkeleton = () => (
 
 // ─── Group selector ────────────────────────────────────
 const GroupSelector = ({ groups = [], value, onChange, error, isLoading }) => {
+  const inputRef = useRef(null);
   const [search, setSearch]   = useState("");
   const [isOpen, setIsOpen]   = useState(false);
 
+useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (inputRef.current && !inputRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
+
+  document.addEventListener("mousedown", handleClickOutside);
+
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, [setIsOpen]);
   if (isLoading) return <GroupSelectorSkeleton />;
 
   const filtered = Array.isArray(groups)
@@ -26,7 +40,7 @@ const GroupSelector = ({ groups = [], value, onChange, error, isLoading }) => {
     : [];
 
   return (
-    <div className="relative">
+    <div ref={inputRef} className="relative">
       <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-600 mb-2 block ml-1">
         Assigned Group *
       </label>
@@ -52,7 +66,7 @@ const GroupSelector = ({ groups = [], value, onChange, error, isLoading }) => {
       )}
 
       {isOpen && (
-        <div className="absolute z-50 w-full mt-2 bg-[#1e1e1e] border border-slate-700 rounded-xl shadow-2xl overflow-hidden">
+        <div  className="absolute z-50 w-full  mt-2 bg-[#1e1e1e] border border-slate-700 rounded-xl shadow-2xl overflow-hidden">
           {/* Search input */}
           <div className="p-3 border-b border-slate-800">
             <div className="flex items-center gap-2 bg-[#1e1e1e] rounded-lg px-3 py-2 border border-slate-800 focus-within:border-blue-500 transition-all">

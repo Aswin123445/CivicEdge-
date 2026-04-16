@@ -66,6 +66,18 @@ export const baseApi = createApi({
     "AdminPollDetailDistribution",
     "NotificationCount",
     "NotificationList",
+    "Posts",
+    "Category",
+    "PostDetails",
+    "Comment",
+    "MyActivity",
+    "Reports",
+    "ReportDetails",
+    "AdminPosts",
+    "AdminCategory",
+    "ModerationLogs",
+    
+    
   ],
 
   endpoints: () => ({}),

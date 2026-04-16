@@ -27,10 +27,9 @@ const HomeNavbar = () => {
     userNotificationsOpen,
     setUserNotificationsOpen,
   } = useCitizenUi();
-  const {
-    notificationCount,
-    countRefetch,
-  } = useNotificationCount({ enabled: !userNotificationsOpen });
+  const { notificationCount, countRefetch } = useNotificationCount({
+    enabled: !userNotificationsOpen,
+  });
   return (
     <header className="sticky top-0 z-50 bg-blue-600/90 backdrop-blur-md border-b border-blue-500/30 text-white">
       <nav className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
@@ -40,7 +39,9 @@ const HomeNavbar = () => {
         {/* 2. END: WRAPPER FOR EVERYTHING ELSE */}
         <div className="flex items-center gap-4">
           {/* Desktop Navigation Links */}
-          <div className={`hidden md:flex items-center gap-4 px-6 text-white/90 text-sm font-medium  xl:mr-60 lg:mr-32 md:mr-8 ${!role && " lg:pr-36 md:pr-20 "}`}>
+          <div
+            className={`hidden md:flex items-center gap-4 px-6 text-white/90 text-sm font-medium  xl:mr-60 lg:mr-32 md:mr-8 ${!role && " lg:pr-36 md:pr-20 "}`}
+          >
             <NavItem
               icon={<HomeIcons.Issues />}
               label="Issues"
@@ -56,7 +57,11 @@ const HomeNavbar = () => {
               label="Polls"
               path={"/poll/home"}
             />
-            <NavItem icon={<HomeIcons.Talk />} label="Civic Talk" />
+            <NavItem
+              icon={<HomeIcons.Talk />}
+              label="Civic Talk"
+              path="/forum"
+            />
           </div>
 
           {/* User / Auth / Mobile Controls */}

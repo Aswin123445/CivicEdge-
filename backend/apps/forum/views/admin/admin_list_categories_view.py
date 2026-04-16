@@ -9,6 +9,7 @@ from apps.forum.serializers.admin.admin_category_list_serializer import AdminCat
 class AdminListCategoriesAPIView(ListAPIView):
     permission_classes = [ IsAdmin]
     serializer_class = AdminCategoryListSerializer
+    search_fields = ["name","reference_id","is_active"]
 
     def get_queryset(self):
         return get_all_categories()

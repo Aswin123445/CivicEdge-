@@ -136,6 +136,30 @@ const AdminAnalysisTabPage = lazy(
   () => import("../features/polls/pages/AdminAnalysisTabPage"),
 );
 
+const AdminReportsPage = lazy(
+  () => import("../features/forum/pages/admin/AdminReportsPage"),
+);
+
+const AdminReportDetailPage = lazy(
+  () => import("../features/forum/pages/admin/AdminReportDetailPage"),
+);
+
+const AdminPostsPage = lazy(
+  () => import("../features/forum/pages/admin/AdminPostsPage"),
+)
+
+const AdminPostDetailPage = lazy(
+  () => import("../features/forum/pages/admin/AdminPostDetailPage"),
+)
+
+const AdminCategoriesPage = lazy(
+  () => import("../features/forum/pages/admin/AdminCategoriesPage"),
+)
+
+const AdminModerationLogsPage = lazy(
+  () => import("../features/forum/pages/admin/AdminModerationLogsPage"),
+)
+
 import Test from "../features/auth/pages/admin/Test";
 
 import UserManagementSectionLoader from "../features/auth/components/skeltons/loaders_skelton/UserManagementSectionLoader";
@@ -198,6 +222,14 @@ import MyVotesPage from "../features/polls/pages/MyVotePage";
 import PollManagementLayout from "../features/polls/layouts/PollManagementLayout";
 import AdminPollDetailLayout from "../features/polls/layouts/AdminPollDetailLayout";
 import AdminDetailsOverviewSkeleton from "../features/polls/components/adminn_detail_poll_page/AdminDetailsOverviewSkeleton";
+import CitizenForumHomePage from "../features/forum/pages/citizen/CitizenForumHomePage";
+import CreatePostPage from "../features/forum/pages/citizen/CreatePostPage";
+import PostDetailPage from "../features/forum/pages/citizen/PostDetailPage";
+import ForumLandingPage from "../features/forum/pages/citizen/ForumLandingPage";
+import MyActivityPage from "../features/forum/pages/citizen/MyActivityPage";
+import ForumManagementLayout from "../features/forum/layouts/ForumManagementLayout";
+import ReportDetailSkeleton from "../features/forum/components/admin/admin_report_detail/ReportDetailSkeleton";
+import PostDetailsSkeleton from "../features/forum/components/admin/admin_posts_details/PostDetailsSkeleton";
 
 export default function AppRoutes() {
   return (
@@ -207,6 +239,7 @@ export default function AppRoutes() {
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/complaints" element={<IssueHome />} />
         <Route path="/volunteer-army" element={<VolunteerHomePage />} />
+        <Route path="/forum" element={<ForumLandingPage />} />
         <Route
           path="/volunteer-army/certificate/:id/verify"
           element={<CertificateVerifyPage />}
@@ -311,6 +344,11 @@ export default function AppRoutes() {
             <Route path="/polls/list" element={<CitizenPollListPage />} />
             <Route path="/polls/list/:id" element={<PollDetailPage />} />
             <Route path="/polls/my-votes" element={<MyVotesPage />} />
+
+            <Route path="/forum/home" element={<CitizenForumHomePage />} />
+            <Route path="/forum/posts/create" element={<CreatePostPage />} />
+            <Route path="/forum/posts/:id" element={<PostDetailPage />} />
+            <Route path="/forum/my-activity" element={<MyActivityPage />} />
           </Route>
         </Route>
         <Route element={<RoleGuard roles={["solver"]} />}>
@@ -531,6 +569,57 @@ export default function AppRoutes() {
                     </Suspense>
                   }
                 />
+              </Route>
+              <Route path="/admin" element={<ForumManagementLayout />}>
+                <Route
+                  path="/admin/forum/reports"
+                  element={
+                    <Suspense fallback={<PendingReviewSkeleton />}>
+                      <AdminReportsPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/admin/forum/reports/:id"
+                  element={
+                    <Suspense fallback={<ReportDetailSkeleton />}>
+                      <AdminReportDetailPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/admin/forum/posts"
+                  element={
+                    <Suspense fallback={<PendingReviewSkeleton />}>
+                      <AdminPostsPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/admin/forum/posts/:id"
+                  element={
+                    <Suspense fallback={<PostDetailsSkeleton />}>
+                      <AdminPostDetailPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/admin/forum/category"
+                  element={
+                    <Suspense fallback={<PendingReviewSkeleton />}>
+                      <AdminCategoriesPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/admin/logs/moderation"
+                  element={
+                    <Suspense fallback={< PendingReviewSkeleton/>}>
+                      <AdminModerationLogsPage />
+                    </Suspense>
+                  }
+                />
+                  
               </Route>
               <Route path="/admin" element={<PollManagementLayout />}>
                 <Route

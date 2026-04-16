@@ -7,6 +7,10 @@ from apps.forum.serializers.admin.moderation_log_list_serializer import Moderati
 class AdminListModerationLogsAPIView(ListAPIView):
     permission_classes = [IsAdmin]
     serializer_class = ModerationLogListSerializer
+    search_fields = ["reference_id","action","reason"]
+    ordering_fields = ["created_at"] 
+    ordering = ["-created_at"] 
+    filterset_fields = ["target_type"]
 
     def get_queryset(self):
         target_type = self.request.query_params.get("target_type")

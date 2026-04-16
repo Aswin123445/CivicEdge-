@@ -18,8 +18,9 @@ class AdminVolunteerGroupListView(ListAPIView):
         "status",
     ]
     ordering_fields = [
-        "-created_at",
+        "created_at",
     ]
+    ordering = ["-created_at"]
 
     def get_queryset(self):
         return list_all_volunteer_groups()

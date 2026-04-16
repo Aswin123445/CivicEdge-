@@ -12,6 +12,7 @@ from apps.forum.views.citizen.delete_forum_comment_view import DeleteForumCommen
 from apps.forum.views.citizen.react_to_forum_post_view import ReactToForumPostAPIView
 from apps.forum.views.citizen.create_forum_report_view import CreateForumReportAPIView
 from apps.forum.views.citizen.list_categories_view import ListCategoriesAPIView
+from apps.forum.views.citizen.list_user_related_posts_view import ListUserRelatedPostsAPIView
 
 urlpatterns = [
     path("posts-create/", CreateForumPostAPIView.as_view(), name="create-post"),
@@ -21,9 +22,10 @@ urlpatterns = [
     path("posts-list/<uuid:id>/delete/", DeleteForumPostAPIView.as_view(), name="delete-post"),
     path("posts-list/<uuid:post_id>/comments-create/", CreateForumCommentAPIView.as_view(), name="post-comments"),
     path("posts-list/<uuid:post_id>/comments-list/", ListForumCommentsAPIView.as_view(), name="list-comment"),
-    path("comments-list/<uuid:id>/update", UpdateForumCommentAPIView.as_view(), name="comment-update"),
+    path("comments-list/<uuid:id>/update/", UpdateForumCommentAPIView.as_view(), name="comment-update"),
     path("comments-list/<uuid:id>/delete/", DeleteForumCommentAPIView.as_view(), name="comment-delete"),
     path("posts-list/<uuid:post_id>/react/", ReactToForumPostAPIView.as_view(), name="post-react"),
     path("reports/", CreateForumReportAPIView.as_view(), name="create-report"),
     path("categories/", ListCategoriesAPIView.as_view(), name="list-categories"),
+    path("users/posts/", ListUserRelatedPostsAPIView.as_view(), name="user-posts"),
 ]

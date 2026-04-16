@@ -16,8 +16,9 @@ class AdminEventParticipantListView(ListAPIView):
         "status",
     ]
     ordering_fields = [
-        "-created_at",
+        "created_at",
     ]
+    ordering = ["-created_at"]
     def get_queryset(self):
         return list_event_participants_for_admin(
             event_id=self.kwargs["event_id"],

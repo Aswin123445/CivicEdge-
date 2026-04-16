@@ -6,6 +6,7 @@ import {
   ClipboardCheck,
   ShieldCheck,
   Vote,
+  MessageSquare
 } from "lucide-react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import useCitizenService from "../../features/core/hooks/citizen/useCitizenService";
@@ -41,6 +42,17 @@ function AdminSidebar() {
     "/admin/management/solvers",
     "/admin/management/admins",
   ];
+
+  const forumManagementPaths = [
+    "/admin/forum/reports",
+    "/admin/forum/posts",
+    "/admin/forum/category",
+    "/admin/logs/moderation"
+  ]
+  const isForumManagementPath = forumManagementPaths.some((path) =>
+    location.pathname.startsWith(path),
+  );  
+   
   const isRoleManagementPath = roleManagementPaths.some((path) =>
     location.pathname.startsWith(path),
   );
@@ -167,6 +179,20 @@ function AdminSidebar() {
           >
             <Vote className="w-5 h-5 mr-2" />
             Poll Management
+          </NavLink>
+          <NavLink
+            to="/admin/forum/reports"
+            end
+            className={() =>
+              `flex items-center rounded-md px-3 py-2 text-sm font-medium transition ${
+                isForumManagementPath
+                  ? "bg-gray-700 text-white"
+                  : "text-gray-400 hover:bg-gray-700 hover:text-white"
+              }`
+            }
+          >
+            <MessageSquare className="w-5 h-5 mr-2" />
+            Forum Management
           </NavLink>
         </nav>
       </aside>

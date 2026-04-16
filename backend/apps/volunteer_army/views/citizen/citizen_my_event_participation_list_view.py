@@ -17,8 +17,9 @@ class CitizenMyEventParticipationListView(ListAPIView):
         "status",
     ]
     ordering_fields = [
-        "-created_at",
+        "created_at",
     ]
+    ordering = ["-created_at"]
 
     def get_queryset(self):
         return list_user_event_participations(user=self.request.user,on_status=self.request.query_params.get("on_status"),)

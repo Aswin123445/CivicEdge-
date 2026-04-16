@@ -2,57 +2,9 @@ import useMyPollList from "../hooks/citizen/myPollList";
 import MyVotesEmptyState from "../components/citizen_my_vote_page/MyVotesEmptyState";
 import MyVotesHeader from "../components/citizen_my_vote_page/MyVotesHeader";
 import VoteSection from "../components/citizen_my_vote_page/VoteSection";
-import PollSearchBar from "../components/citizen_poll_list_page/PollSearchBar";
 import { useSearchParams } from "react-router-dom";
 import MyVoteSearch from "../components/citizen_my_vote_page/MyVoteSearch";
-const DUMMY_DATA = {
-  count: 3,
-  results: [
-    {
-      id: "VT-101",
-      poll_id: "POL-2026-001",
-      reference_id: "REF-9920",
-      question:
-        "Should the city implement a 'Quiet Zone' policy in the Downtown Residential District?",
-      selected_option: {
-        option_id: "OPT-1",
-        label: "Yes, implement the full policy",
-      },
-      voted_at: "2026-04-05T10:30:00Z",
-      expires_at: "2026-04-15T23:59:59Z",
-      is_expired: false,
-      total_votes: 1240,
-    },
-    {
-      id: "VT-102",
-      poll_id: "POL-2026-005",
-      reference_id: "REF-4412",
-      question: "Transitioning Sector 4 Community Parks to 100% Solar Lighting",
-      selected_option: {
-        option_id: "OPT-A",
-        label: "Support with immediate effect",
-      },
-      voted_at: "2026-03-28T14:20:00Z",
-      expires_at: "2026-04-12T23:59:59Z",
-      is_expired: false,
-      total_votes: 856,
-    },
-    {
-      id: "VT-103",
-      poll_id: "POL-2026-012",
-      reference_id: "REF-1102",
-      question: "Mandatory Waste Segregation at Source for Apartment Complexes",
-      selected_option: {
-        option_id: "OPT-2",
-        label: "Support with 6-month grace period",
-      },
-      voted_at: "2026-02-15T09:00:00Z",
-      expires_at: "2026-03-01T23:59:59Z",
-      is_expired: true,
-      total_votes: 3105,
-    },
-  ],
-};
+
 
 const MyVotesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -65,6 +17,7 @@ const MyVotesPage = () => {
     closedCount,
     totalCount,
     handleViewPoll,
+    navigate
   } = useMyPollList();
 
   const isLoading = myVotesLoading || myVotesFetching;
@@ -76,8 +29,7 @@ const MyVotesPage = () => {
 
 
   const handleExplorePolls = () => {
-    // TODO: navigate to /polls
-    console.log("Navigate to polls list");
+    navigate("/admin/polls");
   };
   // Empty state — only show when not loading and genuinely empty
   const handleFilterChange = (tab) => {

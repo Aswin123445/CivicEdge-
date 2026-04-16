@@ -37,7 +37,6 @@ const MembershipDetailPage = () => {
     handleLeaveGroup,
   } = useVolunteerMembershipDetail(id);
   const [uploadError, setUploadError] = useState(null);
-  // const handleReapply = () => console.log("hi");
 
   const isLoading = membershipDetailLoading;
 

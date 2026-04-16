@@ -12,7 +12,8 @@ class AdminPendingVolunteerMembershipListView(ListAPIView):
         "user__email"
     ]
     ordering_fields = [
-        "-created_at",
+        "created_at",
     ]
+    ordering = ["-created_at"]
     def get_queryset(self):
         return list_submitted_volunteer_memberships()
