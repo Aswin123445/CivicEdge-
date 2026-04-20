@@ -1,5 +1,4 @@
 from django.db.models import Count, Q
-from django.utils.timezone import now, timedelta
 
 from apps.issue_execution.models.solver_task import SolverTask
 from apps.issues.models.issues import Issue
@@ -14,8 +13,6 @@ from shared.enums.user_role import UserRole
 
 
 def get_dashboard_metrics(admin):
-
-
     return {
         "issues": Issue.objects.aggregate(
             total=Count("id"),

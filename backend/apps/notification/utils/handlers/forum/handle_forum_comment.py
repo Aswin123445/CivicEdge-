@@ -9,7 +9,7 @@ def handle_forum_comment(payload):
     NotificationService.create_notification(
         user=citizen,
         type=Notification.Type.FORUM_REPLY_RECEIVED,
-        title=f"new comment",
+        title="new comment",
         message=f"{actor.profile.name if actor.profile.name else actor.email.split('@')[0]} commented on your post",
         actor=actor,
 

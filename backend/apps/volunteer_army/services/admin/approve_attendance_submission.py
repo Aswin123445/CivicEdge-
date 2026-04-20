@@ -5,8 +5,6 @@ from rest_framework.exceptions import ValidationError
 
 from apps.volunteer_army.models.volunteer_service_log import VolunteerServiceLog
 from apps.volunteer_army.utils.celery_task.create_event_certificate_recognition import maybe_generate_event_certificate_task
-from apps.notification.services.dispatcher import NotificationDispatcher
-from apps.notification.utils.event_constants import NotificationEvent
 
 
 @transaction.atomic

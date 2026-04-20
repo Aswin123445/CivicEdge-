@@ -30,7 +30,7 @@ def handle_task_completed_by_solver(payload):
 
             "target_type": Notification.TargetType.TASK,
             "target_id": task.id,
-            "redirect_url": f"/admin/execution/execution-proofs/",
+            "redirect_url": "/admin/execution/execution-proofs/",
         }
         for admin in admins
     ]

@@ -11,7 +11,7 @@ def handle_forum_reaction(payload):
     NotificationService.create_notification(
         user=citizen,
         type=Notification.Type.FORUM_REACTED,
-        title=f"new reaction on the post",
+        title="new reaction on the post",
         message=f"{actor.profile.name if actor.profile.name else actor.email.split('@')[0]} and {count - 1} others reacted on your post",
         actor=actor,
 

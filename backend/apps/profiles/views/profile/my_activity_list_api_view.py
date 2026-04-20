@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from apps.profiles.serializers.profile.activity_feed_serializer import ActivityFeedSerializer
 from apps.profiles.selectors.profile.activity_selector import get_activity_analytics, get_user_activity
+from rest_framework.response import Response
 
 
 class MyActivityListAPIView(ListAPIView):

@@ -10,7 +10,7 @@ def handle_forum_report(payload):
         user=citizen,
         type=Notification.Type.FORUM_REPORT_USER,
         title="Took action on the report",
-        message=f"Your report has been successfully processed",
+        message="Your report has been successfully processed",
         actor=actor,
 
         target_type=Notification.TargetType.FORUM,

@@ -1,7 +1,6 @@
 from django.utils.timezone import now
 from rest_framework.exceptions import ValidationError
 
-from apps.polls.models import Poll
 from apps.polls.models.polls import Status
 from apps.notification.models.activiity_log import ActivityAction, ActivityEntity
 from apps.notification.services.create_activity_log import create_activity
