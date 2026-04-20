@@ -15,5 +15,5 @@ def handle_forum_report(payload):
 
         target_type=Notification.TargetType.FORUM,
         target_id=report.id,
-        redirect_url=f"/forum/", 
+        redirect_url="/forum/", 
     )
