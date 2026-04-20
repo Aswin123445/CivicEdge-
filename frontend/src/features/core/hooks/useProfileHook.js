@@ -17,7 +17,6 @@ export default function useProfileHook() {
     { data: profile_data, isLoading: profle_loading, isError: profileError },
   ] = useUpdateProfileMutation();
   const handleUpload = async (file) => {
-    console.log("hieiofo",'adadsofiofjwoijf woiefqwor rieiqoj')
      // send to server
     if (!file) return;
     try {
@@ -49,12 +48,16 @@ export default function useProfileHook() {
       });
     }
   };
-  const updateProfileData = (data) => {
+  const updateProfileData = async(data) => {
     // send to server
     try {
-      updateProfile(data).unwrap();
+      await updateProfile(data).unwrap();
     } catch (error) {
-      console.error("Failed to update profile:", error);
+      const message = extractErrorMessage(error);
+      errorToast({
+        title: "Update failed",
+        description: `${message || "An error occurred during update."}`,
+      });
     }
   };
   return {

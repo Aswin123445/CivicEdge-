@@ -146,12 +146,17 @@ const BehavioralPromptPage = () => {
     } else if (formData.response_type === "SCALE") {
       finalOptions = formData.scale;
     }
-
+const formatOptions = (options) => {
+  return options.map((opt) => ({
+    key: opt.toLowerCase().replace(/\s+/g, "_"),
+    label: opt
+  }));
+};
     const payload = {
       question_text: formData.question_text,
       response_type: formData.response_type,
       display_order: formData.display_order,
-      options: finalOptions,
+      options: formatOptions(finalOptions),
     };
 
     try {
@@ -347,6 +352,7 @@ const BehavioralPromptPage = () => {
                       }
                     >
                       <option value="YES_NO">YES_NO</option>
+                      <option value="MULTIPLE_CHOICE">MULTIPLE_CHOICE</option>
                     </select>
                   </div>
                   <div className="space-y-2">
