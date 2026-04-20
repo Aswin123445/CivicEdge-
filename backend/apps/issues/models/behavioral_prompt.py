@@ -28,7 +28,7 @@ class BehavioralPrompt(models.Model):
         help_text="Used for multiple-choice or scale options",
     )
 
-    # 👇 THIS is the v1 decision
+    #  THIS is the v1 decision
     category = models.ForeignKey(
         "IssueCategory",
         null=True,

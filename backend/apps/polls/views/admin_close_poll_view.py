@@ -13,7 +13,7 @@ class AdminClosePollView(GenericAPIView):
     def patch(self, request, poll_id):
         poll = Poll.objects.get(id=poll_id)
 
-        close_poll(poll=poll)
+        close_poll(poll=poll, user=request.user)
 
         return Response(
             {"message": "Poll closed successfully"},

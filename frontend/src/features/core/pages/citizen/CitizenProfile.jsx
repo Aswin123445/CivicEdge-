@@ -1,6 +1,13 @@
 import { useState } from "react";
 
-import { Award, Calendar, CheckCircle } from "lucide-react";
+import {
+  Award,
+  Calendar,
+  CheckCircle,
+  Clock,
+  Activity,
+  ArrowRight,
+} from "lucide-react";
 import EditableAvatar from "../../components/EditableAvatar";
 import InlineEditableText from "../../components/InlineEditableText";
 import useProfileHook from "../../hooks/useProfileHook";
@@ -12,16 +19,24 @@ import VerifyBadge from "../../ui/solver/VerifyBadge";
 import EditableAvatarSkeletonDark from "../../ui/skeltons/EditableAvatarSkelton";
 import { useFetchZonesQuery } from "../../../auth/services/adminAuthApi";
 import { useNavigate } from "react-router-dom";
+import useActivityLogs from "../../../monitoring/hooks/activity-log/activityLogs";
+import SectionHeader from "../../components/SectionHeader";
+import MyActivity from "../../components/MyActivity";
+import MyActivitySkeleton from "../../components/MyActivitySkeleton";
 
 const CitizenProfile = () => {
-  const { data: zonesData,isLoading,isFetching,isSuccess } = useFetchZonesQuery();
-  const  zones = zonesData ?? [];
   const {
-    handleUpload,
-    profle_loading,
-    avatarIsLoading,
-    updateProfileData
-  } = useProfileHook();
+    data: zonesData,
+    isLoading,
+    isFetching,
+    isSuccess,
+  } = useFetchZonesQuery();
+  const zones = zonesData ?? [];
+  const { handleUpload, profle_loading, avatarIsLoading, updateProfileData } =
+    useProfileHook();
+
+  const { activityLogs, activityLoading, activityFetching } = useActivityLogs();
+  const topTwoActivities = activityLogs.slice(0, 2);
 
   const { userData, userDataLoading, userDataFetching } = useCitizenService();
   const name = capitalizeWords(userData?.profile?.name || "User");
@@ -42,7 +57,7 @@ const CitizenProfile = () => {
     },
     {
       label: "Community Rank",
-        value: `top ${userData?.dashboard?.performance_percentail}%`?? "0",
+      value: `top ${userData?.dashboard?.performance_percentail}%` ?? "0",
       icon: <Award className="text-amber-500" />,
     },
   ];
@@ -104,7 +119,7 @@ const CitizenProfile = () => {
             </div>
 
             {/* CTA */}
-            <button 
+            <button
               onClick={() => navigate("/issue/new")}
               className="
               bg-blue-700 text-white
@@ -137,68 +152,21 @@ const CitizenProfile = () => {
             </div>
           ))}
         </section>
+        <SectionHeader />
 
-        {/* --- Content Tabs --- */}
-        <div className="border-b border-slate-200 mb-8 flex gap-8">
-          {["Impact", "Reports", "Badges"].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab.toLowerCase())}
-              className={`pb-4 text-sm font-bold transition-all ${
-                activeTab === tab.toLowerCase()
-                  ? "border-b-2 border-emerald-500 text-emerald-600"
-                  : "text-slate-400 hover:text-slate-600"
-              }`}
-            >
-              {tab.toUpperCase()}
-            </button>
-          ))}
-        </div>
-
-        {/* --- Dynamic Content Area --- */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          <div className="lg:col-span-2 space-y-6">
-            <h3 className="text-lg font-bold text-slate-800">
-              Recent Activity
-            </h3>
-            {/* Mock Activity Item */}
-            <div className="bg-white p-5 rounded-xl border border-slate-200 flex gap-4">
-              <div className="w-12 h-12 rounded bg-slate-100 flex items-center justify-center">
-                🏗️
-              </div>
-              <div>
-                <p className="font-semibold text-slate-800">
-                  Pothole Repair Request #4402
-                </p>
-                <p className="text-sm text-slate-500">
-                  Status:{" "}
-                  <span className="text-emerald-600 font-bold">Resolved</span> •
-                  2 days ago
-                </p>
-                <p className="mt-2 text-sm text-slate-600 bg-slate-50 p-2 rounded">
-                  "The city maintenance team has completed the overlay on 5th
-                  Ave."
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <aside className="space-y-8">
-            <div className="bg-indigo-900 text-white p-6 rounded-2xl shadow-xl overflow-hidden relative">
-              <div className="relative z-10">
-                <h4 className="font-bold text-lg mb-2">Next Milestone</h4>
-                <p className="text-indigo-200 text-sm mb-4">
-                  5 more reports to unlock the "Neighborhood Watch" badge.
-                </p>
-                <div className="w-full bg-indigo-800 h-2 rounded-full">
-                  <div className="bg-emerald-400 h-full w-[70%] rounded-full" />
-                </div>
-              </div>
-              <div className="absolute -right-4 -bottom-4 opacity-10">
-                <Award size={120} />
-              </div>
-            </div>
-          </aside>
+        <div className="w-full">
+          {/* Grid Layout: 
+          - 1 column on mobile 
+          - 3 columns on medium screens and up
+      */}
+          {activityFetching || activityLoading ? (
+            <MyActivitySkeleton />
+          ) : (
+            <MyActivity
+              topTwoActivities={topTwoActivities}
+              url="/forum/my-activity"
+            />
+          )}
         </div>
       </main>
     </div>

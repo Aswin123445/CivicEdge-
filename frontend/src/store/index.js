@@ -8,6 +8,7 @@ import { profileApi } from '../features/core/services/coreApi';
 import { issueApi } from '../features/issues/services/issue_services';
 import { adminExecutionIssueApi } from '../features/issues_execution/services/admin/issue_execution_service';
 import { baseApi } from '../services/baseApi';
+import { setupListeners } from '@reduxjs/toolkit/query';
 
 
 export const store = configureStore({
@@ -20,3 +21,4 @@ export const store = configureStore({
   .concat(baseApi.middleware)
 });
 export default store;
+setupListeners(store.dispatch);

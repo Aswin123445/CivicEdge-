@@ -3,6 +3,8 @@ from rest_framework.exceptions import ValidationError
 
 from apps.polls.models import Poll, PollOption, PollVote
 from apps.polls.selectors.get_poll_results import get_poll_results
+from apps.notification.models.activiity_log import ActivityAction, ActivityEntity
+from apps.notification.services.create_activity_log import create_activity
 
 
 @transaction.atomic
@@ -51,7 +53,12 @@ def vote_on_poll(*, user, poll_id, option_id):
 
     # 6. Compute results
     results, total_votes = get_poll_results(poll)
-
+    create_activity(
+        user=user,
+        entity=ActivityEntity.POLL,
+        action=ActivityAction.VOTED,
+        message=f"votted in poll {poll.question}",
+    )
     return {
         "already_voted": False,
         "results": results,

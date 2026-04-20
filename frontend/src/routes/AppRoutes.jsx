@@ -146,18 +146,34 @@ const AdminReportDetailPage = lazy(
 
 const AdminPostsPage = lazy(
   () => import("../features/forum/pages/admin/AdminPostsPage"),
-)
+);
 
 const AdminPostDetailPage = lazy(
   () => import("../features/forum/pages/admin/AdminPostDetailPage"),
-)
+);
 
 const AdminCategoriesPage = lazy(
   () => import("../features/forum/pages/admin/AdminCategoriesPage"),
-)
+);
 
 const AdminModerationLogsPage = lazy(
   () => import("../features/forum/pages/admin/AdminModerationLogsPage"),
+);
+
+const AdminActivityLogsPage = lazy(
+  () => import("../features/monitoring/pages/AdminActivityLogsPage"),
+);
+
+const CategoryManagementPage = lazy(
+  () => import("../features/resource/pages/CategoryManagementPage"),
+);
+
+const ZoneManagementPage = lazy(
+  () => import("../features/resource/pages/ZoneManagementPage"),
+);
+
+const BehavioralPromptPage = lazy(
+  () => import("../features/resource/pages/BehavioralPromptPage"),
 )
 
 import Test from "../features/auth/pages/admin/Test";
@@ -230,6 +246,9 @@ import MyActivityPage from "../features/forum/pages/citizen/MyActivityPage";
 import ForumManagementLayout from "../features/forum/layouts/ForumManagementLayout";
 import ReportDetailSkeleton from "../features/forum/components/admin/admin_report_detail/ReportDetailSkeleton";
 import PostDetailsSkeleton from "../features/forum/components/admin/admin_posts_details/PostDetailsSkeleton";
+import MonitorLayout from "../features/monitoring/layouts/MonitorLayout";
+import UserActivityPage from "../features/core/pages/citizen/UserActivityPage";
+import ResourceLayout from "../features/resource/layouts/ResourceLayout";
 
 export default function AppRoutes() {
   return (
@@ -278,6 +297,7 @@ export default function AppRoutes() {
         <Route element={<RoleGuard roles={["citizen"]} />}>
           <Route element={<MainLayout />}>
             <Route path="/profile" element={<CitizenProfile />} />
+            <Route path="/profile/my-activity" element={<UserActivityPage />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/drafts" element={<DraftIssuesPage />} />
             <Route path="/draft/:id" element={<DraftIssueDetails />} />
@@ -359,6 +379,8 @@ export default function AppRoutes() {
             />
             <Route path="/solver/dashboard" element={<SolverDashBoard />} />
             <Route path="/solver/profile" element={<SolverProfile />} />
+            <Route path="/solver/my-activity" element={<UserActivityPage />} />
+
             <Route path="/solver/settings" element={<SettingsPage />} />
             <Route path="/solver/task/list" element={<SolverTaskListPage />} />
             <Route path="/solver/task/:id" element={<SolverTaskDetailPage />} />
@@ -612,14 +634,49 @@ export default function AppRoutes() {
                   }
                 />
                 <Route
-                  path="/admin/logs/moderation"
+                  path="/admin/forum/moderation"
                   element={
-                    <Suspense fallback={< PendingReviewSkeleton/>}>
+                    <Suspense fallback={<PendingReviewSkeleton />}>
                       <AdminModerationLogsPage />
                     </Suspense>
                   }
                 />
-                  
+              </Route>
+              <Route path="/admin" element={<MonitorLayout />}>
+                <Route
+                  path="/admin/monitoring/activity-log"
+                  element={
+                    <Suspense fallback={<PendingReviewSkeleton />}>
+                      <AdminActivityLogsPage />
+                    </Suspense>
+                  }
+                />
+              </Route>
+              <Route path="/admin" element={<ResourceLayout />}>
+                <Route
+                  path="/admin/resource/category"
+                  element={
+                    <Suspense fallback={<PendingReviewSkeleton />}>
+                      <CategoryManagementPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/admin/resource/zones"
+                  element={
+                    <Suspense fallback={<PendingReviewSkeleton />}>
+                      <ZoneManagementPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/admin/resource/behavioral"
+                  element={
+                    <Suspense fallback={<PendingReviewSkeleton />}>
+                      <BehavioralPromptPage />
+                    </Suspense>
+                  }
+                />
               </Route>
               <Route path="/admin" element={<PollManagementLayout />}>
                 <Route

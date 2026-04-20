@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
-import { civicIconMap } from "../../../../utils/civicIconMap";
 import useIssueHomePageService from "../../hooks/home_page_service";
 import CategoryGridSkeleton from "../../ui/skeltons/CategoryGridSkeleton";
-
+import * as civicIconMap from "lucide-react";
 const ITEM_VARIANTS = {
   hidden: { opacity: 0, y: 10 },
   visible: { opacity: 1, y: 0 },
@@ -27,7 +26,7 @@ export default function IssueCategorySelect({ value, onSelect, error }) {
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {categoryData?.map(({ id, name, icon }) => {
-            const Icon = civicIconMap[icon];
+            const Icon = civicIconMap[icon] || civicIconMap.HelpCircle;
             return (
               <button
                 key={id}

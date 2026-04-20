@@ -3,67 +3,80 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Verify Your Email</title>
+  <title>Identity Verification | CivicEdge</title>
+  <style>
+    /* High-end resets for professional rendering */
+    body, table, td, a { -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; }
+    table { border-collapse:collapse !important; }
+    body { margin:0; padding:0; width:100% !important; background-color: #f8fafc; font-family: 'Inter', -apple-system, system-ui, sans-serif; color: #1e293b; }
+
+    .main-container { width:100%; max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; }
+    
+    /* Authority Header */
+    .header-accent { height: 4px; background: linear-gradient(90deg, #4f46e5, #818cf8); }
+    .brand-section { padding: 40px 40px 20px; text-align: left; }
+    
+    .content { padding: 0 40px 40px; }
+    
+    h2 { font-size: 24px; font-weight: 700; color: #0f172a; margin: 0 0 16px; letter-spacing: -0.02em; }
+    p { font-size: 15px; line-height: 1.6; color: #475569; margin: 0 0 24px; }
+
+    /* Action Block */
+    .verification-card { background-color: #f1f5f9; border-radius: 8px; padding: 24px; text-align: center; margin-bottom: 24px; }
+    .btn { display: inline-block; background-color: #4f46e5; color: #ffffff !important; text-decoration: none; padding: 14px 32px; border-radius: 6px; font-weight: 600; font-size: 15px; transition: background 0.2s; }
+    
+    .security-note { font-size: 12px; color: #94a3b8; display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+    /* Footer */
+    .footer { padding: 32px 40px; background-color: #f8fafc; border-top: 1px solid #e2e8f0; text-align: center; }
+    .footer p { font-size: 12px; color: #94a3b8; margin: 4px 0; }
+    .footer a { color: #6366f1; text-decoration: none; }
+
+    @media screen and (max-width: 600px) {
+      .main-container { margin: 0; border-radius: 0; border: none; }
+      .brand-section, .content { padding: 30px 20px; }
+    }
+  </style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #f2f3f8; font-family: 'Segoe UI', sans-serif;">
+<body>
 
-  <table width="100%" bgcolor="#f2f3f8" cellpadding="0" cellspacing="0" style="padding: 30px 0;">
-    <tr>
-      <td align="center">
-        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06); overflow: hidden;">
-          
-          <!-- Logo / Branding -->
-          <tr>
-            <td align="center" style="padding: 40px 0 20px;">
-              <img src="https://yourapp.com/logo.png" alt="YourApp Logo" width="120" style="display: block;" />
-            </td>
-          </tr>
+  <div class="main-container">
+    <div class="header-accent"></div>
+    
+    <div class="brand-section">
+      <img src="https://i.postimg.cc/NMLLTsBx/civicedge-2-removebg-preview(1).png" alt="CivicEdge" width="140" style="display: block; border:0;" />
+    </div>
 
-          <!-- Welcome Text -->
-          <tr>
-            <td align="center" style="padding: 0 40px;">
-              <h2 style="margin: 0; color: #333333; font-size: 24px;">Welcome to YourApp, {{ user.email }}!</h2>
-            </td>
-          </tr>
+    <div class="content">
+      <h2>Verify your identity</h2>
+      <p>
+        Welcome to the community. You are one step away from joining <strong>CivicEdge</strong>. To ensure the integrity of our civic reporting and platform accountability, we need to verify your email address.
+      </p>
 
-          <!-- Body Text -->
-          <tr>
-            <td style="padding: 20px 40px 0; text-align: center; color: #555555; font-size: 16px; line-height: 1.6;">
-              <p style="margin: 0;">
-                Thank you for signing up. To complete your registration, please verify your email address by clicking the button below.
-              </p>
-            </td>
-          </tr>
+      <div class="verification-card">
+        <a href="{{ verification_link }}" class="btn">Confirm Email Address</a>
+        <div style="margin-top: 16px;" class="security-note">
+          <span>🛡️ Verified Secure Link</span>
+        </div>
+      </div> 
+      <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 32px 0;">
+      
+      <p style="font-size: 12px; color: #64748b; margin-bottom: 0;">
+        <strong>Why did I receive this?</strong><br>
+        This email was sent because an account was registered on CivicEdge with this address. If you did not initiate this request, you can safely ignore this email; the account will remain inactive without verification.
+      </p>
+    </div>
 
-          <!-- CTA Button -->
-          <tr>
-            <td align="center" style="padding: 30px 40px;">
-              <a href="{{ verification_link }}" style="background-color: #4CAF50; color: white; text-decoration: none; padding: 14px 30px; border-radius: 8px; font-weight: 600; font-size: 16px; display: inline-block;">
-                Verify My Email
-              </a>
-            </td>
-          </tr>
-
-          <!-- Backup Text Link -->
-          <tr>
-            <td style="padding: 0 40px 30px; text-align: center; font-size: 14px; color: #999999;">
-              <p style="margin: 0;">If the button doesn’t work, copy and paste the following link in your browser:</p>
-              <p style="word-break: break-all;"><a href="{{ verification_link }}" style="color: #4CAF50; text-decoration: none;">{{ verification_link }}</a></p>
-            </td>
-          </tr>
-
-          <!-- Footer -->
-          <tr>
-            <td align="center" style="background-color: #f9f9f9; padding: 20px; font-size: 12px; color: #999999;">
-              © {{ 2029 }} Civicedge. All rights reserved.<br/>
-              <a href="https://yourapp.com" style="color: #4CAF50; text-decoration: none;">Visit Website</a>
-            </td>
-          </tr>
-
-        </table>
-      </td>
-    </tr>
-  </table>
+    <div class="footer">
+      <p><strong>CivicEdge</strong> | Social Accountability Platform</p>
+      <p>© {{ current_year }} CivicEdge. All rights reserved.</p>
+      <p>
+        <a href="{{ privacy_url }}">Privacy Policy</a> • 
+        <a href="{{ terms_url }}">Community Guidelines</a> • 
+        <a href="{{ support_url }}">Help Center</a>
+      </p>
+    </div>
+  </div>
 
 </body>
 </html>

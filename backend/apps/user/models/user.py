@@ -140,6 +140,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Zone(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100, unique=True)
+    is_active = models.BooleanField(default=True)
 
     def clean(self):
         """
@@ -152,7 +153,7 @@ class Zone(models.Model):
 
     def save(self, *args, **kwargs):
         self.name = self.name.strip()  # normalize spaces
-        self.full_clean()              # 👈 THIS calls clean()
+        self.full_clean()              #  THIS calls clean()
         super().save(*args, **kwargs)
 
     def __str__(self):

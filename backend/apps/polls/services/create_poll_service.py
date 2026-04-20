@@ -2,6 +2,8 @@ from django.db import transaction
 
 from apps.polls.models import Poll, PollOption
 from apps.polls.models.polls import Status
+from apps.notification.models.activiity_log import ActivityAction, ActivityEntity
+from apps.notification.services.create_activity_log import create_activity
 
 
 @transaction.atomic
@@ -27,5 +29,10 @@ def create_poll(*, admin_user, data):
         for index, opt in enumerate(options)
     ]
     PollOption.objects.bulk_create(option_objs)
-
+    create_activity(
+        user=admin_user,
+        entity=ActivityEntity.POLL,
+        action=ActivityAction,
+        message=f"poll  {poll.question} created",
+    )
     return poll

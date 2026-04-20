@@ -3,6 +3,8 @@ from rest_framework.exceptions import ValidationError
 from apps.forum.selectors.citizen.get_existing_report_selector import get_existing_report
 from apps.forum.selectors.citizen.get_report_target_selector import get_report_target
 from apps.forum.models.forum_report import ForumReport, ReportStatus
+from apps.notification.models.activiity_log import ActivityAction, ActivityEntity
+from apps.notification.services.create_activity_log import create_activity
 
 
 def create_forum_report(*, user, data):
@@ -39,6 +41,12 @@ def create_forum_report(*, user, data):
         target_id=target_id,
         reason=reason,
         status=ReportStatus.PENDING,
+    )
+    create_activity(
+        user=user,
+        entity=ActivityEntity.FORUM,
+        action=ActivityAction.MODERATED,
+        message=f"Reported the {target_type} with reason: {reason}",
     )
 
     return report

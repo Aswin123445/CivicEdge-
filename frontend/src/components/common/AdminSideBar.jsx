@@ -6,7 +6,9 @@ import {
   ClipboardCheck,
   ShieldCheck,
   Vote,
-  MessageSquare
+  MessageSquare,
+  ScrollText,
+  Boxes 
 } from "lucide-react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import useCitizenService from "../../features/core/hooks/citizen/useCitizenService";
@@ -47,8 +49,23 @@ function AdminSidebar() {
     "/admin/forum/reports",
     "/admin/forum/posts",
     "/admin/forum/category",
-    "/admin/logs/moderation"
+    "/admin/forum/moderation"
   ]
+  const moderationPaths = [
+    "/admin/monitoring/activity-log"
+  ] 
+  const resouceManagement = [
+    "/admin/resource/category",
+    "/admin/resource/zones",
+    "/admin/resource/behavioral"
+  ]
+
+  const isResourceManagementPath = resouceManagement.some((path) =>
+    location.pathname.startsWith(path),
+  );
+  const isModerationPath = moderationPaths.some((path) =>
+    location.pathname.startsWith(path),
+  );
   const isForumManagementPath = forumManagementPaths.some((path) =>
     location.pathname.startsWith(path),
   );  
@@ -193,6 +210,34 @@ function AdminSidebar() {
           >
             <MessageSquare className="w-5 h-5 mr-2" />
             Forum Management
+          </NavLink>
+          <NavLink
+            to="/admin/resource/category"
+            end
+            className={() =>
+              `flex items-center rounded-md px-3 py-2 text-sm font-medium transition ${
+                isResourceManagementPath
+                  ? "bg-gray-700 text-white"
+                  : "text-gray-400 hover:bg-gray-700 hover:text-white"
+              }`
+            }
+          >
+            <Boxes   className="w-5 h-5 mr-2" />
+            Resource Management
+          </NavLink>
+          <NavLink
+            to="/admin/monitoring/activity-log"
+            end
+            className={() =>
+              `flex items-center rounded-md px-3 py-2 text-sm font-medium transition ${
+                isModerationPath
+                  ? "bg-gray-700 text-white"
+                  : "text-gray-400 hover:bg-gray-700 hover:text-white"
+              }`
+            }
+          >
+            <ScrollText  className="w-5 h-5 mr-2" />
+            Monitoring
           </NavLink>
         </nav>
       </aside>

@@ -19,7 +19,7 @@ def handle_issue_resolved(payload):
         message=f"Your reported issue '{issue.title}' has been resolved.",
         actor=actor,
 
-        target_type=Notification.TargetType.RESOLVED_ISSUE,
+        target_type=Notification.TargetType.ISSUE,
         target_id=issue.id,
         redirect_url=f"/complaints/{issue.id}", 
     )

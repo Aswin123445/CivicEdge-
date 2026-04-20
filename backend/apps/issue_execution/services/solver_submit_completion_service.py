@@ -6,6 +6,8 @@ from apps.issue_execution.models.execution_evidence import ExecutionEvidence
 from apps.issue_execution.models.solver_task import SolverTaskStatus
 from apps.notification.services.dispatcher import NotificationDispatcher
 from apps.notification.utils.event_constants import NotificationEvent
+from apps.notification.models.activiity_log import ActivityAction, ActivityEntity
+from apps.notification.services.create_activity_log import create_activity
 
 
 @transaction.atomic
@@ -68,5 +70,10 @@ def submit_completion(*, solver, task, data):
             "actor": solver
         }
     )
-
+    create_activity(
+        user=solver,
+        entity=ActivityEntity.TASK,
+        action=ActivityAction.COMPLETED,
+        message=f"You have completed the task for issue: {task.issue.title}",
+    )
     return proof

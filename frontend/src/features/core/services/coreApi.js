@@ -65,6 +65,17 @@ export const profileApi = baseApi.injectEndpoints({
         return response;
       },
     }),
+    getAdminMetrics: builder.query({
+      query: () => ({
+        url: `${PROFILE_PREFIX}/dashboard/metrics/`,
+        method: "get",
+        meta: { skipAuth: false },
+      }),
+      providesTags: ["AdminMetrics"],
+      transformResponse: (response) => {
+        return response;
+      },
+    }),
   }),
 });
 export const {
@@ -73,4 +84,5 @@ export const {
   useUpdateProfileMutation,
   useSolverWorkToggleMutation,
   useGetSolverDashboardQuery,
+  useGetAdminMetricsQuery,
 } = profileApi;

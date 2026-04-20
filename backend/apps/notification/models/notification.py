@@ -9,12 +9,6 @@ class Notification(models.Model):
         ISSUE = "ISSUE", "Issue"
         TASK = "TASK", "Task"
         REPORT = "REPORT", "Report"
-        RESOLVED_ISSUE = "RESOLVED_ISSUE", "Resolved Issue"
-        TASK_APPROVAL = "TASK_APPROVAL", "Task Approval"
-        TASK_REJECTION = "TASK_REJECTION", "Task Rejection"
-        VOLUNTEER_APPROVED = "VOLUNTEER_APPROVED", "Volunteer Approved"
-        VOLUNTEER_REJECTION = "VOLUNTEER_REJECTION", "Volunteer Rejection"
-        VOLUNTEER_REMINDER = "VOLUNTEER_REMINDER", "Volunteer Reminder"
         FORUM = "FORUM", "Forum"
         PAYMENT = "PAYMENT", "Payment"
         VOLUNTEER = "VOLUNTEER", "Volunteer"
@@ -30,14 +24,18 @@ class Notification(models.Model):
         VOLUNTEER_JOIN_APPROVED = "VOLUNTEER_JOIN_APPROVED"
         VOLUNTEER_EVENT_REMINDER = "VOLUNTEER_EVENT_REMINDER"
         VOLUNTEER_JOIN_REJECTED = "VOLUNTEER_JOIN_REJECTED"
+        VOLUNTEER_CERTIFICATE = "VOLUNTEER_CERTIFICATE", "Volunteer Certificate"    
 
         FORUM_REPLY_RECEIVED = "FORUM_REPLY_RECEIVED"
         FORUM_POST_CREATED = "FORUM_POST_CREATED"
+        FORUM_REPORT_USER = "FORUM_REPORT_USER"
+        FORUM_REACTED = "FORUM_REACTED"
 
         PAYMENT_SUCCESS = "PAYMENT_SUCCESS"
         PAYMENT_FAILED = "PAYMENT_FAILED"
 
         ADMIN_ANNOUNCEMENT = "ADMIN_ANNOUNCEMENT"
+        
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
@@ -56,7 +54,7 @@ class Notification(models.Model):
     )
 
     type = models.CharField(max_length=50, choices=Type.choices)
-    target_type = models.CharField(max_length=20, choices=TargetType.choices)
+    target_type = models.CharField(max_length=40, choices=TargetType.choices)
     target_id = models.UUIDField()
     redirect_url = models.CharField(max_length=255, null=True, blank=True)
     title = models.CharField(max_length=255)

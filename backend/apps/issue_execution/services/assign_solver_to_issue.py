@@ -7,6 +7,8 @@ from apps.issues.models.issue_administrative_decision import IssueAdministrative
 from apps.issues.services.timeline_service import add_issue_timeline_event
 from apps.notification.services.dispatcher import NotificationDispatcher
 from apps.notification.utils.event_constants import NotificationEvent
+from apps.notification.models.activiity_log import ActivityAction, ActivityEntity
+from apps.notification.services.create_activity_log import create_activity
 
 
 @transaction.atomic
@@ -38,6 +40,12 @@ def assign_solver_to_issue(*, issue, solver, assigned_by, remarks=None):
         issue=issue,
         message="Collecting evidences from location",
         created_by=assigned_by,
+    )
+    create_activity(
+        user=assigned_by,
+        entity=ActivityEntity.TASK,
+        action=ActivityAction.ASSIGNED,
+        message=f"Assigned {solver.email} to issue: {issue.title}",
     )
 
     return task

@@ -4,6 +4,8 @@ from rest_framework.exceptions import ValidationError
 from apps.forum.models.forum_report import  ReportStatus
 from apps.forum.models.moderation_log import ModerationLog
 from apps.forum.selectors.admin.get_report_with_target_selector import get_report_with_target
+from apps.notification.services.dispatcher import NotificationDispatcher
+from apps.notification.utils.event_constants import NotificationEvent
 
 
 def admin_take_report_action(*, moderator, report_id, data):
@@ -56,7 +58,13 @@ def admin_take_report_action(*, moderator, report_id, data):
     #  Update report
     report.status = ReportStatus.RESOLVED
     report.save(update_fields=["status"])
-
+    NotificationDispatcher.dispatch(
+        event=NotificationEvent.FORUM_REPORT_USER,
+        payload={
+            "report": report,
+            "actor": moderator,
+        }
+    )
     #  Log action
     ModerationLog.objects.create(
         moderator=moderator,

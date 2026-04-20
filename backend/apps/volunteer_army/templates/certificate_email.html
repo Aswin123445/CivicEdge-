@@ -1,30 +1,91 @@
 <!DOCTYPE html>
-<html>
-  <body style="font-family: Arial, sans-serif; line-height: 1.6;">
-    <p>Hello <strong>{{ user_name }}</strong>,</p>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Civic Recognition | CivicEdge</title>
+  <style>
+    body, table, td, a { -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; }
+    table { border-collapse:collapse !important; }
+    body { margin:0; padding:0; width:100% !important; background-color: #f8fafc; font-family: 'Inter', -apple-system, system-ui, sans-serif; color: #1e293b; }
 
-    <p>
-      Your participation certificate for 
-      <strong>{{ event_title }}</strong> is ready 🎉
-    </p>
+    .main-container { width:100%; max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.04); }
+    
+    /* Achievement Header */
+    .header-accent { height: 6px; background: linear-gradient(90deg, #4f46e5, #fbbf24); }
+    .brand-section { padding: 40px 40px 10px; text-align: left; }
+    
+    .content { padding: 0 40px 40px; }
+    
+    .badge { display: inline-block; padding: 6px 12px; background: #fef3c7; color: #92400e; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 0.05em; }
+    
+    h2 { font-size: 26px; font-weight: 800; color: #0f172a; margin: 0 0 16px; letter-spacing: -0.03em; line-height: 1.2; }
+    p { font-size: 16px; line-height: 1.6; color: #475569; margin: 0 0 24px; }
 
-    <p>
-      <strong>Certificate ID:</strong> {{ reference_id }}
-    </p>
+    /* Certification Card */
+    .cert-card { background: radial-gradient(circle at top left, #ffffff, #f1f5f9); border: 1px dashed #cbd5e1; border-radius: 12px; padding: 32px; text-align: center; margin-bottom: 30px; }
+    .cert-id { font-family: 'monospace'; color: #94a3b8; font-size: 13px; margin-bottom: 20px; display: block; }
+    
+    .btn { display: inline-block; background-color: #4f46e5; color: #ffffff !important; text-decoration: none; padding: 16px 36px; border-radius: 8px; font-weight: 700; font-size: 16px; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3); }
+    
+    /* Motivation Block */
+    .impact-quote { border-left: 4px solid #e2e8f0; padding-left: 20px; margin: 32px 0; font-style: italic; color: #64748b; }
 
-    <p>
-      <a href="{{ certificate_url }}" 
-         style="background:#2563eb;color:white;padding:10px 16px;text-decoration:none;border-radius:6px;">
-        View Certificate
-      </a>
-    </p>
+    .footer { padding: 32px 40px; background-color: #0f172a; color: #94a3b8; text-align: center; }
+    .footer a { color: #ffffff; text-decoration: none; font-weight: 600; }
 
-    <p>
-      Thank you for your contribution to the community.
-    </p>
+    @media screen and (max-width: 600px) {
+      .main-container { margin: 0; border-radius: 0; }
+      .brand-section, .content { padding: 30px 20px; }
+    }
+  </style>
+</head>
+<body>
 
-    <p>
-      — CivicEdge Team
-    </p>
-  </body>
+  <div class="main-container">
+    <div class="header-accent"></div>
+    
+    <div class="brand-section">
+      <img src="https://i.postimg.cc/NMLLTsBx/civicedge-2-removebg-preview(1).png" alt="CivicEdge" width="140" style="display: block; border:0;" />
+    </div>
+
+    <div class="content">
+      <div style="margin-top: 20px;">
+        <span class="badge">Official Recognition</span>
+      </div>
+      <h2>Your Civic Contribution has been Certified</h2>
+      
+      <p>
+        Hello <strong>{{ user_name }}</strong>, your dedication to community accountability has not gone unnoticed. We are honored to present your official certification for your involvement in:
+      </p>
+
+      <div class="cert-card">
+        <div style="font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">{{ event_title }}</div>
+        <span class="cert-id">Validation Key: {{ reference_id }}</span>
+        
+        <a href="{{ certificate_url }}" class="btn">Download Official Certificate</a>
+      </div>
+
+      <div class="impact-quote">
+        "Change happens when citizens stop observing and start participating. Your actions are building a more transparent and responsive city."
+      </div>
+
+      <p style="font-size: 14px;">
+        This document serves as a permanent record of your civic sense and social responsibility. We encourage you to share this milestone on your professional networks to inspire others to join the movement.
+      </p>
+    </div>
+
+    <div class="footer">
+      <p style="color: #ffffff; margin-bottom: 15px;">Building smarter, accountable cities together.</p>
+      <p style="font-size: 11px;">
+        Verified by the CivicEdge Governance Unit.<br>
+        © {{ current_year }} CivicEdge. All rights reserved.
+      </p>
+      <p style="font-size: 11px; margin-top: 15px;">
+        <a href="#">Social Accountability Dashboard</a> | <a href="#">Community impact</a>
+      </p>
+    </div>
+  </div>
+
+</body>
 </html>

@@ -5,6 +5,8 @@ from rest_framework.exceptions import ValidationError
 
 from apps.volunteer_army.models.volunteer_service_log import VolunteerServiceLog
 from apps.volunteer_army.utils.celery_task.create_event_certificate_recognition import maybe_generate_event_certificate_task
+from apps.notification.services.dispatcher import NotificationDispatcher
+from apps.notification.utils.event_constants import NotificationEvent
 
 
 @transaction.atomic
@@ -30,9 +32,12 @@ def approve_attendance_submission(*, participation, by):
         ),
         logged_by=by,
     )
+
     participation_id = participation.id
+    by_id = by.id
+
     transaction.on_commit(
-        lambda: maybe_generate_event_certificate_task.delay(participation_id)
+        lambda: maybe_generate_event_certificate_task.delay(participation_id, by_id)
     )
 
     return participation

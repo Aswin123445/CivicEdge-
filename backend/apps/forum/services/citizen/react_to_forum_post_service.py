@@ -3,6 +3,8 @@ from rest_framework.exceptions import ValidationError
 from apps.forum.selectors.citizen.get_active_forum_post_selector import get_active_forum_post
 from apps.forum.selectors.citizen.get_user_post_reaction_full_selector import get_user_post_reaction
 from apps.forum.models.forum_reaction import ForumReaction
+from apps.notification.services.dispatcher import NotificationDispatcher
+from apps.notification.utils.event_constants import NotificationEvent
 
 
 def react_to_forum_post(*, user, post_id, reaction_type):
@@ -11,11 +13,18 @@ def react_to_forum_post(*, user, post_id, reaction_type):
     if not post:
         raise ValidationError("Post not found or not active")
 
-    existing_reaction = get_user_post_reaction(
+    existing_reaction, count = get_user_post_reaction(
         user=user,
         post_id=post_id,
     )
-
+    if count in {10,25,50,100,250,500,1000}:
+        NotificationDispatcher.dispatch(
+            event=NotificationEvent.FORUM_POST_REACTED,
+            payload={
+                "post": post,
+                "actor": user,
+            }
+        )
     if not existing_reaction:
         ForumReaction.objects.create(
             user=user,

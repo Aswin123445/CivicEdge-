@@ -5,4 +5,5 @@ urlpatterns = [
     path('common/',include('apps.user.routes.common.common_routes')),
     path('solver/',include('apps.user.routes.solver.solver_routes')),
     path('', include('apps.user.routes.user.user_routes')),
+    path('zone/', include('apps.user.routes.zone.zone_routes')),
 ] 

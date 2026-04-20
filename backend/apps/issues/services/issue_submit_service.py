@@ -8,6 +8,8 @@ from apps.issues.utils.enums.issue_status import IssueStatus
 from apps.issues.services.timeline_service import add_issue_timeline_event
 from apps.notification.services.dispatcher import NotificationDispatcher
 from apps.notification.utils.event_constants import NotificationEvent
+from apps.notification.models.activiity_log import ActivityAction, ActivityEntity
+from apps.notification.services.create_activity_log import create_activity
 
 
 @transaction.atomic
@@ -49,6 +51,12 @@ def submit_issue(*, issue: Issue, user):
         issue=issue,
         message="Issue submitted successfully. Your report is now under review.",
         created_by=user,
+    )
+    create_activity(
+        user=user,
+        entity=ActivityEntity.ISSUE,
+        action=ActivityAction.CREATED,
+        message=f"Issue {issue.title} created successfully",
     )
 
     return issue

@@ -10,6 +10,8 @@ class SolverProfileSummarySerializer(serializers.Serializer):
     email = serializers.EmailField()
     availability = serializers.BooleanField()
     bio = serializers.CharField(allow_null=True)
+    task_completed = serializers.IntegerField()
+    task_completion_percent = serializers.FloatField()
 
 class SolverHomeSerializer(HomeBaseSerializer):
     profile = SolverProfileSummarySerializer()

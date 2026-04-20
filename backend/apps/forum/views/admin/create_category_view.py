@@ -17,7 +17,8 @@ class CreateCategoryAPIView(CreateAPIView):
         serializer.is_valid(raise_exception=True)
 
         category = create_category(
-            data=serializer.validated_data
+            data=serializer.validated_data,
+            by = request.user
         )
 
         return Response(

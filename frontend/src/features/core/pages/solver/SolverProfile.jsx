@@ -1,6 +1,11 @@
 import { useState } from "react";
-
-import {  Clock, ShieldCheck, CheckCircle } from "lucide-react";
+import {
+  Clock,
+  ShieldCheck,
+  CheckCircle,
+  Activity,
+  ArrowRight,
+} from "lucide-react";
 import EditableAvatar from "../../components/EditableAvatar";
 import InlineEditableText from "../../components/InlineEditableText";
 import useProfileHook from "../../hooks/useProfileHook";
@@ -10,35 +15,34 @@ import useCitizenService from "../../hooks/citizen/useCitizenService";
 import DutyStatus from "../../ui/solver/DutyStatus";
 import RoleBadge from "../../ui/RoleBadge";
 import EditableAvatarSkeletonDark from "../../ui/skeltons/EditableAvatarSkelton";
-
+import useActivityLogs from "../../../monitoring/hooks/activity-log/activityLogs";
+import { useNavigate } from "react-router-dom";
+import SectionHeader from "../../components/SectionHeader";
+import MyActivity from "../../components/MyActivity";
+import MyActivitySkeleton from "../../components/MyActivitySkeleton";
 const SolverProfile = () => {
-  const {
-    handleUpload,
-    profle_loading,
-    avatarIsLoading,
-    updateProfileData,
-  } = useProfileHook();
+  const navigate = useNavigate();
+  const { handleUpload, profle_loading, avatarIsLoading, updateProfileData } =
+    useProfileHook();
   const { userData, userDataLoading, userDataFetching } = useCitizenService();
-  const pageLoad = userDataLoading || profle_loading || userDataFetching
+  console.log(userData);
+  const pageLoad = userDataLoading || profle_loading || userDataFetching;
   const name = capitalizeWords(userData?.profile?.name || "User");
   const [activeTab, setActiveTab] = useState("impact");
-
+  const { activityLogs, activityLoading, activityFetching } = useActivityLogs();
+  const topTwoActivities = activityLogs.slice(0, 2);
+  const covertsion_percentage =
+    Number(userData?.profile?.task_completion_percent).toFixed(2) || 0;
   const stats = [
     {
       label: "Issues Resolved",
-      value: 128,
+      value: userData?.profile?.task_completed || "0",
       icon: <CheckCircle size={18} />,
       helper: "Successfully closed cases",
     },
     {
-      label: "Avg Resolution Time",
-      value: "3.2 hrs",
-      icon: <Clock size={18} />,
-      helper: "Across all assignments",
-    },
-    {
       label: "SLA Compliance",
-      value: "96%",
+      value: covertsion_percentage || "0",
       icon: <ShieldCheck size={18} />,
       helper: "On-time completion rate",
     },
@@ -54,11 +58,14 @@ const SolverProfile = () => {
           <header className="flex flex-col md:flex-row items-center gap-8 mb-12">
             {/* Avatar */}
             <div className="relative">
-              {avatarIsLoading ?<EditableAvatarSkeletonDark className="light"/>:<EditableAvatar
-                avatarUrl={userData.profile?.avatar}
-                onUpload={(file) => handleUpload(file)} // send to server
-              />
-              }
+              {avatarIsLoading ? (
+                <EditableAvatarSkeletonDark className="light" />
+              ) : (
+                <EditableAvatar
+                  avatarUrl={userData.profile?.avatar}
+                  onUpload={(file) => handleUpload(file)} // send to server
+                />
+              )}
             </div>
 
             {/* Info */}
@@ -141,27 +148,20 @@ const SolverProfile = () => {
             ))}
           </div>
         </section>
-        {/* --- Content Tabs --- */}
-        <div className="border-b border-slate-200 mb-8 flex gap-8">
-          {["Activity", "Rewards", "Badges"].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab.toLowerCase())}
-              className={`pb-4 text-sm font-bold transition-all ${
-                activeTab === tab.toLowerCase()
-                  ? "border-b-2 border-emerald-500 text-emerald-600"
-                  : "text-slate-400 hover:text-slate-600"
-              }`}
-            >
-              {tab.toUpperCase()}
-            </button>
-          ))}
-        </div>
-        {/* --- Dynamic Content Area --- */}
-        need to work on content
+
+        <SectionHeader />
+        {activityFetching || activityLoading ? (
+          <MyActivitySkeleton />
+        ) : (
+          <MyActivity
+            topTwoActivities={topTwoActivities}
+            url="/solver/my-activity"
+          />
+        )}
       </main>
     </div>
   );
 };
 
 export default SolverProfile;
+

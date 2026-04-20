@@ -12,7 +12,7 @@ def send_solver_welcome_email(
     role: str,
     raw_password: str,
     username: str,
-    login_path: str = "/login/"
+    login_path: str = "/auth/solver/login"
 ):
     """
     Sends welcome email to a newly created solver/admin account with credentials.
@@ -22,8 +22,11 @@ def send_solver_welcome_email(
         from_email = settings.DEFAULT_FROM_EMAIL
 
         # Build login URL (assuming you have a domain in settings)
-        domain = getattr(settings, "BACKEND_URL", None) or getattr(settings, "SITE_DOMAIN", "")
-        login_url = f"{domain.rstrip('/')}{login_path}"
+        frontend_url = settings.FRONTEND_URL
+        print(frontend_url)
+        login_url = f"{frontend_url.rstrip('/')}{login_path}"
+        print((login_path,'login path'))
+        print(login_url,'login url')
 
         # Render HTML content
         html_content = render_to_string("solver_welcome.html", {

@@ -15,6 +15,10 @@ from apps.issues.views.issue_review_view import IssueReviewView
 from apps.issues.views.issue_submit_view import IssueSubmitView
 from apps.issues.views.complaint_list_view import ComplaintListView
 from apps.issues.views.complaint_details_view import ComplaintDetailsView
+from apps.issues.views.list_category_api import IssueCategoryCreateAPIView, IssueCategoryListAPIViewNew
+from apps.issues.views.update_category_api import IssueCategoryUpdateAPIView
+from apps.issues.views.category_toggle_view import IssueCategoryToggleAPIView
+from apps.issues.views.list_prompt_api import BehavioralPromptCreateAPIView, BehavioralPromptListAPIView, BehavioralPromptToggleAPIView
 urlpatterns = [
     path("issues/", IssueCreateView.as_view(), name="issue-create"),
     path("issues/drafts/", IssueDraftListView.as_view(), name="issue-draft-list"),
@@ -31,4 +35,11 @@ urlpatterns = [
     path("issues/<uuid:id>/submit/",IssueSubmitView.as_view(), name="issue-submit"),
     path("issues/complaints/list/",ComplaintListView.as_view(), name="complaint-list"),
     path("issues/complaints/<uuid:id>/detail/",ComplaintDetailsView.as_view(), name="complaint-details"),
+    path("issues/categories-admin/",IssueCategoryListAPIViewNew.as_view(), name = "issue-new-categgory-admin"),
+    path("issues/categories-admin/create/",IssueCategoryCreateAPIView.as_view(), name = "issue-new-categgory-admin"),
+    path("issues/categories-admin/<uuid:pk>/update/",IssueCategoryUpdateAPIView.as_view(), name = "issue-update-categgory-admin"),
+    path("issues/categories-admin/<uuid:id>/toggle/",IssueCategoryToggleAPIView.as_view(), name = "issue-delete-categgory-toggle-admin"),
+    path("prompts/", BehavioralPromptListAPIView.as_view(), name="prompt-list"),
+    path("prompts/create/", BehavioralPromptCreateAPIView.as_view(), name="prompt-create"),
+    path("prompts/<uuid:id>/toggle/", BehavioralPromptToggleAPIView.as_view(), name="prompt-toggle"),
 ]

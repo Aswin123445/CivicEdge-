@@ -15,7 +15,7 @@ def handle_volunteer_event_reminder(payload):
             "message": f"Reminder: The event '{event.title}' starts soon.",
             "actor": None,  # system
 
-            "target_type":Notification.TargetType.VOLUNTEER_REMINDER,
+            "target_type":Notification.TargetType.VOLUNTEER,
             "target_id":event.id,
             "redirect_url":f"/volunteer-army/{event.group.id}/events/{event.id}",
 

@@ -241,8 +241,8 @@ const PostDetailPage = () => {
       <ReportCommentModal
         type="comment"
         id={activeCommentId}
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        isOpen={isCommentModalOpen}
+        onClose={() => setIsCommentModalOpen(false)}
         onSubmit={handleReport}
         payload={payload}
         setPayload={setPayload}

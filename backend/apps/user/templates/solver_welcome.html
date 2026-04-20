@@ -3,123 +3,156 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Welcome to CivicEdge</title>
+  <title>Official Account Activation | CivicEdge Governance</title>
   <style>
-    /* Basic reset for email clients */
     body, table, td, a { -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; }
     table { border-collapse:collapse !important; }
     img { border:0; height:auto; line-height:100%; outline:none; text-decoration:none; display:block; }
-    body { margin:0 !important; padding:0 !important; width:100% !important; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f5f7fa; color: #333333; }
+    body { margin:0 !important; padding:0 !important; width:100% !important; font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background-color: #f8fafc; color: #1e293b; }
 
-    /* Container */
     .email-wrapper {
       width:100%;
-      max-width: 680px;
-      margin:0 auto;
+      max-width: 600px;
+      margin: 20px auto;
       background:#ffffff;
-      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
       overflow:hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     }
 
+    /* Governance Header */
     .header {
-      padding: 24px;
-      background: linear-gradient(135deg,#4f46e5,#6366f1);
+      padding: 32px 40px;
+      background-color: #0f172a; /* Deep Navy for Authority */
       color: #ffffff;
-      text-align: center;
+    }
+    .header .brand {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #94a3b8;
+      margin-bottom: 8px;
     }
     .header h1 {
       margin:0;
-      font-size: 24px;
-      font-weight: 600;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
     }
-    .content {
-      padding: 32px 24px;
+
+    .content { padding: 40px; }
+    
+    .notice-bar {
+      background: #f1f5f9;
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #475569;
+      margin-bottom: 24px;
+      border-left: 4px solid #6366f1;
     }
-    .btn {
-      display: inline-block;
-      background-color: #4f46e5;
-      color: #ffffff;
-      padding: 14px 24px;
+
+    /* Credential Table */
+    .credential-table {
+      width: 100%;
+      margin: 24px 0;
+      border: 1px solid #e2e8f0;
       border-radius: 8px;
+    }
+    .credential-row {
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .credential-label {
+      padding: 16px;
+      background: #f8fafc;
+      font-weight: 600;
+      font-size: 13px;
+      width: 30%;
+      color: #64748b;
+    }
+    .credential-value {
+      padding: 16px;
+      font-family: 'SFMono-Regular', Consolas, monospace;
+      font-size: 14px;
+      color: #0f172a;
+    }
+
+    .btn {
+      display: block;
+      text-align: center;
+      background-color: #4f46e5;
+      color: #ffffff !important;
+      padding: 16px 24px;
+      border-radius: 6px;
       text-decoration: none;
       font-weight: 600;
-      margin-top: 16px;
+      margin-top: 24px;
     }
-    .card {
-      background: #f9f9fc;
-      border-radius: 8px;
-      padding: 16px;
-      margin: 16px 0;
-    }
-    .small {
-      font-size:12px;
-      color:#777777;
-    }
+
     .footer {
-      padding: 20px;
-      font-size:12px;
-      text-align:center;
-      color:#888888;
+      padding: 32px 40px;
+      background: #f8fafc;
+      font-size: 12px;
+      color: #64748b;
+      border-top: 1px solid #e2e8f0;
     }
-    .credentials {
-      background: #eef2f7;
-      border-left: 4px solid #6366f1;
-      padding: 12px 16px;
-      border-radius: 6px;
-      font-family: monospace;
-      margin: 8px 0;
-    }
+    .footer-links a { color: #6366f1; text-decoration: none; margin-right: 12px; }
+
     @media screen and (max-width: 600px){
-      .content { padding: 24px 16px; }
-      .header h1 { font-size:20px; }
+      .content { padding: 24px; }
+      .header { padding: 24px; }
     }
   </style>
 </head>
 <body>
-  <center style="width:100%; background:#f5f7fa; padding:30px 0;">
-    <div class="email-wrapper" role="article" aria-roledescription="email">
-      <div class="header">
-        <h1>Welcome to CivicEdge</h1>
-        <p style="margin:4px 0 0; font-size:14px;">Your solver account has been created</p>
-      </div>
-
-      <div class="content">
-        <p>Hi,</p>
-        <p>Your account has been created with the role of <strong>{{ role|capfirst }}</strong> by the CivicEdge admin team. Below are your login details.</p>
-
-        <div class="card">
-          <p style="margin:4px 0 8px;"><strong>Login Credentials</strong></p>
-          <div class="credentials">
-            <div><strong>Email:</strong> {{ email }}</div>
-            <div><strong>Temporary Password:</strong> {{ password }}</div>
-          </div>
-          <p style="margin:4px 0;">For security, please <strong>change your password on first login</strong>.</p>
-          <a href="{{ login_url }}" class="btn" target="_blank" rel="noopener">Log in to CivicEdge</a>
-        </div>
-
-        <p>If you did not expect this email, please contact support immediately.</p>
-
-        <hr style="border:none; border-top:1px solid #e3e8ee; margin:32px 0;">
-
-        <p class="small">
-          Pro tip: For better security, avoid reusing passwords and consider enabling additional account protections if available.
-        </p>
-      </div>
-
-      <div class="footer">
-        <p>CivicEdge • Building smarter cities together</p>
-        <p class="small">
-          This email was sent to <strong>{{ email }}</strong>. If you didn’t request this, reach out to support. 
-        </p>
-        <p class="small">
-          <a href="{{ unsubscribe_url }}" style="color:#6366f1; text-decoration:none;">Unsubscribe</a> • CivicEdge Admin Team
-        </p>
-        <p class="small">
-          © {{ current_year }} CivicEdge. All rights reserved.
-        </p>
-      </div>
+  <div class="email-wrapper">
+    <div class="header">
+      <div class="brand">CivicEdge Platform</div>
+      <h1>Account Provisioning Notice</h1>
     </div>
-  </center>
+
+    <div class="content">
+      <div class="notice-bar">
+        <strong>System Action Required:</strong> This is a formal notification that an administrative account has been provisioned under your credentials.
+      </div>
+
+      <p style="font-size: 15px; line-height: 1.6;">
+        Greetings,<br><br>
+        The CivicEdge Administration Team has finalized your registration as a <strong>{{ role|upper }}</strong>. Your access level grants you authority to manage civic resolutions within the <strong>Solver</strong> ecosystem.
+      </p>
+
+      <table class="credential-table">
+        <tr class="credential-row">
+          <td class="credential-label">System ID</td>
+          <td class="credential-value">{{ email }}</td>
+        </tr>
+        <tr>
+          <td class="credential-label">Temporary Key</td>
+          <td class="credential-value" style="color: #e11d48;">{{ password }}</td>
+        </tr>
+      </table>
+
+      <p style="font-size: 13px; color: #64748b; line-height: 1.5;">
+        <strong>Security Protocol:</strong> For governance compliance, you are required to rotate this temporary password immediately upon your first session. This link will remain active for 24 hours.
+      </p>
+
+      <a href="{{ login_url }}" class="btn">Authenticate & Access Portal</a>
+    </div>
+
+    <div class="footer">
+      <p style="margin-bottom: 16px;">
+        <strong>Official Notification</strong><br>
+        This email was issued by the CivicEdge Governance System. If you are not the intended recipient of this administrative credential, please notify <u>governance@civicedge.com</u> immediately.
+      </p>
+      <div class="footer-links">
+        <a href="{{ privacy_policy_url }}">Privacy Policy</a>
+        <a href="{{ security_url }}">Security Whitepaper</a>
+      </div>
+      <p style="margin-top: 20px; font-size: 11px; color: #94a3b8;">
+        © {{ current_year }} CivicEdge Global. All rights reserved. <br>
+        Building smarter, accountable cities through technology.
+      </p>
+    </div>
+  </div>
 </body>
 </html>

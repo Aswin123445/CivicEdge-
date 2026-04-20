@@ -18,7 +18,7 @@ def handle_issue_reported(payload):
             actor=actor,            
             target_type=Notification.TargetType.ISSUE ,
             target_id=issue.id,
-            redirect_url=f"/complaints/{issue.id}"
+            redirect_url=f"/admin/execution/in-review/issues"
         )
         for admin in admins
     ]

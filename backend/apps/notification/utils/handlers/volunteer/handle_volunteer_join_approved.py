@@ -16,7 +16,7 @@ def handle_volunteer_join_approved(payload):
         message=f"You have been approved to join the group '{group.name}'.",
         actor=actor,
 
-        target_type=Notification.TargetType.VOLUNTEER_APPROVED,
+        target_type=Notification.TargetType.VOLUNTEER,
         target_id=group.id,
         redirect_url=f"/volunteer-army/group/{group.id}",
     )

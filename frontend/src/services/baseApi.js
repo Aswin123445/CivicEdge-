@@ -6,6 +6,8 @@ export const baseApi = createApi({
   baseQuery: baseQueryWithReauth({
     baseUrl: "/api/v1",
   }),
+  refetchOnFocus: true,
+  refetchOnReconnect: true,
 
   tagTypes: [
     "Summary",
@@ -76,8 +78,11 @@ export const baseApi = createApi({
     "AdminPosts",
     "AdminCategory",
     "ModerationLogs",
-    
-    
+    "AdminActivityLogs",
+    "AdminCategoryList",
+    "AdminZoneList",
+    "AdminBehavioralList",
+    "AdminMetrics"
   ],
 
   endpoints: () => ({}),

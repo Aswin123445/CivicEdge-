@@ -1,6 +1,8 @@
 from rest_framework.exceptions import ValidationError
 from apps.forum.selectors.admin.get_forum_comment_selector import get_forum_comment
 from apps.forum.models.moderation_log import ModerationLog
+from apps.notification.models.activiity_log import ActivityAction, ActivityEntity
+from apps.notification.services.create_activity_log import create_activity
 
 
 def admin_moderate_comment(*, moderator, comment_id, data):
@@ -44,6 +46,12 @@ def admin_moderate_comment(*, moderator, comment_id, data):
             "previous_status": old_status,
             "new_status": comment.status,
         },
+    )
+    create_activity(
+        user=moderator,
+        entity=ActivityEntity.FORUM,
+        action=ActivityAction.MODERATED,
+        message=f"Comment {comment.content} moderated",
     )
 
     return comment

@@ -1,3 +1,4 @@
+from apps.issue_execution.utils.enums.solver_task_status import SolverTaskStatus
 from shared.enums.user_role import UserRole
 
 class SolverHomeBuilder:
@@ -14,6 +15,8 @@ class SolverHomeBuilder:
                 "availability": user.profile.is_available,
                 "email": user.email,
                 "bio": user.profile.bio,
+                "task_completed": user.assigned_solver_tasks.filter(status = SolverTaskStatus.COMPLETED).count(),
+                "task_completion_percent": user.assigned_solver_tasks.filter(status = SolverTaskStatus.COMPLETED).count() * 100 / user.assigned_solver_tasks.count(),
                 # "completion": ProfileService.completion(user),
             },
             # "dashboard": {

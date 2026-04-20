@@ -18,7 +18,7 @@ def handle_task_approved_by_admin(payload):
         message=f"Your work for issue '{task.issue.title}' has been approved.",
         actor=actor,
 
-        target_type=Notification.TargetType.TASK_APPROVAL,
+        target_type=Notification.TargetType.TASK,
         target_id=task.id,
         redirect_url=f"/solver/task/{task.id}",
     )

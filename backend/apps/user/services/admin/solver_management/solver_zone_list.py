@@ -4,4 +4,4 @@ class ZoneService:
 
     @staticmethod
     def get_all_zones():
-        return Zone.objects.all().order_by("name")
+        return Zone.objects.filter(is_active=True).order_by("name")

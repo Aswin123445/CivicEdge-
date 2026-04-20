@@ -26,7 +26,6 @@ const NotificationItem = forwardRef((props, ref) => {
   } = notif || {};
 
   const date = formatDate(created_at);
-
   const itemRef = useMarkAsReadOnView({
     id,
     isUnread: is_unread,

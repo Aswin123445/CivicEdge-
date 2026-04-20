@@ -1,5 +1,5 @@
 import React from "react";
-import { Youtube, Github } from "lucide-react";
+import { Youtube, Github,Linkedin } from "lucide-react";
 
 const AdminFooter = () => {
   return (
@@ -28,7 +28,7 @@ const AdminFooter = () => {
         {/* Right: Social Icons */}
         <div className="flex justify-center md:justify-end gap-5">
           <a
-            href="https://www.youtube.com"
+            href="https://www.youtube.com/@AswinSandeep"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="YouTube"
@@ -36,9 +36,21 @@ const AdminFooter = () => {
           >
             <Youtube className="w-5 h-5" />
           </a>
-
           <a
-            href="https://github.com/your-github-username"
+            href="https://www.linkedin.com/in/your-linkedin-username"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            className="
+              text-blue-300
+              hover:text-white
+              transition-colors
+            "
+          >
+            <Linkedin className="w-5 h-5" />
+          </a>
+          <a
+            href="https://github.com/Aswin123445"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"

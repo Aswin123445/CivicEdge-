@@ -6,7 +6,7 @@ export default function ForumManagementLayout() {
   const reports = ["/admin/forum/reports"];
   const post = ["/admin/forum/posts"]
   const category = ["/admin/forum/category"]
-  const logs = ["/admin/logs/moderation"]
+  const logs = ["/admin/forum/moderation"]
 
   const isReports = reports.some((path) => location.pathname.startsWith(path));
   const isPosts = post.some((path) => location.pathname.startsWith(path));
@@ -55,7 +55,7 @@ export default function ForumManagementLayout() {
           Category
         </NavLink>
         <NavLink
-          to="/admin/logs/moderation"
+          to="/admin/forum/moderation"
           className={() =>
             `px-4 py-2 flex-shrink-0 transition-colors duration-200 
             ${

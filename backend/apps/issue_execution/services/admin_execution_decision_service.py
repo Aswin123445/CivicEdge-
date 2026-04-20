@@ -7,6 +7,8 @@ from apps.issue_execution.models.execution_proof import ExecutionProof
 from apps.issues.services.timeline_service import add_issue_timeline_event
 from apps.notification.services.dispatcher import NotificationDispatcher
 from apps.notification.utils.event_constants import NotificationEvent
+from apps.notification.models.activiity_log import ActivityAction, ActivityEntity
+from apps.notification.services.create_activity_log import create_activity
 
 
 @transaction.atomic
@@ -66,7 +68,12 @@ def review_execution_completion(*, admin, proof, data):
         proof.reviewed_by = admin 
         proof.admin_message = data["reason"]
         proof.save(update_fields=["review_status", "reviewed_by", "admin_message"])
-
+        create_activity(
+            user=admin,
+            entity=ActivityEntity.TASK,
+            action=ActivityAction.COMPLETED,
+            message=f"Task {task.reference_id} completed successfully",
+        )
         return {
             "detail": "Execution approved. Issue resolved."
         }

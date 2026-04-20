@@ -3,9 +3,11 @@ import useIssueHomePageService from "../../hooks/home_page_service";
 import {civicIconMap} from '../../../../utils/civicIconMap';
 import CategoryCardSkeleton from "../../ui/skeltons/CategoryCardSkeleton ";
 
+import * as Icons from "lucide-react";
+
 export default function CategorySection() {
   const { categoryData, categoryFetching, categoryLoading } = useIssueHomePageService();
-  
+
   return (
     <section className="py-24 px-6">
       <div className="max-w-7xl mx-auto">
@@ -14,13 +16,25 @@ export default function CategorySection() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10">
           {categoryFetching || categoryLoading ? (
-            <CategoryCardSkeleton/>
+            <CategoryCardSkeleton />
           ) : (
-            categoryData?.map(({ id, name, icon}) => {
-              const Icon = civicIconMap[icon];
+            categoryData?.map(({ id, name, icon }) => {
+              const Icon = Icons[icon] || Icons.HelpCircle;
+
               return (
-                <CategoryCard key={id} icon={<Icon />} label={name} id={id} />
-              )
+                <CategoryCard
+                  key={id}
+                  icon={
+                    <Icon
+                      size={22}
+                      strokeWidth={1.5}
+                      className="text-slate-700"
+                    />
+                  }
+                  label={name}
+                  id={id}
+                />
+              );
             })
           )}
         </div>

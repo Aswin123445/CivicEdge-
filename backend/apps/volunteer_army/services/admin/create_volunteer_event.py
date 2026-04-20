@@ -5,6 +5,8 @@ from apps.volunteer_army.models.volunteer_event import (
     EventStatus,
 )
 from apps.volunteer_army.models.volunteer_group import VolunteerGroupStatus
+from apps.notification.models.activiity_log import ActivityAction, ActivityEntity
+from apps.notification.services.create_activity_log import create_activity
 
 
 def create_volunteer_event(
@@ -45,5 +47,10 @@ def create_volunteer_event(
         status=EventStatus.DRAFT,
         created_by=by,
     )
-
+    create_activity(
+        user=by,
+        entity=ActivityEntity.EVENT,
+        action=ActivityAction.CREATED,
+        message=f"You have created the event {event.title}",
+    )
     return event

@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 const actions = [
   { title: "Raise Issues", icon: <Icons.Issues />,path:"/complaints"},
   { title: "Join Volunteer Army", icon: <Icons.Army />,path:"/volunteer-army/groups"},
-  { title: "Civic Talk", icon: <Icons.Talk />},
-  { title: "Take Polls", icon: <Icons.Polls />},
+  { title: "Take Polls", icon: <Icons.Polls />,path:"/poll/home "},
+  { title: "Civic Talk", icon: <Icons.Talk />,path:"/forum"},
+
 ];
 
 const QuickActions = () => {

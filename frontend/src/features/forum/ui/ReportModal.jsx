@@ -16,6 +16,7 @@ const ReportModal = ({
   payload,
   setPayload,
 }) => {
+  console.log(type)
   // --- INTERNAL STATE ---
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,9 +45,10 @@ const ReportModal = ({
 
   // --- LOGIC: Submission ---
   const handleFormSubmit = async (e) => {
+    console.log("handleFormSubmit")
     e.preventDefault();
     setError(null);
-
+    
     // Validation
     if (!payload.reason.trim()) {
       setError("Please provide a reason for this report.");
@@ -67,7 +69,6 @@ const ReportModal = ({
       textareaRef.current?.focus();
       return;
     }
-
     setIsSubmitting(true);
     try {
       await onSubmit({ ...payload, target_type: type, target_id: id });
@@ -122,7 +123,7 @@ const ReportModal = ({
         </div>
 
         {/* FORM BODY */}
-        <form onSubmit={handleFormSubmit}>
+        <form onSubmit={(e) => handleFormSubmit(e)}>
           <div className="p-6 space-y-4">
             <div className="space-y-2">
               <label className="text-sm font-semibold text-slate-700">

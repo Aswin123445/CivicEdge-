@@ -8,6 +8,8 @@ from apps.issue_execution.models.solver_task import SolverTask
 from apps.issues.services.timeline_service import add_issue_timeline_event
 from apps.notification.services.dispatcher import NotificationDispatcher
 from apps.notification.utils.event_constants import NotificationEvent
+from apps.notification.models.activiity_log import ActivityAction, ActivityEntity
+from apps.notification.services.create_activity_log import create_activity
 
 
 @transaction.atomic
@@ -106,6 +108,12 @@ def submit_field_verification(*, solver, task: SolverTask):
             "report": report,
             "actor": solver
         }
+    )
+    create_activity(
+        user=solver,
+        entity=ActivityEntity.TASK,
+        action=ActivityAction.UPDATED,
+        message=f"Submitted verification report for issue: {task.issue.title}",
     )
 
     return report

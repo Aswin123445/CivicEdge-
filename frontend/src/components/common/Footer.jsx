@@ -1,11 +1,10 @@
 import React from "react";
-import { Youtube, Linkedin } from "lucide-react";
+import { Youtube, Linkedin, Github } from "lucide-react";
 
 const SolverFooter = () => {
   return (
     <footer className="bg-blue-700 text-blue-200 border-t border-blue-700">
       <div className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 md:grid-cols-3 items-center gap-6 text-sm">
-        
         {/* Left: Brand */}
         <div className="text-center md:text-left">
           © {new Date().getFullYear()}{" "}
@@ -16,7 +15,7 @@ const SolverFooter = () => {
         <div className="text-center">
           Developed by{" "}
           <a
-            href="https://www.linkedin.com/in/your-linkedin-username"
+            href="https://www.linkedin.com/in/aswinsandeep/"
             target="_blank"
             rel="noopener noreferrer"
             className="
@@ -32,7 +31,7 @@ const SolverFooter = () => {
         {/* Right: Social Icons */}
         <div className="flex justify-center md:justify-end gap-5">
           <a
-            href="https://www.youtube.com"
+            href="https://www.youtube.com/@AswinSandeep"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="YouTube"
@@ -57,6 +56,19 @@ const SolverFooter = () => {
             "
           >
             <Linkedin className="w-5 h-5" />
+          </a>
+          <a
+            href="https://github.com/Aswin123445"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+            className="
+    text-gray-300
+    hover:text-white
+    transition-colors
+  "
+          >
+            <Github className="w-5 h-5" />
           </a>
         </div>
       </div>

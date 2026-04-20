@@ -19,7 +19,7 @@ class IssueCategory(models.Model):
     description = models.TextField(blank=True)
 
     display_order = models.PositiveIntegerField(default=0)
-    icon = models.CharField(max_length=100, blank=True)
+    icon = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
 
     created_at = models.DateTimeField(auto_now_add=True)

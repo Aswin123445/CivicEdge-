@@ -1,8 +1,8 @@
 from rest_framework.exceptions import ValidationError
 from apps.forum.selectors.admin.get_category_selector import get_category
 
-def toggle_category(*, category_id):
-    category = get_category(category_id=category_id)
+def toggle_category(*, category):
+    category = get_category(category=category)
 
     if not category:
         raise ValidationError("Category not found")

@@ -33,7 +33,7 @@ def create_solver(validated_data: dict):
                 role = user.role,
                 raw_password = password,
                 username = name,
-                login_path = "/api/v1/user/solver/login"           
+                login_path = "/auth/solver/login"           
             )
             return user
 
