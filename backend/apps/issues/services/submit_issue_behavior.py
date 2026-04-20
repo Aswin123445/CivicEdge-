@@ -7,7 +7,6 @@ from rest_framework.exceptions import PermissionDenied
 from apps.issues.models.issues import Issue
 @transaction.atomic
 def submit_issue_behavior(*, issue, user, responses):
-    
     if issue.draft_step != Issue.DraftStep.EVIDENCE:
         raise PermissionDenied("Not allowed to perform this action.")
     # Fetch applicable prompts
@@ -53,6 +52,6 @@ def submit_issue_behavior(*, issue, user, responses):
     answered_ids = set(
         issue.behavioral_responses.values_list("prompt_id", flat=True)
     )
-    if set(prompts_by_id.keys()).issubset(answered_ids):
+    if answered_ids.issubset(set(prompts_by_id.keys())):
         issue.draft_step = issue.DraftStep.BEHAVIOR
         issue.save(update_fields=["draft_step"])

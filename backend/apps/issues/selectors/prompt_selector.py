@@ -8,4 +8,4 @@ def get_behavioral_prompts(*, is_active=None, category_id=None):
     if category_id:
         queryset = queryset.filter(category_id=category_id)
 
-    return queryset.order_by("display_order")
+    return queryset.order_by("-created_at")
