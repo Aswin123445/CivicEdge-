@@ -16,15 +16,21 @@ const MapSearchBox = ({ onSelect }) => {
     dropdownStyle,
     handleSelect
   } = useLocationUiHook(onSelect);
+
+  const handleSearchChange = (e) => {
+    if (!results.includes(e.target.value)) {
+      setQuery(e.target.value);
+    }
+  }
   return (
     <>
-      {/* 🔍 Search Input */}
+      {/*  Search Input */}
       <div ref={containerRef} className="relative">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
         <input
           ref={inputRef}
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {handleSearchChange(e)}}
           placeholder="Search place or landmark"
           className="
             w-full pl-11 pr-4 py-2.5
@@ -40,7 +46,7 @@ const MapSearchBox = ({ onSelect }) => {
         />
       </div>
 
-      {/* 📦 Results (Portal) */}
+      {/*  Results (Portal) */}
       <AnimatePresence>
         {showResults && results.length > 0 && dropdownStyle && (
           <Portal>

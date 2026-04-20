@@ -17,7 +17,8 @@ export default function useProfileHook() {
     { data: profile_data, isLoading: profle_loading, isError: profileError },
   ] = useUpdateProfileMutation();
   const handleUpload = async (file) => {
-    // send to server
+    console.log("hieiofo",'adadsofiofjwoijf woiefqwor rieiqoj')
+     // send to server
     if (!file) return;
     try {
       if (!imageFileExtensionValidaator(file)) {
@@ -39,7 +40,7 @@ export default function useProfileHook() {
       return;
     }
     try {
-      uploadAvatar(file).unwrap();
+      await uploadAvatar(file).unwrap();
     } catch (error) {
       const message = extractErrorMessage(error);
       errorToast({

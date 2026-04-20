@@ -222,7 +222,6 @@ const BehavioralPromptPage = () => {
                     <tr>
                       <th className="px-6 py-4">Question</th>
                       <th className="px-6 py-4">Type</th>
-                      <th className="px-6 py-4">Category</th>
                       <th className="px-6 py-4">Order</th>
                       <th className="px-6 py-4">Status</th>
                       <th className="px-6 py-4"></th>
@@ -244,9 +243,7 @@ const BehavioralPromptPage = () => {
                             {prompt.response_type}
                           </span>
                         </td>
-                        <td className="px-6 py-4 text-sm text-slate-400">
-                          {prompt.category_name}
-                        </td>
+
                         <td className="px-6 py-4 text-sm font-mono text-slate-500">
                           {prompt.display_order}
                         </td>
@@ -350,8 +347,6 @@ const BehavioralPromptPage = () => {
                       }
                     >
                       <option value="YES_NO">YES_NO</option>
-                      <option value="MULTIPLE_CHOICE">MULTIPLE_CHOICE</option>
-                      <option value="SCALE">SCALE</option>
                     </select>
                   </div>
                   <div className="space-y-2">

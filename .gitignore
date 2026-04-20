@@ -6,3 +6,6 @@ __pycache__/
 *.pyo
 *.pyd
 .vscode/
+.sixth/
+review_reports/
+planning_resource/

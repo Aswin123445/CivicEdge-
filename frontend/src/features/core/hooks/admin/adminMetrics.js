@@ -8,7 +8,6 @@ export default function useAdminMetrics() {
     isLoading: metricsLoading,
     isFetching: metricsFetching,
   } = useGetAdminMetricsQuery();
-  console.log(data,'data')
   const {
     data: logsdata,
     isLoading: activityLoading,

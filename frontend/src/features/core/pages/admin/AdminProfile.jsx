@@ -60,7 +60,6 @@ const AdminProfile = () => {
     useProfileHook();
 
   const { adminData, metricsLoading, metricsFetching } = useAdminMetrics();
-  console.log(adminData);
   const { userData, userDataLoading, userDataFetching } = useCitizenService();
   const name = capitalizeWords(userData?.profile?.name || "Admin");
   const isPageLoading = userDataLoading || userDataFetching || profle_loading;

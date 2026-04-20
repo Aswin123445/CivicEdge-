@@ -106,7 +106,7 @@ export default function useAdminCreatePoll() {
       options: formData.options.map((o) => ({ text: o.text })),
     };
     try {
-      await createPoll(payload);
+      await createPoll(payload).unwrap();
       successToast({
         title: "Action Successfull",
         description: "Poll created successfully",

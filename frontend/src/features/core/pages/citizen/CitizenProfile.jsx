@@ -155,10 +155,7 @@ const CitizenProfile = () => {
         <SectionHeader />
 
         <div className="w-full">
-          {/* Grid Layout: 
-          - 1 column on mobile 
-          - 3 columns on medium screens and up
-      */}
+
           {activityFetching || activityLoading ? (
             <MyActivitySkeleton />
           ) : (

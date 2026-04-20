@@ -25,7 +25,6 @@ const SolverProfile = () => {
   const { handleUpload, profle_loading, avatarIsLoading, updateProfileData } =
     useProfileHook();
   const { userData, userDataLoading, userDataFetching } = useCitizenService();
-  console.log(userData);
   const pageLoad = userDataLoading || profle_loading || userDataFetching;
   const name = capitalizeWords(userData?.profile?.name || "User");
   const [activeTab, setActiveTab] = useState("impact");

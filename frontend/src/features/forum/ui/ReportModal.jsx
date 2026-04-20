@@ -16,7 +16,6 @@ const ReportModal = ({
   payload,
   setPayload,
 }) => {
-  console.log(type)
   // --- INTERNAL STATE ---
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,7 +44,6 @@ const ReportModal = ({
 
   // --- LOGIC: Submission ---
   const handleFormSubmit = async (e) => {
-    console.log("handleFormSubmit")
     e.preventDefault();
     setError(null);
     

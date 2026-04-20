@@ -32,7 +32,7 @@ def create_poll(*, admin_user, data):
     create_activity(
         user=admin_user,
         entity=ActivityEntity.POLL,
-        action=ActivityAction,
+        action=ActivityAction.CREATED,
         message=f"poll  {poll.question} created",
     )
     return poll

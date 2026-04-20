@@ -19,7 +19,6 @@ export const activityLogApi = baseApi.injectEndpoints({
       },
       providesTags: ["AdminActivityLogs"],
       transformResponse: (response) => {
-        console.log(response,'response from service')
         return response;
       },
     }),

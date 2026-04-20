@@ -6,7 +6,7 @@ export const baseApi = createApi({
   baseQuery: baseQueryWithReauth({
     baseUrl: "/api/v1",
   }),
-  refetchOnFocus: true,
+  refetchOnFocus: false,
   refetchOnReconnect: true,
 
   tagTypes: [

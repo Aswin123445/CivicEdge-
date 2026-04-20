@@ -8,7 +8,6 @@ export default function useReportContent() {
     const [payload, setPayload] = useState({target_type:"",target_id:"",reason:""});
 
     const handleReport = async(data) => {
-        console.log(data)
         try {
           await reportContent(data).unwrap();
           successToast({ title: "Success", description: "Report submitted successfully" });
