@@ -4,17 +4,63 @@ import { useAdminSolver } from "../../hooks/admin/useAdminSolver";
 
 function SolverCreateModal({ onClose, onSave }) {
   const [name, setName] = useState("");
-  const [password,setPassword] = useState("");
-  const [email,setMail] = useState("")
-  const [zoneId,setZoneId] = useState("")
+  const [password, setPassword] = useState("");
+  const [email, setMail] = useState("");
+  const [zoneId, setZoneId] = useState("");
+  const [errors, setErrors] = useState({});
+  const { zones } = useAdminSolver();
 
-  const {zones} = useAdminSolver()
+  const validate = () => {
+    const newErrors = {};
+
+    // Name validation
+    if (!name.trim()) {
+      newErrors.name = "Name is required";
+    } else if (!/^[A-Za-z\s]+$/.test(name)) {
+      newErrors.name = "Only alphabets and spaces allowed";
+    } else if (name.length < 3) {
+      newErrors.name = "Name must be at least 3 characters";
+    }
+
+    // Email validation
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = "Invalid email format";
+    }
+
+    // Password validation
+    if (!password) {
+      newErrors.password = "Password is required";
+    } else if (password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+    } else if (!/[A-Z]/.test(password)) {
+      newErrors.password = "Must contain at least one uppercase letter";
+    } else if (!/[0-9]/.test(password)) {
+      newErrors.password = "Must contain at least one number";
+    }
+
+    // Zone validation
+    if (!zoneId) {
+      newErrors.zoneId = "Please select a zone";
+    }
+
+    return newErrors;
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
+  const validationErrors = validate();
+
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+    return;
+  }
+
     const zone_id = zoneId;
-    onSave({  name ,password, email, zone_id }); // Pass updated values
+    onSave({ name, password, email, zone_id }); // Pass updated values
     onClose();
   };
+  console.log(errors);
 
   return ReactDOM.createPortal(
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
@@ -43,44 +89,52 @@ function SolverCreateModal({ onClose, onSave }) {
               className="w-full p-2 rounded-md bg-[#1e1e1e] text-gray-200 border border-gray-600 focus:outline-none"
               required
             />
+            {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
             <div className="pt-2">
-             <label className="block text-sm text-gray-400 mb-1">
-               Zone of Operation
-             </label>
-           
-             <select
-               value={zoneId}
-               onChange={(e) => setZoneId(e.target.value)}
-               className="w-full p-2 rounded-md bg-[#1e1e1e] text-gray-200 border border-gray-600 focus:outline-none"
-               required
-             >
-               {/* Default message */}
-               <option value="" disabled>
-                 Select a zone
-               </option>
-               {/* Options from list */}
-               {zones.map((r) => (
-                 <option key={r.id} value={r.id}>
-                   {r.name}
-                 </option>
-               ))}
-             </select>
-           </div>
+              <label className="block text-sm text-gray-400 mb-1">
+                Zone of Operation
+              </label>
 
-            <label className="block pt-2 text-sm text-gray-400 mb-1">Email</label>
+              <select
+                value={zoneId}
+                onChange={(e) => setZoneId(e.target.value)}
+                className="w-full p-2 rounded-md bg-[#1e1e1e] text-gray-200 border border-gray-600 focus:outline-none"
+                required
+              >
+                {/* Default message */}
+                <option value="" disabled>
+                  Select a zone
+                </option>
+                {/* Options from list */}
+                {zones.map((r) => (
+                  <option key={r.id} value={r.id}>
+                    {r.name}
+                  </option>
+                ))}
+              </select>
+              {errors.zoneId && <p className="text-red-500 text-sm">{errors.zoneId}</p>}
+            </div>
+
+            <label className="block pt-2 text-sm text-gray-400 mb-1">
+              Email
+            </label>
             <input
               value={email}
               onChange={(e) => setMail(e.target.value)}
               className="w-full p-2 rounded-md bg-[#1e1e1e] text-gray-200 border border-gray-600 focus:outline-none"
               required
             />
-            <label className="block pt-2 text-sm text-gray-400 mb-1">Password</label>
+            {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+            <label className="block pt-2 text-sm text-gray-400 mb-1">
+              Password
+            </label>
             <input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full p-2 rounded-md bg-[#1e1e1e] text-gray-200 border border-gray-600 focus:outline-none"
               required
             />
+            {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
           </div>
 
           {/* Buttons */}
@@ -102,7 +156,7 @@ function SolverCreateModal({ onClose, onSave }) {
         </form>
       </div>
     </div>,
-    document.getElementById("modal-root")
+    document.getElementById("modal-root"),
   );
 }
-export default SolverCreateModal
+export default SolverCreateModal;

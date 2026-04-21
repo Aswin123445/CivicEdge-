@@ -3,22 +3,22 @@ export function extractErrorMessage(error) {
 
   if (!data) return 'Something went wrong. Please try again.';
 
-  // ✅ NEW: Handle array response directly
+  //  NEW: Handle array response directly
   if (Array.isArray(data)) {
     return data[0];
   }
 
-  // 1️⃣ DRF non-field errors
+  //  DRF non-field errors
   if (Array.isArray(data.non_field_errors)) {
     return data.non_field_errors[0];
   }
 
-  // 2️⃣ DRF detail message
+  //  DRF detail message
   if (typeof data.detail === 'string') {
     return data.detail;
   }
 
-  // 3️⃣ Field-level errors
+  //  Field-level errors
   if (typeof data === 'object') {
     const firstKey = Object.keys(data)[0];
     const firstError = data[firstKey];
@@ -28,6 +28,6 @@ export function extractErrorMessage(error) {
     }
   }
 
-  // 4️⃣ Fallback
+  //  Fallback
   return 'Something went wrong. Please try again.';
 }

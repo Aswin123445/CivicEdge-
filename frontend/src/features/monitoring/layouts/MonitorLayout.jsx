@@ -2,7 +2,7 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 
 export default function MonitorLayout() {
   const location = useLocation();
-  const activityLog = ["/admin/monitoring/activity-log"];
+  const activityLog = ["/dashboard/monitoring/activity-log"];
 
   const isActivityLog = activityLog.some((path) =>
     location.pathname.startsWith(path),
@@ -12,7 +12,7 @@ export default function MonitorLayout() {
     <>
       <div className="flex overflow-x-auto whitespace-nowrap border-b border-gray-700 mb-1 gap-2 px-2 custom-scrollbar">
         <NavLink
-          to="/admin/execution/tasks/list"
+          to="/dashboard/execution/tasks/list"
           className={() =>
             `px-4 py-2 flex-shrink-0 transition-colors duration-200 
             ${

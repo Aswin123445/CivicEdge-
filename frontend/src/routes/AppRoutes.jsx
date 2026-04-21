@@ -405,7 +405,7 @@ export default function AppRoutes() {
             <Route element={<AdminFooterLayout />}>
               {/* User Management Section */}
               <Route
-                path="/admin/management"
+                path="/dashboard/management"
                 element={<UserManagementLayout />}
               >
                 <Route
@@ -435,7 +435,7 @@ export default function AppRoutes() {
               </Route>
 
               <Route
-                path="/admin/execution"
+                path="/dashboard/execution"
                 element={<ExecutionManagementLayout />}
               >
                 <Route
@@ -516,7 +516,7 @@ export default function AppRoutes() {
                 />
               </Route>
               <Route
-                path="/admin/volunteer"
+                path="/dashboard/volunteer"
                 element={<VolunteerManagementLayout />}
               >
                 <Route
@@ -568,7 +568,7 @@ export default function AppRoutes() {
                   }
                 />
                 <Route
-                  path="/admin/volunteer/memberships"
+                  path="/dashboard/volunteer/memberships"
                   element={
                     <Suspense fallback={<MembershipRequestsSkeleton />}>
                       <AdminPendingMemberships />
@@ -576,7 +576,7 @@ export default function AppRoutes() {
                   }
                 />
                 <Route
-                  path="/admin/volunteer/memberships/:id"
+                  path="/dashboard/volunteer/memberships/:id"
                   element={
                     <Suspense fallback={<MembershipRequestsSkeleton />}>
                       <MembershipDetailsPage />
@@ -584,7 +584,7 @@ export default function AppRoutes() {
                   }
                 />
                 <Route
-                  path="/admin/volunteer/attendance"
+                  path="/dashboard/volunteer/attendance"
                   element={
                     <Suspense fallback={<AdminVolunteerGroupsPageSkeleton />}>
                       <EventAttendancePage />
@@ -592,9 +592,9 @@ export default function AppRoutes() {
                   }
                 />
               </Route>
-              <Route path="/admin" element={<ForumManagementLayout />}>
+              <Route path="/dashboard" element={<ForumManagementLayout />}>
                 <Route
-                  path="/admin/forum/reports"
+                  path="/dashboard/forum/reports"
                   element={
                     <Suspense fallback={<PendingReviewSkeleton />}>
                       <AdminReportsPage />
@@ -602,7 +602,7 @@ export default function AppRoutes() {
                   }
                 />
                 <Route
-                  path="/admin/forum/reports/:id"
+                  path="/dashboard/forum/reports/:id"
                   element={
                     <Suspense fallback={<ReportDetailSkeleton />}>
                       <AdminReportDetailPage />
@@ -610,7 +610,7 @@ export default function AppRoutes() {
                   }
                 />
                 <Route
-                  path="/admin/forum/posts"
+                  path="/dashboard/forum/posts"
                   element={
                     <Suspense fallback={<PendingReviewSkeleton />}>
                       <AdminPostsPage />
@@ -618,7 +618,7 @@ export default function AppRoutes() {
                   }
                 />
                 <Route
-                  path="/admin/forum/posts/:id"
+                  path="/dashboard/forum/posts/:id"
                   element={
                     <Suspense fallback={<PostDetailsSkeleton />}>
                       <AdminPostDetailPage />
@@ -626,7 +626,7 @@ export default function AppRoutes() {
                   }
                 />
                 <Route
-                  path="/admin/forum/category"
+                  path="/dashboard/forum/category"
                   element={
                     <Suspense fallback={<PendingReviewSkeleton />}>
                       <AdminCategoriesPage />
@@ -634,7 +634,7 @@ export default function AppRoutes() {
                   }
                 />
                 <Route
-                  path="/admin/forum/moderation"
+                  path="/dashboard/forum/moderation"
                   element={
                     <Suspense fallback={<PendingReviewSkeleton />}>
                       <AdminModerationLogsPage />
@@ -642,9 +642,9 @@ export default function AppRoutes() {
                   }
                 />
               </Route>
-              <Route path="/admin" element={<MonitorLayout />}>
+              <Route path="/dashboard" element={<MonitorLayout />}>
                 <Route
-                  path="/admin/monitoring/activity-log"
+                  path="/dashboard/monitoring/activity-log"
                   element={
                     <Suspense fallback={<PendingReviewSkeleton />}>
                       <AdminActivityLogsPage />
@@ -652,9 +652,9 @@ export default function AppRoutes() {
                   }
                 />
               </Route>
-              <Route path="/admin" element={<ResourceLayout />}>
+              <Route path="/dashboard" element={<ResourceLayout />}>
                 <Route
-                  path="/admin/resource/category"
+                  path="/dashboard/resource/category"
                   element={
                     <Suspense fallback={<PendingReviewSkeleton />}>
                       <CategoryManagementPage />
@@ -662,7 +662,7 @@ export default function AppRoutes() {
                   }
                 />
                 <Route
-                  path="/admin/resource/zones"
+                  path="/dashboard/resource/zones"
                   element={
                     <Suspense fallback={<PendingReviewSkeleton />}>
                       <ZoneManagementPage />
@@ -670,7 +670,7 @@ export default function AppRoutes() {
                   }
                 />
                 <Route
-                  path="/admin/resource/behavioral"
+                  path="/dashboard/resource/behavioral"
                   element={
                     <Suspense fallback={<PendingReviewSkeleton />}>
                       <BehavioralPromptPage />
@@ -678,9 +678,9 @@ export default function AppRoutes() {
                   }
                 />
               </Route>
-              <Route path="/admin" element={<PollManagementLayout />}>
+              <Route path="/dashboard" element={<PollManagementLayout />}>
                 <Route
-                  path="/admin/polls"
+                  path="/dashboard/polls"
                   element={
                     <Suspense fallback={<AdminVolunteerGroupsPageSkeleton />}>
                       <AdminPollManagementPage />
@@ -688,7 +688,7 @@ export default function AppRoutes() {
                   }
                 />
                 <Route
-                  path="/admin/polls/create"
+                  path="/dashboard/polls/create"
                   element={
                     <Suspense fallback={<AdminDashboardSkeleton />}>
                       <AdminCreatePollPage />
@@ -696,7 +696,7 @@ export default function AppRoutes() {
                   }
                 />
                 <Route
-                  path="/admin/polls/:id"
+                  path="/dashboard/polls/:id"
                   element={
                     <Suspense fallback={<AdminDashboardSkeleton />}>
                       <AdminPollDetailPage />
@@ -704,7 +704,7 @@ export default function AppRoutes() {
                   }
                 />
                 <Route
-                  path="/admin/polls/:id"
+                  path="/dashboard/polls/:id"
                   element={<AdminPollDetailLayout />}
                 >
                   <Route index element={<Navigate to="overview" replace />} />
@@ -728,7 +728,7 @@ export default function AppRoutes() {
                 </Route>
               </Route>
               <Route
-                path="/admin/dashboard"
+                path="/dashboard/home"
                 element={
                   <Suspense fallback={<AdminDashboardSkeleton />}>
                     <AdminDashboardMain />
@@ -736,10 +736,10 @@ export default function AppRoutes() {
                 }
               />
 
-              <Route path="/admin/profile" element={<AdminProfile />} />
-              <Route path="/admin/settings" element={<SettingsPage />} />
+              <Route path="/dashboard/profile" element={<AdminProfile />} />
+              <Route path="/dashboard/settings" element={<SettingsPage />} />
 
-              <Route path="/admin/test" element={<Test />} />
+              <Route path="/dashboard/test" element={<Test />} />
             </Route>
           </Route>
         </Route>

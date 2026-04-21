@@ -14,6 +14,7 @@ const DecisionModal = ({ type, onClose, onSubmit, isSubmitting }) => {
             <label className="block text-sm font-medium text-slate-400 mb-2">Reason for Decision (Internal)</label>
             <textarea 
               required
+              minLength = {3}
               name = 'reason'
               className="w-full bg-[#1e1e1e] border border-slate-700 rounded-lg p-3 text-slate-200 h-24 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
               placeholder="e.g. Work verified against photos..."
@@ -23,7 +24,7 @@ const DecisionModal = ({ type, onClose, onSubmit, isSubmitting }) => {
             <label className="block text-sm font-medium text-slate-400 mb-2">Message to Solver & Citizen </label>
             <textarea 
               required
-              minLength={3}
+              minLength={10}
               name = 'public_message'
               className="w-full bg-[#1e1e1e] border border-slate-700 rounded-lg p-3 text-slate-200 h-20 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
               placeholder="e.g. Issue successfully resolved..."

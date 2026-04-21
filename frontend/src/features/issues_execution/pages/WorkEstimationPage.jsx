@@ -13,7 +13,7 @@ const WorkEstimationPage = () => {
   const { draft_id } = useParams();
   const task_id = location.state?.task_id;
   const { task, taskLoading, taskFetching } = useSolverTaskDetail(task_id);
-  const { handleSubmit, loading, formData, setFormData } = useSolverEstimation(
+  const { handleSubmit, loading, formData, setFormData ,errors} = useSolverEstimation(
     draft_id,
     task_id,
   );
@@ -54,7 +54,8 @@ const WorkEstimationPage = () => {
             formData={formData}
             handleInputChange={handleInputChange}
             handleSubmit={handleSubmit}
-            loadin={loading}
+            loading={loading}
+            errors={errors}
           />
 
           {/* SIDEBAR COLUMN */}

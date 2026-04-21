@@ -29,7 +29,7 @@ const MembershipDetailHeader = ({ membership }) => {
   return (
     <header className="mb-8">
       <button
-        onClick={() => navigate("/admin/volunteer/memberships")}
+        onClick={() => navigate("/dashboard/volunteer/memberships")}
         className="flex items-center gap-2 text-slate-500 hover:text-slate-300 transition-colors mb-4 text-sm font-bold uppercase tracking-widest"
       >
         <ChevronLeft size={16} /> Back to Requests

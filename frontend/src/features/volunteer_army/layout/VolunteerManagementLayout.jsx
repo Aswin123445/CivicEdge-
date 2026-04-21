@@ -3,18 +3,18 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 export default function VolunteerManagementLayout() {
   const location = useLocation();
   const solverTask = [
-    "/admin/execution/tasks/list",
-    "/admin/execution/solver-tasks/",
+    "/dashboard/execution/tasks/list",
+    "/dashboard/execution/solver-tasks/",
   ];
 
-  const groups = ["/admin/volunteer/groups"];
+  const groups = ["/dashboard/volunteer/groups"];
 
-  const events = ["/admin/volunteer/events"];
+  const events = ["/dashboard/volunteer/events"];
 
-  const membership = ["/admin/volunteer/memberships"];
+  const membership = ["/dashboard/volunteer/memberships"];
 
   const attendance = [
-    "/admin/volunteer/attendance",
+    "/dashboard/volunteer/attendance",
   ];
 
   const isAttendancePath = attendance.some((path) =>
@@ -33,7 +33,7 @@ export default function VolunteerManagementLayout() {
     <>
       <div className="flex overflow-x-auto whitespace-nowrap border-b border-gray-700 mb-1 gap-2 px-2 custom-scrollbar">
         <NavLink
-          to="/admin/volunteer/groups"
+          to="/dashboard/volunteer/groups"
           className={() =>
             `px-4 py-2 flex-shrink-0 transition-colors duration-200 
             ${
@@ -47,7 +47,7 @@ export default function VolunteerManagementLayout() {
         </NavLink>
 
         <NavLink
-          to="/admin/volunteer/events"
+          to="/dashboard/volunteer/events"
           className={() =>
             `px-4 py-2 flex-shrink-0 transition-colors duration-200 
             ${
@@ -61,7 +61,7 @@ export default function VolunteerManagementLayout() {
         </NavLink>
 
         <NavLink
-          to="/admin/volunteer/memberships"
+          to="/dashboard/volunteer/memberships"
           className={() =>
             `px-4 py-2 flex-shrink-0 transition-colors duration-200 
             ${
@@ -75,7 +75,7 @@ export default function VolunteerManagementLayout() {
         </NavLink>
 
         <NavLink
-          to="/admin/volunteer/attendance"
+          to="/dashboard/volunteer/attendance"
           className={() =>
             `px-4 py-2 flex-shrink-0 transition-colors duration-200 
             ${
@@ -88,7 +88,7 @@ export default function VolunteerManagementLayout() {
           Attendance
         </NavLink>
         {/* <NavLink
-          to="/admin/execution/tasks/list"
+          to="/dashboard/execution/tasks/list"
           className={() =>
             `px-4 py-2 flex-shrink-0 transition-colors duration-200 
             ${
@@ -101,7 +101,7 @@ export default function VolunteerManagementLayout() {
           Recognition
         </NavLink>
         <NavLink
-          to="/admin/execution/tasks/list"
+          to="/dashboard/execution/tasks/list"
           className={() =>
             `px-4 py-2 flex-shrink-0 transition-colors duration-200 
             ${

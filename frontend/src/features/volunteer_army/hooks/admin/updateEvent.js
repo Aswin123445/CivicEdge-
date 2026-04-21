@@ -16,7 +16,7 @@ export default function useUpdateEvent(id) {
   const updateEventAction = async(data)=>{
     try{
       await updateEvent(data).unwrap();
-      navigate('/admin/volunteer/events')
+      navigate('/dashboard/volunteer/events')
       successToast({
         title: "Action Successfull",
         description: "Event updated successfully",

@@ -23,7 +23,7 @@ const AdminPollDetailLayout = () => {
       {/* 6.1 Header Section */}
       <header className="border-b border-slate-800 bg-[#1e1e1e] backdrop-blur-md sticky top-0 z-30">
         <div className="max-w-6xl mx-auto px-6 py-6">
-          <button onClick={() => navigate('/admin/polls')} className="flex items-center gap-2 text-slate-500 hover:text-slate-100 text-sm font-bold mb-4 transition-colors">
+          <button onClick={() => navigate('/dashboard/polls')} className="flex items-center gap-2 text-slate-500 hover:text-slate-100 text-sm font-bold mb-4 transition-colors">
             <ChevronLeft size={16} /> Back to Management
           </button>
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">

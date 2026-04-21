@@ -29,7 +29,7 @@ const AdminPollManagement = () => {
   const isLoading = adminFetchPollsLoading || adminFetchPollsFetching;
 
   const handleViewDetail = (poll) => {
-    navigate(`/admin/polls/${poll.id}`);
+    navigate(`/dashboard/polls/${poll.id}`);
   };
 
   const handleActionClose = (poll) => {

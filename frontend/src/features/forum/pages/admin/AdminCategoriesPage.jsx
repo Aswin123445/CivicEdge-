@@ -85,7 +85,7 @@ const AdminCategoriesPage = () => {
       name: newCategoryName,
     };
     try {
-      await createCategory(newCat);
+      await createCategory(newCat).unwrap();
       successToast({
         title: "Success",
         description: "Category created successfully.",

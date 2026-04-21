@@ -31,7 +31,7 @@ export default function useListReport() {
   const totalReport = data?.count || 0;
 
   const handleViewDetails = (id) => {
-    navigate(`/admin/forum/reports/${id}`);
+    navigate(`/dashboard/forum/reports/${id}`);
   };
   return {
     reports,

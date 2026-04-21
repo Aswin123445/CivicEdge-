@@ -15,8 +15,22 @@ const GroundVerificationPage = () => {
   const task_id = location.state?.task_id;
   const {task,taskLoading,taskFetching} = useSolverTaskDetail(task_id);
   const {onSubmit} = useGroundHook(draft_id,task_id);
+const validate = () => {
+  const newErrors = {};
+  const desc = formData.affected_area_description?.trim();
+
+  if (!desc) {
+    newErrors.affected_area_description = "Description is required";
+  } else if (desc.length < 10) {
+    newErrors.affected_area_description =
+      "Must be at least 10 characters";
+  }
+
+  return newErrors;
+};
   // --- STATE MANAGEMENT ---
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     is_issue_present: true,
     severity_level: 'MEDIUM',
@@ -42,14 +56,20 @@ const GroundVerificationPage = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    
-    // Simulate API: PATCH /solver/verification-draft/<task_id>/ground/
-    await onSubmit(formData);
-    setLoading(false);
-  };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const validationErrors = validate();
+
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+    return;
+  }
+
+  setLoading(true);
+  await onSubmit(formData);
+  setLoading(false);
+};
   if(taskLoading || taskFetching){
     return <SolverTaskDetailsSkeleton/>
   }
@@ -81,7 +101,7 @@ const GroundVerificationPage = () => {
                <SolverSeverityLevel formData={formData} setFormData={setFormData} />
 
                 {/* --- Section: Affected Area Description --- */}
-                <SolverEffectedSection formData={formData} handleInputChange={handleInputChange} />
+                <SolverEffectedSection formData={formData} handleInputChange={handleInputChange} error={errors.affected_area_description}/>
               </div>
 
               {/* --- Form Actions --- */}

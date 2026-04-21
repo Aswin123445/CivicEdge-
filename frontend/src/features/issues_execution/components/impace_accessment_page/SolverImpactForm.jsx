@@ -1,6 +1,12 @@
 import React from "react";
 
-const SolverImpactForm = ({ formData, handleInputChange, handleSubmit ,loading}) => {
+const SolverImpactForm = ({
+  formData,
+  handleInputChange,
+  handleSubmit,
+  loading,
+  errors,
+}) => {
   return (
     <form
       onSubmit={handleSubmit}
@@ -27,6 +33,11 @@ const SolverImpactForm = ({ formData, handleInputChange, handleSubmit ,loading})
               className="w-full h-32 p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all text-sm leading-relaxed"
               required
             ></textarea>
+            {errors?.public_impact_summary && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.public_impact_summary}
+              </p>
+            )}
           </div>
         </section>
 
@@ -56,6 +67,11 @@ const SolverImpactForm = ({ formData, handleInputChange, handleSubmit ,loading})
               <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-bold uppercase">
                 Citizens
               </span>
+              {errors?.estimated_people_affected && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.estimated_people_affected}
+                </p>
+              )}
             </div>
             <p className="text-[11px] text-slate-400 italic">
               Estimate based on nearby residents, businesses, or commuters.
@@ -83,6 +99,11 @@ const SolverImpactForm = ({ formData, handleInputChange, handleSubmit ,loading})
               className="w-full h-32 p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all text-sm leading-relaxed"
               required
             ></textarea>
+            {errors?.local_feedback_summary && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.local_feedback_summary}
+              </p>
+            )}
           </div>
         </section>
       </div>
@@ -90,7 +111,9 @@ const SolverImpactForm = ({ formData, handleInputChange, handleSubmit ,loading})
       {/* --- Form Actions --- */}
       <div className="p-6 bg-slate-50/80 border-t border-slate-100 flex items-center justify-between">
         <button
-          onClick={() =>{window.history.back()}}
+          onClick={() => {
+            window.history.back();
+          }}
           type="button"
           className="px-6 py-2.5 bg-white border border-slate-200 text-slate-700 font-bold rounded-lg hover:bg-slate-100 transition shadow-sm flex items-center gap-2"
         >

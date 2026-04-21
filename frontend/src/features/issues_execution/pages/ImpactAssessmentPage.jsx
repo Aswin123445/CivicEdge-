@@ -21,6 +21,7 @@ const ImpactAssessmentPage = () => {
     formData,
     setFormData,
     handleSubmit,
+    errors,
   } = useSolverImpact(draft_id,task_id);
 
   // --- STATE MANAGEMENT ---
@@ -61,6 +62,7 @@ const ImpactAssessmentPage = () => {
               handleInputChange={handleInputChange}
               handleSubmit={handleSubmit}
               loading={loading}
+              errors={errors}
             />
           </main>
 

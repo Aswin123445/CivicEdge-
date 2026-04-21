@@ -2,9 +2,9 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 
 export default function ResourceLayout() {
   const location = useLocation();
-  const category = ["/admin/resource/category"];
-  const zone = ["/admin/resource/zones"];
-  const behavioral = ["/admin/resource/behavioral"];
+  const category = ["/dashboard/resource/category"];
+  const zone = ["/dashboard/resource/zones"];
+  const behavioral = ["/dashboard/resource/behavioral"];
 
   const isBehavioral = behavioral.some((path) =>
     location.pathname.startsWith(path),
@@ -19,7 +19,7 @@ export default function ResourceLayout() {
     <>
       <div className="flex overflow-x-auto whitespace-nowrap border-b border-gray-700 mb-1 gap-2 px-2 custom-scrollbar">
         <NavLink
-          to="/admin/resource/category"
+          to="/dashboard/resource/category"
           className={() =>
             `px-4 py-2 flex-shrink-0 transition-colors duration-200 
             ${
@@ -32,7 +32,7 @@ export default function ResourceLayout() {
           Category
         </NavLink>
         <NavLink
-          to="/admin/resource/zones"
+          to="/dashboard/resource/zones"
           className={() =>
             `px-4 py-2 flex-shrink-0 transition-colors duration-200 
             ${
@@ -45,7 +45,7 @@ export default function ResourceLayout() {
           Zone
         </NavLink>
         <NavLink
-          to="/admin/resource/behavioral"
+          to="/dashboard/resource/behavioral"
           className={() =>
             `px-4 py-2 flex-shrink-0 transition-colors duration-200 
             ${

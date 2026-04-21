@@ -1,6 +1,6 @@
 import React from "react";
 
-const SolverEffectedSection = ({ formData, handleInputChange }) => {
+const SolverEffectedSection = ({ formData, handleInputChange, error }) => {
   return (
     <section className="space-y-4">
       <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
@@ -18,6 +18,8 @@ const SolverEffectedSection = ({ formData, handleInputChange }) => {
           className="w-full h-32 p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all text-sm"
           required
         ></textarea>
+
+        {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
       </div>
     </section>
   );

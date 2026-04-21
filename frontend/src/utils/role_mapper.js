@@ -1,5 +1,5 @@
  const ROLE_REDIRECT_MAP = {
-  admin: "/admin/dashboard",
+  admin: "/dashboard/home",
   solver: "/solver/dashboard",
   citizen: "/home",
 };

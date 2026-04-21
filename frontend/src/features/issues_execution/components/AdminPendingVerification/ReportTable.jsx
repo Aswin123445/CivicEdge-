@@ -80,7 +80,7 @@ export default function ReportTable({ tasks, pagination }) {
                   <button
                     onClick={() =>
                       navigate(
-                        `/admin/execution/verification-report/${task?.id}`,
+                        `/dashboard/execution/verification-report/${task?.id}`,
                       )
                     }
                     className="inline-flex items-center gap-1 text-blue-400"

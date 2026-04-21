@@ -26,7 +26,7 @@ def handle_report_submitted_to_admin(payload):
 
             "target_type": Notification.TargetType.REPORT,
             "target_id": report.id,
-            "redirect_url": f"/admin/execution/verification-report/{report.id}",
+            "redirect_url": f"/dashboard/execution/verification-report/{report.id}",
 
         }
         for admin in admins

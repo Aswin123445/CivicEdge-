@@ -52,7 +52,7 @@ export default function AdminMenu({ open, onClose, user }) {
           {/* USER IDENTITY */}
           {/* ===================== */}
           <button
-            onClick={() => go("/admin/profile")}
+            onClick={() => go("/dashboard/profile")}
             className="
               w-full flex items-center gap-4
               p-4 text-left
@@ -80,14 +80,14 @@ export default function AdminMenu({ open, onClose, user }) {
             <SolverMenuItem
               icon={User}
               label="Profile"
-              onClick={() => go("/admin/profile")}
+              onClick={() => go("/dashboard/profile")}
               className="text-white hover:bg-neutral-800"
             />
 
             <SolverMenuItem
               icon={Settings}
               label="Settings"
-              onClick={() => go("/admin/settings")}
+              onClick={() => go("/dashboard/settings")}
               className="text-white hover:bg-neutral-800"
             />
 

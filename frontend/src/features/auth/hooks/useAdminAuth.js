@@ -10,7 +10,7 @@ export function useAdminAuth() {
     try {
       await login(data).unwrap(); // result contains your API response
       // Navigate based on role
-      navigate("/admin/dashboard", { replace: true });
+      navigate("/dashboard/dashboard", { replace: true });
     } catch (error) {
       const message = extractErrorMessage(error);
       errorToast({title:"Login failed",description:`${message || 'An error occurred during login.'}`});

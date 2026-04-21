@@ -78,7 +78,7 @@ export default function useCreateEvent() {
         description: "Event has been created mark to active to take it live",
       });
       setFormData(INITIAL_FORM);
-      navigate("/admin/volunteer/events");
+      navigate("/dashboard/volunteer/events");
     } catch (error) {
       const message = extractErrorMessage(error);
       errorToast({ title: "Event creation failed", description: message });

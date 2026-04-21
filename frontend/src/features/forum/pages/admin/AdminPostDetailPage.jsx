@@ -71,7 +71,7 @@ const AdminPostDetailPage = () => {
         {/* SECTION: PageHeader */}
         <header className="flex items-center gap-4">
           <button
-            onClick={() => navigate("/admin/forum/posts")}
+            onClick={() => navigate("/dashboard/forum/posts")}
             className="p-2 bg-[#1e1e1e] border border-slate-800 rounded-lg hover:bg-slate-800 transition-colors"
           >
             <ArrowLeft size={20} />

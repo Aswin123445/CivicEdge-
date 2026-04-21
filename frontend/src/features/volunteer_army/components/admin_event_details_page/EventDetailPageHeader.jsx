@@ -114,7 +114,7 @@ const EventDetailPageHeader = ({ event, onPublish, onCancel }) => {
           {/* Update */}
           {canUpdate && (
             <button
-              onClick={() => navigate(`/admin/volunteer/events/${event.id}/update`)}
+              onClick={() => navigate(`/dashboard/volunteer/events/${event.id}/update`)}
               className="flex items-center gap-2 bg-[#1e1e1e] border border-slate-700 text-slate-200 hover:bg-slate-800 px-6 py-2.5 rounded-xl font-black text-xs uppercase tracking-widest transition-all"
             >
               <Pencil size={14} />

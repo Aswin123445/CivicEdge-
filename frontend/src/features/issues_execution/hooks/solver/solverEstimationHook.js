@@ -13,10 +13,66 @@ export default function useSolverEstimation(draft_id, task_id) {
     site_constraints: "",
     execution_risks: "",
   });
+  const [errors, setErrors] = useState({});
   const [solverEstimateStep3, { isLoading, isFetching, isSuccess, isError }] =
     useSolverEstimateStep3Mutation();
+  const validate = () => {
+    const newErrors = {};
+
+    const budget = Number(formData.estimated_budget);
+    const duration = Number(formData.estimated_duration_days);
+    const constraints = formData.site_constraints?.trim();
+    const risks = formData.execution_risks?.trim();
+
+    //  Budget
+    if (!formData.estimated_budget) {
+      newErrors.estimated_budget = "Budget is required";
+    } else if (isNaN(budget)) {
+      newErrors.estimated_budget = "Must be a number";
+    } else if (budget <= 0) {
+      newErrors.estimated_budget = "Must be greater than 0";
+    } else if (budget > 100000000) {
+      newErrors.estimated_budget = "Unrealistic value";
+    }
+
+    //  Duration
+    if (!formData.estimated_duration_days) {
+      newErrors.estimated_duration_days = "Duration is required";
+    } else if (isNaN(duration)) {
+      newErrors.estimated_duration_days = "Must be a number";
+    } else if (duration <= 0) {
+      newErrors.estimated_duration_days = "Must be at least 1 day";
+    } else if (duration > 3650) {
+      newErrors.estimated_duration_days = "Too long";
+    }
+
+    //  Site Constraints
+    if (!constraints) {
+      newErrors.site_constraints = "This field is required";
+    } else if (constraints.length < 10) {
+      newErrors.site_constraints = "Minimum 10 characters required";
+    } else if (!/[a-zA-Z]/.test(constraints)) {
+      newErrors.site_constraints = "Must contain meaningful text";
+    }
+
+    //  Execution Risks
+    if (!risks) {
+      newErrors.execution_risks = "This field is required";
+    } else if (risks.length < 10) {
+      newErrors.execution_risks = "Minimum 10 characters required";
+    } else if (!/[a-zA-Z]/.test(risks)) {
+      newErrors.execution_risks = "Must contain meaningful text";
+    }
+
+    return newErrors;
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
     setLoading(true);
 
     try {
@@ -37,6 +93,7 @@ export default function useSolverEstimation(draft_id, task_id) {
     }
     setLoading(false);
   };
+  console.log(errors)
   return {
     solverEstimateStep3,
     isLoading,
@@ -47,5 +104,6 @@ export default function useSolverEstimation(draft_id, task_id) {
     loading,
     formData,
     setFormData,
+    errors,
   };
 }

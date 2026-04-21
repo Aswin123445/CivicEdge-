@@ -3,22 +3,22 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 export default function ExecutionManagementLayout() {
   const location = useLocation();
   const solverTask = [
-    "/admin/execution/tasks/list",
-    "/admin/execution/solver-tasks/",
+    "/dashboard/execution/tasks/list",
+    "/dashboard/execution/solver-tasks/",
   ];
 
-  const pendingReview = ["/admin/execution/in-review/issues"];
+  const pendingReview = ["/dashboard/execution/in-review/issues"];
 
-  const solverAssignment = ["/admin/execution/solver-assignment"];
+  const solverAssignment = ["/dashboard/execution/solver-assignment"];
 
   const verificationReport = [
-    "/admin/execution/verification-reports",
-    "/admin/execution/verification-report/",
+    "/dashboard/execution/verification-reports",
+    "/dashboard/execution/verification-report/",
   ];
 
   const executionProof = [
-    "/admin/execution/execution-proofs",
-    "/admin/execution/execution-proof/",
+    "/dashboard/execution/execution-proofs",
+    "/dashboard/execution/execution-proof/",
   ];
 
   const isexecutionProofPath = executionProof.some((path) =>
@@ -41,7 +41,7 @@ export default function ExecutionManagementLayout() {
     <>
       <div className="flex overflow-x-auto whitespace-nowrap border-b border-gray-700 mb-1 gap-2 px-2 custom-scrollbar">
         <NavLink
-          to="/admin/execution/in-review/issues"
+          to="/dashboard/execution/in-review/issues"
           className={() =>
             `px-4 py-2 flex-shrink-0 transition-colors duration-200 
             ${
@@ -55,7 +55,7 @@ export default function ExecutionManagementLayout() {
         </NavLink>
 
         <NavLink
-          to="/admin/execution/solver-assignment"
+          to="/dashboard/execution/solver-assignment"
           className={() =>
             `px-4 py-2 flex-shrink-0 transition-colors duration-200 
             ${
@@ -69,7 +69,7 @@ export default function ExecutionManagementLayout() {
         </NavLink>
 
         <NavLink
-          to="/admin/execution/verification-reports"
+          to="/dashboard/execution/verification-reports"
           className={() =>
             `px-4 py-2 flex-shrink-0 transition-colors duration-200 
             ${
@@ -83,7 +83,7 @@ export default function ExecutionManagementLayout() {
         </NavLink>
 
         <NavLink
-          to="/admin/execution/execution-proofs"
+          to="/dashboard/execution/execution-proofs"
           className={() =>
             `px-4 py-2 flex-shrink-0 transition-colors duration-200 
             ${
@@ -96,7 +96,7 @@ export default function ExecutionManagementLayout() {
           Execution Proofs
         </NavLink>
         <NavLink
-          to="/admin/execution/tasks/list"
+          to="/dashboard/execution/tasks/list"
           className={() =>
             `px-4 py-2 flex-shrink-0 transition-colors duration-200 
             ${

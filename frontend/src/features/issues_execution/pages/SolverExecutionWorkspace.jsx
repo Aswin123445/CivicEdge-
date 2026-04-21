@@ -32,6 +32,7 @@ const SolverExecutionWorkspace = () => {
     isSubmitting,
     handleSubmitCompletion,
     setIsSubmitting,
+    errors
   } = useSolverTaskUpdateHook(task_id);
   const { task, taskLoading, taskFetching } = useSolverTaskDetail(task_id);
 
@@ -91,6 +92,7 @@ const SolverExecutionWorkspace = () => {
           handleAddProgress={handleAddProgress}
           isLoadingUpdateRes={isLoadingUpdateRes}
           isFetchingUpdateRes={isFetchingUpdateRes}
+          errors={errors}
         />
       )}
 

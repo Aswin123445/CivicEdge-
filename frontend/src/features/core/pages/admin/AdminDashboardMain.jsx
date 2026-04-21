@@ -341,7 +341,7 @@ function AttentionItem({
       </div>
       <button
         onClick={() =>
-          navigate(`/admin/execution/in-review/issues/${id}/details`)
+          navigate(`/dashboard/execution/in-review/issues/${id}/details`)
         }
         className="text-sm font-semibold text-blue-400 hover:text-blue-300"
       >

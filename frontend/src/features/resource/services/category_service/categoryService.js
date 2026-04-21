@@ -8,7 +8,7 @@ export const categoryApi = baseApi.injectEndpoints({
         const params = { page };
         if (search) params.search = search;
         return {
-          url: `${EXECUTION_PREFIX}/categories-admin//`,
+          url: `${EXECUTION_PREFIX}/categories-admin/`,
           method: "GET",
           meta: { skipAuth: false },
           params,

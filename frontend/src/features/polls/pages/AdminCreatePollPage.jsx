@@ -33,7 +33,8 @@ const AdminCreatePollPage = () => {
     getOptionGuidance,
     handleImageUpload,
     handleSubmit,
-    navigate
+    navigate,
+    errors
   } = useAdminCreatePoll();
 
   return (
@@ -59,6 +60,7 @@ const AdminCreatePollPage = () => {
             createPollLoading={createPollLoading}
             handleOptionChange = {handleOptionChange}
             handleRemoveOption = {handleRemoveOption}
+            validationErrors = {errors}
            />
 
           {/* 5.3 Guidance Panel & Preview (RIGHT) */}

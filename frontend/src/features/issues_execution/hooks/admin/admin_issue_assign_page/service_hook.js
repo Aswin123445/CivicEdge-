@@ -50,7 +50,7 @@ export default function useAdminIssueAssignService() {
   const handleAssignSolver = async(issue_id, solver_id) => {
     try {
       await assignSolver({data:{solver_id:solver_id}, id:issue_id}).unwrap();
-      naviate("/admin/execution/solver-assignment");
+      naviate("/dashboard/execution/solver-assignment");
     } catch (error) {
       const message = extractErrorMessage(error);
       errorToast({title:"something wrong",description:`${message || 'An error occurred pleas try again.'}`});

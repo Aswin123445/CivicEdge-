@@ -36,7 +36,7 @@ export default function useAdminFinalDetailsHook(id) {
         title: "decision successfull",
         description: "The decision has been made successfully.",
       });
-      naviagate(`/admin/execution/execution-proofs`);
+      naviagate(`/dashboard/execution/execution-proofs`);
     } catch (error) {
       const message = extractErrorMessage(error);
       errorToast({

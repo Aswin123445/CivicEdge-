@@ -17,7 +17,7 @@ const ExecutionProofRow = ({ proof }) => {
       </td>
       <td className="px-6 py-5 text-right">
         <button
-          onClick={() => {navigate(`/admin/execution/execution-proof/${proof?.id}`)}}
+          onClick={() => {navigate(`/dashboard/execution/execution-proof/${proof?.id}`)}}
           className="inline-flex items-center gap-2 text-sm font-medium text-slate-100 bg-[#1e1e1e] group-hover:bg-blue-600 border border-slate-700 group-hover:border-blue-500 px-4 py-1.5 rounded-lg transition-all"
         >
           Review

@@ -3,11 +3,11 @@ import { useState } from "react";
 import { X, AlertTriangle, CheckCircle2 } from "lucide-react";
 
 const INITIAL_FORM = {
-  name:            "",
-  description:     "",
+  name: "",
+  description: "",
   membership_type: "OPEN",
-  risk_level:      "LOW",
-  requirements:    "",
+  risk_level: "LOW",
+  requirements: "",
 };
 
 /**
@@ -15,11 +15,58 @@ const INITIAL_FORM = {
  * @param {function} onClose
  * @param {function} onSubmit  - (formData: object) => void
  */
-const CreateGroupModal = ({ isOpen, onClose, onSubmit,createGroupLoading }) => {
+const CreateGroupModal = ({
+  isOpen,
+  onClose,
+  onSubmit,
+  createGroupLoading,
+}) => {
   const [formData, setFormData] = useState(INITIAL_FORM);
+  const [errors, setErrors] = useState({});
 
   if (!isOpen) return null;
+  const validate = (formData) => {
+    const errors = {};
 
+    const name = formData.name?.trim();
+    const description = formData.description?.trim();
+    const requirements = formData.requirements?.trim();
+
+    //  Name
+    if (!name) {
+      errors.name = "Name is required";
+    } else if (name.length < 3) {
+      errors.name = "Must be at least 3 characters";
+    } else if (!/[a-zA-Z]/.test(name)) {
+      errors.name = "Must contain valid text";
+    }
+
+    //  Description
+    if (!description) {
+      errors.description = "Description is required";
+    } else if (description.length < 10) {
+      errors.description = "Minimum 10 characters required";
+    } else if (!/[a-zA-Z]/.test(description)) {
+      errors.description = "Must contain meaningful text";
+    }
+
+    //  Membership Type
+    if (!formData.membership_type) {
+      errors.membership_type = "Select a membership type";
+    }
+
+    //  Risk Level
+    if (!formData.risk_level) {
+      errors.risk_level = "Select a risk level";
+    }
+
+    //  Requirements (optional)
+    if (requirements && requirements.length < 10) {
+      errors.requirements = "Must be at least 10 characters if provided";
+    }
+
+    return errors;
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -27,6 +74,12 @@ const CreateGroupModal = ({ isOpen, onClose, onSubmit,createGroupLoading }) => {
 
   const handleSubmit = (e) => {
     e?.preventDefault?.();
+    const validationErrors = validate(formData);
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
     onSubmit?.(formData);
     setFormData(INITIAL_FORM);
     onClose?.();
@@ -45,7 +98,6 @@ const CreateGroupModal = ({ isOpen, onClose, onSubmit,createGroupLoading }) => {
 
       {/* Modal */}
       <div className="relative w-full max-w-2xl bg-[#1e1e1e] border border-slate-800 rounded-[2rem] shadow-2xl overflow-hidden">
-
         {/* Header */}
         <div className="px-8 py-6 border-b border-slate-800 flex items-center justify-between">
           <div>
@@ -80,6 +132,7 @@ const CreateGroupModal = ({ isOpen, onClose, onSubmit,createGroupLoading }) => {
               value={formData.name}
               onChange={handleChange}
             />
+            {errors.name && <p className="text-red-500">{errors.name}</p>}
           </div>
 
           {/* Description */}
@@ -95,6 +148,9 @@ const CreateGroupModal = ({ isOpen, onClose, onSubmit,createGroupLoading }) => {
               value={formData.description}
               onChange={handleChange}
             />
+            {errors.description && (
+              <p className="text-red-500">{errors.description}</p>
+            )}
           </div>
 
           {/* Membership + Risk */}
@@ -112,6 +168,9 @@ const CreateGroupModal = ({ isOpen, onClose, onSubmit,createGroupLoading }) => {
                 <option value="OPEN">OPEN (Public Access)</option>
                 <option value="APPROVAL_REQUIRED">APPROVAL REQUIRED</option>
               </select>
+              {errors.membership_type && (
+                <p className="text-red-500">{errors.membership_type}</p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -128,6 +187,9 @@ const CreateGroupModal = ({ isOpen, onClose, onSubmit,createGroupLoading }) => {
                 <option value="MEDIUM">MEDIUM RISK</option>
                 <option value="HIGH">HIGH RISK</option>
               </select>
+              {errors.risk_level && (
+                <p className="text-red-500">{errors.risk_level}</p>
+              )}
             </div>
           </div>
 
@@ -144,6 +206,9 @@ const CreateGroupModal = ({ isOpen, onClose, onSubmit,createGroupLoading }) => {
               value={formData.requirements}
               onChange={handleChange}
             />
+            {errors.requirements && (
+              <p className="text-red-500">{errors.requirements}</p>
+            )}
           </div>
 
           {/* High risk warning */}
@@ -169,7 +234,8 @@ const CreateGroupModal = ({ isOpen, onClose, onSubmit,createGroupLoading }) => {
             onClick={handleSubmit}
             className="flex-[2] bg-blue-600 hover:bg-blue-500 text-white px-6 py-3.5 rounded-xl font-black text-sm flex items-center justify-center gap-2 transition-all shadow-lg active:scale-95"
           >
-            <CheckCircle2 size={18} /> {createGroupLoading ? 'Creating...' : 'Initialize Group'}
+            <CheckCircle2 size={18} />{" "}
+            {createGroupLoading ? "Creating..." : "Initialize Group"}
           </button>
         </div>
       </div>

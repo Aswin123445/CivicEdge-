@@ -7,7 +7,7 @@ const IssueHeader = ({ issue }) => {
   return (
     <header className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
       <div>
-        <button onClick={() => {navigate("/admin/execution/in-review/issues/")}} className="flex items-center text-slate-400 hover:text-slate-100 transition-colors mb-2 text-sm">
+        <button onClick={() => {navigate("/dashboard/execution/in-review/issues/")}} className="flex items-center text-slate-400 hover:text-slate-100 transition-colors mb-2 text-sm">
           <span className="mr-2">←</span> Back to Issues
         </button>
         <div className="flex items-center gap-3">

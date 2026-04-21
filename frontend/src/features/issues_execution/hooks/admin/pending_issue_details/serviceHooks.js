@@ -22,7 +22,7 @@ export default function useAdminIssueDetailsService() {
     try {
         await adminInReviewDecition({ data, id }).unwrap(); 
         successToast({title:"Action Successfull"})
-        navigate("/admin/execution/in-review/issues");
+        navigate("/dashboard/execution/in-review/issues");
       } catch (error) {
           const message = extractErrorMessage(error);
           errorToast({title:"something wrong",description:`${message || 'An error occurred pleas try again.'}`});

@@ -22,42 +22,42 @@ function AdminSidebar() {
   const { userData, userDataLoading, userDataFetching } = useCitizenService();
 
   const pollPath = [
-    "/admin/polls"
+    "/dashboard/polls"
   ];
   const volunteerPath = [
-    "/admin/volunteer/groups",
-    "/admin/volunteer/events",
-    "/admin/volunteer/memberships",
-    "/admin/volunteer/attendance"
+    "/dashboard/volunteer/groups",
+    "/dashboard/volunteer/events",
+    "/dashboard/volunteer/memberships",
+    "/dashboard/volunteer/attendance"
   ]
   const executionPaths = [
-    "/admin/execution/in-review/issues",
-    "/admin/execution/solver-assignment",
-    "/admin/execution/verification-reports",
-    "/admin/execution/solver-tasks",
-    "/admin/execution/execution-proofs",
-    "/admin/execution/verification-report",
-    "/admin/execution/tasks/list",
+    "/dashboard/execution/in-review/issues",
+    "/dashboard/execution/solver-assignment",
+    "/dashboard/execution/verification-reports",
+    "/dashboard/execution/solver-tasks",
+    "/dashboard/execution/execution-proofs",
+    "/dashboard/execution/verification-report",
+    "/dashboard/execution/tasks/list",
   ];
   const roleManagementPaths = [
-    "/admin/management/citizens",
-    "/admin/management/solvers",
-    "/admin/management/admins",
+    "/dashboard/management/citizens",
+    "/dashboard/management/solvers",
+    "/dashboard/management/admins",
   ];
 
   const forumManagementPaths = [
-    "/admin/forum/reports",
-    "/admin/forum/posts",
-    "/admin/forum/category",
-    "/admin/forum/moderation"
+    "/dashboard/forum/reports",
+    "/dashboard/forum/posts",
+    "/dashboard/forum/category",
+    "/dashboard/forum/moderation"
   ]
   const moderationPaths = [
-    "/admin/monitoring/activity-log"
+    "/dashboard/monitoring/activity-log"
   ] 
   const resouceManagement = [
-    "/admin/resource/category",
-    "/admin/resource/zones",
-    "/admin/resource/behavioral"
+    "/dashboard/resource/category",
+    "/dashboard/resource/zones",
+    "/dashboard/resource/behavioral"
   ]
 
   const isResourceManagementPath = resouceManagement.some((path) =>
@@ -109,7 +109,7 @@ function AdminSidebar() {
       >
         {/* Sidebar Header */}
         <div
-          onClick={() => navigate("/admin/profile")}
+          onClick={() => navigate("/dashboard/profile")}
           className="cursor-pointer flex justify-between items-center px-4 py-3 border-b border-gray-700"
         >
           {userDataLoading || userDataFetching ? (
@@ -129,7 +129,7 @@ function AdminSidebar() {
         {/* Sidebar Nav */}
         <nav className="flex-1 overflow-y-auto px-2 py-3 space-y-1">
           <NavLink
-            to="/admin/dashboard"
+            to="/dashboard/home"
             className={({ isActive }) =>
               `flex items-center rounded-md px-3 py-2 text-sm font-medium transition ${
                 isActive
@@ -142,7 +142,7 @@ function AdminSidebar() {
             Dashboard
           </NavLink>
           <NavLink
-            to="/admin/management/citizens"
+            to="/dashboard/management/citizens"
             end
             className={() =>
               `flex items-center rounded-md px-3 py-2 text-sm font-medium transition ${
@@ -156,7 +156,7 @@ function AdminSidebar() {
             Role Management
           </NavLink>
           <NavLink
-            to="/admin/execution/in-review/issues"
+            to="/dashboard/execution/in-review/issues"
             end
             className={() =>
               `flex items-center rounded-md px-3 py-2 text-sm font-medium transition ${
@@ -170,7 +170,7 @@ function AdminSidebar() {
             Issue Execution
           </NavLink>
           <NavLink
-            to="/admin/volunteer/groups"
+            to="/dashboard/volunteer/groups"
             end
             className={() =>
               `flex items-center rounded-md px-3 py-2 text-sm font-medium transition ${
@@ -184,7 +184,7 @@ function AdminSidebar() {
             Army Management
           </NavLink>
           <NavLink
-            to="/admin/polls"
+            to="/dashboard/polls"
             end
             className={() =>
               `flex items-center rounded-md px-3 py-2 text-sm font-medium transition ${
@@ -198,7 +198,7 @@ function AdminSidebar() {
             Poll Management
           </NavLink>
           <NavLink
-            to="/admin/forum/reports"
+            to="/dashboard/forum/reports"
             end
             className={() =>
               `flex items-center rounded-md px-3 py-2 text-sm font-medium transition ${
@@ -212,7 +212,7 @@ function AdminSidebar() {
             Forum Management
           </NavLink>
           <NavLink
-            to="/admin/resource/category"
+            to="/dashboard/resource/category"
             end
             className={() =>
               `flex items-center rounded-md px-3 py-2 text-sm font-medium transition ${
@@ -226,7 +226,7 @@ function AdminSidebar() {
             Resource Management
           </NavLink>
           <NavLink
-            to="/admin/monitoring/activity-log"
+            to="/dashboard/monitoring/activity-log"
             end
             className={() =>
               `flex items-center rounded-md px-3 py-2 text-sm font-medium transition ${

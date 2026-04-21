@@ -33,7 +33,7 @@ const EventParticipantsPage = () => {
 
   // ─── Handlers ────────────────────────────────────
   const handleView = (participant) => {
-    navigate(`/admin/participants/${participant?.id}`);
+    navigate(`/dashboard/participants/${participant?.id}`);
   };
   const handleFilterChange = (tab) => {
     if (tab === "ALL") {

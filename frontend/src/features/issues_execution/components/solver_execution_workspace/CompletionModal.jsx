@@ -21,6 +21,7 @@ const CompletionModal = ({
             name="completion_summary"
             className="w-full rounded-lg border border-slate-200 p-3"
             rows="3"
+            minLength={10} 
             required
           ></textarea>
         </FormGroup>

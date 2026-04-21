@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useState } from "react";
 import useIssueHomePageService from "./home_page_service";
 import { errorToast, successToast } from "../../../utils/Toaster";
 import { extractErrorMessage } from "../../../utils/extractErrorMessage";
@@ -22,22 +22,36 @@ export default function useIssueStep1() {
     description: "",
   });
 
-
   const [errors, setErrors] = useState({});
 
   const handleContinue = async () => {
     const newErrors = {};
 
-    if (!formData.title.trim()) {
+    const title = formData.title?.trim();
+
+    if (!title) {
       newErrors.title = "Please add a short title.";
+    } else if (title.length < 3) {
+      newErrors.title = "Title must be at least 3 characters.";
+    } else if (!/[a-zA-Z]/.test(title)) {
+      newErrors.title = "Title must contain valid text.";
     }
 
+    // --- Category ---
     if (!formData.category) {
       newErrors.category = "Please select a category.";
     }
 
-    if (formData.description.trim().length < 20) {
-      newErrors.description = "Please describe the issue in a bit more detail.";
+    // --- Description ---
+    const description = formData.description?.trim();
+
+    if (!description) {
+      newErrors.description = "Description is required.";
+    } else if (description.length < 20) {
+      newErrors.description =
+        "Please describe the issue in at least 20 characters.";
+    } else if (!/[a-zA-Z]/.test(description)) {
+      newErrors.description = "Description must contain meaningful text.";
     }
 
     setErrors(newErrors);

@@ -23,7 +23,7 @@ const MembershipRow = ({ req, onApprove, onReject, isProcessing }) => {
   if (!req) return null;
 
   return (
-    <tr onClick={()=>{navigate(`/admin/volunteer/memberships/${req.id}`)}} className="hover:bg-slate-800/40 transition-colors cursor-pointer">
+    <tr onClick={()=>{navigate(`/dashboard/volunteer/memberships/${req.id}`)}} className="hover:bg-slate-800/40 transition-colors cursor-pointer">
       {/* Membership ID */}
       <td className="px-6 py-4">
         <span className="font-mono text-xs font-bold text-slate-300 bg-slate-800 px-2 py-1 rounded">

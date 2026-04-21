@@ -116,7 +116,7 @@ const AdminPostsPage = () => {
 
   const isLoading = isLoadingPosts || isFetchingPosts;
 
-  const handleView = (id) => navigate(`/admin/forum/posts/${id}`);
+  const handleView = (id) => navigate(`/dashboard/forum/posts/${id}`);
   const handleStatusChange = (tab) => {
     if (tab === "ALL") {
       setSearchParams((pre) => {

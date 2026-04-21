@@ -49,7 +49,7 @@ export default function useAdminFetchPolls() {
     setPollToClose(null);
   };
   const handleCreatePoll = () => {
-    navigate("/admin/polls/create");
+    navigate("/dashboard/polls/create");
   };
   return {
     adminPolls,

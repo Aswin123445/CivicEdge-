@@ -68,7 +68,7 @@ export default function IssueTable({ issues ,pagination, goToPage,page}) {
                 </td>
 
                 <td className="px-6 py-4 text-right">
-                  <button onClick={() => navigate(`/admin/execution/in-review/issues/${issue.id}/details`)} className="inline-flex items-center gap-1 text-blue-400">
+                  <button onClick={() => navigate(`/dashboard/execution/in-review/issues/${issue.id}/details`)} className="inline-flex items-center gap-1 text-blue-400">
                     View <ChevronRight size={16} />
                   </button>
                 </td>

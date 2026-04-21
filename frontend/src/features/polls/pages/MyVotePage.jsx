@@ -29,7 +29,7 @@ const MyVotesPage = () => {
 
 
   const handleExplorePolls = () => {
-    navigate("/admin/polls");
+    navigate("/dashboard/polls");
   };
   // Empty state — only show when not loading and genuinely empty
   const handleFilterChange = (tab) => {

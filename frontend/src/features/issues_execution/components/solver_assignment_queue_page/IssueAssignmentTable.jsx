@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 const IssueAssignmentTable = ({issues, isLoading}) => {
   const navigate = useNavigate();
   const handleAssignSolver = (issueId) => {
-    navigate(`/admin/execution/solver-assignment/${issueId}/decision`);
+    navigate(`/dashboard/execution/solver-assignment/${issueId}/decision`);
   }
   return (
     <div className="bg-[#1e1e1e] border border-slate-700 rounded-xl overflow-hidden shadow-sm">

@@ -44,7 +44,7 @@ const AdminVolunteerGroupsPage = () => {
   // ─── Handlers ────────────────────────────────────────
 
   const handleView = (group) => {
-    navigate(`/admin/volunteer-groups/${group.id}`);
+    navigate(`/dashboard/volunteer-groups/${group.id}`);
   };
 
   const handleFilterChange = (tab) => {

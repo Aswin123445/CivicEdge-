@@ -5,25 +5,25 @@ import { useNavigate, useLocation } from "react-router-dom";
 const UserManagementLayout = () => {
   const location = useLocation(); // 👈 this always holds the current pathname
   let Tab;
-  if (location.pathname.includes("/admin/management/citizens")) {
+  if (location.pathname.includes("/dashboard/management/citizens")) {
     Tab = "user";
-  } else if (location.pathname.includes("/admin/management/solvers")) {
+  } else if (location.pathname.includes("/dashboard/management/solvers")) {
     Tab = "solver";
   } else {
     Tab = "admin";
   }
-  // const Tab = location.pathname.includes("/admin/management/citizens") ? "user" : "solver";
+  // const Tab = location.pathname.includes("/dashboard/management/citizens") ? "user" : "solver";
   // const { users, activeTab, setActiveTab } = useAdminUserManagement();
 
   const navigate = useNavigate();
   const handleSolverClick = () => {
-    navigate("/admin/management/solvers");
+    navigate("/dashboard/management/solvers");
   };
   const handleUserClick = () => {
-    navigate("/admin/management/citizens");
+    navigate("/dashboard/management/citizens");
   };
   const handleAdminClick = () => {
-    navigate("/admin/management/admins");
+    navigate("/dashboard/management/admins");
   };
 
   return (

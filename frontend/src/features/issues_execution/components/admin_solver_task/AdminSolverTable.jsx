@@ -63,7 +63,7 @@ export default function AdminSolverTable({ tasks ,pagination}) {
                 </td>
 
                 <td className="px-6 py-4 text-right">
-                  <button onClick={() => navigate(`/admin/execution/solver-tasks/${task?.id}`)} className="inline-flex items-center gap-1 text-blue-400">
+                  <button onClick={() => navigate(`/dashboard/execution/solver-tasks/${task?.id}`)} className="inline-flex items-center gap-1 text-blue-400">
                     View <ChevronRight size={16} />
                   </button>
                 </td>

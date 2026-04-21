@@ -25,7 +25,8 @@ const AdminVerificationReportPage = () => {
     setIsModalOpen,
     formData,
     setFormData,
-    handleSubmit
+    handleSubmit,
+    errors,
   } = useAdminPendingVerificationDetails(id);
   // --- State Management ---
 
@@ -96,6 +97,7 @@ const AdminVerificationReportPage = () => {
           contractors={contractors}
           setFormData={setFormData}
           adminDecisionTaskLoading={adminDecisionTaskLoading}
+          errors={errors}
         />
       )}
     </div>

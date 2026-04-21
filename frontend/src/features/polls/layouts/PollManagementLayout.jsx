@@ -3,14 +3,14 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 export default function PollManagementLayout() {
   const location = useLocation();
 
-  const polls = ["/admin/polls"];
+  const polls = ["/dashboard/polls"];
 
   const isPolls = polls.some((path) => location.pathname.startsWith(path));
   return (
     <>
       <div className="flex overflow-x-auto whitespace-nowrap border-b border-gray-700 mb-1 gap-2 px-2 custom-scrollbar">
         <NavLink
-          to="/admin/polls"
+          to="/dashboard/polls"
           className={() =>
             `px-4 py-2 flex-shrink-0 transition-colors duration-200 
             ${

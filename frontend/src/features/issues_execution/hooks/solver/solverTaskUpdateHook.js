@@ -10,9 +10,13 @@ import {
 } from "../../services/solver/issue_execution_service_solver";
 import { useState } from "react";
 export default function useSolverTaskUpdateHook(task_id) {
-    const navigate = useNavigate();
-  const { data, isLoading:isLoadingUpdate, isFetching:isFetchingUpdate } =
-    useSolverTaskUpdateListQuery(task_id);
+  const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
+  const {
+    data,
+    isLoading: isLoadingUpdate,
+    isFetching: isFetchingUpdate,
+  } = useSolverTaskUpdateListQuery(task_id);
   const [
     updateProgress,
     { isLoading: isLoadingUpdateRes, isFetching: isFetchingUpdateRes },
@@ -25,11 +29,64 @@ export default function useSolverTaskUpdateHook(task_id) {
   const [imagefile, setImagefile] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const validate = (formData) => {
+    const errors = {};
+
+    const progress_summary = formData.get("progress_summary")?.trim();
+    const progress_percentage = formData.get("progress_percentage");
+    const blockers = formData.get("blockers")?.trim();
+    const next_steps = formData.get("next_steps")?.trim();
+
+    //  Progress Summary
+    if (!progress_summary) {
+      errors.progress_summary = "Progress summary is required";
+    } else if (progress_summary.length < 10) {
+      errors.progress_summary = "Minimum 10 characters required";
+    } else if (!/[a-zA-Z]/.test(progress_summary)) {
+      errors.progress_summary = "Must contain meaningful text";
+    }
+
+    //  Progress Percentage
+    const percentage = Number(progress_percentage);
+
+    if (progress_percentage === "" || progress_percentage === null) {
+      errors.progress_percentage = "Percentage is required";
+    } else if (isNaN(percentage)) {
+      errors.progress_percentage = "Must be a number";
+    } else if (percentage < 0 || percentage > 100) {
+      errors.progress_percentage = "Must be between 0 and 100";
+    }
+
+    //  Blockers (optional)
+    if (blockers && blockers.length > 0) {
+      if (blockers.length < 5) {
+        errors.blockers = "Too short";
+      } else if (!/[a-zA-Z]/.test(blockers)) {
+        errors.blockers = "Must contain meaningful text";
+      }
+    }
+
+    //  Next Steps
+    if (!next_steps) {
+      errors.next_steps = "Next steps are required";
+    } else if (next_steps.length < 10) {
+      errors.next_steps = "Minimum 10 characters required";
+    } else if (!/[a-zA-Z]/.test(next_steps)) {
+      errors.next_steps = "Must contain meaningful text";
+    }
+
+    return errors;
+  };
   const handleAddProgress = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
+    const validationErrors = validate(formData);
 
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
     const data = {};
 
     const progress_summary = formData.get("progress_summary")?.trim();
@@ -93,8 +150,7 @@ export default function useSolverTaskUpdateHook(task_id) {
         title: "Image upload failed",
         description: `${message || "An error occurred during image upload."}`,
       });
-    }
-    finally {
+    } finally {
       setIsCompletionModalOpen(false);
       setIsSubmitting(false);
     }
@@ -118,6 +174,7 @@ export default function useSolverTaskUpdateHook(task_id) {
     setImagefile,
     isSubmitting,
     handleSubmitCompletion,
-    setIsSubmitting
+    setIsSubmitting,
+    errors
   };
 }

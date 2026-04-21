@@ -22,7 +22,8 @@ const AdminExecutionProofDetailPage = () => {
     setIsSubmitting,
     submitData,
     setSubmitData,
-    handleAdminDecision
+    handleAdminDecision,
+    errors,
   } = useAdminFinalDetailsHook(id);
 
   const handleOpenModal = (type) => {
@@ -74,6 +75,7 @@ const AdminExecutionProofDetailPage = () => {
           onClose={() => setShowModal(false)}
           onSubmit= {handleAdminDecision}
           isSubmitting={isSubmitting}
+          errors={errors}
         />
       )}
     </div>

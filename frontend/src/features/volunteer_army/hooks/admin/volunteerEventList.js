@@ -39,7 +39,7 @@ export default function useVolunteerEventList() {
     ...urlSearchParams,
   };
   const handleCreateEvent = () => {
-    navigate("/admin/volunteer/events/create");
+    navigate("/dashboard/volunteer/events/create");
   };
 
   const [publishEvent, { isLoading: publishEventLoading }] =
@@ -65,7 +65,7 @@ export default function useVolunteerEventList() {
     }
   };
   const handleEdit = (event) => {
-    navigate(`/admin/volunteer/events/${event?.id}/update`);
+    navigate(`/dashboard/volunteer/events/${event?.id}/update`);
   };
   return {
     eventData,

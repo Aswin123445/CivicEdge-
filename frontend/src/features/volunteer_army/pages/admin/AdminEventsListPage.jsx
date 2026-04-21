@@ -39,7 +39,7 @@ const AdminEventsListPage = () => {
   const events = Array.isArray(eventData) ? eventData : [];
 
   const handleView = (event) => {
-    navigate(`/admin/volunteer/events/${event.id}`);
+    navigate(`/dashboard/volunteer/events/${event.id}`);
   };
 
   const handleConfirmAction = (type) => {

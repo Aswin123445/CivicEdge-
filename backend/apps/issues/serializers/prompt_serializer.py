@@ -47,7 +47,7 @@ class BehavioralPromptCreateSerializer(serializers.ModelSerializer):
         return data
     
     
-# POST /admin/prompts/
+# POST /dashboard/prompts/
 
 # {
 #   "question_text": "What type of road damage?",

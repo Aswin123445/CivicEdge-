@@ -83,7 +83,6 @@ const IssueDetailPage = () => {
       {isApproveModalOpen && (
         <ApproveIssueModal
           open={isApproveModalOpen}
-          onSubmit={handleDecision}
           handleDecision={handleDecision}
           setIsApproveModalOpen={setIsApproveModalOpen}
         />

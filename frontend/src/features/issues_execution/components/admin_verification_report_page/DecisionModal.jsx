@@ -8,12 +8,11 @@ const DecisionModal = ({
   setFormData,
   handleContractorSelection,
   adminDecisionTaskLoading,
+  errors
 }) => {
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#1e1e1e]/40 backdrop-blur-sm">
       <div className="bg-[#1e1e1e] border border-slate-700 w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden">
-
         {/* Header */}
         <div className="p-6 border-b border-slate-800 flex justify-between items-center">
           <h3 className="text-xl font-bold">
@@ -33,9 +32,7 @@ const DecisionModal = ({
 
         {/* Form */}
         <form onSubmit={handleSubmit}>
-
           <div className="p-6 space-y-4">
-
             {/* Contractor Selection */}
             {formData.decision_type === "APPROVED" && (
               <div>
@@ -84,6 +81,9 @@ const DecisionModal = ({
                 placeholder="Explain the decision for internal records..."
                 required
               />
+              {errors.reason && (
+                <p className="text-red-500 text-xs mt-1">{errors.reason}</p>
+              )}
             </div>
 
             {/* Public Message */}
@@ -104,6 +104,11 @@ const DecisionModal = ({
                 className="w-full bg-[#1e1e1e] border border-slate-700 rounded-lg p-2.5 text-slate-200 h-20 outline-none focus:ring-2 focus:ring-slate-600"
                 placeholder="What should the citizen see in their app?"
               />
+              {errors.public_message && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.public_message}
+                </p>
+              )}
             </div>
           </div>
 
@@ -123,14 +128,13 @@ const DecisionModal = ({
                 formData.decision_type === "APPROVED"
                   ? "bg-emerald-600 hover:bg-emerald-500"
                   : formData.decision_type === "BLOCKED"
-                  ? "bg-red-600 hover:bg-red-500"
-                  : "bg-blue-600 hover:bg-blue-500"
+                    ? "bg-red-600 hover:bg-red-500"
+                    : "bg-blue-600 hover:bg-blue-500"
               } ${adminDecisionTaskLoading ? "opacity-50 cursor-not-allowed" : ""}`}
             >
-              {adminDecisionTaskLoading ? "Loading..." : "Submit"} 
+              {adminDecisionTaskLoading ? "Loading..." : "Submit"}
             </button>
           </div>
-
         </form>
       </div>
     </div>

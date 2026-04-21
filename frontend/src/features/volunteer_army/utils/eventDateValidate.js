@@ -3,7 +3,7 @@ import { infoToast } from "../../../utils/Toaster";
 const validate = (formData) => {
   const errors = {};
 
-  // 🔹 Basic validations
+  //  Basic validations
   if (!formData.group)
     errors.group = "Please select a group";
 
@@ -18,7 +18,6 @@ const validate = (formData) => {
 
   if (!formData.capacity || Number(formData.capacity) <= 0)
     errors.capacity = "Must be greater than 0";
-
   if (formData.start_time && formData.end_time) {
     const now = new Date();
     const start = new Date(formData.start_time);
@@ -36,7 +35,7 @@ const validate = (formData) => {
   return errors;
 };
 
-const updateValidate = (formData,setErrors) => {
+const updateValidate = (formData,setErrors) => {c 
     let errs = {};
     if (!formData.title?.trim()) errs.title = "Title is required";
     if (!formData.location_name?.trim()) errs.location_name = "Location name is required";

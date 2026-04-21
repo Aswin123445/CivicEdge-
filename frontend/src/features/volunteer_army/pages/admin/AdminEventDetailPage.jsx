@@ -38,7 +38,7 @@ const AdminEventDetailPage = () => {
 
 
   const handleViewParticipants = () => {
-    navigate(`/admin/volunteer/events/${id}/participants`);
+    navigate(`/dashboard/volunteer/events/${id}/participants`);
   };
   return (
     <div className="min-h-screen bg-[#1e1e1e] text-slate-100 font-sans p-6 lg:p-10">

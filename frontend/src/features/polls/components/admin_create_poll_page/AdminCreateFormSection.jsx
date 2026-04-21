@@ -16,10 +16,10 @@ const AdminCreateFormSection = ({
   duplicateIndices,
   handleAddOption,
   getOptionGuidance,
-  isValid,
   isSubmitting,
   createPollLoading,
-  handleOptionChange 
+  handleOptionChange,
+  validationErrors,
 }) => {
   return (
     <div className="col-span-12 lg:col-span-8">
@@ -46,6 +46,11 @@ const AdminCreateFormSection = ({
                 setFormData({ ...formData, question: e.target.value })
               }
             />
+            {validationErrors.question && (
+              <p className="text-red-500 text-xs">
+                {validationErrors.question}
+              </p>
+            )}
           </div>
 
           {/* Field 2 & 3: Context & Did You Know */}
@@ -63,6 +68,11 @@ const AdminCreateFormSection = ({
                   setFormData({ ...formData, context: e.target.value })
                 }
               />
+              {validationErrors.context && (
+                <p className="text-red-500 text-xs">
+                  {validationErrors.context}
+                </p>
+              )}
             </div>
             <div className="space-y-2">
               <label className="text-sm font-bold text-slate-300">
@@ -79,6 +89,11 @@ const AdminCreateFormSection = ({
                   })
                 }
               />
+              {validationErrors.did_you_know && (
+                <p className="text-red-500 text-xs">
+                  {validationErrors.did_you_know}
+                </p>
+              )}
             </div>
           </div>
 
@@ -179,6 +194,11 @@ const AdminCreateFormSection = ({
                       handleOptionChange(option.id, e.target.value)
                     }
                   />
+                  {validationErrors.options && (
+                    <p className="text-red-500 text-xs">
+                      {validationErrors.options}
+                    </p>
+                  )}
                   {formData.options.length > 2 && (
                     <button
                       type="button"
@@ -221,10 +241,10 @@ const AdminCreateFormSection = ({
             </label>
 
             <div className="flex gap-4 max-w-md">
-              {/* 📅 Date Picker */}
+              {/*  Date Picker */}
               <div className="relative w-1/2">
                 <Calendar
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
+                  className="absolute left-4 mt-6 -translate-y-1/2 text-slate-500"
                   size={18}
                 />
                 <input
@@ -243,7 +263,7 @@ const AdminCreateFormSection = ({
 
               <div className="relative w-1/2">
                 <Clock
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
+                  className="absolute left-4 mt-6 -translate-y-1/2 text-slate-500"
                   size={18}
                 />
 
@@ -276,6 +296,11 @@ const AdminCreateFormSection = ({
                     );
                   })}
                 </select>
+                              {validationErrors.expires_at && (
+                  <p className="text-red-500 text-xs block">
+                    {validationErrors.expires_at}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -289,9 +314,9 @@ const AdminCreateFormSection = ({
         <div className="bg-slate-800/50 p-6 flex flex-col sm:flex-row gap-4 border-t border-slate-700">
           <button
             type="submit"
-            disabled={!isValid || isSubmitting}
+            disabled={isSubmitting}
             className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-sm transition-all shadow-lg ${
-              !isValid || isSubmitting
+              isSubmitting
                 ? "bg-slate-700 text-slate-500 cursor-not-allowed"
                 : "bg-blue-600 text-white hover:bg-blue-700 shadow-blue-900/20 active:scale-[0.98]"
             }`}
@@ -301,7 +326,9 @@ const AdminCreateFormSection = ({
             ) : (
               <CheckCircle2 size={18} />
             )}
-            {isSubmitting || createPollLoading ? "Creating Poll..." : "Create Poll"}
+            {isSubmitting || createPollLoading
+              ? "Creating Poll..."
+              : "Create Poll"}
           </button>
           <button
             type="button"
