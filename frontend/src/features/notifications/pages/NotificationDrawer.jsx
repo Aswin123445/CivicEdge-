@@ -17,6 +17,7 @@ export default function NotificationDrawer({ open, onClose, role }) {
     resetNotifications,
     markAllAsRead,
   } = useNotificationList(containerRef);
+  console.log(notificationList)
   const { addToQueue, flushQueue } = useNotificationReadQueue();
   const ref = useRef(null);
 

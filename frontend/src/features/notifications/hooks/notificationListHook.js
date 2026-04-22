@@ -18,6 +18,7 @@ export default function useNotificationList(containerRef) {
 
   const { data, isLoading, isFetching } =
     useGetNotificationListQuery(queryParams);
+  console.log(data);
 
   const [markAllRead] = useMarkAllNotificationAsReadMutation();
 
@@ -45,18 +46,21 @@ export default function useNotificationList(containerRef) {
 
   const lastItemRef = useCallback(
     (node) => {
-      if (isFetching || !hasMore) return;
-      if (!containerRef?.current) return;
       if (observer.current) observer.current.disconnect();
+      if (!node || !hasMore || isFetching) return;
+
+      const root = containerRef?.current ?? null; // fallback to viewport if null
+
       observer.current = new IntersectionObserver(
         (entries) => {
-          if (entries[0].isIntersecting && !isFetching) {
+          if (entries[0].isIntersecting && !isFetching && hasMore) {
             setPage((prev) => prev + 1);
           }
         },
-        { root: containerRef.current, threshold: 0.5 },
+        { root, threshold: 0.1 },
       );
-      if (node) observer.current.observe(node);
+
+      observer.current.observe(node);
     },
     [isFetching, hasMore, containerRef],
   );
