@@ -20,7 +20,6 @@ const CreateEventPage = () => {
     handleSubmit,
     navigate,
   } = useCreateEvent();
-  console.log(errors)
   const groups = Array.isArray(apiGroups) ? apiGroups : [];
 
   const handleCancel = () => navigate(-1);

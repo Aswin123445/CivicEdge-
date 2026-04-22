@@ -12,7 +12,6 @@ const MyActivityPage = () => {
   const navigate = useNavigate();
   const { myActivity, myActivityLoading, myActivityFetching, pagination } =
     useMyActivity();
-    console.log(myActivity)
 
   // Null-safe: always work with an array
   const posts = Array.isArray(myActivity) ? myActivity : [];

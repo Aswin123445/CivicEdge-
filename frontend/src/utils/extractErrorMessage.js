@@ -1,5 +1,4 @@
 export function extractErrorMessage(error) {
-  console.log(error);
   if(error?.status === 500){
     return "We’re facing a temporary issue while processing your request. Our team is working on it. Please try again shortly."
   }

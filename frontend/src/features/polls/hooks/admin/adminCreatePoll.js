@@ -137,7 +137,6 @@ export default function useAdminCreatePoll() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const err = validate(formData, duplicateIndices);
-    console.log(err)
     setErrors(err);
     if (Object.keys(err).length > 0) return;
     setIsSubmitting(true);

@@ -18,7 +18,6 @@ export default function useNotificationList(containerRef) {
 
   const { data, isLoading, isFetching } =
     useGetNotificationListQuery(queryParams);
-  console.log(data);
 
   const [markAllRead] = useMarkAllNotificationAsReadMutation();
 

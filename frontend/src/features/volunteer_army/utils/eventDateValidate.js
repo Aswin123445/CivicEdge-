@@ -1,7 +1,6 @@
 import { infoToast } from "../../../utils/Toaster";
 
 const validate = (formData) => {
-  console.log(formData,'oioio')
   const errors = {};
 
   const group = formData.group;

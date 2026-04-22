@@ -4,10 +4,10 @@ from django.utils.timezone import now
 from apps.polls.models import Poll, PollOption, PollVote
 from apps.polls.models.polls import Status
 
-
 def get_home_polls(limit=2):
     total_active_polls = Poll.objects.filter(
-        status=Status.ACTIVE
+        status=Status.ACTIVE,
+        expires_at__gt = now()
     ).count()
     current_time = now()
 

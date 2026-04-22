@@ -53,7 +53,6 @@ export default function useCreatePost() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const fieldErrors = validate(fields);
-    console.log(fieldErrors);
     if (Object.keys(fieldErrors).length > 0) {
       setErrors(fieldErrors);
       return;
