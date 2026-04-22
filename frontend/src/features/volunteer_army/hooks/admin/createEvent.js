@@ -5,7 +5,7 @@ import {
 } from "../../services/admin/eventService";
 import validate from "../../utils/eventDateValidate";
 import { extractErrorMessage } from "../../../../utils/extractErrorMessage";
-import { errorToast, successToast } from "../../../../utils/Toaster";
+import { errorToast, successToast, infoToast } from "../../../../utils/Toaster";
 import { useNavigate } from "react-router-dom";
 
 const today = new Date().toISOString().split("T")[0];
@@ -69,6 +69,7 @@ export default function useCreateEvent() {
 
       if (Object.keys(newErrors).length > 0) {
         setErrors(newErrors);
+        infoToast({ title: "Please fix the errors", description: "errors in required fields" });
         return;
       }
 

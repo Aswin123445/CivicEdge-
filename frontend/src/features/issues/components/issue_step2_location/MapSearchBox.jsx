@@ -18,9 +18,7 @@ const MapSearchBox = ({ onSelect }) => {
   } = useLocationUiHook(onSelect);
 
   const handleSearchChange = (e) => {
-    if (!results.includes(e.target.value)) {
-      setQuery(e.target.value);
-    }
+     setQuery(e.target.value);
   }
   return (
     <>

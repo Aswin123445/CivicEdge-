@@ -54,6 +54,7 @@ export default function useProfileHook() {
       await updateProfile(data).unwrap();
     } catch (error) {
       const message = extractErrorMessage(error);
+      console.log(error)
       errorToast({
         title: "Update failed",
         description: `${message || "An error occurred during update."}`,

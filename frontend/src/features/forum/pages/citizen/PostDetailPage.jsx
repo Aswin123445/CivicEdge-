@@ -194,7 +194,7 @@ const PostDetailPage = () => {
                         onReport={handleReport}
                         onReportClick={(id) => {
                           setActiveCommentId(id);
-                          setIsModalOpen(true);
+                          setIsCommentModalOpen(true);
                         }}
                         setIsCommentUpdateModalOpen={
                           setIsCommentUpdateModalOpen

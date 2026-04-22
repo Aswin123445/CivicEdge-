@@ -6,7 +6,7 @@ const TABS = [
   "IN_PROGRESS",
   "RESOLVED",
   "REJECTED",
-  "CANCELLED",
+  // "CANCELLED",
 ];
 
 const ComplaintFilters = ({

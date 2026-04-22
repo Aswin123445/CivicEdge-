@@ -21,6 +21,11 @@ const EventLogisticsSection = ({ formData, onChange, errors = {} }) => (
         onChange={(v) => onChange("location_name", v)}
         error={errors.location_name}
       />
+      {errors.location_name && (
+        <p className="text-[10px] text-red-500 font-bold ml-1 mt-1">
+          {errors.location_name}
+        </p>
+      )}
 
       <InputField
         label="Max Capacity *"
@@ -30,6 +35,11 @@ const EventLogisticsSection = ({ formData, onChange, errors = {} }) => (
         onChange={(v) => onChange("capacity", v)}
         error={errors.capacity}
       />
+            {errors.capacity && (
+        <p className="text-[10px] text-red-500 font-bold ml-1 mt-1">
+          {errors.capcity}
+        </p>
+      )}
 
       {/* Full-width address textarea */}
       <div className="md:col-span-2">

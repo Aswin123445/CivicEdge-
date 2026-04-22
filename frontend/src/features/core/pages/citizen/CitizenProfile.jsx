@@ -161,7 +161,7 @@ const CitizenProfile = () => {
           ) : (
             <MyActivity
               topTwoActivities={topTwoActivities}
-              url="/forum/my-activity"
+              url="/profile/my-activity"
             />
           )}
         </div>

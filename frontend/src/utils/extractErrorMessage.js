@@ -1,33 +1,8 @@
 export function extractErrorMessage(error) {
-  const data = error?.data;
-
-  if (!data) return 'Something went wrong. Please try again.';
-
-  //  NEW: Handle array response directly
-  if (Array.isArray(data)) {
-    return data[0];
+  console.log(error);
+  if(error?.status === 500){
+    return "We’re facing a temporary issue while processing your request. Our team is working on it. Please try again shortly."
   }
-
-  //  DRF non-field errors
-  if (Array.isArray(data.non_field_errors)) {
-    return data.non_field_errors[0];
-  }
-
-  //  DRF detail message
-  if (typeof data.detail === 'string') {
-    return data.detail;
-  }
-
-  //  Field-level errors
-  if (typeof data === 'object') {
-    const firstKey = Object.keys(data)[0];
-    const firstError = data[firstKey];
-
-    if (Array.isArray(firstError)) {
-      return `${firstKey}: ${firstError[0]}`;
-    }
-  }
-
-  //  Fallback
-  return 'Something went wrong. Please try again.';
+  if (error?.data?.message) return error?.data?.message;
+  return "Something went wrong. Please try again.";
 }
