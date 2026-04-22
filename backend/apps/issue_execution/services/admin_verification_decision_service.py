@@ -3,6 +3,10 @@ from django.db import transaction
 
 from apps.issues.models.issue_administrative_decision import IssueAdministrativeDecision
 from apps.issues.services.timeline_service import add_issue_timeline_event
+from django.utils import timezone
+
+from apps.notification.services.dispatcher import NotificationDispatcher
+from apps.notification.utils.event_constants import NotificationEvent
 
 
 @transaction.atomic
@@ -46,7 +50,16 @@ def create_verification_decision(*, admin, report, data):
 
     elif decision.decision_type == IssueAdministrativeDecision.DecisionType.BLOCKED:
         issue.reject(by=admin, reason=data["reason"])
+        report.solver_task.completed_at = timezone.now()    
+        report.solver_task.save(update_fields=["completed_at"])
         report.solver_task.approve_completion(by=admin)
+        NotificationDispatcher.dispatch(
+            event=NotificationEvent.ISSUE_REJECTED,
+            payload={
+                "issue": issue,
+                "actor": admin
+            }
+        )
 
     elif decision.decision_type in [
         IssueAdministrativeDecision.DecisionType.POSTPONED,
@@ -54,5 +67,20 @@ def create_verification_decision(*, admin, report, data):
     ]:
         # remains IN_REVIEW
         pass
+    NotificationDispatcher.dispatch(
+            event=NotificationEvent.APPROVE_REPORT,
+            payload={
+                "task": report.solver_task,
+                "actor": admin
+            }
+        )
+    if decision.decision_type == IssueAdministrativeDecision.DecisionType.BLOCKED:
+        NotificationDispatcher.dispatch(
+            event=NotificationEvent.TASK_APPROVED_BY_ADMIN,
+            payload={
+                "task": report.solver_task,
+                "actor": admin
+            }
+        )
 
     return decision

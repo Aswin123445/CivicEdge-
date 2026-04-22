@@ -173,8 +173,8 @@ class SolverTask(models.Model):
         )
 
     def submit_completion(self, *, by):
-        if by != self.solver:
-            raise ValidationError("Only assigned solver can submit completion.")
+        if not (by == self.solver or by.role == "admin"):
+            raise ValidationError("Only assigned solver or admin can submit completion.")
 
         self.completed_at = timezone.now()
         self._transition(to_status=SolverTaskStatus.COMPLETION_SUBMITTED)

@@ -13,6 +13,8 @@ from apps.notification.utils.handlers.volunteer.handle_volunteer_certificate_gen
 from apps.notification.utils.handlers.forum.handle_forum_report import handle_forum_report
 from apps.notification.utils.handlers.forum.handle_forum_comment import handle_forum_comment
 from apps.notification.utils.handlers.forum.handle_forum_reaction import handle_forum_reaction
+from apps.notification.utils.handlers.issue_and_execution.handle_issue_rejected import handle_issue_rejected
+from apps.notification.utils.handlers.issue_and_execution.handle_approve_report import handle_approve_report
 
 EVENT_HANDLERS = {
     NotificationEvent.ISSUE_REPORTED: handle_issue_reported,
@@ -27,6 +29,8 @@ EVENT_HANDLERS = {
     NotificationEvent.VOLUNTEER_CERTIFICATE:  handle_volunteer_certificate_generated,
     NotificationEvent.FORUM_REPORT_USER : handle_forum_report,
     NotificationEvent.FORUM_REPLY_RECEIVED: handle_forum_comment,
-    NotificationEvent.FORUM_POST_REACTED: handle_forum_reaction
+    NotificationEvent.FORUM_POST_REACTED: handle_forum_reaction,
+    NotificationEvent.ISSUE_REJECTED : handle_issue_rejected,
+    NotificationEvent.APPROVE_REPORT : handle_approve_report
     
 }

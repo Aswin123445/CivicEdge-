@@ -16,6 +16,7 @@ class AdminSolverTaskListView(ListAPIView):
         "reference_id",
         "issue__title",
         "solver__email",
+        "issue__reference_id",
     ]
     filterset_fields = [
         "status",

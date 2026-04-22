@@ -17,6 +17,7 @@ ALLOWED_SOLVER_TASK_TRANSITIONS = {
         SolverTaskStatus.APPROVED_FOR_EXECUTION,
         SolverTaskStatus.ASSIGNED,  # verification rejected
         SolverTaskStatus.TERMINATED,
+        SolverTaskStatus.COMPLETED,
     },
     SolverTaskStatus.APPROVED_FOR_EXECUTION: {
         SolverTaskStatus.IN_EXECUTION,
