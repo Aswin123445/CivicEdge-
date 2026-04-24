@@ -7,6 +7,10 @@ export default function ExecutionManagementLayout() {
     "/dashboard/execution/solver-tasks/",
   ];
 
+  const issueAnalytics = [
+    "/dashboard/execution/issue/analytics"
+  ]
+
   const pendingReview = ["/dashboard/execution/in-review/issues"];
 
   const solverAssignment = ["/dashboard/execution/solver-assignment"];
@@ -21,6 +25,9 @@ export default function ExecutionManagementLayout() {
     "/dashboard/execution/execution-proof/",
   ];
 
+  const isIssueAnalytics = issueAnalytics.some((path) =>
+    location.pathname.startsWith(path),
+  );
   const isexecutionProofPath = executionProof.some((path) =>
     location.pathname.startsWith(path),
   );
@@ -107,6 +114,19 @@ export default function ExecutionManagementLayout() {
           }
         >
           Solver Tasks
+        </NavLink>
+        <NavLink
+          to="/dashboard/execution/issue/analytics"
+          className={() =>
+            `px-4 py-2 flex-shrink-0 transition-colors duration-200 
+            ${
+              isIssueAnalytics
+                ? "border-b-2 border-[#56CCF2] text-white"
+                : "text-gray-400 hover:text-white hover:border-b-2 hover:border-gray-500"
+            }`
+          }
+        >
+          Issue Analytics
         </NavLink>
       </div>
 

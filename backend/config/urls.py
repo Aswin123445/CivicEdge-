@@ -39,4 +39,5 @@ urlpatterns = [
     path('api/v1/polls/', include('apps.polls.routes')),
     path('api/v1/notifications/', include('apps.notification.routes')),
     path('api/v1/forum/', include('apps.forum.routes')),
+    path('api/v1/analytics/', include('apps.analytics.routes')),
 ]

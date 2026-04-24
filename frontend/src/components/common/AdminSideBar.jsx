@@ -38,11 +38,13 @@ function AdminSidebar() {
     "/dashboard/execution/execution-proofs",
     "/dashboard/execution/verification-report",
     "/dashboard/execution/tasks/list",
+    "/dashboard/execution/issue/analytics"
   ];
   const roleManagementPaths = [
     "/dashboard/management/citizens",
     "/dashboard/management/solvers",
     "/dashboard/management/admins",
+    "/dashboard/management/analytics"
   ];
 
   const forumManagementPaths = [

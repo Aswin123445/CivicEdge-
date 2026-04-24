@@ -82,7 +82,11 @@ export const baseApi = createApi({
     "AdminCategoryList",
     "AdminZoneList",
     "AdminBehavioralList",
-    "AdminMetrics"
+    "AdminMetrics",
+    "IssueAnalytics",
+    "IssueAnalyticsExport",
+    "UserAnalytics",
+    
   ],
 
   endpoints: () => ({}),

@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'apps.polls',
     'apps.notification',
     'apps.forum',
+    'apps.analytics',
     # Third-party apps   
     'corsheaders',
     'rest_framework',

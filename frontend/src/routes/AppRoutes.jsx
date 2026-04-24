@@ -176,6 +176,15 @@ const BehavioralPromptPage = lazy(
   () => import("../features/resource/pages/BehavioralPromptPage"),
 )
 
+const IssueAnalticsPage = lazy(
+  () => import("../features/analytics/pages/issue_analytics/IssueAnalticsPage"),
+);
+
+const AnalyticsUserDashboardPage = lazy(
+  () =>
+    import("../features/analytics/pages/user/AnalyticsUserDashboardPage"),
+)
+
 import Test from "../features/auth/pages/admin/Test";
 
 import UserManagementSectionLoader from "../features/auth/components/skeltons/loaders_skelton/UserManagementSectionLoader";
@@ -249,6 +258,7 @@ import PostDetailsSkeleton from "../features/forum/components/admin/admin_posts_
 import MonitorLayout from "../features/monitoring/layouts/MonitorLayout";
 import UserActivityPage from "../features/core/pages/citizen/UserActivityPage";
 import ResourceLayout from "../features/resource/layouts/ResourceLayout";
+import AnalyticsSkeleton from "../features/analytics/components/AnalyticsSkeleton";
 
 export default function AppRoutes() {
   return (
@@ -432,6 +442,14 @@ export default function AppRoutes() {
                     </Suspense>
                   }
                 />
+                <Route 
+                  path="analytics"
+                  element={
+                    <Suspense fallback={<UserManagementSectionLoader />}>
+                      <AnalyticsUserDashboardPage />
+                    </Suspense>
+                  }
+                />
               </Route>
 
               <Route
@@ -513,6 +531,14 @@ export default function AppRoutes() {
                 <Route
                   path="solver-tasks/:id"
                   element={<AdminSolverTaskDetailPage />}
+                />
+                <Route 
+                  path="issue/analytics"
+                  element={
+                    <Suspense fallback={<AnalyticsSkeleton />}>
+                      <IssueAnalticsPage />
+                    </Suspense>
+                  }
                 />
               </Route>
               <Route

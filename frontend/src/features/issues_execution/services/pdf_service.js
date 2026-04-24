@@ -22,4 +22,48 @@ const handleDownload = async (id,access_token) => {
   }
 };
 
+const handleIssueExportDownload = async (range, date_from, date_to,access_token) => {
+  try {
+
+    const response = await axios.get(
+      `/api/v1/analytics/issues-export/`,
+      {
+        responseType: "blob",
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+
+    const blob = response.data;
+
+    return blob
+
+  } catch (err) {
+    throw err;
+  }
+};
+const handleUserExportDownload = async (range, date_from, date_to,access_token) => {
+  try {
+
+    const response = await axios.get(
+      `/api/v1/analytics/users-export/`,
+      {
+        responseType: "blob",
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+
+    const blob = response.data;
+
+    return blob
+
+  } catch (err) {
+    throw err;
+  }
+};
+
 export default handleDownload;
+export { handleIssueExportDownload, handleUserExportDownload };

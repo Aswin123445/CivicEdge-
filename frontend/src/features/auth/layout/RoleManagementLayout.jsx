@@ -3,15 +3,18 @@ import { useNavigate, useLocation } from "react-router-dom";
 // import useAdminUserManagement from "../hooks/admin/useadminUserManagement"; // Sample user data
 
 const UserManagementLayout = () => {
-  const location = useLocation(); // 👈 this always holds the current pathname
+  const location = useLocation(); //  this always holds the current pathname
   let Tab;
   if (location.pathname.includes("/dashboard/management/citizens")) {
     Tab = "user";
   } else if (location.pathname.includes("/dashboard/management/solvers")) {
     Tab = "solver";
-  } else {
+  } else if (location.pathname.includes("/dashboard/management/admins")) {
     Tab = "admin";
+  }else {
+    Tab = "analytics";
   }
+
   // const Tab = location.pathname.includes("/dashboard/management/citizens") ? "user" : "solver";
   // const { users, activeTab, setActiveTab } = useAdminUserManagement();
 
@@ -24,6 +27,10 @@ const UserManagementLayout = () => {
   };
   const handleAdminClick = () => {
     navigate("/dashboard/management/admins");
+  };
+  
+  const handleAnalyticsClick = () => {
+    navigate("/dashboard/management/analytics");
   };
 
   return (
@@ -52,6 +59,14 @@ const UserManagementLayout = () => {
           }`}
         >
           Admin Management
+        </button>
+        <button
+          onClick={handleAnalyticsClick}
+          className={`px-4 py-2 ${
+            Tab === "analytics" ? "border-b-2 border-[#56CCF2]" : ""
+          }`}
+        >
+          Analytics
         </button>
       </div>
       <Outlet />
