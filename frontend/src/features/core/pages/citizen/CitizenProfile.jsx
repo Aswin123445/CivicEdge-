@@ -46,7 +46,7 @@ const CitizenProfile = () => {
 
   const stats = [
     {
-      label: "Issues Resolved",
+      label: "Total Complaints",
       value: userData?.dashboard?.total_complaints ?? "0",
       icon: <CheckCircle className="text-emerald-500" />,
     },

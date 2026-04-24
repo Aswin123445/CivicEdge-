@@ -40,7 +40,7 @@ const IssueSubmitSuccessPage = ({ issueId = "CE-774291", issueTitle = "Damaged P
   const handleCopyId = () => {
     navigator.clipboard.writeText(issueId);
   };
-  const issue = reviewData.issue;
+  const issue = reviewData?.issue;
   if (isLoadingReview) return (<ReviewIssueCombinedSkeleton/>);
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 font-sans antialiased text-slate-900">
@@ -76,7 +76,7 @@ const IssueSubmitSuccessPage = ({ issueId = "CE-774291", issueTitle = "Damaged P
                   onClick={handleCopyId}
                   className="flex items-center gap-2 text-sm font-mono text-slate-600 hover:text-blue-600 transition-colors group"
                 >
-                  {issue.reference_id}
+                  {issue?.reference_id}
                   <Clipboard size={14} className="text-slate-300 group-hover:text-blue-400" />
                 </button>
               </div>
