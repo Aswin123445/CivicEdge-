@@ -166,7 +166,7 @@ export default function AdminDashboardMain() {
             />
             <StatCard
               label="Flagged Content"
-              value={metrics?.pendingFlags || 0}
+              value={metrics?.flags || 0}
               icon={<ShieldAlert />}
               tone="danger"
             />

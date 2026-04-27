@@ -1,16 +1,17 @@
 import { useSelector } from "react-redux";
 import { extractErrorMessage } from "../../../../utils/extractErrorMessage";
 import { errorToast } from "../../../../utils/Toaster";
-import { useIssueExportMutation } from "../../services/analyticsService";
 import { handleIssueExportDownload } from "../../../issues_execution/services/pdf_service";
+import { useState } from "react";
 
 export default function useIssueExport() {
   const { access_token } = useSelector((state) => state.auth);
-  const [issueExport, { isLoading: issueExportLoading }] =
-    useIssueExportMutation();
+  const [issueExportLoading, setIssueExportLoading] = useState(false);
+
 
   const handleExport = async (range, date_from, date_to) => {
     const now = new Date();
+    setIssueExportLoading(true);
     try {
       const blob = await handleIssueExportDownload(range, date_from, date_to, access_token);
       const url = window.URL.createObjectURL(blob);
@@ -27,6 +28,8 @@ export default function useIssueExport() {
         title: "download failed",
         description: `${message || "An error occurred pleas try again."}`,
       });
+    }finally{
+      setIssueExportLoading(false);
     }
   };
   return {

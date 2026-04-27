@@ -7,7 +7,6 @@ export default function usePollHome() {
     isLoading: isPollHomeLoading,
     isFetching: isPollHomeFetching,
   } = useFetchPollHomeQuery();
-  console.log(pollHome)
   const handleSeeAll = () => {
     navigate("/polls/list");
   };

@@ -185,6 +185,21 @@ const AnalyticsUserDashboardPage = lazy(
     import("../features/analytics/pages/user/AnalyticsUserDashboardPage"),
 )
 
+const VolunteerAnalyticsPage = lazy(
+  () =>
+    import("../features/analytics/pages/volunteer/VolunteerAnalyticsPage"),
+)
+
+const PollAnalyticsDashboardPage = lazy(
+  () =>
+    import("../features/analytics/pages/poll/PollAnalyticsDashboardPage"),
+)
+
+const ForumAnalyticsDashboardPage = lazy(
+  () =>
+    import("../features/analytics/pages/forum/ForumAnalyticsDashboardPage"),
+)
+
 import Test from "../features/auth/pages/admin/Test";
 
 import UserManagementSectionLoader from "../features/auth/components/skeltons/loaders_skelton/UserManagementSectionLoader";
@@ -259,6 +274,8 @@ import MonitorLayout from "../features/monitoring/layouts/MonitorLayout";
 import UserActivityPage from "../features/core/pages/citizen/UserActivityPage";
 import ResourceLayout from "../features/resource/layouts/ResourceLayout";
 import AnalyticsSkeleton from "../features/analytics/components/AnalyticsSkeleton";
+import VolunteerAnalyticsSkeleton from "../features/analytics/components/volunteer/VolunteerAnalyticsSkeleton";
+import { PollAnalyticsSkeleton } from "../features/analytics/components/polls/PollAnalyticsSkeleton";
 
 export default function AppRoutes() {
   return (
@@ -617,6 +634,14 @@ export default function AppRoutes() {
                     </Suspense>
                   }
                 />
+                <Route
+                  path="/dashboard/volunteer/analytics"
+                  element={
+                    <Suspense fallback={<VolunteerAnalyticsSkeleton />}>
+                      <VolunteerAnalyticsPage />
+                    </Suspense>
+                  }
+                />
               </Route>
               <Route path="/dashboard" element={<ForumManagementLayout />}>
                 <Route
@@ -664,6 +689,14 @@ export default function AppRoutes() {
                   element={
                     <Suspense fallback={<PendingReviewSkeleton />}>
                       <AdminModerationLogsPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/dashboard/forum/analytics"
+                  element={
+                    <Suspense fallback={<PendingReviewSkeleton />}>
+                      <ForumAnalyticsDashboardPage />
                     </Suspense>
                   }
                 />
@@ -726,6 +759,14 @@ export default function AppRoutes() {
                   element={
                     <Suspense fallback={<AdminDashboardSkeleton />}>
                       <AdminPollDetailPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/dashboard/polls/analytics"
+                  element={
+                    <Suspense fallback={<PollAnalyticsSkeleton />}>
+                      <PollAnalyticsDashboardPage />
                     </Suspense>
                   }
                 />

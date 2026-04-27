@@ -21,8 +21,7 @@ const MyActivityPage = () => {
   };
 
   const handleStartDiscussion = () => {
-    // e.g. navigate("/forum/new")
-    console.log("Navigating to create post page");
+    navigate("/forum/posts/create");
   };
 
   return (

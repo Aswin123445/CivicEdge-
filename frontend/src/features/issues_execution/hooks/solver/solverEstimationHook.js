@@ -93,7 +93,6 @@ export default function useSolverEstimation(draft_id, task_id) {
     }
     setLoading(false);
   };
-  console.log(errors)
   return {
     solverEstimateStep3,
     isLoading,

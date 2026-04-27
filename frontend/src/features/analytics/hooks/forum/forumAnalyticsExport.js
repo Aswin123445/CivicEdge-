@@ -1,23 +1,23 @@
 import { useSelector } from "react-redux";
 import { extractErrorMessage } from "../../../../utils/extractErrorMessage";
 import { errorToast } from "../../../../utils/Toaster";
-import { useIssueExportMutation } from "../../services/analyticsService";
-import { handleIssueExportDownload, handleUserExportDownload } from "../../../issues_execution/services/pdf_service";
+import { handleForumExportDownload } from "../../../issues_execution/services/pdf_service";
 import { useState } from "react";
 
-export default function useUserExport() {
+export default function useForumExport() {
   const { access_token } = useSelector((state) => state.auth);
-  const [issueExportLoading, setIssueExportLoading] = useState(false);
+  const [isExportLoading, setIsExportLoading] = useState(false);
+
 
   const handleExport = async (range, date_from, date_to) => {
     const now = new Date();
-    setIssueExportLoading(true);
+    setIsExportLoading(true);
     try {
-      const blob = await handleUserExportDownload(range, date_from, date_to, access_token);
+      const blob = await handleForumExportDownload(range, date_from, date_to, access_token);
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = `user_analytics_${now.toISOString()}.xlsx`;
+      link.download = `forum_analytics${now.toISOString()}.xlsx`;
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -29,11 +29,11 @@ export default function useUserExport() {
         description: `${message || "An error occurred pleas try again."}`,
       });
     }finally{
-      setIssueExportLoading(false);
+      setIsExportLoading(false);
     }
   };
   return {
+    isExportLoading,
     handleExport,
-    issueExportLoading
   };
 }

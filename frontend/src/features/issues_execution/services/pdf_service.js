@@ -1,8 +1,7 @@
 import axios from "axios";
 
-const handleDownload = async (id,access_token) => {
+const handleDownload = async (id, access_token) => {
   try {
-
     const response = await axios.get(
       `/api/v1/civic/execute/solver/field-verification-report-pdf/${id}/`,
       {
@@ -10,60 +9,149 @@ const handleDownload = async (id,access_token) => {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
-      }
+      },
     );
 
     const blob = response.data;
 
-    return blob
-
+    return blob;
   } catch (err) {
     throw err;
   }
 };
 
-const handleIssueExportDownload = async (range, date_from, date_to,access_token) => {
+const handleIssueExportDownload = async (
+  range,
+  date_from,
+  date_to,
+  access_token,
+) => {
   try {
-
-    const response = await axios.get(
-      `/api/v1/analytics/issues-export/`,
-      {
-        responseType: "blob",
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
+    const response = await axios.get(`/api/v1/analytics/issues-export/`, {
+      responseType: "blob",
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
 
     const blob = response.data;
 
-    return blob
-
+    return blob;
   } catch (err) {
     throw err;
   }
 };
-const handleUserExportDownload = async (range, date_from, date_to,access_token) => {
+const handleUserExportDownload = async (
+  range,
+  date_from,
+  date_to,
+  access_token,
+) => {
   try {
-
-    const response = await axios.get(
-      `/api/v1/analytics/users-export/`,
-      {
-        responseType: "blob",
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
+    const response = await axios.get(`/api/v1/analytics/users-export/`, {
+      responseType: "blob",
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+      params: {
+        range,
+        date_from,
+        date_to,
+      },
+    });
 
     const blob = response.data;
 
-    return blob
+    return blob;
+  } catch (err) {
+    throw err;
+  }
+};
 
+const handleVolunteerExportDownload = async (
+  range,
+  date_from,
+  date_to,
+  access_token,
+) => {
+  try {
+    const response = await axios.get(`/api/v1/analytics/volunteer-export/`, {
+      responseType: "blob",
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+      params: {
+        range,
+        date_from,
+        date_to,
+      },
+    });
+
+    const blob = response.data;
+
+    return blob;
+  } catch (err) {
+    throw err;
+  }
+};
+const handlePollExportDownload = async (
+  range,
+  date_from,
+  date_to,
+  access_token,
+) => {
+  try {
+    const response = await axios.get(`/api/v1/analytics/poll-export/`, {
+      responseType: "blob",
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+      params: {
+        range,
+        date_from,
+        date_to,
+      },
+    });
+
+    const blob = response.data;
+
+    return blob;
+  } catch (err) {
+    throw err;
+  }
+};
+const handleForumExportDownload = async (
+  range,
+  date_from,
+  date_to,
+  access_token,
+) => {
+  try {
+    const response = await axios.get(`/api/v1/analytics/forum-export/`, {
+      responseType: "blob",
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+      params: {
+        range,
+        date_from,
+        date_to,
+      },
+    });
+
+    const blob = response.data;
+
+    return blob;
   } catch (err) {
     throw err;
   }
 };
 
 export default handleDownload;
-export { handleIssueExportDownload, handleUserExportDownload };
+export {
+  handleIssueExportDownload,
+  handleUserExportDownload,
+  handleVolunteerExportDownload,
+  handlePollExportDownload,
+  handleForumExportDownload,
+};

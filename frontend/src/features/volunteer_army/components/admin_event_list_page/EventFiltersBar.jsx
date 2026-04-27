@@ -35,7 +35,7 @@ const EventFiltersBar = ({ search, statusFilter, onSearch, onStatusChange }) => 
           className={`px-4 py-2 rounded-lg text-[10px] font-black transition-all ${
             statusFilter === status
               ? "bg-blue-600 text-white"
-              : "bg-slate-950 text-slate-400 border border-slate-800 hover:border-slate-700"
+              : "bg-gray-700 text-slate-300 border border-slate-800 hover:border-slate-700"
           }`}
         >
           {status}

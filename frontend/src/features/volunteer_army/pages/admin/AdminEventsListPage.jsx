@@ -42,11 +42,6 @@ const AdminEventsListPage = () => {
     navigate(`/dashboard/volunteer/events/${event.id}`);
   };
 
-  const handleConfirmAction = (type) => {
-    console.log("Confirmed action:", type);
-    // dispatch publishEvent / cancelEvent mutation here
-  };
-
   const handleFilterChange = (tab) => {
     if (tab === "ALL") {
       setSearchParams((pre) => {
@@ -127,12 +122,7 @@ const AdminEventsListPage = () => {
           />
         )}
 
-        {/* CONFIRM MODAL */}
-        <ConfirmActionModal
-          modal={modal}
-          onClose={() => setModal(MODAL_CLOSED)}
-          onConfirm={handleConfirmAction}
-        />
+
       </div>
     </div>
   );

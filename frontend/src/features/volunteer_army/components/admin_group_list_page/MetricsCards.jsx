@@ -61,7 +61,7 @@ const MetricsCards = ({ metrix = [] }) => {
                 {stat.value}
               </h3>
             </div>
-            <div className={`p-3 rounded-xl bg-slate-950 border border-slate-800 ${stat.color}`}>
+            <div className={`p-3 rounded-xl bg-slate-800/50 border border-slate-800 ${stat.color}`}>
               <stat.icon size={20} />
             </div>
           </div>

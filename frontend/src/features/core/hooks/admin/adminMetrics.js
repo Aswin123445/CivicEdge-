@@ -22,7 +22,7 @@ export default function useAdminMetrics() {
   const logs = logsdata?.results?.slice(0, 5) || [];
   const openIssues = data?.issues?.open || 0;
   const totalEvents = data?.events?.total || 0;
-  const pendingFlags = data?.flags?.pending || 0;
+  const flags = data?.flags?.total - data?.flags?.pending || 0;
   const activeSolvers = data?.solvers?.active || 0;
   const tasks = data?.tasks?.total || 0;
   const issues_last_7_days = data?.issues_last_7_days || [];
@@ -32,7 +32,7 @@ export default function useAdminMetrics() {
   const metrics = {
     openIssues,
     totalEvents,
-    pendingFlags,
+    flags,
     activeSolvers,
     tasks,
   };

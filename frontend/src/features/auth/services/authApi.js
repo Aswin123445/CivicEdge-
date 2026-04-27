@@ -1,5 +1,6 @@
 import { citizenLogin, googleLogin, refreshToken } from '../authSlice';
 import { baseApi } from '../../../services/baseApi';
+import { errorToast } from '../../../utils/Toaster';
 
 
 const AUTH_PREFIX = '/user';
@@ -34,7 +35,7 @@ export const authApi = baseApi.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(citizenLogin(data));
         } catch (error) {
-          console.log(error);
+          errorToast({ title: "Unable to fetch user", description: "please login again" });
         }
       },
       transformResponse: (response) => {
@@ -55,7 +56,7 @@ export const authApi = baseApi.injectEndpoints({
           dispatch(refreshToken({...data,loading:false}));
         } catch (error) {
           dispatch(refreshToken({access:null,loading:false}));
-          console.log(error);
+          errorToast({ title: "Unable to login", description: "Please try again" });
         }
       },
       transformResponse: (response) => {
@@ -88,7 +89,7 @@ export const authApi = baseApi.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(googleLogin(data));
         } catch (error) {
-          console.log(error);
+          errorToast({ title: "Unable to login", description: "Please try again" });
         }
       },
       transformResponse: (response) => {

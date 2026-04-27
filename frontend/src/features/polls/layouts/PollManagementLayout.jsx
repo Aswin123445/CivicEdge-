@@ -4,8 +4,11 @@ export default function PollManagementLayout() {
   const location = useLocation();
 
   const polls = ["/dashboard/polls"];
+  const analytics = ["/dashboard/polls/analytics"]; 
+  
+  const isPolls = location.pathname === "/dashboard/polls";
+  const isAnalytics = analytics.some((path) => location.pathname.startsWith(path));
 
-  const isPolls = polls.some((path) => location.pathname.startsWith(path));
   return (
     <>
       <div className="flex overflow-x-auto whitespace-nowrap border-b border-gray-700 mb-1 gap-2 px-2 custom-scrollbar">
@@ -21,6 +24,19 @@ export default function PollManagementLayout() {
           }
         >
           Polls
+        </NavLink>
+        <NavLink
+          to="/dashboard/polls/analytics"
+          className={() =>
+            `px-4 py-2 flex-shrink-0 transition-colors duration-200 
+            ${
+              isAnalytics
+                ? "border-b-2 border-[#56CCF2] text-white"
+                : "text-gray-400 hover:text-white hover:border-b-2 hover:border-gray-500"
+            }`
+          }
+        >
+          Analytics
         </NavLink>
       </div>
 

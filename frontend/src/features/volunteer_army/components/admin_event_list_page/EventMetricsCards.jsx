@@ -59,7 +59,10 @@ const STATS_CONFIG = [
 const EventMetricsCards = ({ matrix = [] }) => (
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
     {STATS_CONFIG.map((stat, i) => (
-      <div key={i} className="bg-[#1e1e1e] border border-slate-800 p-5 rounded-2xl shadow-sm hover:border-slate-700 transition-colors">
+      <div
+        key={i}
+        className="bg-[#1e1e1e] border border-slate-800 p-5 rounded-2xl shadow-sm hover:border-slate-700 transition-colors"
+      >
         <div className="flex justify-between items-start">
           <div className="space-y-1">
             <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em]">
@@ -69,7 +72,9 @@ const EventMetricsCards = ({ matrix = [] }) => (
               {stat.key(matrix)}
             </h3>
           </div>
-          <div className={`p-2.5 rounded-xl bg-slate-950 border border-slate-800 ${stat.color}`}>
+          <div
+            className={`p-2.5 rounded-xl bg-slate-800/50 border border-slate-800 ${stat.color}`}
+          >
             <stat.icon size={18} />
           </div>
         </div>

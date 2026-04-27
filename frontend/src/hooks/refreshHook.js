@@ -4,6 +4,7 @@ import { useRefreshMutation } from "../features/auth/services/authApi";
 import { useDispatch } from "react-redux";
 import { setStatus } from "../features/auth/authSlice";
 import { commonApi } from "../features/auth/services/commonApi";
+import { infoToast } from "../utils/Toaster";
 
 export function useAuthBootstrap() {
   const [refresh, { isLoading }] = useRefreshMutation();
@@ -21,7 +22,7 @@ export function useAuthBootstrap() {
             commonApi.endpoints.role.initiate(),
           ).unwrap();
         } catch (error) {
-          console.log(error, "error has been called ");
+          infoToast({ title: "Unable to fetch user", description: "please login again" });
         }
 
         dispatch(setStatus("authenticated"));

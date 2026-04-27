@@ -2,6 +2,7 @@ import {createApi} from '@reduxjs/toolkit/query/react';
 import baseQueryWithReauth from "../../../services/baseQueryWithReauth";
 import { solverLogin } from "../authSlice";
 import { baseApi } from '../../../services/baseApi';
+import { errorToast } from '../../../utils/Toaster';
 
 export const solverAuthApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -17,7 +18,7 @@ export const solverAuthApi = baseApi.injectEndpoints({
                     const { data } = await queryFulfilled;
                     dispatch(solverLogin(data));
                 } catch (error) {
-                    console.log(error);
+                    errorToast({ title: "Unable to login", description: "Please try again" });
                 }
                 
             },

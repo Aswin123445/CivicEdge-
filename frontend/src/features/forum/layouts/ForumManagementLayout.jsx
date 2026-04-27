@@ -7,11 +7,13 @@ export default function ForumManagementLayout() {
   const post = ["/dashboard/forum/posts"]
   const category = ["/dashboard/forum/category"]
   const logs = ["/dashboard/forum/moderation"]
+  const analytics = ["/dashboard/forum/analytics"]
 
   const isReports = reports.some((path) => location.pathname.startsWith(path));
   const isPosts = post.some((path) => location.pathname.startsWith(path));
   const isCategory = category.some((path) => location.pathname.startsWith(path));
   const isLogs = logs.some((path) => location.pathname.startsWith(path));
+  const isAnalytics = analytics.some((path) => location.pathname.startsWith(path));
   return (
     <>
       <div className="flex overflow-x-auto whitespace-nowrap border-b border-gray-700 mb-1 gap-2 px-2 custom-scrollbar">
@@ -66,6 +68,19 @@ export default function ForumManagementLayout() {
           }
         >
           Moderation Logs
+        </NavLink>
+        <NavLink
+          to="/dashboard/forum/analytics"
+          className={() =>
+            `px-4 py-2 flex-shrink-0 transition-colors duration-200 
+            ${
+              isAnalytics
+                ? "border-b-2 border-[#56CCF2] text-white"
+                : "text-gray-400 hover:text-white hover:border-b-2 hover:border-gray-500"
+            }`
+          }
+        >
+          Analytics
         </NavLink>
       </div>
 

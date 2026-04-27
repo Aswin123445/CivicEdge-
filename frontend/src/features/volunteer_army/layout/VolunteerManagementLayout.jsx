@@ -6,6 +6,7 @@ export default function VolunteerManagementLayout() {
     "/dashboard/execution/tasks/list",
     "/dashboard/execution/solver-tasks/",
   ];
+  const analytics = ["/dashboard/volunteer/analytics"]
 
   const groups = ["/dashboard/volunteer/groups"];
 
@@ -16,6 +17,10 @@ export default function VolunteerManagementLayout() {
   const attendance = [
     "/dashboard/volunteer/attendance",
   ];
+
+  const isAnalyticsPath = analytics.some((path) =>
+    location.pathname.startsWith(path),
+  );
 
   const isAttendancePath = attendance.some((path) =>
     location.pathname.startsWith(path),
@@ -87,32 +92,19 @@ export default function VolunteerManagementLayout() {
         >
           Attendance
         </NavLink>
-        {/* <NavLink
-          to="/dashboard/execution/tasks/list"
-          className={() =>
-            `px-4 py-2 flex-shrink-0 transition-colors duration-200 
-            ${
-              isSolverTaskPath
-                ? "border-b-2 border-[#56CCF2] text-white"
-                : "text-gray-400 hover:text-white hover:border-b-2 hover:border-gray-500"
-            }`
-          }
-        >
-          Recognition
-        </NavLink>
         <NavLink
-          to="/dashboard/execution/tasks/list"
+          to="/dashboard/volunteer/analytics"
           className={() =>
             `px-4 py-2 flex-shrink-0 transition-colors duration-200 
             ${
-              isSolverTaskPath
+              isAnalyticsPath
                 ? "border-b-2 border-[#56CCF2] text-white"
                 : "text-gray-400 hover:text-white hover:border-b-2 hover:border-gray-500"
             }`
           }
         >
           Analytics
-        </NavLink> */}
+        </NavLink>
       </div>
 
       <main className="flex-1 overflow-y-auto bg-[#1e1e1e] custom-scrollbar">

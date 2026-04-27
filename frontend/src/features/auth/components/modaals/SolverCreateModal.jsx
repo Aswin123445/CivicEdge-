@@ -60,7 +60,6 @@ function SolverCreateModal({ onClose, onSave }) {
     onSave({ name, password, email, zone_id }); // Pass updated values
     onClose();
   };
-  console.log(errors);
 
   return ReactDOM.createPortal(
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">

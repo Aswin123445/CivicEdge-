@@ -16,7 +16,7 @@ export function showToast({
     duration,
     unstyled: true,
     classNames: {
-      toast: className,                 // ✅ background & border
+      toast: className,                 //  background & border
       title: "text-white font-semibold",
       description: "text-white/90",
     },

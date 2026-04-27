@@ -22,13 +22,15 @@ function AdminSidebar() {
   const { userData, userDataLoading, userDataFetching } = useCitizenService();
 
   const pollPath = [
-    "/dashboard/polls"
+    "/dashboard/polls",
+    "/dashboard/poll/analytics",
   ];
   const volunteerPath = [
     "/dashboard/volunteer/groups",
     "/dashboard/volunteer/events",
     "/dashboard/volunteer/memberships",
-    "/dashboard/volunteer/attendance"
+    "/dashboard/volunteer/attendance",
+    "/dashboard/volunteer/analytics"
   ]
   const executionPaths = [
     "/dashboard/execution/in-review/issues",
@@ -51,7 +53,8 @@ function AdminSidebar() {
     "/dashboard/forum/reports",
     "/dashboard/forum/posts",
     "/dashboard/forum/category",
-    "/dashboard/forum/moderation"
+    "/dashboard/forum/moderation",
+    "/dashboard/forum/analytics"
   ]
   const moderationPaths = [
     "/dashboard/monitoring/activity-log"

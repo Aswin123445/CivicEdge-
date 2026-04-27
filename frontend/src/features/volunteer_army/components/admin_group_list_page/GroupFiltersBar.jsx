@@ -9,7 +9,12 @@ const STATUS_TABS = ["ALL", "DRAFT", "ACTIVE", "ARCHIVED"];
  * @param {function} onSearch      - (value: string) => void
  * @param {function} onStatusChange- (status: string) => void
  */
-const GroupFiltersBar = ({ search, statusFilter, onSearch, onStatusChange }) => (
+const GroupFiltersBar = ({
+  search,
+  statusFilter,
+  onSearch,
+  onStatusChange,
+}) => (
   <div className="bg-[#1e1e1e] border border-slate-800 p-4 rounded-2xl flex flex-col lg:flex-row items-center gap-4">
     {/* Search */}
     <div className="relative w-full lg:w-96 group">
@@ -35,7 +40,7 @@ const GroupFiltersBar = ({ search, statusFilter, onSearch, onStatusChange }) => 
           className={`px-4 py-2 rounded-lg text-[10px] font-black transition-all ${
             statusFilter === status
               ? "bg-blue-600 text-white"
-              : "bg-slate-950 text-slate-400 border border-slate-800 hover:border-slate-700"
+              : "bg-gray-700 text-slate-300 border border-slate-800 hover:border-slate-700"
           }`}
         >
           {status}
