@@ -9,6 +9,7 @@ Responsibilities:
 
 Nothing here touches the DB directly — that belongs in selectors.py.
 """
+
 from __future__ import annotations
 
 import datetime
@@ -17,8 +18,13 @@ from typing import TypedDict
 from django.utils import timezone
 from datetime import timezone as python_timezone
 
-from apps.analytics.selectors.user_analytics.user_analytics_selector import get_user_distribution, get_user_growth, get_user_stats, get_zone_solver_chart
-
+from apps.analytics.selectors.user_analytics.user_analytics_selector import (
+    get_top_solver_performance,
+    get_user_distribution,
+    get_user_growth,
+    get_user_stats,
+    get_zone_solver_chart,
+)
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -43,6 +49,7 @@ class FilterParams(TypedDict):
 # Filter resolver
 # ──────────────────────────────────────────────────────────────────────────────
 
+
 def resolve_filters(
     range_param: str | None,
     date_from: datetime.date | None,
@@ -60,8 +67,12 @@ def resolve_filters(
     if range_param == "custom":
         # Caller must supply both dates; if missing, fall back to 30d
         if date_from and date_to:
-            from_dt = datetime.datetime.combine(date_from, datetime.time.min, tzinfo=python_timezone.utc)
-            to_dt = datetime.datetime.combine(date_to, datetime.time.max, tzinfo=python_timezone.utc)
+            from_dt = datetime.datetime.combine(
+                date_from, datetime.time.min, tzinfo=python_timezone.utc
+            )
+            to_dt = datetime.datetime.combine(
+                date_to, datetime.time.max, tzinfo=python_timezone.utc
+            )
             return (
                 {"range": "custom", "date_from": date_from, "date_to": date_to},
                 from_dt,
@@ -115,4 +126,5 @@ def get_user_analytics_service(filters: dict) -> dict:
         "distribution": get_user_distribution(),
         "growth": get_user_growth(start_date, end_date),
         "zone_solver_chart": get_zone_solver_chart(),
+        "top_solver_performance": get_top_solver_performance(start_date, end_date),
     }

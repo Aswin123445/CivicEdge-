@@ -80,6 +80,11 @@ class ZoneSolverPointSerializer(serializers.Serializer):
     zone = serializers.CharField()   # zone name  → <BarChart> x-axis
     solvers = serializers.IntegerField()
     active_solvers = serializers.IntegerField()  # extra bar / stacked
+    
+class SolverPerformanceSeralizer(serializers.Serializer):
+    id = serializers.UUIDField()  # zone name  → <BarChart> x-axis
+    name = serializers.CharField()
+    resolved = serializers.IntegerField()
 
 
 # ── Root response ─────────────────────────────
@@ -89,3 +94,4 @@ class UserAnalyticsDashboardSerializer(serializers.Serializer):
     distribution = UserDistributionPointSerializer(many=True)
     growth = UserGrowthPointSerializer(many=True)
     zone_solver_chart = ZoneSolverPointSerializer(many=True)
+    top_solver_performance = SolverPerformanceSeralizer(many=True)

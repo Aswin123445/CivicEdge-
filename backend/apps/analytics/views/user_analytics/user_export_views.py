@@ -12,17 +12,6 @@ from apps.analytics.serializers.user_analytics.user_analytics_serilzers import U
 
 
 
-
-def _parse_date(value: str | None) -> datetime.date | None:
-    """Safely parse a YYYY-MM-DD string; returns None on failure."""
-    if not value:
-        return None
-    try:
-        return datetime.date.fromisoformat(value)
-    except ValueError:
-        return None
-
-
 class UserDashboardExportView(APIView):
     permission_classes = [IsAdmin]
 

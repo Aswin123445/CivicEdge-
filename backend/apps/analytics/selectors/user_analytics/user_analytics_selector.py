@@ -15,6 +15,8 @@ from django.db.models import (
 from django.db.models.functions import TruncMonth, TruncDate, TruncWeek
 
 from django.contrib.auth import get_user_model
+from apps.issue_execution.models.solver_task import SolverTask
+from apps.issue_execution.utils.enums.solver_task_status import SolverTaskStatus
 from shared.enums.user_role import UserRole
 from apps.user.models.user import Zone
 from django.utils.timezone import now
@@ -192,3 +194,33 @@ def get_zone_solver_chart() -> list[dict]:
         })
 
     return result
+
+
+def get_top_solver_performance(start_date, end_date, limit: int = 5) -> list[dict]:
+    """
+    Top solvers ranked by number of COMPLETED tasks in the given period.
+    Uses completed_at for the date filter since that's when work was done.
+
+    Returns: [{ id, name, resolved }]
+    """
+
+
+    rows = (
+        SolverTask.objects.filter(
+            status=SolverTaskStatus.COMPLETED,
+            completed_at__date__gte=start_date,
+            completed_at__date__lte=end_date,
+        )
+        .values("solver__id", "solver__profile__name", "solver__email")
+        .annotate(resolved=Count("id"))
+        .order_by("-resolved")[:limit]
+    )
+
+    return [
+        {
+            "id": str(row["solver__id"]),
+            "name": f"{row['solver__profile__name'] if row['solver__profile__name'] else row['solver__email'].split('@')[0]}" ,
+            "resolved": row["resolved"],
+        }
+        for row in rows
+    ]

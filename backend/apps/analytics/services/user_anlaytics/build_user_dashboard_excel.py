@@ -80,6 +80,26 @@ def build_user_dashboard_excel(data):
             row["solvers"],
             row["active_solvers"],
         ])
+  # --------------------------------------------------
+    # Sheet 4: Zone Solvers
+    # --------------------------------------------------
+    ws4 = wb.create_sheet("Solvers Performance")
+
+    ws4.append([
+        "Solver ID",
+        "Solver Name",
+        "Tasks Resolved"
+    ])
+
+    for cell in ws4[1]:
+        cell.font = Font(bold=True)
+
+    for row in data["top_solver_performance"]:
+        ws4.append([
+            row["id"],
+            row["name"],
+            row["resolved"],
+        ])
 
     # --------------------------------------------------
     # Auto Width

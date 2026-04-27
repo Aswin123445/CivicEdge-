@@ -23,10 +23,8 @@ def send_solver_welcome_email(
 
         # Build login URL (assuming you have a domain in settings)
         frontend_url = settings.FRONTEND_URL
-        print(frontend_url)
         login_url = f"{frontend_url.rstrip('/')}{login_path}"
-        print((login_path,'login path'))
-        print(login_url,'login url')
+
 
         # Render HTML content
         html_content = render_to_string("solver_welcome.html", {

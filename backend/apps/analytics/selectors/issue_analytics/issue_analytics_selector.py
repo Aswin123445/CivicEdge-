@@ -17,7 +17,6 @@ from django.db.models import (
 from django.db.models.functions import TruncMonth
 
 from apps.issues.utils.enums.issue_status import IssueStatus
-from apps.issues.models.issues import Issue
 
 
 
