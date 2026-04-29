@@ -80,6 +80,8 @@ const GroupTable = ({
   dropdownRef,
   activateGroupLoading,
   archiveGroupLoading,
+  setEditModalOpen,
+  setActiveGroup,
 }) => {
   const toggleDropdown = (e, id) => {
     e.stopPropagation();
@@ -186,7 +188,9 @@ const GroupTable = ({
                             setActiveDropdown(null);
                           }}
                           activateGroupLoading={activateGroupLoading}
-                          archiveGroupLoading = {archiveGroupLoading}
+                          archiveGroupLoading={archiveGroupLoading}
+                          setEditModalOpen={setEditModalOpen}
+                          setActiveGroup={setActiveGroup}
                         />
                       )}
                     </td>

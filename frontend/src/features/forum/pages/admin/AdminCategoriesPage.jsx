@@ -49,7 +49,7 @@ const EmptyState = () => (
     <Inbox className="text-slate-600 w-12 h-12 mb-4" />
     <h3 className="text-xl font-bold text-slate-100">No categories found</h3>
     <p className="text-slate-400 mt-2">
-      Create categories to organize discussions effectively.
+      Create categories to organize discussions effecively.
     </p>
   </div>
 );

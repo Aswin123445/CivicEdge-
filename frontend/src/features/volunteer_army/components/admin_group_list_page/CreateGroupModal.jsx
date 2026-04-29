@@ -24,6 +24,12 @@ const CreateGroupModal = ({
   const [formData, setFormData] = useState(INITIAL_FORM);
   const [errors, setErrors] = useState({});
 
+  const handleonClose = () => {
+    setFormData(INITIAL_FORM);
+    setErrors({});
+    onClose?.();
+  };
+
   if (!isOpen) return null;
   const validate = (formData) => {
     const errors = {};
@@ -65,6 +71,13 @@ const CreateGroupModal = ({
       errors.requirements = "Must be at least 10 characters if provided";
     }
 
+    if (formData.membership_type === "APPROVAL_REQUIRED") {
+      if (!requirements) {
+        errors.requirements =
+          "Requirements are required for approval required  groups";
+      }
+    }
+
     return errors;
   };
   const handleChange = (e) => {
@@ -82,7 +95,7 @@ const CreateGroupModal = ({
     }
     onSubmit?.(formData);
     setFormData(INITIAL_FORM);
-    onClose?.();
+    handleonClose?.();
   };
 
   const inputClass =
@@ -93,7 +106,9 @@ const CreateGroupModal = ({
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-[#1e1e1e]/10 backdrop-blur-sm"
-        onClick={onClose}
+        onClick={() => {
+          handleonClose();
+        }}
       />
 
       {/* Modal */}
@@ -109,7 +124,9 @@ const CreateGroupModal = ({
             </p>
           </div>
           <button
-            onClick={onClose}
+            onClick={() => {
+              handleonClose();
+            }}
             className="p-2 hover:bg-slate-800 rounded-xl text-slate-400 transition-colors"
           >
             <X size={20} />
@@ -225,7 +242,9 @@ const CreateGroupModal = ({
         {/* Footer */}
         <div className="px-8 py-6 border-t border-slate-800 flex gap-3">
           <button
-            onClick={onClose}
+            onClick={() => {
+              handleonClose();
+            }}
             className="flex-1 px-6 py-3.5 rounded-xl font-bold text-slate-400 hover:bg-slate-800 transition-all"
           >
             Cancel

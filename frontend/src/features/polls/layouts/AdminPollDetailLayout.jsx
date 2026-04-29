@@ -4,8 +4,8 @@ import useAdminPollDetails from "../hooks/admin/adminPollDetails";
 import { getStatusColor } from "../utils";
 import { useParams } from "react-router-dom";
 import AdminDetailsHeaderSkeleton from "../components/adminn_detail_poll_page/AdminDetailsHeaderSkeleton";
+import EditPollModal from "../components/adminn_detail_poll_page/EditPollModal";
 const AdminPollDetailLayout = () => {
-
   const { id } = useParams();
   const {
     adminPollDetail: poll,
@@ -15,15 +15,24 @@ const AdminPollDetailLayout = () => {
     closePollLoading,
     isModalOpen,
     setIsModalOpen,
-    navigate
+    navigate,
+    isEditModalOpen,
+    setIsEditModalOpen,
+    editModalClose,
+    editModalOnSubmit,
+    updatePollLoading,
   } = useAdminPollDetails(id);
-  if (adminPollDetailLoading || adminPollDetailFetching) return <AdminDetailsHeaderSkeleton />;
+  if (adminPollDetailLoading || adminPollDetailFetching)
+    return <AdminDetailsHeaderSkeleton />;
   return (
     <div className="bg-[#1e1e1e] text-slate-100 font-sans selection:bg-blue-500/30 pb-20">
       {/* 6.1 Header Section */}
       <header className="border-b border-slate-800 bg-[#1e1e1e] backdrop-blur-md sticky top-0 z-30">
         <div className="max-w-6xl mx-auto px-6 py-6">
-          <button onClick={() => navigate('/dashboard/polls')} className="flex items-center gap-2 text-slate-500 hover:text-slate-100 text-sm font-bold mb-4 transition-colors">
+          <button
+            onClick={() => navigate("/dashboard/polls")}
+            className="flex items-center gap-2 text-slate-500 hover:text-slate-100 text-sm font-bold mb-4 transition-colors"
+          >
             <ChevronLeft size={16} /> Back to Management
           </button>
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -55,12 +64,20 @@ const AdminPollDetailLayout = () => {
 
             <div className="flex items-center gap-3">
               {poll.status === "active" && (
-                <button
-                  onClick={() => setIsModalOpen(true)}
-                  className="bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-lg shadow-red-900/20"
-                >
-                  Close Poll
-                </button>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setIsEditModalOpen(true)}
+                    className="bg-gray-700 hover:bg-gray-800 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-lg shadow-red-900/20"
+                  >
+                    Edit Poll
+                  </button>
+                  <button
+                    onClick={() => setIsModalOpen(true)}
+                    className="bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-lg shadow-red-900/20"
+                  >
+                    Close Poll
+                  </button>
+                </div>
               )}
             </div>
           </div>
@@ -90,6 +107,15 @@ const AdminPollDetailLayout = () => {
             Analysis
           </NavLink>
         </div>
+        {isEditModalOpen && (
+          <EditPollModal
+            isOpen={isEditModalOpen}
+            onClose={editModalClose}
+            onSubmit={editModalOnSubmit}
+            initialData={poll}
+            loading={updatePollLoading}
+          />
+        )}
         {isModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-sm">
             <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-md p-8 shadow-2xl animate-in zoom-in-95 duration-200">
@@ -120,6 +146,7 @@ const AdminPollDetailLayout = () => {
             </div>
           </div>
         )}
+
         <Outlet />
       </main>
     </div>

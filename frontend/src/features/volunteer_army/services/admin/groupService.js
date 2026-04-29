@@ -32,6 +32,18 @@ export const AdminGroupListApi = baseApi.injectEndpoints({
         return response;
       },
     }),
+    updateAdminGroup: builder.mutation({
+      query: (data) => ({
+        url: `${EXECUTION_PREFIX}/groups/${data.id}/`,
+        method: "put",
+        meta: { skipAuth: false },
+        data,
+      }),
+      invalidatesTags: ["AdminGroupList"],
+      transformResponse: (response) => {
+        return response;
+      },
+    }),
     activateAdminGroup: builder.mutation({
       query: (id) => ({
         url: `${EXECUTION_PREFIX}/groups/${id}/activate/`,
@@ -61,5 +73,6 @@ export const {
   useFetchAdminGroupListQuery,
   useCreateAdminGroupMutation,
   useActivateAdminGroupMutation,
-  useArchiveAdminGroupMutation
+  useArchiveAdminGroupMutation,
+  useUpdateAdminGroupMutation
 } = AdminGroupListApi;

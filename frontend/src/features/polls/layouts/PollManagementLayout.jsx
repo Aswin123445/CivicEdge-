@@ -3,10 +3,10 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 export default function PollManagementLayout() {
   const location = useLocation();
 
-  const polls = ["/dashboard/polls"];
+  const polls = ["/dashboard/polls", "/dashboard/polls/create"];
   const analytics = ["/dashboard/polls/analytics"]; 
   
-  const isPolls = location.pathname === "/dashboard/polls";
+  const isPolls = polls.some((path) => location.pathname.startsWith(path));
   const isAnalytics = analytics.some((path) => location.pathname.startsWith(path));
 
   return (

@@ -10,6 +10,7 @@ import useSolverTaskDetail from "../hooks/solver/solverTaskDetail";
 import SolverTaskDetailSkeleton from "../components/solver_task_details_page/SolverTaskDetailSkeleton";
 import { useParams } from "react-router-dom";
 import AdminExecutionDecisionBanner from "../components/solver_task_details_page/AdminExecutionDecisionBanner";
+import PostponedTaskNotice from "../components/solver_task_details_page/PostponedTaskNotice";
 
 const SolverTaskDetailPage = () => {
   // State for image modal preview
@@ -25,6 +26,12 @@ const SolverTaskDetailPage = () => {
         return {
           text: "Start Verification",
           color: "bg-blue-600 hover:bg-blue-700",
+        };
+
+      case "POSTPONED":
+        return {
+          text: "View Completion Submission",
+          color: "bg-yellow-600 hover:bg-yellow-700",
         };
 
       case "VERIFICATION_SUBMITTED":
@@ -74,8 +81,13 @@ const SolverTaskDetailPage = () => {
     <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
         {/* --- COMPONENT: PageHeader --- */}
-        <TaskDetailsHeaderSolver taskData={task} /> 
-        <AdminExecutionDecisionBanner  latestExecutionProof={task?.latest_execution_proofs} />
+        <TaskDetailsHeaderSolver taskData={task} />
+        <AdminExecutionDecisionBanner
+          latestExecutionProof={task?.latest_execution_proofs}
+        />
+        {task?.status === "POSTPONED" && (
+          <PostponedTaskNotice />
+        )}
 
         {/* --- MAIN CONTENT GRID --- */}
         <div className="grid grid-cols-12 gap-6">

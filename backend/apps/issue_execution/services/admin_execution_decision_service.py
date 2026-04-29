@@ -9,6 +9,7 @@ from apps.notification.services.dispatcher import NotificationDispatcher
 from apps.notification.utils.event_constants import NotificationEvent
 from apps.notification.models.activiity_log import ActivityAction, ActivityEntity
 from apps.notification.services.create_activity_log import create_activity
+from apps.issue_execution.utils.celery.issue_resolved_notification import send_issue_resolved_email
 
 
 @transaction.atomic
@@ -36,7 +37,7 @@ def review_execution_completion(*, admin, proof, data):
     # APPROVE FLOW
     # =============================
     if decision == "APPROVE":
-        
+
         task._transition(
             to_status=SolverTaskStatus.COMPLETED,
         )
@@ -49,6 +50,12 @@ def review_execution_completion(*, admin, proof, data):
             issue=issue,
             message="Issue as been successfully completed",
             created_by=admin,
+        )
+        send_issue_resolved_email.delay(
+            to_email=issue.reporter.email,
+            issue_title=issue.title,
+            issue_description=issue.description,
+            resolved_message=data["reason"],
         )
         NotificationDispatcher.dispatch(
             event=NotificationEvent.ISSUE_RESOLVED,
@@ -77,7 +84,6 @@ def review_execution_completion(*, admin, proof, data):
         return {
             "detail": "Execution approved. Issue resolved."
         }
-
 
     # =============================
     # REJECT FLOW

@@ -8,7 +8,7 @@ import {
 import { useState } from "react";
 import { errorToast, successToast } from "../../../../../utils/Toaster";
 import { extractErrorMessage } from "../../../../../utils/extractErrorMessage";
-export default function useAdminPendingVerificationDetails(id) {
+export default function useAdminPendingVerificationDetails(id, navigationLink) {
   const navigate = useNavigate();
   const [adminDecisionTask, { isLoading: adminDecisionTaskLoading }] =
     useAdminDecisionTaskMutation();
@@ -67,7 +67,7 @@ export default function useAdminPendingVerificationDetails(id) {
         title: "decision successfull",
         description: "The decision has been made successfully.",
       });
-      navigate(`/dashboard/execution/verification-reports`);
+      navigate(navigationLink);
     } catch (error) {
       const message = extractErrorMessage(error);
       errorToast({

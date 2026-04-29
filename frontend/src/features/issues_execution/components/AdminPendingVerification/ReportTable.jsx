@@ -12,7 +12,7 @@ import Pagination from "../../../../components/common/PaginationBar";
 import { useNavigate } from "react-router-dom";
 import { formatDate } from "../../../../utils/datenormalize";
 
-export default function ReportTable({ tasks, pagination }) {
+export default function ReportTable({ tasks, pagination,handleNavigate }) {
   const navigate = useNavigate();
   return (
     <div className="bg-[#1e1e1e] border border-[#1e1e1e] rounded-xl overflow-hidden">
@@ -79,9 +79,7 @@ export default function ReportTable({ tasks, pagination }) {
                 <td className="px-6 py-4 text-right">
                   <button
                     onClick={() =>
-                      navigate(
-                        `/dashboard/execution/verification-report/${task?.id}`,
-                      )
+                      handleNavigate(task?.id)
                     }
                     className="inline-flex items-center gap-1 text-blue-400"
                   >

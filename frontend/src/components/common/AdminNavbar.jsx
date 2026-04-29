@@ -1,7 +1,14 @@
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
-import { Bell, Search } from "lucide-react";
+import {
+  Bell,
+  Search,
+  AlertTriangle,
+  CalendarPlus,
+  Vote,
+  ShieldAlert,
+} from "lucide-react";
 
 import AdminDropDown from "../ui/AdminDropDown";
 import CitizenLogo from "../ui/CitizenLogo";
@@ -10,8 +17,10 @@ import useCitizenService from "../../features/core/hooks/citizen/useCitizenServi
 import NotificationDrawer from "../../features/notifications/pages/NotificationDrawer";
 import CitizenBellIconNotification from "../../features/notifications/components/CitizenBellIconNotification";
 import useNotificationCount from "../../features/notifications/hooks/notificationCountHook";
-
+import { useNavigate,useLocation } from "react-router-dom";
 export default function AdminNavbar() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [userNotificationsOpen, setUserNotificationsOpen] = useState(false);
   const menuRef = useRef(null);
@@ -35,6 +44,14 @@ export default function AdminNavbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const isIssue = location.pathname.includes(
+    "/dashboard/execution/in-review/issues",
+  );
+  const isEvents = location.pathname.includes(
+    "/dashboard/volunteer/events/create",
+  );
+  const isPolls = location.pathname.includes("/dashboard/polls/create");  
+  const isReport = location.pathname.includes("/dashboard/forum/reports");
   return (
     <motion.nav
       initial={{ opacity: 0, y: -10 }}
@@ -64,28 +81,46 @@ export default function AdminNavbar() {
       {/* ===================== */}
       {/* CENTER: SEARCH */}
       {/* ===================== */}
-      <div className="hidden md:flex flex-1 justify-center">
-        <div className="relative w-full max-w-md">
-          <Search
-            size={16}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
-          />
-          <input
-            type="text"
-            placeholder="Search users, issues, polls…"
-            className="
-              w-full h-9 pl-9 pr-3
-              bg-neutral-800
-              border border-neutral-700
-              rounded-md
-              text-sm text-slate-200
-              placeholder:text-slate-500
-              focus:outline-none focus:ring-1 focus:ring-blue-500
-            "
-          />
+
+      <div className="hidden md:flex items-center gap-2 text-slate-400">
+        {/* Pending Issues */}
+        <div
+          onClick={() => navigate("/dashboard/execution/in-review/issues")}
+          className={`${isIssue ? "bg-slate-800 text-white" : ""} flex items-center gap-2 px-3 py-2 rounded-xl cursor-pointer hover:bg-slate-800 hover:text-white transition-all duration-200`}
+        >
+          <AlertTriangle size={16} />
+          <span className="text-sm font-medium">Pending Issues</span>
+        </div>
+
+        {/* Create Event */}
+        <div
+          onClick={() => navigate("/dashboard/volunteer/events/create")}
+          className={`${isEvents ? "bg-slate-800 text-white" : ""} flex items-center gap-2 px-3 py-2 rounded-xl cursor-pointer hover:bg-slate-800 hover:text-white transition-all duration-200`}
+        >
+          <CalendarPlus size={16} />
+          <span className="text-sm font-medium">Create Event</span>
+        </div>
+
+        {/* Create Poll */}
+        <div
+          onClick={() => {
+            navigate("/dashboard/polls/create");
+          }}
+          className={`${isPolls ? "bg-slate-800 text-white" : ""} flex items-center gap-2 px-3 py-2 rounded-xl cursor-pointer hover:bg-slate-800 hover:text-white transition-all duration-200`}
+        >
+          <Vote size={16} />
+          <span className="text-sm font-medium">Create Poll</span>
+        </div>
+
+        {/* Forum Reports */}
+        <div
+          onClick={() => navigate("/dashboard/forum/reports")}
+          className={`${isReport ? "bg-slate-800 text-white" : ""} flex items-center gap-2 px-3 py-2 rounded-xl cursor-pointer hover:bg-slate-800 hover:text-white transition-all duration-200`}
+        >
+          <ShieldAlert size={16} />
+          <span className="text-sm font-medium">Forum Reports</span>
         </div>
       </div>
-
       {/* ===================== */}
       {/* RIGHT: ACTIONS */}
       {/* ===================== */}

@@ -26,7 +26,7 @@ const IssueDescriptionInput = ({ value, onChange, error }) => (
         What happened? Where? Since when?
       </p>
       <span className="text-[10px] font-bold text-slate-400">
-        {value.length}/500
+        {value.length}
       </span>
     </div>
 

@@ -1,5 +1,5 @@
 import { extractErrorMessage } from "../../../utils/extractErrorMessage";
-import { errorToast } from "../../../utils/Toaster";
+import { errorToast, successToast } from "../../../utils/Toaster";
 import {
   useUpdateProfileMutation,
   useUploadAvatarMutation,
@@ -40,6 +40,7 @@ export default function useProfileHook() {
     }
     try {
       await uploadAvatar(file).unwrap();
+      successToast({ title: "Upload successful", description: "Avatar uploaded successfully" });
     } catch (error) {
       const message = extractErrorMessage(error);
       errorToast({

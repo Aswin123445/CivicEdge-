@@ -10,6 +10,15 @@ const STATUS_CONFIG = {
     message:
       "Your complaint is currently under review by the civic administration. A decision will be made after verification.",
   },
+  POSTPONED: {
+    accent: "bg-amber-600",
+    title: "Postponed",
+    iconBg: "bg-amber-50",
+    iconColor: "text-amber-600",
+    titleColor: "text-amber-700",
+    message:
+      "The civic team has postponed this issue. Progress updates will appear as work continues.",
+  },
 
   RESOLVED: {
     accent: "bg-green-600",

@@ -14,7 +14,7 @@ export const PollAdminApi = baseApi.injectEndpoints({
           params,
         };
       },
-      providesTags: ["AdminFetchPolls","AdminPollDetail"],
+      providesTags: ["AdminFetchPolls", "AdminPollDetail"],
       transformResponse: (response) => {
         return response;
       },
@@ -31,13 +31,25 @@ export const PollAdminApi = baseApi.injectEndpoints({
         return response;
       },
     }),
+    adminEditPoll: builder.mutation({
+      query: ({ data, id }) => ({
+        url: `${EXECUTION_PREFIX}/polls/edit/${id}/`,
+        method: "PATCH",
+        meta: { skipAuth: false },
+        data,
+      }),
+      invalidatesTags: ["AdminFetchPolls", "AdminPollDetail"],
+      transformResponse: (response) => {
+        return response;
+      },
+    }),
     adminClosePoll: builder.mutation({
       query: (id) => ({
         url: `${EXECUTION_PREFIX}/polls/${id}/close/`,
         method: "PATCH",
         meta: { skipAuth: false },
       }),
-      invalidatesTags: ["AdminFetchPolls","AdminPollDetail"],
+      invalidatesTags: ["AdminFetchPolls", "AdminPollDetail"],
       transformResponse: (response) => {
         return response;
       },
@@ -74,7 +86,7 @@ export const PollAdminApi = baseApi.injectEndpoints({
       transformResponse: (response) => {
         return response;
       },
-    })
+    }),
   }),
 });
 
@@ -84,6 +96,7 @@ export const {
   useAdminClosePollMutation,
   useAdminPollDetailQuery,
   useAdminPollDistributionQuery,
-  useAdminPollsTimeLineQuery
+  useAdminPollsTimeLineQuery,
+  useAdminEditPollMutation
 
 } = PollAdminApi;

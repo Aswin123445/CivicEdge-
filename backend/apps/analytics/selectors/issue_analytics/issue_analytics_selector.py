@@ -6,6 +6,7 @@ and returns plain Python data ready for the serializer.
 
 Rule: never re-filter or reach outside qs.  One shared queryset.
 """
+
 from __future__ import annotations
 
 from django.db.models import (
@@ -19,15 +20,15 @@ from django.db.models.functions import TruncMonth
 from apps.issues.utils.enums.issue_status import IssueStatus
 
 
-
 # ──────────────────────────────────────────────────────────────────────────────
 # KPI stats
 # ──────────────────────────────────────────────────────────────────────────────
 
+
 def get_issue_stats(qs: QuerySet) -> dict:
     """
     Returns total, resolved, pending counts and average resolution time.
- 
+
     Resolution time = cancelled_at - created_at for resolved issues.
     We use ExpressionWrapper so the subtraction stays inside the DB.
     """
@@ -43,34 +44,71 @@ def get_issue_stats(qs: QuerySet) -> dict:
         ),
         pending_issues=Count(
             "id",
-            filter=Q(status__in=[
-                IssueStatus.OPEN,
-                IssueStatus.IN_REVIEW,
-                IssueStatus.IN_PROGRESS,
-                IssueStatus.REOPENED,
-            ]),
+            filter=Q(
+                status__in=[
+                    IssueStatus.OPEN,
+                    IssueStatus.IN_REVIEW,
+                    IssueStatus.IN_PROGRESS,
+                    IssueStatus.REOPENED,
+                ]
+            ),
         ),
     )
 
- 
     return {**agg}
-
 
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Trend chart  (reported vs resolved per month)
 # ──────────────────────────────────────────────────────────────────────────────
 
-def get_trend_chart(qs: QuerySet) -> list[dict]:
-    """
-    Groups issues by calendar month and counts reported vs resolved.
+# selectors.py
 
-    Returns rows sorted chronologically so the frontend can use them
-    directly as <LineChart data={...}>.
+import datetime
+from dateutil.relativedelta import relativedelta
+
+from django.db.models import Count, Q, QuerySet
+from django.db.models.functions import TruncDay, TruncMonth
+
+from apps.issues.models.issues import IssueStatus
+
+
+def get_trend_chart(qs: QuerySet, from_dt, to_dt) -> list[dict]:
     """
+    Dynamic trend chart based on selected date range.
+
+    Rules:
+    - <= 31 days   -> group by day
+    - > 31 days    -> group by month
+
+    Returns:
+    [
+        {
+            "label": "01 Apr" / "Apr 2026",
+            "reported": 10,
+            "resolved": 4
+        }
+    ]
+    """
+
+    if not from_dt or not to_dt:
+        return []
+
+    total_days = (to_dt.date() - from_dt.date()).days + 1
+
+    # Decide bucket size
+    if total_days <= 31:
+        trunc_func = TruncDay
+        label_format = "%d %b"
+        mode = "day"
+    else:
+        trunc_func = TruncMonth
+        label_format = "%b %Y"
+        mode = "month"
+
     rows = (
-        qs.annotate(month=TruncMonth("created_at"))
-        .values("month")
+        qs.annotate(period=trunc_func("created_at"))
+        .values("period")
         .annotate(
             reported=Count("id"),
             resolved=Count(
@@ -78,17 +116,46 @@ def get_trend_chart(qs: QuerySet) -> list[dict]:
                 filter=Q(status=IssueStatus.RESOLVED),
             ),
         )
-        .order_by("month")
+        .order_by("period")
     )
 
-    return [
-        {
-            "label": row["month"].strftime("%b %Y"),
-            "reported": row["reported"],
-            "resolved": row["resolved"],
-        }
+    # Convert DB rows to dict for easy lookup
+    data_map = {
+        (
+            row["period"].date()
+            if mode == "day"
+            else row["period"].date().replace(day=1)
+        ): row
         for row in rows
-    ]
+    }
+
+    result = []
+
+    current = from_dt.date()
+
+    if mode == "month":
+        current = current.replace(day=1)
+
+    while current <= to_dt.date():
+
+        key = current
+        row = data_map.get(key)
+
+        result.append(
+            {
+                "label": current.strftime(label_format),
+                "reported": row["reported"] if row else 0,
+                "resolved": row["resolved"] if row else 0,
+            }
+        )
+
+        # Move next bucket
+        if mode == "day":
+            current += datetime.timedelta(days=1)
+        else:
+            current += relativedelta(months=1)
+
+    return result
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -100,42 +167,52 @@ def get_trend_chart(qs: QuerySet) -> list[dict]:
 # We count cumulative membership so the funnel is strictly non-increasing.
 _FUNNEL_STAGES: list[tuple[str, list]] = [
     # Every non-draft issue has been reported, including reopened ones.
-    ("Reported", [
-        IssueStatus.OPEN,
-        IssueStatus.IN_REVIEW,
-        IssueStatus.IN_PROGRESS,
-        IssueStatus.RESOLVED,
-        IssueStatus.CLOSED,
-        IssueStatus.REJECTED,
-        IssueStatus.CANCELLED,
-        IssueStatus.REOPENED,
-    ]),
+    (
+        "Reported",
+        [
+            IssueStatus.OPEN,
+            IssueStatus.IN_REVIEW,
+            IssueStatus.IN_PROGRESS,
+            IssueStatus.RESOLVED,
+            IssueStatus.CLOSED,
+            IssueStatus.REJECTED,
+            IssueStatus.CANCELLED,
+            IssueStatus.REOPENED,
+        ],
+    ),
     # Staff have looked at it (moved past raw OPEN).
-    ("In Review", [
-        IssueStatus.IN_REVIEW,
-        IssueStatus.IN_PROGRESS,
-        IssueStatus.RESOLVED,
-        IssueStatus.CLOSED,
-        IssueStatus.REJECTED,
-        IssueStatus.CANCELLED,
-        IssueStatus.REOPENED,
-    ]),
+    (
+        "In Review",
+        [
+            IssueStatus.IN_REVIEW,
+            IssueStatus.IN_PROGRESS,
+            IssueStatus.RESOLVED,
+            IssueStatus.CLOSED,
+            IssueStatus.REJECTED,
+            IssueStatus.CANCELLED,
+            IssueStatus.REOPENED,
+        ],
+    ),
     # Active work has started.
-    ("In Progress", [
-        IssueStatus.IN_PROGRESS,
-        IssueStatus.RESOLVED,
-        IssueStatus.CLOSED,
-        IssueStatus.REOPENED,
-    ]),
+    (
+        "In Progress",
+        [
+            IssueStatus.IN_PROGRESS,
+            IssueStatus.RESOLVED,
+            IssueStatus.CLOSED,
+            IssueStatus.REOPENED,
+        ],
+    ),
     # Fix was delivered (RESOLVED or subsequently CLOSED).
-    ("Resolved", [
-        IssueStatus.RESOLVED,
-        IssueStatus.CLOSED,
-    ]),
+    (
+        "Resolved",
+        [
+            IssueStatus.RESOLVED,
+            IssueStatus.CLOSED,
+        ],
+    ),
     # Formally closed — terminal success state.
-
 ]
-
 
 
 def get_funnel_chart(qs: QuerySet) -> list[dict]:
@@ -148,10 +225,7 @@ def get_funnel_chart(qs: QuerySet) -> list[dict]:
     agg = qs.aggregate(**annotations)
 
     return [
-        {
-            "stage": stage,
-            "count": agg[f"stage_{idx}"]
-        }
+        {"stage": stage, "count": agg[f"stage_{idx}"]}
         for idx, (stage, _) in enumerate(_FUNNEL_STAGES)
     ]
 
@@ -159,6 +233,7 @@ def get_funnel_chart(qs: QuerySet) -> list[dict]:
 # ──────────────────────────────────────────────────────────────────────────────
 # Zone chart  (issues per ward / zone)
 # ──────────────────────────────────────────────────────────────────────────────
+
 
 def get_zone_chart(qs: QuerySet) -> list[dict]:
     """
@@ -180,6 +255,7 @@ def get_zone_chart(qs: QuerySet) -> list[dict]:
 # ──────────────────────────────────────────────────────────────────────────────
 # Category chart  (issues per category — pie slices)
 # ──────────────────────────────────────────────────────────────────────────────
+
 
 def get_category_chart(qs: QuerySet) -> list[dict]:
     """

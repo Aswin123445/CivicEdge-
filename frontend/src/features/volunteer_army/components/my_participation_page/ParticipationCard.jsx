@@ -152,12 +152,12 @@ const StatusMessage = ({ status }) => {
   }
   if (status === "LEFT") {
     return (
-      <div className="h-full flex flex-col items-center justify-center text-center px-4 mt-16">
-        <p className="text-sm font-semibold text-slate-600">
+      <div className="h-full flex flex-col items-center justify-center text-center px-4 mt-7">
+        <p className="text-lg  font-bold text-slate-600">
           You left this event
         </p>
 
-        <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+        <p className="text-md text-slate-400 mt-1 leading-relaxed">
           Things don’t always go as planned — but your contribution still
           matters. Explore other events and continue making a positive impact in
           your community.
@@ -167,7 +167,7 @@ const StatusMessage = ({ status }) => {
           onClick={() => {
             navigate("/volunteer-army/groups");
           }}
-          className="text-xs text-blue-600 mt-2 font-medium cursor-pointer"
+          className="text-sm text-blue-600 mt-8 font-semibold cursor-pointer"
         >
           Discover new opportunities →
         </p>
@@ -269,12 +269,12 @@ const ParticipationCard = ({ item, handleAction }) => {
             </div>
 
             {/* Message */}
-            <p className="text-sm font-medium text-slate-700">
+            <p className="text-lg font-medium text-slate-700">
               Upload your attendance selfie
             </p>
 
             {/* Subtext */}
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-md text-slate-400 mt-1">
               Take a selfie at the event to mark your presence
             </p>
           </div>
@@ -283,11 +283,11 @@ const ParticipationCard = ({ item, handleAction }) => {
           item.event_runtime_status === "UPCOMING" &&
           item.status === "REGISTERED" && (
             <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 pt-10  text-center ">
-              <p className="text-sm font-medium text-slate-700">
+              <p className="text-lg font-bold text-green-700">
                 Be ready to attend on time
               </p>
 
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-md text-slate-400 mt-1">
                 Your participation helps build a better community. Join the
                 event on time and make an impact.
               </p>
@@ -295,22 +295,20 @@ const ParticipationCard = ({ item, handleAction }) => {
           )}
 
         {isNotAttend && (
-          <div className="rounded-xl border border-slate-700 bg-slate-900 p-4 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+          <div className="rounded-xl border  bg-white p-4 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
             {/* Message */}
             <div>
-              <p className="text-sm font-medium text-yellow-400">
+              <p className="text-lg  font-bold text-yellow-600">
                 You missed this event
               </p>
 
-              <p className="text-xs text-slate-400 mt-1 leading-relaxed max-w-xl">
+              <p className="text-md text-slate-400  mt-1 leading-relaxed max-w-xl">
                 It looks like you registered but were unable to attend. For
                 future events, if you’re not able to join, please leave the
                 event in advance. This helps free up spots for other citizens
                 who are willing to participate.
               </p>
             </div>
-
-          
           </div>
         )}
 

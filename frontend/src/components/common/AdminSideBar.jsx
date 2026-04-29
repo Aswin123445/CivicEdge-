@@ -40,7 +40,8 @@ function AdminSidebar() {
     "/dashboard/execution/execution-proofs",
     "/dashboard/execution/verification-report",
     "/dashboard/execution/tasks/list",
-    "/dashboard/execution/issue/analytics"
+    "/dashboard/execution/issue/analytics",
+    "/dashboard/execution/postponed-verification-reports",
   ];
   const roleManagementPaths = [
     "/dashboard/management/citizens",

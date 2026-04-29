@@ -4,6 +4,7 @@ class IssueStatus(models.TextChoices):
     OPEN = "OPEN", "Open"
     IN_REVIEW = "IN_REVIEW", "In Review"
     IN_PROGRESS = "IN_PROGRESS", "In Progress"
+    POSTPONED = "POSTPONED", "Postponed"
     RESOLVED = "RESOLVED", "Resolved"
     CLOSED = "CLOSED", "Closed"
     REJECTED = "REJECTED", "Rejected"

@@ -6,9 +6,11 @@ from apps.polls.views.admin_poll_details_view import AdminPollDetailView
 from apps.polls.views.admin_close_poll_view import AdminClosePollView
 from apps.polls.views.admin_poll_distrubution_views import PollDistributionView
 from apps.polls.views.admin_poll_timeline_views import PollTimelineView
+from apps.polls.views.admin_edit_poll_view import AdminEditPollView
 urlpatterns = [ 
     path("polls/", AdminPollListView.as_view(), name="admin-poll-list"),
     path("polls/create/", AdminCreatePollView.as_view(), name="admin-create-poll"),
+    path("polls/edit/<uuid:id>/", AdminEditPollView.as_view(), name="admin-edit-poll"),
     path("polls/<uuid:poll_id>/", AdminPollDetailView.as_view(), name="admin-poll-detail"),
     path("polls/<uuid:poll_id>/close/", AdminClosePollView.as_view(), name="admin-close-poll"),
     path("polls/<uuid:poll_id>/distribution/", PollDistributionView.as_view(), name="admin-poll-distribution"),

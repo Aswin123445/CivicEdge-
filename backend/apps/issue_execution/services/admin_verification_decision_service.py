@@ -26,9 +26,12 @@ def create_verification_decision(*, admin, report, data):
     # -----------------------------
     # Create decision
     # -----------------------------
+    context = IssueAdministrativeDecision.DecisionContext.VERIFICATION_REVIEW
+    if data["decision_type"] == IssueAdministrativeDecision.DecisionType.POSTPONED:
+        context = IssueAdministrativeDecision.DecisionContext.REEVALUATION_REVIEW
     decision = IssueAdministrativeDecision.objects.create(
         issue=issue,
-        context=IssueAdministrativeDecision.DecisionContext.VERIFICATION_REVIEW,
+        context=context,
         decision_type=data["decision_type"],
         reason=data["reason"],
         public_message=data.get("public_message", ""),
@@ -63,17 +66,17 @@ def create_verification_decision(*, admin, report, data):
 
     elif decision.decision_type in [
         IssueAdministrativeDecision.DecisionType.POSTPONED,
-        IssueAdministrativeDecision.DecisionType.ESCALATED,
     ]:
-        # remains IN_REVIEW
-        pass
-    NotificationDispatcher.dispatch(
-            event=NotificationEvent.APPROVE_REPORT,
-            payload={
-                "task": report.solver_task,
-                "actor": admin
-            }
-        )
+        issue.move_postpone(by=admin)
+        report.solver_task.postpone_task(by=admin)
+    if decision.decision_type != IssueAdministrativeDecision.DecisionType.POSTPONED:
+        NotificationDispatcher.dispatch(
+                event=NotificationEvent.APPROVE_REPORT,
+                payload={
+                    "task": report.solver_task,
+                    "actor": admin
+                }
+            )
     if decision.decision_type == IssueAdministrativeDecision.DecisionType.BLOCKED:
         NotificationDispatcher.dispatch(
             event=NotificationEvent.TASK_APPROVED_BY_ADMIN,

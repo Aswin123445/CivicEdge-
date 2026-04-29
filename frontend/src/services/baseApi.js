@@ -88,7 +88,8 @@ export const baseApi = createApi({
     "UserAnalytics",
     "VolunteerAnalytics",
     "PollAnalytics",
-    "ForumAnalytics"
+    "ForumAnalytics",
+    "PostponedVerification"
   ],
 
   endpoints: () => ({}),

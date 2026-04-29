@@ -200,6 +200,14 @@ const ForumAnalyticsDashboardPage = lazy(
     import("../features/analytics/pages/forum/ForumAnalyticsDashboardPage"),
 )
 
+const AdminPostponedTaskList = lazy(
+  () => import("../features/issues_execution/pages/AdminPostponedTaskList"),
+)
+
+const AdminPostponedReportDetailPage = lazy(
+  () => import("../features/issues_execution/pages/AdminPostponedReportDetailPage"),
+)
+
 import Test from "../features/auth/pages/admin/Test";
 
 import UserManagementSectionLoader from "../features/auth/components/skeltons/loaders_skelton/UserManagementSectionLoader";
@@ -276,6 +284,7 @@ import ResourceLayout from "../features/resource/layouts/ResourceLayout";
 import AnalyticsSkeleton from "../features/analytics/components/AnalyticsSkeleton";
 import VolunteerAnalyticsSkeleton from "../features/analytics/components/volunteer/VolunteerAnalyticsSkeleton";
 import { PollAnalyticsSkeleton } from "../features/analytics/components/polls/PollAnalyticsSkeleton";
+import CivicEdgeLanding from "../features/core/pages/citizen/CivicEdgeLanding";
 
 export default function AppRoutes() {
   return (
@@ -283,6 +292,7 @@ export default function AppRoutes() {
       <Route element={<MainLayout />}>
         <Route path="/home" element={<CivicEdgeHome />} />
         <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="/home/know-more" element={<CivicEdgeLanding />} />
         <Route path="/complaints" element={<IssueHome />} />
         <Route path="/volunteer-army" element={<VolunteerHomePage />} />
         <Route path="/forum" element={<ForumLandingPage />} />
@@ -459,7 +469,7 @@ export default function AppRoutes() {
                     </Suspense>
                   }
                 />
-                <Route 
+                <Route
                   path="analytics"
                   element={
                     <Suspense fallback={<UserManagementSectionLoader />}>
@@ -522,6 +532,22 @@ export default function AppRoutes() {
                   }
                 />
                 <Route
+                  path="postponed-verification-reports"
+                  element={
+                    <Suspense fallback={<PendingReviewSkeleton />}>
+                      <AdminPostponedTaskList />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="postponed-verification-reports/:id"
+                  element={
+                    <Suspense fallback={<PendingReviewSkeleton />}>
+                      <AdminPostponedReportDetailPage />
+                    </Suspense>
+                  }
+                />
+                <Route
                   path="verification-report/:id"
                   element={
                     <Suspense fallback={<IssueDetailSkeleton />}>
@@ -549,7 +575,7 @@ export default function AppRoutes() {
                   path="solver-tasks/:id"
                   element={<AdminSolverTaskDetailPage />}
                 />
-                <Route 
+                <Route
                   path="issue/analytics"
                   element={
                     <Suspense fallback={<AnalyticsSkeleton />}>

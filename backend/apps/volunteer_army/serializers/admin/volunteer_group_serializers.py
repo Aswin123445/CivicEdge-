@@ -12,6 +12,12 @@ class VolunteerGroupCreateSerializer(serializers.ModelSerializer):
             "risk_level",
             "requirements",
         ]
+        
+    def validate(self, attrs):
+        if attrs["membership_type"] == "APPROVAL_REQUIRED":
+            if not attrs["requirements"]:
+                raise serializers.ValidationError("Membership type is not open, please add requirements.")
+        return attrs
 
     def validate_name(self, value):
         if VolunteerGroup.objects.filter(name=value).exists():
@@ -26,12 +32,16 @@ class VolunteerGroupUpdateSerializer(serializers.ModelSerializer):
         fields = [
             "name",
             "description",
-            "membership_type",
             "risk_level",
             "requirements",
         ]
-
+    def validate_requirements(self, value):
+        if self.instance.membership_type == "APPROVAL_REQUIRED":
+            if not value:
+                raise serializers.ValidationError("Membership type is not open, please add requirements.")
+        return value
     def validate_name(self, value):
+        print(self.instance)
         qs = VolunteerGroup.objects.filter(name=value)
 
         if self.instance:

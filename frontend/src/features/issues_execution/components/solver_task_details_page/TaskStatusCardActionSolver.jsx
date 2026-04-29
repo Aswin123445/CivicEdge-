@@ -3,6 +3,9 @@ const getVerificationStatus = (status) => {
     case "ASSIGNED":
       return { text: "Pending", color: "text-blue-600" };
 
+    case "POSTPONED":
+      return { text: "Postponed", color: "text-yellow-600" };
+
     case "VERIFICATION_SUBMITTED":
       return { text: "Submitted", color: "text-blue-600" };
 
@@ -37,6 +40,8 @@ const getExecutionStatus = (status) => {
 
     case "COMPLETED":
       return { text: "Completed", color: "text-green-600" };
+    case "POSTPONED":
+      return { text: "Postponed", color: "text-yellow-600" };
 
     default:
       return { text: "Locked", color: "text-slate-300 italic" };
@@ -46,6 +51,9 @@ const getActionRoute = (status, taskId) => {
   switch (status) {
     case "ASSIGNED":
       return `/solver/task/verification-entry/${taskId}`;
+
+    case "POSTPONED":
+      return `/solver/${taskId}/verification-reports`;
 
     case "VERIFICATION_SUBMITTED":
       return `/solver/${taskId}/verification-reports`;
@@ -87,8 +95,7 @@ const TaskStatusCardActionSolver = ({
         await handleStartExecution(taskId);
       }
       navigate(route);
-    }
-    else {
+    } else {
       navigate(route);
     }
   };
@@ -136,8 +143,8 @@ const TaskStatusCardActionSolver = ({
           disabled={actionConfig.disabled}
           className={`w-full py-4 px-6 ${actionConfig.color} text-white font-bold rounded-xl shadow-lg transition duration-200 active:scale-95 flex items-center justify-center gap-2 mt-4 ${startIsLoading ? "cursor-not-allowed" : ""}`}
         >
-          {startIsLoading && <Spinner className="w-5 h-5 " />} { actionConfig.text}
-
+          {startIsLoading && <Spinner className="w-5 h-5 " />}{" "}
+          {actionConfig.text}
           {!actionConfig.disabled && (
             <svg
               className="w-5 h-5"

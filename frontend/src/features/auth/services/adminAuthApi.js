@@ -2,7 +2,6 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { adminLogin } from "../authSlice";
 import baseQueryWithReauth from "../../../services/baseQueryWithReauth";
 import { baseApi } from "../../../services/baseApi";
-import { errorToast } from "../../../utils/Toaster";
 
 
 const ADMINAUTH_PREFIX = "/user/admin";
@@ -21,7 +20,7 @@ export const adminAuthApi = baseApi.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(adminLogin(data));
         } catch (error) {
-          errorToast({ title: "Unable to login", description: "Please try again" });
+          // intentionally ignored
         }
       },
     }),

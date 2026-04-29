@@ -25,7 +25,7 @@ class RiskLevel(models.TextChoices):
     HIGH = "HIGH", "High"
 
 ALLOWED_GROUP_TRANSITIONS = {
-    VolunteerGroupStatus.DRAFT: {VolunteerGroupStatus.ACTIVE},
+    VolunteerGroupStatus.DRAFT: {VolunteerGroupStatus.ACTIVE,VolunteerGroupStatus.ARCHIVED},
     VolunteerGroupStatus.ACTIVE: {VolunteerGroupStatus.ARCHIVED},
     VolunteerGroupStatus.ARCHIVED: set(),
 }

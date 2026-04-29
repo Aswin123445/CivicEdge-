@@ -31,6 +31,7 @@ from apps.issue_execution.views.solver_draft_detail_view import SolverVerificati
 from apps.issue_execution.views.verification_report import SolverVerificationReportPDFView
 from apps.issue_execution.views.admin_approve_verification_view import AdminApproveVerificationView
 from apps.issue_execution.views.contractor_views import ContractorListAPIView
+from apps.issue_execution.views.admin_postponed_report_list import AdminPostponedVerificationReportListView
  
 
 urlpatterns = [
@@ -50,6 +51,7 @@ urlpatterns = [
     path("solver/draft/<uuid:draft_id>/get-draft/", SolverVerificationReportDetailAPIView.as_view(), name="solver-submit-completion"),
     path("solver/tasks/<uuid:task_id>/submit-verification/", SolverSubmitVerificationView.as_view(), name="solver-submit-verification"),  
     path("admin/verification-reports/", AdminVerificationReportListView.as_view(), name="admin-verification-report-list"),
+    path("admin/postponed-verification-reports/", AdminPostponedVerificationReportListView.as_view(), name="admin-postponed-verification-report-list"),
     path("admin/verification-reports/<uuid:report_id>/", AdminVerificationReportDetailView.as_view(), name="admin-verification-report-detail"),
     path("admin/verification-reports/<uuid:report_id>/decision/", AdminVerificationDecisionView.as_view(), name="admin-verification-report-decision"),
     path("admin/solver-tasks/<uuid:task_id>/assign-contractor/", AdminAssignContractorView.as_view(), name="admin-assign-contractor"), 

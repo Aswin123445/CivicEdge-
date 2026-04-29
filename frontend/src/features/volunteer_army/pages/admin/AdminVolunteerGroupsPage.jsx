@@ -12,6 +12,7 @@ import GroupTable, {
 import CreateGroupModal from "../../components/admin_group_list_page/CreateGroupModal";
 import Pagination from "../../../../components/common/PaginationBar";
 import { useSearchParams } from "react-router-dom";
+import EditGroupModal from "../../components/admin_group_list_page/EditGroupModal";
 
 const AdminVolunteerGroupsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -34,8 +35,13 @@ const AdminVolunteerGroupsPage = () => {
     dropdownRef,
     handleArchive,
     archiveGroupLoading,
-    metrix
-
+    metrix,
+    handleUpdate,
+    onEditClose,
+    isEditModalOpen,
+    setEditModalOpen,
+    activeGroup,
+    setActiveGroup,
   } = useVolunteerGroupList();
 
   // Use real data when available, fallback to mock
@@ -105,7 +111,11 @@ const AdminVolunteerGroupsPage = () => {
         />
 
         {/* TABLE */}
-        {groupisLoading || groupisFetching || createGroupLoading || activateGroupLoading || archiveGroupLoading ? (
+        {groupisLoading ||
+        groupisFetching ||
+        createGroupLoading ||
+        activateGroupLoading ||
+        archiveGroupLoading ? (
           <GroupTableSkeleton />
         ) : (
           <GroupTable
@@ -118,6 +128,8 @@ const AdminVolunteerGroupsPage = () => {
             dropdownRef={dropdownRef}
             activateGroupLoading={activateGroupLoading}
             archiveGroupLoading={archiveGroupLoading}
+            setEditModalOpen={setEditModalOpen}
+            setActiveGroup={setActiveGroup}
           />
         )}
         {/* pagination */}
@@ -136,6 +148,13 @@ const AdminVolunteerGroupsPage = () => {
           onClose={() => setModalOpen(false)}
           onSubmit={handleCreateSubmit}
           createGroupLoading={createGroupLoading}
+        />
+        <EditGroupModal
+          isOpen={isEditModalOpen}
+          onClose={onEditClose}
+          onSubmit={handleUpdate}
+          createGroupLoading={createGroupLoading}
+          group={activeGroup}
         />
       </div>
     </div>

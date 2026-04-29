@@ -149,25 +149,23 @@ class SolverTask(models.Model):
             raise ValidationError("Only assigned solver can submit verification.")
 
         self._transition(to_status=SolverTaskStatus.VERIFICATION_SUBMITTED)
-    
+
     def terminate(self, *, by):
         if by.role != "admin":
             raise ValidationError("Only admin can terminate task.")
 
         self._transition(to_status=SolverTaskStatus.TERMINATED)
 
-
-
     def start_execution(self, *, by):
         if self.status != SolverTaskStatus.APPROVED_FOR_EXECUTION:
             raise ValidationError("Not allowed to perform this action.")
-    
+
         if not self.contractor:
             raise ValidationError("Contractor must be assigned before execution starts.")
-    
+
         if self.solver_id != by.id:
             raise ValidationError("Only assigned solver can start execution.")
-    
+
         self._transition(
             to_status=SolverTaskStatus.IN_EXECUTION,
         )
@@ -194,6 +192,11 @@ class SolverTask(models.Model):
         self.verification_rejection_count += 1
         self._transition(to_status=SolverTaskStatus.ASSIGNED)
 
+    def postpone_task(self, *, by):
+        if not by.is_staff:
+            raise ValidationError("Only admin can postpone verification.")
+        self._transition(to_status=SolverTaskStatus.POSTPONED)
+
     def approve_completion(self, *, by):
         if not by.is_staff:
             raise ValidationError("Only admin can approve completion.")
@@ -213,6 +216,6 @@ class SolverTask(models.Model):
     def _transition(self, *, to_status):
         self.status = to_status
         self.save()
-        
+
     def __str__(self):
         return f"{self.reference_id} {self.status} ({self.pk})"

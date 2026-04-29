@@ -20,10 +20,17 @@ export default function ExecutionManagementLayout() {
     "/dashboard/execution/verification-report/",
   ];
 
+  const postponedVerification = [
+    "/dashboard/execution/postponed-verification-reports",
+  ]
+
   const executionProof = [
     "/dashboard/execution/execution-proofs",
     "/dashboard/execution/execution-proof/",
   ];
+  const isPostponedVerification = postponedVerification.some((path) =>
+    location.pathname.startsWith(path),
+  );
 
   const isIssueAnalytics = issueAnalytics.some((path) =>
     location.pathname.startsWith(path),
@@ -114,6 +121,19 @@ export default function ExecutionManagementLayout() {
           }
         >
           Solver Tasks
+        </NavLink>
+        <NavLink
+          to="/dashboard/execution/postponed-verification-reports"
+          className={() =>
+            `px-4 py-2 flex-shrink-0 transition-colors duration-200 
+            ${
+              isPostponedVerification
+                ? "border-b-2 border-[#56CCF2] text-white"
+                : "text-gray-400 hover:text-white hover:border-b-2 hover:border-gray-500"
+            }`
+          }
+        >
+          Postponed Verification
         </NavLink>
         <NavLink
           to="/dashboard/execution/issue/analytics"

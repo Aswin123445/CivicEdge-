@@ -27,7 +27,10 @@ const AdminVerificationReportPage = () => {
     setFormData,
     handleSubmit,
     errors,
-  } = useAdminPendingVerificationDetails(id);
+  } = useAdminPendingVerificationDetails(
+    id,
+    "/dashboard/execution/verification-reports",
+  );
   // --- State Management ---
 
   const openModal = (type) => {

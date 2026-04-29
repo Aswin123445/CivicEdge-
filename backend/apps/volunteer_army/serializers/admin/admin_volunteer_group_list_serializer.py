@@ -15,4 +15,7 @@ class AdminVolunteerGroupListSerializer(serializers.ModelSerializer):
             "status",
             "created_by",
             "created_at",
+            "requirements",
+            "risk_level",
+            "description",
         ]

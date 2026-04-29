@@ -1,15 +1,15 @@
 import IssueFilters from "../components/pending_review_page/IssueFilters";
 import PendingReviewSkeleton from "../components/pending_review_page/PendingReviewSkeleton";
-import PageHeader from "../components/pending_review_page/PageHeader";
-import EmptyState from "../components/pending_review_page/EmptyState";
 import IssueTable from "../components/pending_review_page/IssueTable";
 import SummaryMetrics from "../components/pending_review_page/SummaryMetrics";
 import usePendingReviewService from "../hooks/admin/pending_review_page/serviceHooks";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import TableSkeleton from "../components/pending_review_page/TableSkelton";
 import SearchBar from "../ui/pending_review_page/SearchBar";
 import useAdminPendingVerification from "../hooks/admin/admin_pending_verification/adminPendingVerfication";
 import ReportTable from "../components/AdminPendingVerification/ReportTable";
+import PageHeader from "../components/AdminPendingVerification/PageHeader";
+import EmptyState from "../components/AdminPendingVerification/EmptyState";
 const AdminPendingVerification = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const {
@@ -23,6 +23,10 @@ const AdminPendingVerification = () => {
     categoryFetching,
     totalPending
   } = useAdminPendingVerification();
+  const navigate = useNavigate();
+  const handleNavigate = (id) => {
+    navigate(`/dashboard/execution/verification-report/${id}`);
+  }
   return (
     <div className="flex  bg-[#1e1e1e] text-slate-200 font-sans">
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
@@ -49,6 +53,7 @@ const AdminPendingVerification = () => {
                 <ReportTable
                   tasks={pendingVerificationIssue}
                   pagination={pagination}
+                  handleNavigate={handleNavigate}
                 />
               )}
             </>

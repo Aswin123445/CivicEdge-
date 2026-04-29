@@ -80,6 +80,22 @@ export const adminExecutionIssueApi = baseApi.injectEndpoints({
         return response;
       },
     }),
+    getPostPonedVerification: builder.query({
+      query: ({ page = 1, search = "" }) => {
+        const params = { page };
+        if (search) params.search = search;
+        return {
+          url: `${EXECUTION_PREFIX}/admin/postponed-verification-reports/`,
+          method: "get",
+          meta: { skipAuth: false },
+          params,
+        };
+      },
+      providesTags: ["PostponedVerification"],
+      transformResponse: (response) => {
+        return response;
+      },
+    }),
     getPendingVerification: builder.query({
       query: ({ page = 1, search = "" }) => {
         const params = { page };
@@ -129,6 +145,7 @@ export const adminExecutionIssueApi = baseApi.injectEndpoints({
         "PendingVerification",
         "PendingVerificationDetail",
         "AdminTask",
+        "PostponedVerification",
       ],
       transformResponse: (response) => {
         return response;
@@ -173,8 +190,8 @@ export const adminExecutionIssueApi = baseApi.injectEndpoints({
       },
     }),
     AdminTaskFetch: builder.query({
-      query: ({search = "",page = 1, status,ordering}) => {
-        const params = {page}
+      query: ({ search = "", page = 1, status, ordering }) => {
+        const params = { page };
         if (search) params.search = search;
         if (status) params.status = status;
         if (ordering) params.ordering = ordering;
@@ -207,4 +224,5 @@ export const {
   useGetAdminFinalReportDetailQuery,
   useAdminSubmitFinalReportDecisionMutation,
   useAdminTaskFetchQuery,
+  useGetPostPonedVerificationQuery
 } = adminExecutionIssueApi;

@@ -14,6 +14,7 @@ class IssueAdministrativeDecision(models.Model):
     class DecisionContext(models.TextChoices):
         INITIAL_REVIEW = "INITIAL_REVIEW", "Initial Review"
         VERIFICATION_REVIEW = "VERIFICATION_REVIEW", "Verification Review"
+        REEVALUATION_REVIEW = "REEVALUATION_REVIEW", "Reevaluation Review"
         CLOSURE_REVIEW = "CLOSURE_REVIEW", "Closure Review"
 
 

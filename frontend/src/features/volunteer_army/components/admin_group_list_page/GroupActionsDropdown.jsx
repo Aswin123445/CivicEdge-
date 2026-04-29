@@ -7,7 +7,16 @@ import { ExternalLink, CheckCircle2, Archive } from "lucide-react";
  * @param {function} onActivate  - () => void
  * @param {function} onArchive   - () => void
  */
-const GroupActionsDropdown = ({ group, onView, onActivate, onArchive,activateGroupLoading,archiveGroupLoading }) => {
+const GroupActionsDropdown = ({
+  group,
+  onView,
+  onActivate,
+  onArchive,
+  activateGroupLoading,
+  archiveGroupLoading,
+  setEditModalOpen,
+  setActiveGroup
+}) => {
   if (!group) return null;
 
   return (
@@ -20,12 +29,25 @@ const GroupActionsDropdown = ({ group, onView, onActivate, onArchive,activateGro
       </button> */}
 
       {group.status === "DRAFT" && (
-        <button
-          onClick={onActivate}
-          className="w-full px-4 py-3 text-left text-xs font-bold text-green-400 hover:bg-green-500/10 flex items-center gap-2 border-t border-slate-800"
-        >
-          <CheckCircle2 size={14} /> {activateGroupLoading ? "Activating..." : "Activate"}
-        </button>
+        <div>
+          <button
+            onClick={() => {
+              setEditModalOpen(true);
+              setActiveGroup(group);
+            }}
+            className="w-full px-4 py-3 text-left text-xs font-bold text-gray-200 hover:bg-green-500/10 flex items-center gap-2 border-t border-slate-800"
+          >
+            <CheckCircle2 size={14} />{" "}
+            {activateGroupLoading ? "please wait..." : "Edit"}
+          </button>
+          <button
+            onClick={onActivate}
+            className="w-full px-4 py-3 text-left text-xs font-bold text-green-400 hover:bg-green-500/10 flex items-center gap-2 border-t border-slate-800"
+          >
+            <CheckCircle2 size={14} />{" "}
+            {activateGroupLoading ? "Activating..." : "Activate"}
+          </button>
+        </div>
       )}
 
       {group.status !== "ARCHIVED" && (
@@ -33,7 +55,8 @@ const GroupActionsDropdown = ({ group, onView, onActivate, onArchive,activateGro
           onClick={onArchive}
           className="w-full px-4 py-3 text-left text-xs font-bold text-red-400 hover:bg-red-500/10 flex items-center gap-2 border-t border-slate-800"
         >
-          <Archive size={14} /> {archiveGroupLoading ? "Archiving..." : "Archive"}
+          <Archive size={14} />{" "}
+          {archiveGroupLoading ? "Archiving..." : "Archive"}
         </button>
       )}
     </div>

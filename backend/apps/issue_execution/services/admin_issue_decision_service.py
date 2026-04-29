@@ -5,6 +5,7 @@ from apps.issues.models.issues import Issue
 from apps.issues.models.issue_administrative_decision import IssueAdministrativeDecision
 from apps.issues.utils.enums.issue_status import IssueStatus
 from apps.issues.services.timeline_service import add_issue_timeline_event
+from apps.issue_execution.utils.celery.send_issue_rejected_email import send_issue_rejected_email
 
 
 @transaction.atomic
@@ -37,9 +38,15 @@ def create_admin_issue_decision(*, issue: Issue, decided_by, data: dict):
     # --- Decision effects ---
     if decision.decision_type == IssueAdministrativeDecision.DecisionType.BLOCKED:
         issue.reject(by=decided_by, reason=decision.reason)
+        send_issue_rejected_email.delay(
+            to_email=issue.reporter.email,
+            issue_title=issue.title,
+            issue_description=issue.description,
+            rejection_message=decision.public_message,
+        )
 
     elif decision.decision_type == IssueAdministrativeDecision.DecisionType.APPROVED:
-        
+
         # stays IN_REVIEW, next step is solver assignment
         pass
 

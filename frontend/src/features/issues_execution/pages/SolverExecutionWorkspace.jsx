@@ -35,7 +35,6 @@ const SolverExecutionWorkspace = () => {
     errors
   } = useSolverTaskUpdateHook(task_id);
   const { task, taskLoading, taskFetching } = useSolverTaskDetail(task_id);
-
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
     setImagefile((prev) => [...prev, ...files]);

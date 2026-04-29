@@ -7,7 +7,7 @@ const CONFIGS = {
   ATTENDANCE_SUBMITTED: "bg-amber-50 text-amber-600",
   REJECTED:        "bg-red-50 text-red-600",
   NO_SHOW:         "bg-slate-100 text-slate-600",
-  LEFT:            "bg-slate-100 text-slate-500",
+  LEFT:            "bg-red-50 text-red-500",
 };
 
 /**

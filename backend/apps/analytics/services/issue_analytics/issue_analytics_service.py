@@ -132,7 +132,7 @@ def get_issues_dashboard(
     return {
         "filters": filter_meta,
         "stats": get_issue_stats(qs),
-        "trend_chart": get_trend_chart(qs),
+        "trend_chart": get_trend_chart(qs,from_dt, to_dt),
         "funnel_chart": get_funnel_chart(qs),
         "zone_chart": get_zone_chart(qs),
         "category_chart": get_category_chart(qs),

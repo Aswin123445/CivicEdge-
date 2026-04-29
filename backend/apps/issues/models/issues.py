@@ -18,6 +18,11 @@ ALLOWED_TRANSITIONS = {
     IssueStatus.IN_REVIEW: {
         IssueStatus.IN_PROGRESS,
         IssueStatus.REJECTED,
+        IssueStatus.POSTPONED,
+    },
+
+    IssueStatus.POSTPONED: {
+        IssueStatus.IN_PROGRESS,
     },
 
     IssueStatus.IN_PROGRESS: {
@@ -58,7 +63,7 @@ class Issue(models.Model):
         editable=False,
     )
     # --- Identity ---
-    
+
     is_draft = models.BooleanField(default=True)
     draft_step = models.CharField(
         max_length=30,
@@ -81,7 +86,6 @@ class Issue(models.Model):
         on_delete=models.PROTECT,
         related_name="issues",
     )
-
 
     # --- State ---
     status = models.CharField(
@@ -146,13 +150,13 @@ class Issue(models.Model):
         super().save(*args, **kwargs)
     def _transition(self, *, to_status, by, reason=None):
         previous_status = self.status
-    
+
         self.status = to_status
         if to_status == IssueStatus.CANCELLED:
             self.cancelled_at = timezone.now()
-    
+
         self.save()
-    
+
         # --- Status History (AUDIT) ---
         IssueStatusHistory.objects.create(
             issue=self,
@@ -182,12 +186,10 @@ class Issue(models.Model):
                 event_type=event,
                 actor=by,
             )
-    
 
     # -----------------------------
     # Domain Methods (ONLY way to mutate status)
     # -----------------------------
-
 
     def submit(self, *, by):
         """
@@ -235,11 +237,24 @@ class Issue(models.Model):
         """
         Called when admin assigns a solver and work begins.
         """
-        if self.status != IssueStatus.IN_REVIEW:
-            raise ValidationError("Work can only start on issues under review.")
+        print(self.status)
+        if self.status not in  {IssueStatus.IN_REVIEW, IssueStatus.POSTPONED}:
+            raise ValidationError("Work can only start on issues under review or postponed.")
 
         self._transition(
             to_status=IssueStatus.IN_PROGRESS,
+            by=by,
+        )
+
+    def move_postpone(self, *, by):
+        """
+        Called when admin assigns a solver and work begins.
+        """
+        if self.status != IssueStatus.IN_REVIEW:
+            raise ValidationError("Only Postpone can be done on issues under review.")
+
+        self._transition(
+            to_status=IssueStatus.POSTPONED,
             by=by,
         )
 

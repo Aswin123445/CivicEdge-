@@ -20,10 +20,16 @@ const HeroSection = () => {
           </p>
 
           <div className="flex flex-wrap gap-4">
-            <button onClick={() => navigate("/complaints")} className="px-8 py-3 bg-white text-blue-600 font-bold rounded-xl shadow-lg hover:scale-105 transition-transform">
+            <button
+              onClick={() => navigate("/complaints")}
+              className="px-8 py-3 bg-white text-blue-600 font-bold rounded-xl shadow-lg hover:scale-105 transition-transform"
+            >
               Report An Issue
             </button>
-            <button className="px-8 py-3 border-2 border-white/50 rounded-xl hover:bg-white/10 transition-colors">
+            <button
+              onClick={() => navigate("/home/know-more")}
+              className="px-8 py-3 border-2 border-white/50 rounded-xl hover:bg-white/10 transition-colors"
+            >
               Know More
             </button>
           </div>

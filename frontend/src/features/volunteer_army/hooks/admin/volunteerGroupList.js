@@ -5,6 +5,7 @@ import {
   useArchiveAdminGroupMutation,
   useCreateAdminGroupMutation,
   useFetchAdminGroupListQuery,
+  useUpdateAdminGroupMutation,
 } from "../../services/admin/groupService";
 import { extractErrorMessage } from "../../../../utils/extractErrorMessage";
 import { errorToast, successToast } from "../../../../utils/Toaster";
@@ -12,6 +13,8 @@ import { errorToast, successToast } from "../../../../utils/Toaster";
 export default function useVolunteerGroupList() {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [activeGroup, setActiveGroup] = useState(null);
   const dropdownRef = useRef(null);
   useEffect(() => {
     function handleClickOutside(event) {
@@ -52,6 +55,9 @@ export default function useVolunteerGroupList() {
     ...pageData,
     ...urlSearchParams,
   };
+
+  const [updateGroup, { isLoading: updateGroupLoading }] =
+    useUpdateAdminGroupMutation();
 
   const [createGroup, { isLoading: createGroupLoading }] =
     useCreateAdminGroupMutation();
@@ -98,6 +104,22 @@ export default function useVolunteerGroupList() {
       errorToast({ title: "Action Failed", description: message });
     }
   };
+
+  const handleUpdate = async (group) => {
+    try {
+      await updateGroup(group).unwrap();
+      successToast({
+        title: "Action Successfull",
+        description: "Group updated successfully",
+      });
+    } catch (error) {
+      const message = extractErrorMessage(error);
+      errorToast({ title: "Action Failed", description: message });
+    } finally {
+      setEditModalOpen(false);
+    }
+  }
+  const onEditClose = () => setEditModalOpen(false);
   return {
     groupData,
     groupisLoading,
@@ -114,6 +136,12 @@ export default function useVolunteerGroupList() {
     dropdownRef,
     handleArchive,
     archiveGroupLoading,
-    metrix
+    metrix,
+    handleUpdate,
+    onEditClose,
+    isEditModalOpen,
+    setEditModalOpen,
+    activeGroup,
+    setActiveGroup
   };
 }
