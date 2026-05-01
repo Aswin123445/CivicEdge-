@@ -1,18 +1,20 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
 from urllib.parse import parse_qs
 from channels.db import database_sync_to_async
-from django.contrib.auth import get_user_model
-from rest_framework_simplejwt.tokens import AccessToken
 import json
 import logging
 
-User = get_user_model()
+
 logger = logging.getLogger(__name__)
 
 
 class NotificationConsumer(AsyncWebsocketConsumer):
 
     async def connect(self):
+        from rest_framework_simplejwt.tokens import AccessToken
+        from django.contrib.auth import get_user_model
+        User = get_user_model()
+
         self.group_name = None
 
         # Extract token from query params
