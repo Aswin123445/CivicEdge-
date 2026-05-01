@@ -1,4 +1,3 @@
-
 from apps.notification.utils.event_constants import NotificationEvent
 from apps.notification.utils.handlers.issue_and_execution.handle_issue_reported import handle_issue_reported
 from apps.notification.utils.handlers.issue_and_execution.handle_task_assigned import handle_task_assigned
@@ -15,6 +14,8 @@ from apps.notification.utils.handlers.forum.handle_forum_comment import handle_f
 from apps.notification.utils.handlers.forum.handle_forum_reaction import handle_forum_reaction
 from apps.notification.utils.handlers.issue_and_execution.handle_issue_rejected import handle_issue_rejected
 from apps.notification.utils.handlers.issue_and_execution.handle_approve_report import handle_approve_report
+from apps.notification.utils.handlers.volunteer.handle_volunteer_attendance_reject import handle_volunteer_attendance_reject
+from apps.notification.utils.handlers.volunteer.handle_notify_event import handle_noitfy_event
 
 EVENT_HANDLERS = {
     NotificationEvent.ISSUE_REPORTED: handle_issue_reported,
@@ -26,11 +27,12 @@ EVENT_HANDLERS = {
     NotificationEvent.TASK_REJECTED_BY_ADMIN: handle_task_rejected_by_admin,
     NotificationEvent.VOLUNTEER_JOIN_APPROVED: handle_volunteer_join_approved,
     NotificationEvent.VOLUNTEER_JOIN_REJECTED: handle_volunteer_join_rejected,
-    NotificationEvent.VOLUNTEER_CERTIFICATE:  handle_volunteer_certificate_generated,
-    NotificationEvent.FORUM_REPORT_USER : handle_forum_report,
+    NotificationEvent.VOLUNTEER_CERTIFICATE: handle_volunteer_certificate_generated,
+    NotificationEvent.FORUM_REPORT_USER: handle_forum_report,
     NotificationEvent.FORUM_REPLY_RECEIVED: handle_forum_comment,
     NotificationEvent.FORUM_POST_REACTED: handle_forum_reaction,
-    NotificationEvent.ISSUE_REJECTED : handle_issue_rejected,
-    NotificationEvent.APPROVE_REPORT : handle_approve_report
-    
+    NotificationEvent.ISSUE_REJECTED: handle_issue_rejected,
+    NotificationEvent.APPROVE_REPORT: handle_approve_report,
+    NotificationEvent.VOLUNTEER_ATTENDANCE_REJECT: handle_volunteer_attendance_reject,
+    NotificationEvent.VOLUNTEER_EVENTS_NOTIFY: handle_noitfy_event,
 }

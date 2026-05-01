@@ -237,7 +237,6 @@ class Issue(models.Model):
         """
         Called when admin assigns a solver and work begins.
         """
-        print(self.status)
         if self.status not in  {IssueStatus.IN_REVIEW, IssueStatus.POSTPONED}:
             raise ValidationError("Work can only start on issues under review or postponed.")
 

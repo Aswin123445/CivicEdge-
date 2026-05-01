@@ -210,7 +210,7 @@ export default function usePdfExport({
 
       pdf.save(`${filename}_${Date.now()}.pdf`);
     } catch (err) {
-      console.error("PDF export failed:", err);
+      // console ingonred
     } finally {
       setExporting(false);
     }

@@ -330,7 +330,7 @@ function AttentionItem({
   return (
     <div
       className={`
-        bg-neutral-800 border ${severityColor[severity]}
+        bg-neutral-800 border border-gray-700
         rounded-lg p-4 flex justify-between items-center
         transition-shadow hover:shadow-md
       `}

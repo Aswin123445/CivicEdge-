@@ -120,7 +120,7 @@ const RegisteredOngoingCard = ({ onSubmit, submitAttendanceLoading, isCloudinary
           onClick={() => onSubmit?.(file)}
           className={`group w-full py-5 rounded-2xl font-black text-lg transition-all shadow-xl relative overflow-hidden flex items-center justify-center gap-3
             ${tempImage && !isProcessing
-              ? "bg-slate-900 text-white shadow-slate-200 hover:bg-black active:scale-[0.98]"
+              ? "bg-green-600 text-white shadow-slate-200 hover:bg-green-500 active:scale-[0.98]"
               : "bg-slate-100 text-slate-400 cursor-not-allowed"
             }`}
         >

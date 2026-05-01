@@ -12,13 +12,11 @@ import UserSkeleton from "../../ui/skeltons/UserButtonSkelton";
 import NameUrlGet from "../NameUrlGet";
 import UserMenu from "../UserMenu";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
-// ... imports stay the same
+import { useNavigate } from "react-router-dom";// ... imports stay the same
 
 const HomeNavbar = () => {
   const navigate = useNavigate();
-  const { role } = useSelector((s) => s.auth);
+  const { role,access_token } = useSelector((s) => s.auth);
   const { userData, userDataLoading, userDataFetching } = useCitizenService();
   const handleNavigate = (route) => navigate("/landing");
   const {
@@ -27,8 +25,8 @@ const HomeNavbar = () => {
     userNotificationsOpen,
     setUserNotificationsOpen,
   } = useCitizenUi();
-  const { notificationCount, countRefetch } = useNotificationCount({
-    enabled: !userNotificationsOpen,
+  const { notificationCount, refetch } = useNotificationCount({
+    access_token
   });
   return (
     <header className="sticky top-0 z-50 bg-blue-600/90 backdrop-blur-md border-b border-blue-500/30 text-white">
@@ -72,7 +70,7 @@ const HomeNavbar = () => {
                 <div className="flex md:hidden items-center gap-2">
                   <CitizenBellIconNotification
                     onClick={() => setUserNotificationsOpen(true)}
-                    count={notificationCount?.unread_count || 0}
+                    count={notificationCount || 0}
                   />
                   <MobileMenButton />
                 </div>
@@ -84,7 +82,7 @@ const HomeNavbar = () => {
                   <div className="hidden md:flex items-center gap-3">
                     <CitizenBellIconNotification
                       onClick={() => setUserNotificationsOpen(true)}
-                      count={notificationCount?.unread_count || 0}
+                      count={notificationCount || 0}
                     />
                     <div
                       onClick={() => setMenuOpen((pre) => !pre)}

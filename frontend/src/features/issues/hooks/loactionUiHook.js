@@ -77,7 +77,6 @@ export default function useLocationUiHook(onSelect) {
         });
       } catch (err) {
         if (err.name !== "AbortError") {
-          console.error("Geocoding error:", err.message);
           setShowResults(false);
         }
       }

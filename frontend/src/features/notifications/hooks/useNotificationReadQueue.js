@@ -23,7 +23,7 @@ export default function useNotificationReadQueue() {
       ids.forEach((id) => queueRef.current.delete(id));
 
     } catch (err) {
-      console.error("❌ Failed batch", err);
+      //failed batch ignored indensionally
     }
 
     isFlushing.current = false;

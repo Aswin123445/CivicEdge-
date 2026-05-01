@@ -51,36 +51,42 @@ def review_execution_completion(*, admin, proof, data):
             message="Issue as been successfully completed",
             created_by=admin,
         )
-        send_issue_resolved_email.delay(
-            to_email=issue.reporter.email,
-            issue_title=issue.title,
-            issue_description=issue.description,
-            resolved_message=data["reason"],
-        )
-        NotificationDispatcher.dispatch(
-            event=NotificationEvent.ISSUE_RESOLVED,
-            payload={
-                "issue": issue,
-                "actor": admin
-            }
-        )
-        NotificationDispatcher.dispatch(
-            event=NotificationEvent.TASK_APPROVED_BY_ADMIN,
-            payload={
-                "task": task,
-                "actor": admin
-            }
-        )
-        proof.review_status = ExecutionProof.ReviewStatus.APPROVED 
-        proof.reviewed_by = admin 
+        proof.review_status = ExecutionProof.ReviewStatus.APPROVED
+        proof.reviewed_by = admin
         proof.admin_message = data["reason"]
         proof.save(update_fields=["review_status", "reviewed_by", "admin_message"])
+
         create_activity(
             user=admin,
             entity=ActivityEntity.TASK,
             action=ActivityAction.COMPLETED,
             message=f"Task {task.reference_id} completed successfully",
         )
+
+        issue_title = issue.title
+        issue_description = issue.description
+        reporter_email = issue.reporter.email
+        reason = data["reason"]
+
+        def after_commit():
+            send_issue_resolved_email.delay(
+                to_email=reporter_email,
+                issue_title=issue_title,
+                issue_description=issue_description,
+                resolved_message=reason,
+            )
+
+            NotificationDispatcher.dispatch(
+                event=NotificationEvent.ISSUE_RESOLVED,
+                payload={"issue": issue, "actor": admin},
+            )
+
+            NotificationDispatcher.dispatch(
+                event=NotificationEvent.TASK_APPROVED_BY_ADMIN,
+                payload={"task": task, "actor": admin},
+            )
+        transaction.on_commit(after_commit)
+
         return {
             "detail": "Execution approved. Issue resolved."
         }
@@ -99,20 +105,18 @@ def review_execution_completion(*, admin, proof, data):
         task._transition(
             to_status=SolverTaskStatus.IN_EXECUTION,
         )
-        NotificationDispatcher.dispatch(
-            event=NotificationEvent.TASK_REJECTED_BY_ADMIN,
-            payload={
-                "task": task,
-                "actor": admin,
-            }
-        )
         add_issue_timeline_event(
             issue=issue,
             message="Cross checking the issue",
             created_by=admin,
-        )       
+        )
+        def after_commit():
+            NotificationDispatcher.dispatch(
+                event=NotificationEvent.TASK_REJECTED_BY_ADMIN,
+                payload={"task": task, "actor": admin},
+            )
 
-        # Issue remains IN_PROGRESS
+        transaction.on_commit(after_commit)
 
         return {
             "detail": "Execution rejected. Task reopened."

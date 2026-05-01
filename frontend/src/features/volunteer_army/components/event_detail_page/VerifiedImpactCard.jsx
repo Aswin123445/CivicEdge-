@@ -112,7 +112,7 @@ const VerifiedImpactCard = ({
         <div className="flex flex-col gap-4">
           <button
             onClick={onViewRecognition}
-            className="w-full bg-slate-900 text-white py-5 rounded-[1.25rem] font-bold text-lg flex items-center justify-center gap-3 hover:bg-black transition-all shadow-2xl shadow-slate-300 group active:scale-95"
+            className="w-full bg-green-700 text-white py-5 rounded-[1.25rem] font-bold text-lg flex items-center justify-center gap-3 hover:bg-green-600 transition-all shadow-2xl shadow-slate-300 group active:scale-95"
           >
             <Award size={24} className="text-amber-400 group-hover:scale-110 transition-transform" />
             View Recognition

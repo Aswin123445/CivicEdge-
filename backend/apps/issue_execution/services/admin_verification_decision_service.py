@@ -47,6 +47,8 @@ def create_verification_decision(*, admin, report, data):
     # -----------------------------
     # Apply state transition
     # -----------------------------
+
+    events_to_dispatch = []
     if decision.decision_type == IssueAdministrativeDecision.DecisionType.APPROVED:
         issue.start_progress(by=admin)
         report.solver_task.approve_execution(by=admin)
@@ -56,12 +58,9 @@ def create_verification_decision(*, admin, report, data):
         report.solver_task.completed_at = timezone.now()    
         report.solver_task.save(update_fields=["completed_at"])
         report.solver_task.approve_completion(by=admin)
-        NotificationDispatcher.dispatch(
-            event=NotificationEvent.ISSUE_REJECTED,
-            payload={
-                "issue": issue,
-                "actor": admin
-            }
+
+        events_to_dispatch.append(
+            (NotificationEvent.ISSUE_REJECTED, {"issue": issue, "actor": admin})
         )
 
     elif decision.decision_type in [
@@ -70,20 +69,23 @@ def create_verification_decision(*, admin, report, data):
         issue.move_postpone(by=admin)
         report.solver_task.postpone_task(by=admin)
     if decision.decision_type != IssueAdministrativeDecision.DecisionType.POSTPONED:
-        NotificationDispatcher.dispatch(
-                event=NotificationEvent.APPROVE_REPORT,
-                payload={
-                    "task": report.solver_task,
-                    "actor": admin
-                }
+        events_to_dispatch.append(
+            (
+                NotificationEvent.APPROVE_REPORT,
+                {"task": report.solver_task, "actor": admin},
             )
-    if decision.decision_type == IssueAdministrativeDecision.DecisionType.BLOCKED:
-        NotificationDispatcher.dispatch(
-            event=NotificationEvent.TASK_APPROVED_BY_ADMIN,
-            payload={
-                "task": report.solver_task,
-                "actor": admin
-            }
         )
+    if decision.decision_type == IssueAdministrativeDecision.DecisionType.BLOCKED:
+        events_to_dispatch.append(
+            (
+                NotificationEvent.TASK_APPROVED_BY_ADMIN,
+                {"task": report.solver_task, "actor": admin},
+            )
+        )
+    def after_commit():
+        for event, payload in events_to_dispatch:
+            NotificationDispatcher.dispatch(event=event, payload=payload)
+
+    transaction.on_commit(after_commit)
 
     return decision

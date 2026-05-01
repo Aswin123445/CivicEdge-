@@ -73,7 +73,7 @@ const ActionButton = ({ item, handleAction }) => {
     return (
       <button
         onClick={() => handleAction?.(item)}
-        className="w-full bg-slate-900 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-black transition-all shadow-lg shadow-slate-200"
+        className="w-full bg-green-700 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-green-600 transition-all shadow-lg shadow-slate-200"
       >
         <Award size={16} className="text-amber-400" /> View Recognition
       </button>

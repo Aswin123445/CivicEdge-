@@ -18,7 +18,9 @@ import NotificationDrawer from "../../features/notifications/pages/NotificationD
 import CitizenBellIconNotification from "../../features/notifications/components/CitizenBellIconNotification";
 import useNotificationCount from "../../features/notifications/hooks/notificationCountHook";
 import { useNavigate,useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 export default function AdminNavbar() {
+  const { access_token } = useSelector((s) => s.auth);
   const location = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -26,10 +28,9 @@ export default function AdminNavbar() {
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
   const { userData } = useCitizenService();
-  const {
-    notificationCount,
-    countRefetch,
-  } = useNotificationCount({ enabled: !userNotificationsOpen });
+  const { notificationCount, refetch } = useNotificationCount({
+    access_token,
+  });
   useEffect(() => {
     function handleClickOutside(event) {
       if (
@@ -82,7 +83,7 @@ export default function AdminNavbar() {
       {/* CENTER: SEARCH */}
       {/* ===================== */}
 
-      <div className="hidden md:flex items-center gap-2 text-slate-400">
+      <div className="hidden lg:flex items-center gap-2 text-slate-400">
         {/* Pending Issues */}
         <div
           onClick={() => navigate("/dashboard/execution/in-review/issues")}
@@ -128,7 +129,7 @@ export default function AdminNavbar() {
         {/* Notifications */}
         <CitizenBellIconNotification
           onClick={() => setUserNotificationsOpen(true)}
-          count={notificationCount?.unread_count || 0}
+          count={notificationCount || 0}
         />
 
         {/* Admin Menu */}

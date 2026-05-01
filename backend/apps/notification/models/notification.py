@@ -27,6 +27,8 @@ class Notification(models.Model):
         VOLUNTEER_EVENT_REMINDER = "VOLUNTEER_EVENT_REMINDER"
         VOLUNTEER_JOIN_REJECTED = "VOLUNTEER_JOIN_REJECTED"
         VOLUNTEER_CERTIFICATE = "VOLUNTEER_CERTIFICATE", "Volunteer Certificate"    
+        VOLUNTEER_ATTENDANCE_REJECT = "VOLUNTEER_ATTENDANCE_REJECT", "Volunteer Attendance Reject"
+        NEW_EVENT_NOTIFY = "NEW_EVENT_NOTIFY", "new event notify"
 
         FORUM_REPLY_RECEIVED = "FORUM_REPLY_RECEIVED"
         FORUM_POST_CREATED = "FORUM_POST_CREATED"
@@ -37,7 +39,6 @@ class Notification(models.Model):
         PAYMENT_FAILED = "PAYMENT_FAILED"
 
         ADMIN_ANNOUNCEMENT = "ADMIN_ANNOUNCEMENT"
-        
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 

@@ -118,7 +118,7 @@ const UserManagement = () => {
       {/* PAGINATION */}
       {/* ===================== */}
       {!isSinglePage && (
-        <div className="sticky bottom-0 mt-6 py-4 bg-neutral-900">
+        <div className="sticky bottom-0 mt-1 py-4 ">
           <Pagination
             currentPage={page}
             totalPages={totalPages}

@@ -50,7 +50,6 @@ const baseQueryWithReauth =
 
       return result;
     } catch (err) {
-      console.error("Refresh failed", err);
       api.dispatch(logout_user()); 
       return result;
     }

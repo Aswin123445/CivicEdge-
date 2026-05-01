@@ -63,17 +63,20 @@ def submit_completion(*, solver, task, data):
     # Transition task state
     # -----------------------------
     task.submit_completion(by=solver)
-    NotificationDispatcher.dispatch(
-        event=NotificationEvent.TASK_COMPLETED_BY_SOLVER,
-        payload={
-            "task": task,
-            "actor": solver
-        }
-    )
     create_activity(
         user=solver,
         entity=ActivityEntity.TASK,
         action=ActivityAction.COMPLETED,
         message=f"You have completed the task for issue: {task.issue.title}",
     )
+    def after_commit():
+        NotificationDispatcher.dispatch(
+            event=NotificationEvent.TASK_COMPLETED_BY_SOLVER,
+            payload={
+                "task": task,
+                "actor": solver
+            }
+        )
+    transaction.on_commit(after_commit)
+
     return proof

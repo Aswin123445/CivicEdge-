@@ -20,7 +20,7 @@ class VolunteerGroupCreateSerializer(serializers.ModelSerializer):
         return attrs
 
     def validate_name(self, value):
-        if VolunteerGroup.objects.filter(name=value).exists():
+        if VolunteerGroup.objects.filter(name__iexact=value).exists():
             raise serializers.ValidationError("Group with this name already exists.")
         return value
 
@@ -41,7 +41,6 @@ class VolunteerGroupUpdateSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError("Membership type is not open, please add requirements.")
         return value
     def validate_name(self, value):
-        print(self.instance)
         qs = VolunteerGroup.objects.filter(name=value)
 
         if self.instance:

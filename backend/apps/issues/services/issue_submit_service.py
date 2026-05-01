@@ -30,14 +30,6 @@ def submit_issue(*, issue: Issue, user):
     issue.draft_step = Issue.DraftStep.REVIEW
     issue.status = IssueStatus.IN_REVIEW
     issue.save(update_fields=["is_draft", "draft_step","status"])
-    
-    NotificationDispatcher.dispatch(
-        event=NotificationEvent.ISSUE_REPORTED,
-        payload={
-            "issue": issue,
-            "actor": user
-        }
-    )
 
     IssueLog.objects.create(
         issue=issue,
@@ -58,5 +50,12 @@ def submit_issue(*, issue: Issue, user):
         action=ActivityAction.CREATED,
         message=f"Issue {issue.title} created successfully",
     )
+
+    def after_commit():
+        NotificationDispatcher.dispatch(
+            event=NotificationEvent.ISSUE_REPORTED,
+            payload={"issue": issue, "actor": user},
+        )
+    transaction.on_commit(after_commit)
 
     return issue

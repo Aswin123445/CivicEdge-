@@ -1,6 +1,8 @@
 from apps.notification.models.notification import Notification
 from apps.notification.services.notification_service import NotificationService
-
+from apps.notification.services.realtime_notification_service import (
+    RealtimeNotificationService,
+)
 
 def handle_volunteer_join_approved(payload):
     membership = payload["membership"]
@@ -20,3 +22,4 @@ def handle_volunteer_join_approved(payload):
         target_id=group.id,
         redirect_url=f"/volunteer-army/group/{group.id}",
     )
+    RealtimeNotificationService.push_unread_count(user=user)

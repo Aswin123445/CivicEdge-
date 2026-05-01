@@ -1,7 +1,8 @@
-
 from apps.notification.models.notification import Notification
 from apps.notification.services.notification_service import NotificationService
-
+from apps.notification.services.realtime_notification_service import (
+    RealtimeNotificationService,
+)
 
 def handle_issue_rejected(payload):
     issue = payload["issue"]
@@ -23,3 +24,4 @@ def handle_issue_rejected(payload):
         target_id=issue.id,
         redirect_url=f"/complaints/{issue.id}", 
     )
+    RealtimeNotificationService.push_unread_count(user=citizen)

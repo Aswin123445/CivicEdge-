@@ -3,6 +3,9 @@ from django.contrib.auth import get_user_model
 from apps.notification.models.notification import Notification
 from apps.notification.services.notification_service import NotificationService
 from shared.enums.user_role import UserRole
+from apps.notification.services.realtime_notification_service import (
+    RealtimeNotificationService,
+)
 
 User = get_user_model()
 
@@ -38,3 +41,4 @@ def handle_task_completed_by_solver(payload):
     NotificationService.bulk_create_notifications(
         [Notification(**n) for n in notifications]
     )
+    RealtimeNotificationService.push_unread_count_many(users=admins)

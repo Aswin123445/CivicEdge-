@@ -1,6 +1,8 @@
 from apps.notification.services.notification_service import NotificationService
 from apps.notification.models.notification import Notification
-
+from apps.notification.services.realtime_notification_service import (
+    RealtimeNotificationService,
+)
 
 def handle_forum_comment(payload):
     actor = payload["actor"] 
@@ -17,3 +19,4 @@ def handle_forum_comment(payload):
         target_id=comment.id,
         redirect_url=f"/forum/posts/{comment.post.id}", 
     )
+    RealtimeNotificationService.push_unread_count(user=citizen)

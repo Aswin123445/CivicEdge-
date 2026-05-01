@@ -19,7 +19,6 @@ const EditGroupModal = ({
 
   const [formData, setFormData] = useState(INITIAL_FORM);
   const [errors, setErrors] = useState({});
-  console.log(errors)
   useEffect(() => {
     if (group && isOpen) {
       setFormData({

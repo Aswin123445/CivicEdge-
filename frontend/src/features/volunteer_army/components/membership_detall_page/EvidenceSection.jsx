@@ -58,6 +58,7 @@ const EvidenceSection = ({ status, evidences, onUpload, onDelete, onError, isFil
   const isEditable = status === "PENDING" || status === "REJECTED";
 
   const handleFileChange = (e) => {
+    onError?.(null);
     const file = e.target.files?.[0];
     if (!file) return;
 

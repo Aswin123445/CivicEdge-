@@ -45,7 +45,7 @@ def generate_certificate_task(self, recognition_id):
         recognition.status = "GENERATED"
         recognition.save(update_fields=["certificate_url", "status", "updated_at"])
 
-        # 5️⃣ Send Email
+        #  Send Email
         send_certificate_email_task.delay(
             to_email=participation.membership.user.email,
             user_name=payload["participant_name"],

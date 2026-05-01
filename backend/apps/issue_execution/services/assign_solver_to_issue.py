@@ -29,13 +29,6 @@ def assign_solver_to_issue(*, issue, solver, assigned_by, remarks=None):
         solver=solver,
         assigned_by=assigned_by,
     )
-    NotificationDispatcher.dispatch(
-        event=NotificationEvent.TASK_ASSIGNED_TO_SOLVER,
-        payload={
-            "task": task,
-            "actor": assigned_by
-        }
-    )
     add_issue_timeline_event(
         issue=issue,
         message="Collecting evidences from location",
@@ -47,5 +40,16 @@ def assign_solver_to_issue(*, issue, solver, assigned_by, remarks=None):
         action=ActivityAction.ASSIGNED,
         message=f"Assigned {solver.email} to issue: {issue.title}",
     )
+    
+    def after_commit():
+        NotificationDispatcher.dispatch(
+            event=NotificationEvent.TASK_ASSIGNED_TO_SOLVER,
+            payload={
+                "task": task,
+                "actor": assigned_by
+            }
+        )
+
+    transaction.on_commit(after_commit)
 
     return task

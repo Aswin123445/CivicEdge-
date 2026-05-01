@@ -12,11 +12,13 @@ import CitizenBellIconNotification from "../../../notifications/components/Citiz
 import { useState } from "react";
 import useNotificationCount from "../../../notifications/hooks/notificationCountHook";
 import NotificationDrawer from "../../../notifications/pages/NotificationDrawer";
+import { useSelector } from "react-redux";
 
 export default function SolverNavbar() {
+  const { access_token } = useSelector((s) => s.auth);
   const [userNotificationsOpen, setUserNotificationsOpen] = useState(false);
-  const { notificationCount, countRefetch } = useNotificationCount({
-    enabled: !userNotificationsOpen,
+  const { notificationCount, refetch } = useNotificationCount({
+    access_token
   });
   const { menuOpen, setMenuOpen } = solverUi();
   const { userData, userDataLoading, userDataFetching } = useCitizenService();
@@ -53,7 +55,7 @@ export default function SolverNavbar() {
         {/* Notifications */}
         <CitizenBellIconNotification
           onClick={() => setUserNotificationsOpen(true)}
-          count={notificationCount?.unread_count || 0}
+          count={notificationCount || 0}
         />
 
         {/* Profile / Menu */}

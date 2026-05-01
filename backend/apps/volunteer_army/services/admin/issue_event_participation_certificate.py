@@ -31,12 +31,15 @@ def create_event_certificate_recognition(*, participation_id, by_id):
         status=  RecognitionStatus.PENDING
     )
     by = User.objects.filter(id=by_id).first()
-    NotificationDispatcher.dispatch(
-        event=NotificationEvent.VOLUNTEER_CERTIFICATE,
-        payload={
-            "parcipation": participation,
-            "actor": by
-        }
-    )
+    
+    def after_commit():
+        NotificationDispatcher.dispatch(
+            event=NotificationEvent.VOLUNTEER_CERTIFICATE,
+            payload={
+                "parcipation": participation,
+                "actor": by
+            }
+        )
+    transaction.on_commit(after_commit)
 
     return recognition.id

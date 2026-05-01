@@ -102,18 +102,20 @@ def submit_field_verification(*, solver, task: SolverTask):
     # Update solver task state
     # -----------------------------
     task.submit_verification(by=solver)
-    NotificationDispatcher.dispatch(
-        event=NotificationEvent.REPORT_SUBMITTED_TO_ADMIN,
-        payload={
-            "report": report,
-            "actor": solver
-        }
-    )
     create_activity(
         user=solver,
         entity=ActivityEntity.TASK,
         action=ActivityAction.UPDATED,
         message=f"Submitted verification report for issue: {task.issue.title}",
     )
+    def after_commit():
+        NotificationDispatcher.dispatch(
+            event=NotificationEvent.REPORT_SUBMITTED_TO_ADMIN,
+            payload={
+                "report": report,
+                "actor": solver
+            }
+        )
+    transaction.on_commit(after_commit)
 
     return report

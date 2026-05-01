@@ -18,27 +18,28 @@ DEBUG = os.environ.get("DEBUG", "False") == "True"
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
-    'rest_framework_simplejwt.token_blacklist',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    
-    #project apps
-    'apps.user',
-    'apps.profiles',
-    'apps.issues',
-    'apps.issue_execution',
-    'apps.volunteer_army',
-    'apps.polls',
-    'apps.notification',
-    'apps.forum',
-    'apps.analytics',
-    # Third-party apps   
-    'corsheaders',
-    'rest_framework',
+    "rest_framework_simplejwt.token_blacklist",
+    "daphne",
+    "channels",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    # project apps
+    "apps.user",
+    "apps.profiles",
+    "apps.issues",
+    "apps.issue_execution",
+    "apps.volunteer_army",
+    "apps.polls",
+    "apps.notification",
+    "apps.forum",
+    "apps.analytics",
+    # Third-party apps
+    "corsheaders",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -69,6 +70,12 @@ REST_FRAMEWORK = {
     'EXCEPTION_HANDLER':'shared.exceptions.custom_exception_handler.custom_exception_handler'
 }
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
+ASGI_APPLICATION = "config.asgi.application"
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_SAMESITE = 'Lax'  # This is enough for redirect-based login flows
@@ -116,7 +123,6 @@ ROOT_URLCONF = "config.urls"
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "Asia/Kolkata"
 USE_I18N = True
@@ -137,7 +143,7 @@ FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:5173")
 BACKEND_URL = os.environ.get("BACKEND_URL", "http://localhost:8000")
 CORS_ALLOW_CREDENTIALS = True
 
-#email settings 
+# email settings
 EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND", "backend")
 EMAIL_HOST = os.environ.get("EMAIL_HOST", "hoster")
 EMAIL_PORT = os.environ.get("EMAIL_PORT", 587)
@@ -146,7 +152,7 @@ EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "email")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "password")
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "from email")
 
-# backend/core/settings/base.py 
+# backend/core/settings/base.py
 REDIS_HOST = os.getenv("REDIS_HOST", "redis")
 REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
 
@@ -166,17 +172,16 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'  # or your timezone
 
-#google oauth
+# google oauth
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
 DATA_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024
 
-#cloudinary
+# cloudinary
 cloudinary.config(secure = not DEBUG)
 
 
-
-#jwt setup
+# jwt setup
 # USER_ID_FIELD = 'id'
 # CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
@@ -184,14 +189,12 @@ cloudinary.config(secure = not DEBUG)
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-
     "formatters": {
         "simple": {
             "format": "[{levelname}] {message}",
             "style": "{",
         },
     },
-
     "handlers": {
         "console": {
             "class": "logging.StreamHandler",
@@ -199,12 +202,10 @@ LOGGING = {
             "formatter": "simple",
         },
     },
-
     "root": {
         "handlers": ["console"],
         "level": "WARNING",  # Only show warnings, errors, critical
     },
-
     "loggers": {
         "django": {
             "handlers": ["console"],
@@ -213,7 +214,7 @@ LOGGING = {
         },
         "django.request": {
             "handlers": ["console"],
-            "level": "ERROR",  # Only show request errors
+            "level": "INFO",  # Only show request errors
             "propagate": False,
         },
         "django.server": {

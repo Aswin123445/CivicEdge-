@@ -53,4 +53,5 @@ def create_volunteer_event(
         action=ActivityAction.CREATED,
         message=f"You have created the event {event.title}",
     )
+
     return event
