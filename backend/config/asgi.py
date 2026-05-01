@@ -8,9 +8,8 @@ https://docs.djangoproject.com/en/5.2/howto/deployment/asgi/
 """
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
-from apps.notification.routes import websocket_urlpatterns
 import os
-
+from apps.notification.routes.realtime_notification import websocket_urlpatterns
 from django.core.asgi import get_asgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
