@@ -6,7 +6,10 @@ and returns plain Python data ready for the serializer.
 
 Rule: never re-filter or reach outside qs.  One shared queryset.
 """
-
+import datetime
+from dateutil.relativedelta import relativedelta
+from django.db.models.functions import TruncDay, TruncMonth
+from apps.issues.models.issues import IssueStatus
 from __future__ import annotations
 
 from django.db.models import (
@@ -15,10 +18,6 @@ from django.db.models import (
     Q,
     QuerySet,
 )
-from django.db.models.functions import TruncMonth
-
-from apps.issues.utils.enums.issue_status import IssueStatus
-
 
 # ──────────────────────────────────────────────────────────────────────────────
 # KPI stats
@@ -63,15 +62,6 @@ def get_issue_stats(qs: QuerySet) -> dict:
 # ──────────────────────────────────────────────────────────────────────────────
 
 # selectors.py
-
-import datetime
-from dateutil.relativedelta import relativedelta
-
-from django.db.models import Count, Q, QuerySet
-from django.db.models.functions import TruncDay, TruncMonth
-
-from apps.issues.models.issues import IssueStatus
-
 
 def get_trend_chart(qs: QuerySet, from_dt, to_dt) -> list[dict]:
     """

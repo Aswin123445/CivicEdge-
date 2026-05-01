@@ -1,8 +1,6 @@
 
 from __future__ import annotations
 
-import datetime
-
 from apps.user.permissions.user_permissions import IsAdmin
 from rest_framework.views import APIView
 
