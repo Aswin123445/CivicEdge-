@@ -6,11 +6,11 @@ and returns plain Python data ready for the serializer.
 
 Rule: never re-filter or reach outside qs.  One shared queryset.
 """
+from __future__ import annotations
 import datetime
 from dateutil.relativedelta import relativedelta
 from django.db.models.functions import TruncDay, TruncMonth
 from apps.issues.models.issues import IssueStatus
-from __future__ import annotations
 
 from django.db.models import (
     Count,
