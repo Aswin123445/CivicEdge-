@@ -1,3 +1,3 @@
-from apps.issues.models import IssueCategory
+from apps.forum.models.forum_category import ForumCategory
 def get_category(*, category):
-    return IssueCategory.objects.filter(id=category.id).first()
+    return ForumCategory.objects.filter(id=category).first()

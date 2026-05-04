@@ -10,8 +10,7 @@ class ToggleCategoryAPIView(UpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         category_id = self.kwargs.get("id")
-
-        category = toggle_category(category_id=category_id)
+        category = toggle_category(category=category_id)
 
         return Response({
             "id": category.id,

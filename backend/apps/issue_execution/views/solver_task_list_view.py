@@ -30,6 +30,7 @@ class SolverTaskListView(ListAPIView):
         in_progress_count = queryset.filter(status = SolverTaskStatus.IN_EXECUTION, is_active=True).count() 
         pending_verification_count = queryset.filter(status = SolverTaskStatus.VERIFICATION_SUBMITTED, is_active=True).count()
         pending_submission_count = queryset.filter(status = SolverTaskStatus.COMPLETION_SUBMITTED, is_active=True).count()
+        postponed_count = queryset.filter(status = SolverTaskStatus.POSTPONED, is_active=True).count()
         completed_count = queryset.filter(status = SolverTaskStatus.COMPLETED, is_active=True).count()
         
         
@@ -41,6 +42,7 @@ class SolverTaskListView(ListAPIView):
             response.data['pending_verification_count'] = pending_verification_count    
             response.data['pending_submission_count'] = pending_submission_count
             response.data['completed_count'] = completed_count
+            response.data['postponed_count'] = postponed_count
             return response
 
         serializer = self.get_serializer(queryset, many=True)

@@ -4,7 +4,7 @@ from rest_framework import status
 from apps.user.permissions.user_permissions import IsAdmin
 
 from apps.issues.models.issue_category import IssueCategory
-from apps.forum.services.admin.toggle_category_service import toggle_category
+from apps.issues.services.category_service import toggle_category
 
 
 class IssueCategoryToggleAPIView(APIView):
