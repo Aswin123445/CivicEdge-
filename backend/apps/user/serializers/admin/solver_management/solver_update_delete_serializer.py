@@ -34,7 +34,7 @@ class SolverUpdateSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         logger.info("This is working")
-        if "is_active" in validated_data and validated_data["is_active"] == False:
+        if "is_active" in validated_data and not validated_data["is_active"]:
             tasks = instance.assigned_solver_tasks.all() 
             for task in tasks:
                 if task.status not in {
