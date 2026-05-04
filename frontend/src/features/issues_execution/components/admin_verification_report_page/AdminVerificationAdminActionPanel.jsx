@@ -29,7 +29,7 @@ const AdminVerificationAdminActionPanel = ({ openModal , isModalOpen}) => {
           onClick={() => openModal("BLOCKED")}
           className="w-full bg-transparent hover:bg-red-500/10 text-red-500 border border-red-500/20 py-2 rounded-lg transition-all"
         >
-          Block Submission
+          Invalid Issue
         </button>
       </div>
     </div>

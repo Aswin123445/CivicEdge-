@@ -25,7 +25,7 @@ import useToggleCategory from "../hooks/category/categoryToggle";
 const CategoryManagementPage = () => {
   const { categories, categoryLoading, categoryFetching, pagination } =
     useListCategory();
-
+  console.log(categories)
   const { createCategory, createCategoryLoading } = useCreateCategory();
 
   const { updateCategory, updateCategoryLoading } = useUpdateCategory();
@@ -71,6 +71,7 @@ const CategoryManagementPage = () => {
   };
 
   const handleToggleStatus = async(id) => {
+    console.log(id)
     try{
       await toggleCategory(id).unwrap();
     } catch (error) {

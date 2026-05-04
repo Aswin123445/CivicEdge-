@@ -28,12 +28,14 @@ export default function useSolverTaskListHook() {
   const pending_submission_count = data?.pending_submission_count || 0;
   const pending_verification_count = data?.pending_verification_count || 0;
   const new_assignments_count = data?.new_assignments_count || 0;
+  const postponed_count = data?.postponed_count || 0
   const aggregatedCount = {
     completed_count,
     in_progress_count,
     pending_submission_count,
     pending_verification_count,
     new_assignments_count,
+    postponed_count
   };
 
   const pageData = getPaginationState({

@@ -20,17 +20,6 @@ import { extractErrorMessage } from "../../../../utils/extractErrorMessage";
 import useCategoryCreate from "../../hooks/admin/createCategory";
 import { EventTableSkeleton } from "../../../volunteer_army/components/admin_event_list_page/EventTable";
 
-/**
- * CIVICEDGE ADMIN: CATEGORIES MANAGEMENT PAGE
- * ---------------------------------------
- * Component Split Guide:
- * - ./components/admin/categories/PageHeader.jsx
- * - ./components/admin/categories/CategoriesTable.jsx
- * - ./components/admin/categories/CategoryRow.jsx
- * - ./components/admin/categories/CreateCategoryModal.jsx
- * - ./components/admin/categories/ToggleStatusModal.jsx
- */
-
 // --- SUB-COMPONENT: SKELETON LOADING ---
 const CategoriesSkeleton = () => (
   <div className="space-y-3 animate-pulse">
@@ -101,7 +90,7 @@ const AdminCategoriesPage = () => {
 
   const handleToggleStatus = async () => {
     try {
-      await toggleCategory(selectedCategory.id);
+      await toggleCategory(selectedCategory.id).unwrap();
       successToast({
         title: "Success",
         description: "Category status toggled successfully.",

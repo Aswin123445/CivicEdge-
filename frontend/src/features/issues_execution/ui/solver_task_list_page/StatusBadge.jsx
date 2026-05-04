@@ -9,7 +9,10 @@ const StatusBadge = ({ status }) => {
       label: "Verification Submitted",
       style: "bg-purple-100 text-purple-700",
     },
-
+    POSTPONED: {
+      label: "Postponed",
+      style: "bg-yellow-100 text-yellow-700",
+    },
     APPROVED_FOR_EXECUTION: {
       label: "Approved for Execution",
       style: "bg-indigo-100 text-indigo-700",

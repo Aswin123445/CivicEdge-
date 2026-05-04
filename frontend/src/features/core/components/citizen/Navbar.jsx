@@ -12,7 +12,7 @@ import UserSkeleton from "../../ui/skeltons/UserButtonSkelton";
 import NameUrlGet from "../NameUrlGet";
 import UserMenu from "../UserMenu";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";// ... imports stay the same
+import { useNavigate } from "react-router-dom";
 
 const HomeNavbar = () => {
   const navigate = useNavigate();
@@ -103,7 +103,7 @@ const HomeNavbar = () => {
                 )}
               </>
             ) : (
-              <LoginPill onClick={() => handleNavigate()} />
+              <LoginPill onClick={() => handleNavigate()} className="flex" />
             )}
           </div>
 

@@ -74,7 +74,7 @@ export default function UserMenu({ open, onClose }) {
               <div onClick={() => {navigate('/profile'); onClose()}}>
                 <UserMenuItem icon={User} label="My Profile" />
               </div>
-              <UserMenuItem icon={Bell} label="Notifications" badge="3" />
+              {/* <UserMenuItem icon={Bell} label="Notifications" badge="3" /> */}
               <div onClick={() => {navigate('/settings')}}>
                   <UserMenuItem icon={Settings} label="Settings" />
               </div>

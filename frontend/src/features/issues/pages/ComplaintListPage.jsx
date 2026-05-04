@@ -26,6 +26,7 @@ const ComplaintListPage = () => {
     searchParams,
     setSearchParams,
   } = useComplaintService();
+  console.log(complaints)
   const handleFilterChange = (tab) => {
     if (tab === "All") {
       setSearchParams((pre) => {

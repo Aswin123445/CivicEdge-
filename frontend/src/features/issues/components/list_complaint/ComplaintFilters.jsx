@@ -5,6 +5,7 @@ const TABS = [
   "IN_REVIEW",
   "IN_PROGRESS",
   "RESOLVED",
+  "POSTPONED",
   "REJECTED",
   // "CANCELLED",
 ];

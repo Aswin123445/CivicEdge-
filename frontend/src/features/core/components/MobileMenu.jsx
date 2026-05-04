@@ -97,7 +97,10 @@ export default function MobileMenu({ open, onClose }) {
                 <nav className="px-4 py-6 space-y-6 overflow-y-auto h-[calc(100vh-120px)]">
                   {/* Primary CTA */}
                   <motion.button
-                    onClick={() => {navigate('issue/new')}}
+                    onClick={() => {
+                      navigate("issue/new");
+                      onClose();
+                    }}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     className="
@@ -115,15 +118,33 @@ export default function MobileMenu({ open, onClose }) {
                     <p className="px-4 text-[10px] font-bold uppercase tracking-widest text-blue-400/60 mb-2">
                       Menu
                     </p>
-                    <MobileMenuItem icon={HomeIcons.Issues} label="My Issues" handleNavigate={() => {handleNavigate('/complaints/list'),onClose()}}/>
+                    <MobileMenuItem
+                      icon={HomeIcons.Issues}
+                      label="My Issues"
+                      handleNavigate={() => {
+                        (handleNavigate("/complaints/list"), onClose());
+                      }}
+                    />
                     <MobileMenuItem
                       icon={HomeIcons.Army}
                       label="Volunteer Armies"
-                      handleNavigate={() => {handleNavigate('/volunteer-army'),onClose()}}
+                      handleNavigate={() => {
+                        (handleNavigate("/volunteer-army"), onClose());
+                      }}
                     />
-                    <MobileMenuItem icon={HomeIcons.Talk} label="Civic Talk" />
+                    <MobileMenuItem handleNavigate={() =>{
+                      navigate("/poll/home")
+                      onClose();
+                    }} icon={HomeIcons.Polls} label="Polls" />
 
-                    <MobileMenuItem icon={HomeIcons.Polls} label="Polls" />
+                    <MobileMenuItem
+                      handleNavigate={() => {
+                        navigate("/forum");
+                        onClose();
+                      }}
+                      icon={HomeIcons.Talk}
+                      label="Civic Talk"
+                    />
                   </div>
 
                   <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
@@ -141,10 +162,11 @@ export default function MobileMenu({ open, onClose }) {
                     >
                       <MobileMenuItem icon={User} label="My Profile" />
                     </div>
-                    <MobileMenuItem icon={Bell} label="Notifications" badge />
+                    {/* <MobileMenuItem icon={Bell} label="Notifications" badge /> */}
                     <div
                       onClick={() => {
                         navigate("/settings");
+                        onClose();
                       }}
                     >
                       <MobileMenuItem icon={Settings} label="Settings" />

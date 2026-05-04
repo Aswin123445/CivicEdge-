@@ -15,7 +15,7 @@ const ComplaintCard = ({ item }) => {
       whileHover={{ y: -4 }}
       className="group relative flex flex-col md:flex-row gap-0 overflow-hidden bg-white rounded-[24px] border border-slate-200 shadow-sm transition-all duration-300"
     >
-      {/* 🟦 Left Accent: Use your Primary Blue as the default rail */}
+      {/*  Left Accent: Use your Primary Blue as the default rail */}
       <div className="w-1.5 shrink-0 bg-blue-600 opacity-80" />
 
       <div className="flex-1 p-6 flex flex-col md:flex-row justify-between items-stretch gap-6">
@@ -43,7 +43,7 @@ const ComplaintCard = ({ item }) => {
             </div>
           </div>
 
-          {/* 💡 Reassurance Message: Separate Background Shade */}
+          {/*  Reassurance Message: Separate Background Shade */}
           {isReviewing && item?.public_message && (
             <div className="bg-slate-50 border-l-2 border-blue-400 p-4 rounded-r-xl rounded-bl-xl">
               <div className="flex items-center gap-2 mb-1">
@@ -59,7 +59,7 @@ const ComplaintCard = ({ item }) => {
 
         {/* 2. Action & Time Section (Separated by subtle border) */}
         <div className="flex md:flex-col items-center md:items-end justify-between md:pl-8 md:border-l border-slate-100">
-          <div  className="hidden md:block">
+          <div  className="">
              <div onClick={() => {navigate(`/complaints/${item?.id}`)}} className="w-12 h-12 cursor-pointer rounded-2xl bg-blue-50 flex items-center justify-center group-hover:bg-blue-600 transition-all duration-300">
                 <ArrowRight className="w-5 h-5 text-blue-600 group-hover:text-white" />
              </div>

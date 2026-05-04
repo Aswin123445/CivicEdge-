@@ -253,12 +253,12 @@ export default function VolunteerAnalyticsPage() {
               ref={kpiRef}
               className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4"
             >
-              <StatsCard title="Total Groups"        value={kpis?.total_groups?.value}         change={`+${kpis?.total_groups?.change_percent}%`}         icon={<Users size={20} />} />
-              <StatsCard title="Total Members"       value={kpis?.total_members?.value}        change={`+${kpis?.total_members?.change_percent}%`}        icon={<UserPlus size={20} />} />
-              <StatsCard title="Active Events"       value={kpis?.active_events?.value}        change={`+${kpis?.active_events?.change_percent}%`}        icon={<Calendar size={20} />} />
-              <StatsCard title="Event Participations" value={kpis?.event_participations?.value} change={`+${kpis?.event_participations?.change_percent}%`} icon={<Activity size={20} />} />
-              <StatsCard title="Restricted Members"  value={kpis?.restricted_members?.value}   change={`+${kpis?.restricted_members?.change_percent}%`}   icon={<ShieldCheck size={20} />} />
-              <StatsCard title="New Members (Month)" value={kpis?.new_members_month?.value}    change={`+${kpis?.new_members_month?.change_percent}%`}    icon={<UserCheck size={20} />} />
+              <StatsCard title="Total Groups"        value={kpis?.total_groups?.value}         change={`${kpis?.total_groups?.change_percent}%`}         icon={<Users size={20} />} />
+              <StatsCard title="Total Members"       value={kpis?.total_members?.value}        change={`${kpis?.total_members?.change_percent}%`}        icon={<UserPlus size={20} />} />
+              <StatsCard title="Active Events"       value={kpis?.active_events?.value}        change={`${kpis?.active_events?.change_percent}%`}        icon={<Calendar size={20} />} />
+              <StatsCard title="Event Participations" value={kpis?.event_participations?.value} change={`${kpis?.event_participations?.change_percent}%`} icon={<Activity size={20} />} />
+              <StatsCard title="Restricted Members"  value={kpis?.restricted_members?.value}   change={`${kpis?.restricted_members?.change_percent}%`}   icon={<ShieldCheck size={20} />} />
+              <StatsCard title="New Members (Month)" value={kpis?.new_members_month?.value}    change={`${kpis?.new_members_month?.change_percent}%`}    icon={<UserCheck size={20} />} />
             </div>
 
             {/* Charts — refs on each grid CELL (col-span lives here, not inside ChartCard) */}
