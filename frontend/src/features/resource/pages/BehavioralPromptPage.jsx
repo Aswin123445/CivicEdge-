@@ -138,26 +138,31 @@ const BehavioralPromptPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const formatOptions = (options) => {
+      return options.map((opt) => ({
+        key: opt.toLowerCase().replace(/\s+/g, "_"),
+        label: opt,
+      }));
+    };
+    console.log(formData);
+    let payload = null;
     // Dynamic Payload Formatting
     let finalOptions = null;
     if (formData.response_type === "MULTIPLE_CHOICE") {
       finalOptions = formData.mc_options.filter((opt) => opt.trim() !== "");
-    } else if (formData.response_type === "SCALE") {
-      finalOptions = formData.scale;
+      payload = {
+        question_text: formData.question_text,
+        response_type: formData.response_type,
+        display_order: formData.display_order,
+        options: formatOptions(finalOptions),
+      };
+    }else {
+      payload = {
+        question_text: formData.question_text,
+        response_type: formData.response_type,
+        display_order: formData.display_order,
+      };
     }
-const formatOptions = (options) => {
-  return options.map((opt) => ({
-    key: opt.toLowerCase().replace(/\s+/g, "_"),
-    label: opt
-  }));
-};
-    const payload = {
-      question_text: formData.question_text,
-      response_type: formData.response_type,
-      display_order: formData.display_order,
-      options: formatOptions(finalOptions),
-    };
 
     try {
       await createBehavioral(payload).unwrap();
